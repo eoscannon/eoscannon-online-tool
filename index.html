@@ -3,153 +3,84 @@
 
 <head>
     <meta charset="utf-8">
-
     <title>EOS Tool  | EOSCannon 出品</title>
-    <link rel="shortcut icon" type="image/x-icon" href="resource/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="resource/eoscannon.ico">
     <link rel="stylesheet" href="resource/bootstrap.min.css">
-
-    <!--<script src="js/eosjs-offline.js" type="text/javascript"></script>-->
-    <!-- <script src="js/clipboard.min.js" type="text/javascript"></script> -->
-
-    <script type="text/javascript">
-
-//        function signMessage() {
-//
-//            let unsigned = document.getElementById('unsigned-message').value;
-//            let jsonUnsigned;
-//            try {
-//                jsonUnsigned = JSON.parse(unsigned);
-//            } catch {
-//                alert('格式错误 | Format Error');
-//            }
-//
-//
-//            let chain_id = document.getElementById("chain-id").innerHTML;
-//
-//            let wif = document.getElementById('private-key').value;
-//            document.getElementById('private-key').value = "";
-//
-//            let signed = EosOffline(jsonUnsigned, chain_id, wif);
-//
-//            document.getElementById('signed-message').innerHTML = signed;
-//
-//            //清空私钥
-//            wif = null;
-//
-//        }
-//
-//        function parseTransaction() {
-//            let unsigned = document.getElementById('unsigned-message').value;
-//            let jsonUnsigned;
-//            try {
-//                jsonUnsigned = JSON.parse(unsigned);
-//            } catch {
-//                alert('格式错误 | Format Error');
-//            }
-//
-//            if (jsonUnsigned.transaction.actions.length > 1) {
-//                alert('暂时不支持多action | Do not support multi actions yet');
-//                document.getElementById('unsigned-message').style.backgroundColor = "red";
-//            }
-//
-//            let action = jsonUnsigned.transaction.actions[0];
-//            let contract = action.account;
-//            let func = action.name;
-//            let accountName = action.authorization[0].actor;
-//            document.getElementById('account_name').value = accountName;
-//            document.getElementById('contract_name').value = contract;
-//            document.getElementById('func_name').value = func;
-//
-//            if (contract != "eosio") {
-//                document.getElementById('contract_name').style.backgroundColor = "red";
-//            }
-//
-//            if (func != "voteproducer") {
-//                document.getElementById('func_name').style.backgroundColor = "red";
-//            }
-//        }
-
-
-    </script>
-
 </head>
 
 <body class="container">
     <div class="text-center">
         <img height=150px src="resource/img/eoslogo.png">
     </div>
-    <h1 class="text-center" style='padding-top:30px'>EOS 进程初始化工具</h1>
-
+    <h1 class="text-center" style='padding-top:30px'>EOS 在线交易工具</h1>
     <section id="alerts">
         <div class="alert alert-warning" role="alert">
-            此页面在线使用。
+            此页面在线使用，将下方信息粘贴至离线工具中。
         </div>
-
     </section>
-
-    <div class="form-group">
-        <label for="eos-chain-id">
-            <strong>链ID | Chain ID</strong>
-        </label>
-        <p id="chain-id" class="form-control">aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906</p>
-    </div>
-
     <div class="form-group">
         <label for="eos-chain-id">
             <strong>EOS区块高度 </strong>
         </label>
         <textarea id="signed-message" class="form-control" rows="3" readonly=true></textarea>
     </div>
-
     <div class="form-group">
-        <button id="copy" class="btn btn-success" data-clipboard-target="#signed-message">复制初始化信息</button>
+        <button id="copy" class="btn btn-success" data-clipboard-target="#signed-message">复制初始化信息|Copy inital message</button>
     </div>
+    <section>
+        <div class="alert alert-warning" role="alert">
+            下方粘贴已签名的交易报文，并发送
+        </div>
+    </section>
     <div class="form-group">
         <label for="eos-chain-id">
             <strong>发送交易</strong>
         </label>
         <textarea id="send-message" class="form-control" rows="10" ></textarea>
     </div>
-
     <div class="form-group">
         <button id="send" class="btn btn-success" data-clipboard-target="#signed-message" onclick="sendTrasctioin()">发送已签名报文|Send signed trasaction</button>
         <!--<button id="close" class="btn btn-danger" onclick="window.close()">关闭页面|Close Page</button>-->
     </div>
-
     <!-- 1、引入相关的 clipboard 文件  -->
     <script src="js/clipboard.min.js"></script>
     <script src="js/eos.js" type="text/javascript"></script>
-
     <script type="text/javascript">
         // 2、实例化（参数内是要触发事件源对象元素）
         new Clipboard('.btn');
         let {ecc} = Eos.modules;
-
         let nodeAddress = 'https://mainnet.genereos.io';
         config = {
            httpEndpoint: nodeAddress,
             expireInSeconds: 60,
             chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
         };
-
         eos = Eos.Testnet(config);
 
         //初始化
         getInfo()
-
-        function getBlock(data) {
+        function getBlock(data ,exp) {
             console.log('==============get block==================');
             eos.getBlock({"block_num_or_id":data}).then(( res , err)=> {
-                 document.getElementById('signed-message').value = `{"ref_block_prefix":${res.ref_block_prefix},"ref_block_num":${data}}`
+                 document.getElementById('signed-message').value = `{"ref_block_prefix":${res.ref_block_prefix},"ref_block_num":${data},"expiration":${exp}`
              });
         }
-
         function getInfo() {
             console.log('==============get info==================');
             eos.getInfo((err,res)=> {
-                let data = res.head_block_num
-                getBlock(data)
+                let data = res.head_block_num  - 3 & 0xFFFF;
+
+                var exp = getExpiration(res)
+                getBlock(data , exp)
             });
+        }
+
+        function getExpiration(info){
+            var expireInSeconds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 60;
+            var chainDate = new Date(info.head_block_time + 'Z');
+            var expiration = new Date(chainDate.getTime() + expireInSeconds * 1000);
+            expiration = expiration.toISOString().split('.')[0]
+            return expiration
         }
 
         //发送报文
