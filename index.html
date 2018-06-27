@@ -12,7 +12,7 @@
     <div class="text-center">
         <img height=150px src="resource/img/eoslogo.png">
     </div>
-    <h1 class="text-center" style='padding-top:30px'>EOS 在线交易工具</h1>
+    <h1 class="text-center" style='padding-top:30px'>EOS 交易签名发送工具</h1>
     <section id="alerts">
         <div class="alert alert-warning" role="alert">
             此页面在线使用，将下方信息粘贴至离线工具中。
@@ -62,7 +62,12 @@
         function getBlock(data ,exp) {
             console.log('==============get block==================');
             eos.getBlock({"block_num_or_id":data}).then(( res , err)=> {
-                 document.getElementById('signed-message').value = `{"ref_block_prefix":${res.ref_block_prefix},"ref_block_num":${data},"expiration":${exp}`
+            let newData ={
+                ref_block_prefix:res.ref_block_prefix,
+                ref_block_num: data,
+                expiration:exp
+            }
+             document.getElementById('signed-message').value = JSON.stringify(newData)
              });
         }
         function getInfo() {
@@ -70,7 +75,7 @@
             eos.getInfo((err,res)=> {
                 let data = res.head_block_num  - 3 & 0xFFFF;
 
-                var exp = getExpiration(res)
+                var exp = getExpiration(res)+""
                 getBlock(data , exp)
             });
         }
