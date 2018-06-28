@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>EOS Tool  | EOSCannon 出品</title>
+    <link rel="shortcut icon" type="image/x-icon" href="resource/eoscannon.ico">
+    <link rel="stylesheet" href="resource/bootstrap.min.css">
+</head>
+
+<body class="container">
+    <div class="text-center">
+        <img height=150px src="resource/img/eoslogo.png">
+    </div>
+    <h1 class="text-center" style='padding-top:30px'>EOS 交易签名发送工具</h1>
+    <section id="alerts">
+        <div class="alert alert-warning" role="alert">
+            此页面在线使用，将下方信息粘贴至EOSCannon离线签名工具中。
+        </div>
+    </section>
+    <div class="form-group">
+        <label for="eos-chain-id">
+            <strong>EOS区块高度 </strong>
+        </label>
+        <textarea id="signed-message" class="form-control" rows="3" readonly=true></textarea>
+    </div>
+    <div class="form-group">
+        <button id="copy" class="btn btn-success" data-clipboard-target="#signed-message">复制初始化信息|Copy inital message</button>
+    </div>
+    <br>
+    <br>
+    <section>
+        <div class="alert alert-warning" role="alert">
+            下方粘贴已签名的交易报文，并发送
+        </div>
+    </section>
+    <div class="form-group">
+        <label for="eos-chain-id">
+            <strong>发送交易</strong>
+        </label>
+        <textarea id="send-message" class="form-control" rows="10" ></textarea>
+    </div>
+    <div class="form-group">
+        <button id="send" class="btn btn-success" data-clipboard-target="#signed-message" onclick="sendTrasctioin()">发送已签名报文|Send signed trasaction</button>
+        <!--<button id="close" class="btn btn-danger" onclick="window.close()">关闭页面|Close Page</button>-->
+    </div>
+    <!-- 1、引入相关的 clipboard 文件  -->
+    <script src="js/clipboard.min.js"></script>
+    <script src="js/eos.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        // 2、实例化（参数内是要触发事件源对象元素）
+        new Clipboard('.btn');
+        let {ecc} = Eos.modules;
+        let nodeAddress = 'http://13.251.3.82:8888';
+        config = {
+            keyProvider : "5Hxywfg6SpF1Sfs9sbmNWHf85ToHnYCAWQXpwYtX68vC9wWu4h5",
+           httpEndpoint: nodeAddress,
+            expireInSeconds: 60,
+            chainId: 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
+        };
+        eos = Eos.Testnet(config);
+
+        //初始化
+        getstr()
+        function getstr(){
+            const expireInSeconds = 60 * 60; // 1 hour
+            eos.getInfo({}).then((info)=>{
+                const chainDate = new Date(`${info.head_block_time}Z`);
+                const expiration = new Date(chainDate.getTime() + expireInSeconds * 1000);
+                const expirationStr = expiration.toISOString().split('.')[0];
+                const refBlockNum = info.last_irreversible_block_num & 0xffff;
+                    eos.getBlock(info.last_irreversible_block_num).then(block => {
+                    const refBlockPrefix = block.ref_block_prefix;
+                        const transactionHeaders = {
+                            expiration: expirationStr,
+                            ref_block_num: refBlockNum,
+                            ref_block_prefix: refBlockPrefix,
+                        };
+                        document.getElementById('signed-message').value = JSON.stringify(transactionHeaders)
+                     });
+                });
+        };
+        function pushTra(tra){
+            const eos = EOS({ httpEndpoint: 'http://13.251.3.82:8888' });
+            console.log(tra);
+            eos.pushTransaction(tra).then(res => {
+                console.log(res);
+            });
+        };
+
+        //发送报文
+
+        function sendTrasctioin(){
+            var signed = document.getElementById('send-message').value;
+            var content =JSON.parse(signed)
+            eos.pushTransaction(content).then((res , err) => {
+                console.log('res:',res);
+                console.log("Err:",err);
+                alert("发送报文成功")
+             }).catch(()=>{
+                alert("报文错误")
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
