@@ -50,7 +50,7 @@
     <script type="text/javascript">
         // 2、实例化（参数内是要触发事件源对象元素）
         new Clipboard('.btn');
-        const httpEndpoint = 'https://mainnet.eoscannon.io';
+        const httpEndpoint = 'https://api.eoseco.com';
         const chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
         config = {
             httpEndpoint,
@@ -86,7 +86,7 @@
                 alert("发送报文成功")
              }).catch((err) => {
                 console.log("Err:",err);
-                alert("报文错误")
+                alert(err.message)
             });
         }
 
