@@ -60,7 +60,8 @@
         eos = Eos.Testnet(config);
 
         //初始化
-        setInterval( getstr() , 3600000)
+        getstr()
+        setInterval( "getstr()" , 60000)
         function getstr(){
             const expireInSeconds = 60 * 60; // 1 hour
             eos.getInfo({}).then((info)=>{
