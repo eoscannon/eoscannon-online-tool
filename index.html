@@ -15,7 +15,7 @@
     <h1 class="text-center" style='padding-top:30px'>EOS 交易签名发送工具</h1>
     <section id="alerts">
         <div class="alert alert-warning" role="alert">
-            此页面在线使用，将下方信息粘贴至离线工具中。
+            此页面在线使用，将下方信息粘贴至EOSCannon离线签名工具中。
         </div>
     </section>
     <div class="form-group">
@@ -27,6 +27,8 @@
     <div class="form-group">
         <button id="copy" class="btn btn-success" data-clipboard-target="#signed-message">复制初始化信息|Copy inital message</button>
     </div>
+    <br>
+    <br>
     <section>
         <div class="alert alert-warning" role="alert">
             下方粘贴已签名的交易报文，并发送
@@ -43,64 +45,56 @@
         <!--<button id="close" class="btn btn-danger" onclick="window.close()">关闭页面|Close Page</button>-->
     </div>
     <!-- 1、引入相关的 clipboard 文件  -->
-    <script src="js/clipboard.min.js"></script>
-    <script src="js/eos.js" type="text/javascript"></script>
+    <script src="./js/clipboard.min.js"></script>
+    <script src="./lib/eos.js" type="text/javascript"></script>
     <script type="text/javascript">
         // 2、实例化（参数内是要触发事件源对象元素）
         new Clipboard('.btn');
-        let {ecc} = Eos.modules;
-        let nodeAddress = 'https://mainnet.genereos.io';
+        const httpEndpoint = 'https://api.eoseco.com';
+        const chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
         config = {
-           httpEndpoint: nodeAddress,
-            expireInSeconds: 60,
-            chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+            httpEndpoint,
+            chainId,
         };
-        eos = Eos.Testnet(config);
+        const eos = Eos(config);
 
-        //初始化
-        getInfo()
-        function getBlock(data ,exp) {
-            console.log('==============get block==================');
-            eos.getBlock({"block_num_or_id":data}).then(( res , err)=> {
-            let newData ={
-                ref_block_prefix:res.ref_block_prefix,
-                ref_block_num: data,
-                expiration:exp
-            }
-             document.getElementById('signed-message').value = JSON.stringify(newData)
-             });
-        }
-        function getInfo() {
-            console.log('==============get info==================');
-            eos.getInfo((err,res)=> {
-                let data = res.head_block_num  - 3 & 0xFFFF;
-
-                var exp = getExpiration(res)+""
-                getBlock(data , exp)
-            });
-        }
-
-        function getExpiration(info){
-            var expireInSeconds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 60;
-            var chainDate = new Date(info.head_block_time + 'Z');
-            var expiration = new Date(chainDate.getTime() + expireInSeconds * 1000);
-            expiration = expiration.toISOString().split('.')[0]
-            return expiration
-        }
+        //获取初始化信息
+        function getstr(){
+            const expireInSeconds = 60 * 60; // 1 hour
+            eos.getInfo({}).then((info) => {
+                const chainDate = new Date(`${info.head_block_time}Z`);
+                const expiration = new Date(chainDate.getTime() + expireInSeconds * 1000);
+                const expirationStr = expiration.toISOString().split('.')[0];
+                const refBlockNum = info.last_irreversible_block_num & 0xffff;
+                eos.getBlock(info.last_irreversible_block_num).then(block => {
+                    const refBlockPrefix = block.ref_block_prefix;
+                        const transactionHeaders = {
+                            expiration: expirationStr,
+                            ref_block_num: refBlockNum,
+                            ref_block_prefix: refBlockPrefix,
+                        };
+                        document.getElementById('signed-message').value = JSON.stringify(transactionHeaders);
+                     });
+                });
+        };
 
         //发送报文
-
         function sendTrasctioin(){
             var signed = document.getElementById('send-message').value;
-            var content =JSON.parse(signed)
-            eos.pushTransaction(content).then((res , err) => {
+            eos.pushTransaction(JSON.parse(signed)).then((res) => {
                 console.log('res:',res);
+                alert("发送报文成功")
+             }).catch((err) => {
                 console.log("Err:",err);
-                alert("发送成功")
-             }).catch(()=>{
-                alert("发送失败")
+                alert(err.message)
             });
         }
+
+        // 启动
+        getstr();
+        setInterval(() => {
+            getstr();
+        }, 60000);
 
     </script>
 
