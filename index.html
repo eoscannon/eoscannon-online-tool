@@ -45,26 +45,23 @@
         <!--<button id="close" class="btn btn-danger" onclick="window.close()">关闭页面|Close Page</button>-->
     </div>
     <!-- 1、引入相关的 clipboard 文件  -->
-    <script src="js/clipboard.min.js"></script>
-    <script src="js/eos.js" type="text/javascript"></script>
+    <script src="./js/clipboard.min.js"></script>
+    <script src="./lib/eos.js" type="text/javascript"></script>
     <script type="text/javascript">
         // 2、实例化（参数内是要触发事件源对象元素）
         new Clipboard('.btn');
-        let {ecc} = Eos.modules;
-        let nodeAddress = 'http://13.251.3.82:8888';
+        const httpEndpoint = 'https://mainnet.eoscannon.io';
+        const chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
         config = {
-            httpEndpoint: nodeAddress,
-            expireInSeconds: 60,
-            chainId: 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
+            httpEndpoint,
+            chainId,
         };
-        eos = Eos.Testnet(config);
+        const eos = Eos(config);
 
-        //初始化
-        getstr()
-        setInterval( "getstr()" , 60000)
+        //获取初始化信息
         function getstr(){
             const expireInSeconds = 60 * 60; // 1 hour
-            eos.getInfo({}).then((info)=>{
+            eos.getInfo({}).then((info) => {
                 const chainDate = new Date(`${info.head_block_time}Z`);
                 const expiration = new Date(chainDate.getTime() + expireInSeconds * 1000);
                 const expirationStr = expiration.toISOString().split('.')[0];
@@ -76,31 +73,28 @@
                             ref_block_num: refBlockNum,
                             ref_block_prefix: refBlockPrefix,
                         };
-                        document.getElementById('signed-message').value = JSON.stringify(transactionHeaders)
+                        document.getElementById('signed-message').value = JSON.stringify(transactionHeaders);
                      });
                 });
         };
-        function pushTra(tra){
-            const eos = EOS({ httpEndpoint: nodeAddress });
-            console.log(tra);
-            eos.pushTransaction(tra).then(res => {
-                console.log(res);
-            });
-        };
 
         //发送报文
-
         function sendTrasctioin(){
             var signed = document.getElementById('send-message').value;
-            var content =JSON.parse(signed)
-            eos.pushTransaction(content).then((res , err) => {
+            eos.pushTransaction(JSON.parse(signed)).then((res) => {
                 console.log('res:',res);
-                console.log("Err:",err);
                 alert("发送报文成功")
-             }).catch(()=>{
+             }).catch((err) => {
+                console.log("Err:",err);
                 alert("报文错误")
             });
         }
+
+        // 启动
+        getstr();
+        setInterval(() => {
+            getstr();
+        }, 60000);
 
     </script>
 
