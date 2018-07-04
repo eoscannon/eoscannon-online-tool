@@ -69,6 +69,6 @@ function init() {
   // 获取初始化信息，将其赋值到信息框中
   getInitJson();
   // 定时更新初始化信息
-  setInterval(() => {getstr();}, 60000);
+  setInterval(() => {getInitJson();}, 60000);
 }
 window.onload = init;
