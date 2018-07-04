@@ -48,17 +48,12 @@ var qrcode = new QRCode(document.getElementById("qrcode"), {
 
 function makeCode () {
   var elText = document.getElementById("signed-message").value;
-  console.log('elText:',elText)
-
-
   qrcode.makeCode(elText);
 }
 
-
-
 $("#signed-message").
-change(function () {
-  makeCode();
+  change(function () {
+    makeCode();
 })
 
 function init() {
