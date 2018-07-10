@@ -1,6 +1,6 @@
 let eos = null;
 function getEos() {
-  const httpEndpoint = 'https://api.eoseco.com';
+  const httpEndpoint = 'https://mainnet.eoscannon.io';
   const chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
   const config = {
     httpEndpoint,
@@ -42,14 +42,16 @@ function pushTransaction(){
 }
 
 var qrcode = new QRCode(document.getElementById("qrcode"), {
-  width : 100,
-  height : 100
+  width : 300,
+  height : 300
 });
 
 function makeCode () {
   var elText = document.getElementById("signed-message").value;
   qrcode.makeCode(elText);
 }
+
+
 
 $("#signed-message").
   change(function () {

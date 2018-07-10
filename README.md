@@ -1,86 +1,36 @@
-# EOS 离线投票工具 | EOS Offline Voting Tool | EOSeco出品
+# EOS佳能离线工具
+## 工具简介：
+EOS佳能离线工具是由EOS佳能主导，为保护数字货币投资者安全交易而开发的工具。
 
-## EOSeco 超级节点账户 | BPC account name ：eosecoeoseco
+目前工具提供**质押/解质押、设置代理、转账**等功能。工具仍在完善中，欢迎提供建议。
 
-EOS 已经上线，但是很多用户苦于没有放心的钱包不能投票。EOSeco 推出了离线投票工具，可以完全在离线的环境下使用，保证用户私钥的安全。整个投票流程分为3个步骤：
+免责声明：该工具仅供学习、交流，不对使用过程中产生的收益、损失负责，请知悉。
 
-EOS Offline Voting Tool can be use offline for safty reason.
+## 使用方法：
+准备两台设备：离线设备、联网设备；已安装node环境，node安装：[https://nodejs.org/zh-cn/](https://nodejs.org/zh-cn/)
+##### 首先：使用离线设备
+1. 下载项目，打开控制台
+2. cd 项目根目录
+3. npm install
+4. npm start
+5. 在浏览器地址栏输入：[http://localhost:3000](http://localhost:3000)
+##### 然后：使用联网设备
+1. 打开 [https://tool.eoscannon.io/](https://tool.eoscannon.io/)
+2. 点击 **复制初始化信息** 按钮
+3. ![image](https://raw.githubusercontent.com/eoscannon/EosCannon-Offline-Tools/master/docs/stepImg/1.1.jpeg)
+##### 然后：使用离线设备
+1. 打开[http://localhost:3000](http://localhost:3000)，选择想要进行的操作页面
+2. 在json字段输入框，输入已复制的初始化信息
+3. ![image](https://raw.githubusercontent.com/eoscannon/EosCannon-Offline-Tools/master/docs/stepImg/2.1.jpeg)
+4. 按照提示输入生成签名报文所需的字段
+5. 点击 **生成签名报文** 按钮，生成的签名报文会自动填充在下面的输入框中。
+6. ![image](https://raw.githubusercontent.com/eoscannon/EosCannon-Offline-Tools/master/docs/stepImg/2.2.jpeg)
+7. 点击 **复制签名报文** 按钮，或扫描二维码，获取签名报文。
+8. ![image](https://raw.githubusercontent.com/eoscannon/EosCannon-Offline-Tools/master/docs/stepImg/2.3.jpeg)
+##### 最后：使用联网设备
+1. 在[https://tool.eoscannon.io/](https://tool.eoscannon.io/)页面的发送交易输入框粘贴已复制的签名报文
+2. 点击 **发送已签名报文** 按钮
+3. ![image](https://raw.githubusercontent.com/eoscannon/EosCannon-Offline-Tools/master/docs/stepImg/1.2.jpeg)
+4. 根据提示确认是否交易成功
 
-## 1 生成交易 | Generate Transaction
-
-这个步骤需要在线完成。
-
-This step go online.
-
-如果你不知道你的EOS账户名，请访问：[映射查询](https://explorer.eoseco.com/snapshots)查询用户名。
-
-If you do not know your EOS account name , please go to [Snapshot query](https://explorer.eoseco.com/snapshots).
-
-
-访问 EOSeco区块链浏览器的投票界面：
-[EOSeco投票排行](https://explorer.eoseco.com/voting)
-
-Visit EOSeco explorer voting page :
-[EOSeco Voting](https://explorer.eoseco.com/voting)
-
-![投票界面](resource/img/1.jpg)
-
-勾选希望投票的超级节点，默认会把EOSeco勾选上，如果你一定不投我们的话，可以取消勾选，最多不能选择超过30个。
-
-click BPCs you want, no more than 30.
-
-![投票界面](resource/img/2.jpg)
-然后输入你的用户名，点击生成交易，然后点击复制待签名交易。这里设定该交易报文的失效时间为半小时，应该足够用户进行操作了。
-
-Input your account name , click to generate transaction, and copy it.
-
-## 2 签名交易 | Signing Transaction
-
-这个步骤需要用到私钥，强烈建议离线完成。
-
-This step need private key, strongly recommend offline operation.
-
-下载最新版本的EOSeco [离线签名工具](https://github.com/EOSeco-team/eos-local-voting-page/archive/v0.5.zip)。
-
-Download latest version of  [Offline Signing Tool](https://github.com/EOSeco-team/eos-local-voting-page/archive/v0.5.zip).
-
-MD5:487c9d18bd5940d74adae32623596b94
-
-![签名界面](resource/img/3.jpg)
-
-将第一步中生成的待签名交易报文复制进来，确认账户正确，**确保"合约“是 "eosio“，确保"功能“是 "voteproducer“**，然后输入私钥，点击签名交易报文。
-
-Paste unsigned transaction in step #1, make sure account name is right, **make sure "Contract" is "eosio" , make sure "Function" is "voteproducer"** , then type in private key and click Sign Transaction.
-
-![签名界面](resource/img/4.jpg)
-
-点击将已签名交易复制出来。到这一步唯一使用私钥的场景完毕，你可以关闭页面，重新上网。
-
-Copy signed transaction, and close page. Now you can go online.
-
-## 3 发送报文 | Send Transaction
-
-访问 EOSeco区块链浏览器的发送报文界面：
-[EOSeco发送交易](https://explorer.eoseco.com/sending)
-
-Visit EOSeco explorer sending page:
-[EOSeco Sending](https://explorer.eoseco.com/sending)
-
-将第二步签名好的交易复制进来，点击发送。
-
-Paste signd transaction, and click send transaction.
-
-![发送界面](resource/img/6.jpg)
-
-
-不出意外你就可以在EOSeco浏览器查看你的账号，是不是投票成功了。
-
-Now you can see your voting transaction.
-
-![用户界面](resource/img/5.jpg)
-
-
-希望大家能够帮忙宣传 EOSeco 生态区，我们深度参与了EOS主网启动，以后也会持续为社区做贡献。
-
-Hope you guys vote us , EOSeco.
-
+特别鸣谢：EOSeco 提供帮助
