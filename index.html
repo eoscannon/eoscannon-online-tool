@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/index.css">
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="./resource/qrcode.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body class="container">
@@ -21,34 +22,101 @@
             此页面在线使用，将下方信息粘贴至EOSCannon离线签名工具中。
         </div>
     </section>
-    <div class="form-group">
-        <div id="qrcode" style="width:11rem;  margin:0 auto;"></div>
-        <label for="eos-chain-id">
-            <strong>EOS区块高度 </strong>
-        </label>
-        <textarea id="signed-message" class="form-control" rows="3" readonly=true></textarea>
+    <!--tab栏-->
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active">
+            <a href="#home" data-toggle="tab" onclick='doMain()'>主网</a>
+        </li>
+        <li>
+            <a href="#ios" data-toggle="tab" onclick='initTest()'>测试网</a>
+        </li>
+    </ul>
+    <!--tab内容-->
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane  in active" id="home">
+            <div class="form-group">
+                <div id="qrcode"></div>
+                <label for="eos-chain-id">
+                    <strong>EOS区块高度 </strong>
+                </label>
+                <textarea id="signed-message" class="form-control" rows="3" readonly=true></textarea>
+            </div>
+            <div class="form-group">
+                <button id="copy" class="btn btn-success" data-clipboard-target="#signed-message">复制初始化信息|Copy inital message</button>
+            </div>
+            <br>
+            <br>
+            <section>
+                <div class="alert alert-warning" role="alert">下方粘贴已签名的交易报文，并发送</div>
+            </section>
+            <div class="form-group">
+                <label for="eos-chain-id">
+                    <strong>发送交易</strong>
+                </label>
+                <textarea id="send-message" class="form-control" rows="10" ></textarea>
+            </div>
+            <div class="form-group">
+                <button id="send" class="btn btn-success" data-clipboard-target="#signed-message" onclick="pushTransaction()">发送已签名报文|Send signed trasaction</button>
+            </div>
+        </div>
+
+
+
+        <div class="tab-pane" id="ios">
+            <form class="bs-example bs-example-form" role="form">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder='请输入测试网chainId' id='chainIdTest'>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder='请输入测试网节点url' id='nodeUrlTest'>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+            </form>
+            <div class="form-group">
+                <div id="qrcodeTest" ></div>
+                <label for="eos-chain-id">
+                    <strong>EOS区块高度 </strong>
+                </label>
+                <textarea id="signed-messageTest" class="form-control" rows="3" readonly=true></textarea>
+            </div>
+            <div class="form-group">
+                <button id="getExpTest" class="btn btn-success" onclick='dealTest()'>生成初始化信息</button>
+                <button id="copyTest" class="btn btn-success" data-clipboard-target="#signed-messageTest">复制初始化信息|Copy inital message</button>
+            </div>
+            <br>
+            <br>
+            <section>
+                <div class="alert alert-warning" role="alert">下方粘贴已签名的交易报文，并发送</div>
+            </section>
+            <div class="form-group">
+                <label for="eos-chain-id">
+                    <strong>发送交易</strong>
+                </label>
+                <textarea id="send-messageTest" class="form-control" rows="10" ></textarea>
+            </div>
+            <div class="form-group">
+                <button id="sendTest" class="btn btn-success" data-clipboard-target="#signed-message" onclick="pushTransaction()">发送已签名报文|Send signed trasaction</button>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <button id="copy" class="btn btn-success" data-clipboard-target="#signed-message">复制初始化信息|Copy inital message</button>
-    </div>
-    <br>
-    <br>
-    <section>
-        <div class="alert alert-warning" role="alert">下方粘贴已签名的交易报文，并发送</div>
-    </section>
-    <div class="form-group">
-        <label for="eos-chain-id">
-            <strong>发送交易</strong>
-        </label>
-        <textarea id="send-message" class="form-control" rows="10" ></textarea>
-    </div>
-    <div class="form-group">
-        <button id="send" class="btn btn-success" data-clipboard-target="#signed-message" onclick="pushTransaction()">发送已签名报文|Send signed trasaction</button>
-    </div>
+
     <!-- 1、引入相关的 clipboard 文件  -->
     <script src="./js/clipboard.min.js"></script>
     <script src="./js/lib/eos.js" type="text/javascript"></script>
     <script src="./js/index.js" type="text/javascript"></script>
+    <script>
+        $(function () {
+            console.log("111")
+            $('#myTab li:eq(0) a').tab('show');
+        });
+    </script>
 </body>
 
 </html>
