@@ -1,3 +1,27 @@
 #qrcode img{
-    width: 11rem;
+    display: table;
+    margin: 0 auto;
+}
+#qrcodeTest img{
+    display: table;
+    margin: 0 auto;
+}
+ul li{
+    padding-right: 1.4rem;
+}
+#myTab{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    background: #000;
+    padding: .5rem;
+}
+#myTab li a{
+    color: #fff;
+}
+.input-group{
+    margin:1rem 0;
+}
+#qrcode{
+    padding-top:1rem;
 }
