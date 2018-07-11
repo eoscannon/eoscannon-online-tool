@@ -25,3 +25,6 @@ ul li{
 #qrcode{
     padding-top:1rem;
 }
+.row{
+    justify-content: center;
+}

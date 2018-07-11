@@ -22,8 +22,9 @@ function getInitJson(){
       const refBlockPrefix = block.ref_block_prefix;
       const transactionHeaders = {
         expiration: expirationStr,
-        ref_block_num: refBlockNum,
-        ref_block_prefix: refBlockPrefix,
+        refBlockNum: refBlockNum,
+        refBlockPrefix: refBlockPrefix,
+        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
       };
       document.getElementById('signed-message').value = JSON.stringify(transactionHeaders);
       makeCode();
@@ -103,8 +104,9 @@ function getInitJsonTest(){
       let refBlockPrefix = block.ref_block_prefix;
       let transactionHeaders = {
         expiration: expirationStr,
-        ref_block_num: refBlockNum,
-        ref_block_prefix: refBlockPrefix,
+        refBlockNum: refBlockNum,
+        refBlockPrefix: refBlockPrefix,
+        chainId: document.getElementById('chainIdTest').value
       };
       document.getElementById('signed-messageTest').value = JSON.stringify(transactionHeaders);
       makeCodeTest();
@@ -120,6 +122,7 @@ function getInitJsonTest(){
 //发送报文
 function pushTransactionTest(){
   var signed = document.getElementById('send-messageTest').value;
+  console.log("signed:",JSON.parse(signed))
   eos.pushTransaction(JSON.parse(signed)).then((res) => {
     alert('发送报文成功');
   }).catch((err) => {
