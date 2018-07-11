@@ -112,8 +112,6 @@ function getInitJsonTest(){
       makeCodeTest();
     });
   }).catch((err)=>{
-    "use strict";
-    console.log('请求失败')
     alert('请求失败')
     return
   });
@@ -122,7 +120,6 @@ function getInitJsonTest(){
 //发送报文
 function pushTransactionTest(){
   var signed = document.getElementById('send-messageTest').value;
-  console.log("signed:",JSON.parse(signed))
   eos.pushTransaction(JSON.parse(signed)).then((res) => {
     alert('发送报文成功');
   }).catch((err) => {
