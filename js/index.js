@@ -60,9 +60,8 @@ $("#signed-message").change(function () {
 function doMain(){
   window.clearInterval(initTest)
   init()
-  console.log('$===',$)
-  $('#home').css('color','red')
-  $('#ios').css('color','#fff')
+  $('#myTab li:first-child a').css('color','yellow')
+  $('#myTab li:last-child a').css('color','#fff')
 }
 
 function init() {
@@ -74,6 +73,7 @@ function init() {
   getInitJson();
   // 定时更新初始化信息
   setInterval(() => {getInitJson();}, 60000);
+  $('#myTab li:first-child a').css('color','yellow')
 }
 window.onload = init;
 
@@ -87,8 +87,6 @@ function getEosTest() {
     chainId,
   };
   eos = Eos(config);
-  console.log("httpEndpoint==", httpEndpoint )
-  console.log("chainId==", chainId )
 }
 
 //获取初始化信息
@@ -145,7 +143,6 @@ $("#signed-messageTest").change(function () {
 function initTest() {
   // 按钮添加复制到剪贴板功能
   new Clipboard('.btn');
-
   document.getElementById('chainIdTest').value = 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
   document.getElementById('nodeUrlTest').value = 'http://13.251.3.82:8888'
   //执行剩余操作
@@ -153,9 +150,8 @@ function initTest() {
 
 }
 function dealTest(){
-
-  $('#ios').css('color','red')
-  $('#home').css('color','#fff')
+  $('#myTab li:first-child a').css('color','#fff')
+  $('#myTab li:last-child a').css('color','yellow')
   window.clearInterval(init)
   // 获取EOS
   getEosTest();
