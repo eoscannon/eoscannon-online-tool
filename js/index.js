@@ -79,9 +79,9 @@ window.onload = init;
 
 
 //测试网方法
-function getEosTest() {
+function getEosTest(data) {
   let httpEndpoint = document.getElementById('nodeUrlTest').value;
-  let chainId = document.getElementById('chainIdTest').value;
+  let chainId = data.chain_id;
   let config = {
     httpEndpoint,
     chainId,
@@ -98,13 +98,14 @@ function getInitJsonTest(){
     let expiration = new Date(chainDate.getTime() + expireInSeconds * 1000);
     let expirationStr = expiration.toISOString().split('.')[0];
     let refBlockNum = info.last_irreversible_block_num & 0xffff;
+    let chainId = info.chain_id;
     eos.getBlock(info.last_irreversible_block_num).then(block => {
       let refBlockPrefix = block.ref_block_prefix;
       let transactionHeaders = {
         expiration: expirationStr,
         refBlockNum: refBlockNum,
         refBlockPrefix: refBlockPrefix,
-        chainId: document.getElementById('chainIdTest').value
+        chainId: chainId
       };
       document.getElementById('signed-messageTest').value = JSON.stringify(transactionHeaders);
       makeCodeTest();
@@ -143,8 +144,8 @@ $("#signed-messageTest").change(function () {
 function initTest() {
   // 按钮添加复制到剪贴板功能
   new Clipboard('.btn');
-  document.getElementById('chainIdTest').value = 'cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f'
-  document.getElementById('nodeUrlTest').value = 'http://13.251.3.82:8888'
+  //document.getElementById('chainIdTest').value = '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca'
+  document.getElementById('nodeUrlTest').value = 'https://145.239.255.224'
   //执行剩余操作
   dealTest()
 
@@ -153,10 +154,17 @@ function dealTest(){
   $('#myTab li:first-child a').css('color','#fff')
   $('#myTab li:last-child a').css('color','yellow')
   window.clearInterval(init)
-  // 获取EOS
-  getEosTest();
-  // 获取初始化信息，将其赋值到信息框中
-  getInitJsonTest();
+  getChainId();
   // 定时更新初始化信息
   setInterval(() => {getInitJsonTest();}, 60000);
+}
+function getChainId(){
+
+  $.get(
+    "https://145.239.255.224/v1/chain/get_info",function(data,state){
+      //这里显示从服务器返回的数据 // 获取EOS
+      getEosTest(data);
+      // 获取初始化信息，将其赋值到信息框中
+      getInitJsonTest();
+    })
 }
