@@ -39,6 +39,7 @@
                 <div id="qrcode"></div>
                 <label for="eos-chain-id">
                     <strong>EOS区块高度 </strong>
+                    (chain_id:<span id="mainnet_chain"></span>)
                 </label>
                 <textarea id="signed-message" class="form-control" rows="3" readonly=true></textarea>
             </div>
@@ -64,25 +65,27 @@
 
 
         <div class="tab-pane" id="ios">
-            <form class="bs-example bs-example-form" role="form">
-
+            <!--<form class="bs-example bs-example-form" role="form">-->
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder='请输入测试网节点url' id='nodeUrlTest'>
+                            <button id="getExpTest" class="btn btn-success" onclick='dealTest()'>变更测试网</button>
+
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
                 </div><!-- /.row -->
-            </form>
+            <!--</form>-->
+
             <div class="form-group">
                 <div id="qrcodeTest" ></div>
                 <label for="eos-chain-id">
                     <strong>EOS区块高度 </strong>
+                   (chain_id:<span id="testnet_chain"></span>)
                 </label>
                 <textarea id="signed-messageTest" class="form-control" rows="3" readonly=true></textarea>
             </div>
             <div class="form-group">
-                <button id="getExpTest" class="btn btn-success" onclick='dealTest()'>生成初始化信息</button>
                 <button id="copyTest" class="btn btn-success" data-clipboard-target="#signed-messageTest">复制初始化信息|Copy inital message</button>
             </div>
             <br>
@@ -98,6 +101,7 @@
             </div>
             <div class="form-group">
                 <button id="sendTest" class="btn btn-success" data-clipboard-target="#signed-message" onclick="pushTransactionTest()">发送已签名报文|Send signed trasaction</button>
+                (transaction_id:<span class='transactionId'></span>)
             </div>
         </div>
     </div>

@@ -7,6 +7,7 @@ function getEos() {
     chainId,
   };
   eos = Eos(config);
+  $("#mainnet_chain").html('aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906');
 }
 
 
@@ -58,7 +59,7 @@ $("#signed-message").change(function () {
 })
 
 function doMain(){
-  window.clearInterval(initTest)
+  //window.clearInterval(initTest)
   init()
   $('#myTab li:first-child a').css('color','yellow')
   $('#myTab li:last-child a').css('color','#fff')
@@ -72,7 +73,7 @@ function init() {
   // 获取初始化信息，将其赋值到信息框中
   getInitJson();
   // 定时更新初始化信息
-  setInterval(() => {getInitJson();}, 60000);
+  //setInterval(() => {getInitJson();}, 60000);
   $('#myTab li:first-child a').css('color','yellow')
 }
 window.onload = init;
@@ -82,6 +83,7 @@ window.onload = init;
 function getEosTest(data) {
   let httpEndpoint = document.getElementById('nodeUrlTest').value;
   let chainId = data.chain_id;
+  $("#testnet_chain").html(data.chain_id);
   let config = {
     httpEndpoint,
     chainId,
@@ -120,10 +122,13 @@ function getInitJsonTest(){
 function pushTransactionTest(){
   var signed = document.getElementById('send-messageTest').value;
   eos.pushTransaction(JSON.parse(signed)).then((res) => {
-    alert('发送报文成功');
+    console.log('res:',res)
+    console.log('transaction_id:',res.transaction_id)
+    alert(`发送报文成功,请在页尾查看transaction_id=${res.transaction_id}`);
+    $(".transactionId").html(res.transaction_id)
   }).catch((err) => {
     console.log('Err:',err);
-    alert(err.message);
+    alert('发送失败.',err.message);
   });
 }
 
@@ -144,7 +149,7 @@ $("#signed-messageTest").change(function () {
 function initTest() {
   // 按钮添加复制到剪贴板功能
   new Clipboard('.btn');
-  document.getElementById('nodeUrlTest').value = 'https://145.239.255.224'
+  document.getElementById('nodeUrlTest').value = 'https://tool.eoscannon.io/jungle'
   //document.getElementById('nodeUrlTest').value = 'http://dev.cryptolions.io:38888'
   //执行剩余操作
   dealTest()
@@ -153,18 +158,26 @@ function initTest() {
 function dealTest(){
   $('#myTab li:first-child a').css('color','#fff')
   $('#myTab li:last-child a').css('color','yellow')
-  window.clearInterval(init)
+  //window.clearInterval(init)
   getChainId();
   // 定时更新初始化信息
-  setInterval(() => {getInitJsonTest();}, 60000);
+  //setInterval(() => {getInitJsonTest();}, 60000);
 }
 function getChainId(){
-  $.get(
-    document.getElementById('nodeUrlTest').value + "/v1/chain/get_info",function(data,state){
+  $.ajax({
+    url: document.getElementById('nodeUrlTest').value + "/v1/chain/get_info",
+    type: 'get',
+    success: function(data,state){
       console.log('state:',state)
       //这里显示从服务器返回的数据 // 获取EOS
       getEosTest(data);
-      // 获取初始化信息，将其赋值到信息框中
+      //// 获取初始化信息，将其赋值到信息框中
       getInitJsonTest();
-    })
+    },
+    error:function(){
+      alert("请求失败，请稍后重试！")
+    }
+  })
+
+    //.error(function() { alert("请求失败，请稍后再试"); })
 }
