@@ -19,6 +19,9 @@ ul li{
 #myTab li a{
     color: #fff;
 }
+.form-control{
+    margin-right: .2rem;
+}
 .input-group{
     margin:1rem 0;
 }
