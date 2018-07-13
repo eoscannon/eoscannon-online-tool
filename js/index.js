@@ -144,8 +144,8 @@ $("#signed-messageTest").change(function () {
 function initTest() {
   // 按钮添加复制到剪贴板功能
   new Clipboard('.btn');
-  //document.getElementById('chainIdTest').value = '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca'
   document.getElementById('nodeUrlTest').value = 'https://145.239.255.224'
+  //document.getElementById('nodeUrlTest').value = 'http://dev.cryptolions.io:38888'
   //执行剩余操作
   dealTest()
 
@@ -159,9 +159,9 @@ function dealTest(){
   setInterval(() => {getInitJsonTest();}, 60000);
 }
 function getChainId(){
-
   $.get(
-    "https://145.239.255.224/v1/chain/get_info",function(data,state){
+    document.getElementById('nodeUrlTest').value + "/v1/chain/get_info",function(data,state){
+      console.log('state:',state)
       //这里显示从服务器返回的数据 // 获取EOS
       getEosTest(data);
       // 获取初始化信息，将其赋值到信息框中
