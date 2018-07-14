@@ -37,7 +37,8 @@ function getInitJson(){
 function pushTransaction(){
   var signed = document.getElementById('send-message').value;
   eos.pushTransaction(JSON.parse(signed)).then((res) => {
-    alert('发送报文成功');
+    $(".transactionIdMain").html(res.transaction_id)
+    alert(`发送报文成功,请在页尾查看transaction_id=${res.transaction_id}`);
   }).catch((err) => {
     console.log('Err:',err);
     alert(err.message);
