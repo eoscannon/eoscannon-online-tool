@@ -31,3 +31,11 @@ ul li{
 .row{
     justify-content: center;
 }
+.alerts{
+    text-align: center;
+}
+.button{
+    background-color: #28a745!important;;
+    border: 0.1rem solid #28a745!important;;
+    color: #fff!important;
+}

@@ -37,7 +37,8 @@ function getInitJson(){
 function pushTransaction(){
   var signed = document.getElementById('send-message').value;
   eos.pushTransaction(JSON.parse(signed)).then((res) => {
-    alert('发送报文成功');
+    $(".transactionIdMain").html(res.transaction_id)
+    alert(`发送报文成功,请在页尾查看transaction_id=${res.transaction_id}`);
   }).catch((err) => {
     console.log('Err:',err);
     alert(err.message);
@@ -181,3 +182,58 @@ function getChainId(){
 
     //.error(function() { alert("请求失败，请稍后再试"); })
 }
+
+//扫描事件
+window.addEventListener('load', function () {
+  const codeReader = new ZXing.BrowserQRCodeReader()
+  codeReader.getVideoInputDevices()
+    .then((videoInputDevices) => {
+      const sourceSelect = document.getElementById('sourceSelect')
+      const firstDeviceId = videoInputDevices[0].deviceId
+      if (videoInputDevices.length > 1) {
+        videoInputDevices.forEach((element) => {
+          const sourceOption = document.createElement('option')
+          sourceOption.text = element.label
+          sourceOption.value = element.deviceId
+          sourceSelect.appendChild(sourceOption)
+        })
+
+        const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+        sourceSelectPanel.style.display = 'block'
+      }
+//正式网
+      document.getElementById('startButton').addEventListener('click', () => {
+        codeReader.reset()
+        console.log('Reset.')
+
+        codeReader.decodeFromInputVideoDevice(firstDeviceId, 'video').then((result) => {
+          console.log(result)
+          document.getElementById('send-message').textContent = result.text
+          $('#startButton').html('重新扫描')
+        }).catch((err) => {
+          console.error(err)
+          document.getElementById('send-message').textContent = err
+        })
+        console.log(`Started continous decode from camera with id ${firstDeviceId}`)
+      })
+//测试网
+      document.getElementById('startButtonTest').addEventListener('click', () => {
+        codeReader.reset()
+        console.log('Reset.')
+
+        codeReader.decodeFromInputVideoDevice(firstDeviceId, 'videoTest').then((result) => {
+          console.log(result)
+          $('#startButtonTest').html('重新扫描')
+          document.getElementById('send-messageTest').textContent = result.text
+        }).catch((err) => {
+          console.error(err)
+          document.getElementById('send-messageTest').textContent = err
+        })
+        console.log(`Started continous decode from camera with id ${firstDeviceId}`)
+      })
+
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+})
