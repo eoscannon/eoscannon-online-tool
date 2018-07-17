@@ -164,6 +164,7 @@ function dealTest(){
   // 定时更新初始化信息
   //setInterval(() => {getInitJsonTest();}, 60000);
 }
+
 function getChainId(){
   $.ajax({
     url: document.getElementById('nodeUrlTest').value + "/v1/chain/get_info",
@@ -179,8 +180,68 @@ function getChainId(){
       alert("请求失败，请稍后重试！")
     }
   })
+}
 
-    //.error(function() { alert("请求失败，请稍后再试"); })
+function search(){
+  console.log("signed====",$('.accountName').val())
+  var signed = $('.accountName').val();
+  eos.getAccount({'account_name': signed}).then(result => {
+    console.log(result);
+    let time = filterTime(result.created)
+    $('.createdTime').html(time)
+    $('.Cpu').html(result.total_resources.cpu_weight)
+    $('.network').html(result.total_resources.net_weight)
+    if(result.voter_info){
+      $('.mortgage').html(result.voter_info.staked / 10000)
+    }
+    if(result.voter_info && result.voter_info.producers){
+      let producer = ''
+      for(let i=0;i<result.voter_info.producers.length;i++){
+        producer += result.voter_info.producers[i]
+      }
+      $('.node_done').html(producer)
+    }
+
+  }).catch((err) => {
+    console.log('Err:',err);
+    alert('发送失败.',err.message);
+  });
+}
+function searchTest(){
+  console.log("signed====",$('.accountNameTest').val())
+  var signed = $('.accountNameTest').val();
+  eos.getAccount({'account_name': signed}).then(result => {
+    console.log(result);
+    let time = filterTime(result.created)
+    $('.createdTimeTest').html(time)
+    $('.CpuTest').html(result.total_resources.cpu_weight)
+    $('.networkTest').html(result.total_resources.net_weight)
+    if(result.voter_info){
+      $('.mortgageTest').html(result.voter_info.staked / 10000)
+    }
+    if(result.voter_info && result.voter_info.producers){
+      let producer = ''
+      for(let i=0;i<result.voter_info.producers.length;i++){
+        producer += result.voter_info.producers[i]
+      }
+      $('.node_done_test').html(producer)
+    }
+
+  }).catch((err) => {
+    console.log('Err:',err);
+    alert('发送失败.',err.message);
+  });
+}
+
+function filterTime(time){
+  let newTime = new Date(time)
+  let year = newTime.getFullYear()
+  let month = newTime.getMonth()<10? '0' + newTime.getMonth() : newTime.getMonth()
+  let day = newTime.getDay()<10? '0' + newTime.getDay() : newTime.getDay()
+  let hours = newTime.getHours()<10? '0' + newTime.getHours() : newTime.getHours()
+  let min = newTime.getMinutes()<10? '0' + newTime.getMinutes(): newTime.getMinutes()
+  let sec = newTime.getSeconds()<10? '0' + newTime.getSeconds(): newTime.getSeconds()
+  return year+'-'+month+'-'+day+' '+hours+':'+min+':'+sec
 }
 
 //扫描事件
@@ -209,7 +270,7 @@ window.addEventListener('load', function () {
         codeReader.decodeFromInputVideoDevice(firstDeviceId, 'video').then((result) => {
           console.log(result)
           document.getElementById('send-message').textContent = result.text
-          $('#startButton').html('重新扫描')
+          //$('#startButton').html('重新扫描')
         }).catch((err) => {
           console.error(err)
           document.getElementById('send-message').textContent = err
@@ -223,7 +284,7 @@ window.addEventListener('load', function () {
 
         codeReader.decodeFromInputVideoDevice(firstDeviceId, 'videoTest').then((result) => {
           console.log(result)
-          $('#startButtonTest').html('重新扫描')
+          //$('#startButtonTest').html('重新扫描')
           document.getElementById('send-messageTest').textContent = result.text
         }).catch((err) => {
           console.error(err)
