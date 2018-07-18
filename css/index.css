@@ -9,6 +9,14 @@
 ul li{
     padding-right: 1.4rem;
 }
+#langBox{
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    width: 12rem
+}
 #myTab{
     text-align: center;
     display: flex;
@@ -38,4 +46,43 @@ ul li{
     background-color: #28a745!important;;
     border: 0.1rem solid #28a745!important;;
     color: #fff!important;
+}
+select{
+    margin-bottom: 0!important;
+}
+button{
+    background-color: #28a745!important;;
+    border: 0.1rem solid #28a745!important;;
+    color: #fff!important;
+}
+.input-group{
+    align-items: center;
+}
+.content{
+    /*display: flex;*/
+    display: none;
+}
+.contentTest{
+    /*display: flex;*/
+    display: none;
+}
+.content .progress{
+    margin-right: 2rem;
+}
+.contentDetail{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.weight{
+    font-weight: 600;
+}
+button{
+    margin-bottom: 0!important;
+}
+.blockNone{
+    display: none;
+}
+.flexRight{
+    justify-content: right;
 }

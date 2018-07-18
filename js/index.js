@@ -164,6 +164,7 @@ function dealTest(){
   // 定时更新初始化信息
   //setInterval(() => {getInitJsonTest();}, 60000);
 }
+
 function getChainId(){
   $.ajax({
     url: document.getElementById('nodeUrlTest').value + "/v1/chain/get_info",
@@ -179,8 +180,150 @@ function getChainId(){
       alert("请求失败，请稍后重试！")
     }
   })
+}
 
-    //.error(function() { alert("请求失败，请稍后再试"); })
+function search(){
+  console.log("signed====",$('.accountName').val())
+  var signed = $('.accountName').val();
+  eos.getAccount({'account_name': signed}).then(result => {
+    console.log(result);
+    let time = filterTime(result.created)
+    $('.content').css('display','flex')
+    $('.createdTime').html(time)
+    $('.Cpu').html(result.total_resources.cpu_weight)
+    $('.network').html(result.total_resources.net_weight)
+    if(result.voter_info && result.voter_info.staked){
+      $('.mortgage').html(result.voter_info.staked / 10000+' EOS')
+    }else{
+      $('.mortgage').html('0 ' + $('.tokenName').val())
+    }
+    if(result.voter_info && result.voter_info.producers){
+      let producer = ''
+      for(let i=0;i<result.voter_info.producers.length;i++){
+        producer += result.voter_info.producers[i]
+      }
+      $('.node_done').html(producer)
+    }else{
+      $('.node_done').html('暂无')
+    }
+    if(result.cpu_limit){
+      let num = result.cpu_limit.used/1000 + ' ms/' +result.cpu_limit.max/1000+' ms'
+      let propotion = result.cpu_limit.used / result.cpu_limit.max
+      $('.Cpu_Proportion').html(num)
+
+    }
+    if(result.net_limit){
+      let netNum = result.net_limit.used + ' bytes/' +((result.net_limit.max/1024)/1024).toFixed(2)+' Mib'
+      $('.network_Proportion').html(netNum)
+    }
+    if(result.ram_usage && result.ram_usage){
+      let ramNum = (result.ram_usage/1024).toFixed(2)+' Kib/' + (result.ram_quota/1024).toFixed(2)+' Kib'
+      $('.memory_Proportion').html(ramNum)
+    }
+    if(result.refund_request){
+      $('.Cpu_back').html(result.refund_request.cpu_amount)
+      $('.net_back').html(result.refund_request.net_amount)
+    }else{
+      $('.Cpu_back').html('0 EOS')
+      $('.net_back').html('0 EOS')
+    }
+
+  }).catch((err) => {
+    console.log('Err:',err);
+    alert('发送失败.',err.message);
+  });
+  eos.getCurrencyBalance({
+    "code": $('.constractName').val(),
+    "account": signed,
+    "symbol": $('.tokenName').val(),
+  }).then((res)=> {
+    if(res[0]){
+      $('.balance').html(res[0])
+    }else{
+      $('.balance').html('0 ' + $('.tokenName').val())
+    }
+    // 4.1版本如果Balance为0,返回空数组
+    console.log(res);
+  }).catch((err)=>{
+    console.log('err:',err)
+    $('.balance').html('0 ' + $('.tokenName').val())
+  });
+}
+function searchTest(){
+  console.log("signed====",$('.accountNameTest').val())
+  var signed = $('.accountNameTest').val();
+  eos.getAccount({'account_name': signed}).then(result => {
+    console.log(result);
+    let time = filterTime(result.created)
+    $('.contentTest').css('display','flex')
+    $('.createdTimeTest').html(time)
+    $('.CpuTest').html(result.total_resources.cpu_weight)
+    $('.networkTest').html(result.total_resources.net_weight)
+    if(result.voter_info){
+      $('.mortgageTest').html(result.voter_info.staked / 10000 +' EOS')
+    }
+    if(result.voter_info && result.voter_info.producers){
+      let producer = ''
+      for(let i=0;i<result.voter_info.producers.length;i++){
+        producer += result.voter_info.producers[i]
+      }
+      $('.node_done_test').html(producer)
+    }else{
+      $('.node_done_test').html('暂无')
+    }
+    if(result.cpu_limit){
+      let num = result.cpu_limit.used/1000 + ' ms/' +result.cpu_limit.max/1000+' ms'
+      let propotion = result.cpu_limit.used / result.cpu_limit.max
+      $('.Cpu_ProportionTest').html(num)
+
+    }
+    if(result.net_limit){
+      let netNum = result.net_limit.used + ' bytes/' +((result.net_limit.max/1024)/1024).toFixed(2)+' Mib'
+      $('.network_ProportionTest').html(netNum)
+    }
+    if(result.ram_usage && result.ram_usage){
+      let ramNum = (result.ram_usage/1024).toFixed(2)+' Kib/' + (result.ram_quota/1024).toFixed(2)+' Kib'
+      $('.memory_ProportionTest').html(ramNum)
+    }
+    if(result.refund_request){
+      $('.Cpu_back_test').html(result.refund_request.cpu_amount)
+      $('.net_back_test').html(result.refund_request.net_amount)
+    }else{
+      $('.Cpu_back_test').html('0 EOS')
+      $('.net_back_test').html('0 EOS')
+    }
+  }).catch((err) => {
+    console.log('Err:',err);
+    alert('发送失败.',err.message);
+  });
+
+  eos.getCurrencyBalance({
+    "code": $('.constractNameTest').val(),
+    "account": signed,
+    "symbol": $('.tokenNameTest').val(),
+  }).then((res)=> {
+    if(res[0]){
+      $('.balanceTest').html(res[0])
+    }else{
+      $('.balanceTest').html('0 EOS')
+    }
+    // 4.1版本如果Balance为0,返回空数组
+    console.log(res);
+  }).catch((err)=>{
+    console.log('err:',err)
+    $('.balance').html('0 EOS')
+  });
+}
+
+function filterTime(time){
+  let newTime = new Date(time)
+  let year = newTime.getFullYear()
+  let month = newTime.getMonth()<10? '0' + newTime.getMonth() : newTime.getMonth()
+  let day = newTime.getDay()<10? '0' + newTime.getDay() : newTime.getDay()
+  let hours = newTime.getHours()<10? '0' + newTime.getHours() : newTime.getHours()
+  let min = newTime.getMinutes()<10? '0' + newTime.getMinutes(): newTime.getMinutes()
+  let sec = newTime.getSeconds()<10? '0' + newTime.getSeconds(): newTime.getSeconds()
+  return year+'-'+month+'-'+day+' '+hours+':'+min+':'+sec+' UTC'
 }
 
 //扫描事件
@@ -209,7 +352,7 @@ window.addEventListener('load', function () {
         codeReader.decodeFromInputVideoDevice(firstDeviceId, 'video').then((result) => {
           console.log(result)
           document.getElementById('send-message').textContent = result.text
-          $('#startButton').html('重新扫描')
+          //$('#startButton').html('重新扫描')
         }).catch((err) => {
           console.error(err)
           document.getElementById('send-message').textContent = err
@@ -223,7 +366,7 @@ window.addEventListener('load', function () {
 
         codeReader.decodeFromInputVideoDevice(firstDeviceId, 'videoTest').then((result) => {
           console.log(result)
-          $('#startButtonTest').html('重新扫描')
+          //$('#startButtonTest').html('重新扫描')
           document.getElementById('send-messageTest').textContent = result.text
         }).catch((err) => {
           console.error(err)
