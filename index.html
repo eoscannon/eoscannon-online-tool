@@ -89,54 +89,88 @@
                 <textarea id="send-message" class="form-control" rows="10" ></textarea>
             </div>
             <div class="form-group">
-                <button id="send" class="btn btn-success send" data-clipboard-target="#signed-message" onclick="pushTransaction()">发送已签名报文|Send signed trasaction</button>
-                (ts_id:<span class='transactionIdMain'></span>)
+                <button id="send" class="btn btn-success send " data-clipboard-target="#signed-message" onclick="pushTransaction()">发送已签名报文|Send signed trasaction</button>
+                (txid:<span class='transactionIdMain'></span>)
             </div>
             <br>
             <br>
             <div class="form-group">
-                <div class="col-lg-4 col-md-4">
+                <!--<div class="col-lg-4 col-md-4">-->
                     <label for="eos-account-info">
                         <strong class='accountDetail'>账户详情</strong>
                     </label>
+                <!--</div>-->
+                <div class="row flexRight">
+                    <div class="col-lg-3 col-md-3">
+                        <div class="input-group">
+                            <span class='account_name'>账户名</span>：<input type="text" class="form-control accountName">
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-3 col-md-3 blockNone">
+                        <div class="input-group ">
+                            <span class='constract_name'>合约名</span>：<input type="text" class="form-control constractName" value='eosio.token'>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-3 col-md-3 blockNone">
+                        <div class="input-group ">
+                            <span class='token_name'>币&nbsp;&nbsp;种</span>：<input type="text" class="form-control tokenName"  value='EOS'>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <div class="col-lg-3 col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default searchBtn" type="button" onclick='search()'>搜索</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
                 </div>
-                <div class="col-lg-4 col-md-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control accountName" placeholder='请输入账户名'>
-                    <span class="input-group-btn">
-                        <button class="btn btn-default searchBtn" type="button" onclick='search()'>搜索</button>
-                    </span>
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4" >
-                            <span class='createdTime_num'>创建时间</span>：<span class='createdTime'></span>
-                        </div>
-                        <div class="col-md-4" >
-                            <span class='balance_num'>余额</span>：<span class='balance'></span>
-                        </div>
-                        <div class="col-md-4" >
-                            <span class='mortgage_num'>抵押</span>：<span class='mortgage'></span>
-                        </div>
-                    </div>
-                    <div class="row">
 
-                        <div class="col-md-4" >
-                            CPU：<span class='Cpu'></span>
+                <div class="container">
+                    <div class='content'>
+                        <div style='width: 30rem;'>
+                            <div >
+                                <span class='createdTime_num'>创建时间</span>：<span class='createdTime'></span>
+                            </div>
+                            <div  >
+                                <span class='balance_num'>余额</span>：<span class='balance'></span>
+                            </div>
+                            <div  >
+                                <span class='mortgage_num'>质押</span>：<span class='mortgage'></span>
+                            </div>
+                            <div  >
+                                <span class='nodeDoneNum'>已投节点</span>：<span class='node_done'></span>
+                            </div>
                         </div>
-                        <div class="col-md-4" >
-                            <span class='network_num'>网络</span>：<span class='network'></span>
-                        </div>
-                        <div class="col-md-4" >
-                            <span class='memory_num'>内存</span>：<span class='memory'></span>
+                        <div class='contentDetail'>
+                            <div style='width: 14rem'>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success"  role="progressbar" style="width:20%"></div>
+                                </div>
+                                <p class='memory_Proportion'></p>
+                                <div><span class='memory_num weight'>内存</span></div>
+                            </div>
+                            <div style='width: 14rem'>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success"  role="progressbar" style="width:20%"></div>
+                                </div>
+                                <p class='Cpu_Proportion'></p>
+                                <div class='weight'>CPU</div>
+                                <div><span class='mortgage_num'>抵押</span>：<span class='Cpu'></span></div>
+                                <div><span class='redeemBack'>赎回</span>：<span class='Cpu_back'></span></div>
+                            </div>
+                            <div style='width: 14rem'>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success"  role="progressbar" style="width:20%"></div>
+                                </div>
+                                <p class='network_Proportion'></p>
+                                <div><span class='network_num weight'>网络</span></div>
+                                <div><span class='mortgage_num'>抵押</span>：<span class='network'></span></div>
+                                <div><span class='redeemBack'>赎回</span>：<span class='net_back'></span></div>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12" >
-                            <span class='nodeDoneNum'>已投节点</span>：<span class='node_done'></span>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -151,7 +185,6 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder='请输入测试网节点url' id='nodeUrlTest'>
                             <button id="getExpTest" class="btn btn-success" onclick='dealTest()'>变更测试网</button>
-
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
                 </div><!-- /.row -->
@@ -190,54 +223,99 @@
             </div>
             <div class="form-group">
                 <button id="sendTest" class="btn btn-success send" data-clipboard-target="#signed-message" onclick="pushTransactionTest()">发送已签名报文</button>
-                (ts_id:<span class='transactionId'></span>)
+                (txid:<span class='transactionId'></span>)
             </div>
 
             <br>
             <br>
             <div class="form-group">
-                <div class="col-lg-4 col-md-4">
+                <!--<div class="col-lg-4 col-md-4">-->
                     <label for="eos-account-info">
                         <strong class='accountDetail'>账户详情</strong>
                     </label>
-                </div>
+                <!--</div>-->
 
-                <div class="col-lg-4 col-md-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control accountNameTest" placeholder='请输入账户名'>
-                    <span class="input-group-btn">
-                        <button class="btn btn-default searchBtn" type="button" onclick='searchTest()'>搜索!</button>
-                    </span>
-                    </div><!-- /input-group -->
-                </div><!-- /.col-lg-6 -->
+                <div class="row flexRight">
+                    <div class="col-lg-3 col-md-3">
+                        <div class="input-group">
+                            <span class='account_name'>账户名</span>：
+                            <input type="text" class="form-control accountNameTest" placeholder='请输入账户名'>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-3 col-md-3 blockNone">
+                        <div class="input-group ">
+                            <span class='constract_name'>合约名</span>：
+                            <input type="text" class="form-control constractNameTest" value='eosio.token'>
+                        </div><!-- /input-group -->
+                    </div>
+                    <div class="col-lg-3 col-md-3 blockNone">
+                        <div class="input-group">
+                            <span class='token_name'>币种</span>：<input type="text" class="form-control tokenNameTest"  value='EOS'>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <div class="col-lg-3 col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default searchBtn" type="button" onclick='searchTest()'>搜索!</button>
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div>
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-4" >
-                            <span class='createdTime_num'>创建时间</span>：<span class='createdTimeTest'></span>
+                    <div class='contentTest'>
+                        <div style='width: 30rem;'>
+                            <div >
+                                <span class='createdTime_num'>创建时间</span>：<span class='createdTimeTest'></span>
+                            </div>
+                            <div  >
+                                <span class='balance_num'>余额</span>：<span class='balanceTest'></span>
+                            </div>
+                            <div  >
+                                <span class='mortgage_num'>质押</span>：<span class='mortgageTest'></span>
+                            </div>
+                            <div  >
+                                <span class='nodeDoneNum'>已投节点</span>：<span class='node_done_test'></span>
+                            </div>
                         </div>
-                        <div class="col-md-4" >
-                            <span class='balance_num'>余额</span>：<span class='balanceTest'></span>
-                        </div>
-                        <div class="col-md-4" >
-                            <span class='mortgage_num'>抵押</span>：<span class='mortgageTest'></span>
+                        <div class='contentDetail'>
+                            <div style='width: 14rem'>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success"  role="progressbar" style="width:20%"></div>
+                                </div>
+                                <p class='memory_ProportionTest'></p>
+                                <div>
+                                    <span class='memory_num weight'>内存</span>：<span class='memoryTest'></span>
+                                </div>
+                            </div>
+                            <div style='width: 14rem'>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success"  role="progressbar" style="width:20%"></div>
+                                </div>
+                                <p class='Cpu_ProportionTest'></p>
+                                <div class='weight'>CPU</div>
+                                <div>
+                                    <span class='mortgage_num'>抵押</span>：
+                                    <span class='CpuTest'></span>
+                                </div>
+                                <div>
+                                    <span class='redeemBack'>赎回</span>：
+                                    <span class='Cpu_back_test'></span>
+                                </div>
+                            </div>
+                            <div style='width: 14rem'>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success"  role="progressbar" style="width:20%"></div>
+                                </div>
+                                <p class='network_ProportionTest'></p>
+                                <div><span class='network_num weight'>网络</span></div>
+                                <div><span class='mortgage_num'>抵押</span>：<span class='networkTest'></span></div>
+                                <div><span class='redeemBack'>赎回</span>：<span class='net_back_test'></span></div>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4" >
-                            <span class='memory_num'>内存</span>：<span class='memoryTest'></span>
-                        </div>
-                        <div class="col-md-4" >
-                            CPU：<span class='CpuTest'></span>
-                        </div>
-                        <div class="col-md-4" >
-                            <span class='network_num'>网络</span>：<span class='networkTest'></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12" >
-                            <span class='nodeDoneNum'>已投节点</span>：<span class='node_done_test'></span>
-                        </div>
-                    </div>
+
+
                 </div>
             </div>
 

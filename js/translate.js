@@ -62,6 +62,10 @@ function updateExamples() {
   var network = 'network_num';
   var getExpTest = 'get_exp_test';
   var nodeDoneNum = 'node_done_num';
+  var accountName = 'account_name';
+  var constractName = 'constract_name';
+  var tokenName = 'token_name';
+  var redeemBack = 'redeem_back';
 
   console.log('========')
   $('#toolName').html(eval(toolName))
@@ -84,5 +88,9 @@ function updateExamples() {
   $('.network_num').html(eval(network))
   $('.getExpTest_num').html(eval(getExpTest))
   $('.nodeDoneNum').html(eval(nodeDoneNum))
+  $('.account_name').html(eval(accountName))
+  $('.constract_name').html(eval(constractName))
+  $('.token_name').html(eval(tokenName))
+  $('.redeemBack').html(eval(redeemBack))
 
 }
