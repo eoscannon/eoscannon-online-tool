@@ -188,7 +188,13 @@ function search(){
   eos.getAccount({'account_name': signed}).then(result => {
     console.log(result);
     let time = filterTime(result.created)
-    $('.content').css('display','flex')
+    if(document.body.clientWidth > 740){
+      $('.content').css('display','flex')
+    }else{
+      $('.content').css('display','block')
+      $('.contentDetail').css('display','block')
+      $('.contentDetailDesc').css('border','1px solid blue')
+    }
     $('.createdTime').html(time)
     $('.Cpu').html(result.total_resources.cpu_weight)
     $('.network').html(result.total_resources.net_weight)

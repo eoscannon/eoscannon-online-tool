@@ -3,12 +3,14 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <meta id="i18n_pagename" content="index-common">
     <meta http-equiv=”Content-Security-Policy” content=”upgrade-insecure-requests”/>
     <title>EOS Tool  | EOSCannon 出品</title>
     <link rel="shortcut icon" type="image/x-icon" href="./img/eoscannon.ico">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" type="text/css" href="./lib/my.css">
     <link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
     <link rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/milligram@1.3.0/dist/milligram.min.css">
@@ -17,22 +19,24 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./js/jquery.i18n.properties.js"></script>
     <script type="text/javascript" src="./js/translate.js"></script>
-
+    <!--<script src="./lib/zepto.js"></script>-->
+    <script src="./lib/qrcode.lib.min.js"></script>
+    <script src="./lib/qrcode.js"></script>
 </head>
 
 <body class="container">
 <div id="langBox">
-    <span>Language:</span>
+    <!--<span>Language:</span>-->
     <select id="lang">
-        <option value="en">en</option>
-        <option value="zh" selected>zh</option>
+        <option value="en">English</option>
+        <option value="zh" selected>中文</option>
     </select>
     <span id="langBrowser"></span>
 </div>
     <div class="text-center">
         <img height=150px src="./img/eoslogo.png">
     </div>
-    <h1 class="text-center" style='padding-top:30px' id='toolName'>EOS 交易签名发送工具</h1>
+    <h1 class="text-center" style='padding-top:30px' id='toolName'>交易签名发送工具</h1>
     <section>
         <div class="alert alert-warning" role="alert" id='pageAttention'>
             此页面在线使用，将下方信息粘贴至EOSCannon离线签名工具中。
@@ -77,15 +81,14 @@
                        <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
                    </div>
                    <div>
-                       <a class="button startButton" id='startButton'>扫描</a>
+                       <a class="button startButton" id='startButton'>电脑扫描</a>
                    </div>
-
-                   <div id="sourceSelectPanel" style="display:none">
-                       <label for="sourceSelect">Change video source:</label>
-                       <select id="sourceSelect" style="max-width:400px">
-                       </select>
+                   <div class="qr-btn " node-type="qr-btn">
+                       <span class='qrBtnMobile'>手机扫描</span>
+                       <input node-type="jsbridge" type="file" name="myPhoto" value="手机扫描" />
                    </div>
                </div>
+                <div class="result-qrcode"></div>
                 <textarea id="send-message" class="form-control" rows="10" ></textarea>
             </div>
             <div class="form-group">
@@ -127,8 +130,8 @@
 
                 <div class="container">
                     <div class='content'>
-                        <div style='width: 30rem;'>
-                            <div >
+                        <div  class="col-lg-4 col-sm-12" >
+                            <div>
                                 <span class='createdTime_num'>创建时间</span>：<span class='createdTime'></span>
                             </div>
                             <div  >
@@ -141,15 +144,17 @@
                                 <span class='nodeDoneNum'>已投节点</span>：<span class='node_done'></span>
                             </div>
                         </div>
-                        <div class='contentDetail'>
-                            <div style='width: 14rem'>
+                        <div class='contentDetail col-lg-8 col-sm-12'>
+                            <div class='contentDetailDesc'>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-success"  role="progressbar" style="width:20%"></div>
                                 </div>
                                 <p class='memory_Proportion'></p>
                                 <div><span class='memory_num weight'>内存</span></div>
+                                <div><span class='mortgage_num'>抵押</span>：0</div>
+                                <div><span class='redeemBack'>赎回</span>：0</div>
                             </div>
-                            <div style='width: 14rem'>
+                            <div class='contentDetailDesc'>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-success"  role="progressbar" style="width:20%"></div>
                                 </div>
@@ -158,7 +163,7 @@
                                 <div><span class='mortgage_num'>抵押</span>：<span class='Cpu'></span></div>
                                 <div><span class='redeemBack'>赎回</span>：<span class='Cpu_back'></span></div>
                             </div>
-                            <div style='width: 14rem'>
+                            <div class='contentDetailDesc'>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-success"  role="progressbar" style="width:20%"></div>
                                 </div>
@@ -167,10 +172,8 @@
                                 <div><span class='mortgage_num'>抵押</span>：<span class='network'></span></div>
                                 <div><span class='redeemBack'>赎回</span>：<span class='net_back'></span></div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -215,8 +218,12 @@
                         <video id="videoTest" width="300" height="200" style="border: 1px solid gray"></video>
                     </div>
                     <div>
-                        <a class="button startButton" id='startButtonTest'>扫描</a>
+                        <a class="button startButton" id='startButtonTest'>电脑扫描</a>
                     </div>
+                    <!--<div class="qr-btn " node-type="qr-btn">-->
+                        <!--<span class='qrBtnMobile'>手机扫描</span>-->
+                        <!--<input node-type="jsbridge" type="file" name="myPhoto" value="手机扫描" />-->
+                    <!--</div>-->
 
                 </div>
                 <textarea id="send-messageTest" class="form-control" rows="10" ></textarea>
@@ -322,7 +329,134 @@
         </div>
         <br>
         <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 center">
+                EOSCannon出品 <a href="https://github.com/eoscannon" target=_blank><img src="./img/github.svg" alt="" class='githubPic'></a>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+
+
     </div>
+<script>
+    //初始化扫描二维码按钮，传入自定义的 node-type 属性
+    $(function() {
+        Qrcode.init($('[node-type=qr-btn]'));
+    });
+    //这段代 主要是获取摄像头的视频流并显示在Video 签中
+    var canvas=null,context=null,video=null;
+    window.addEventListener("DOMContentLoaded", function ()
+    {
+        try{
+            canvas = document.getElementById("canvas");
+            context = canvas.getContext("2d");
+            video = document.getElementById("video");
+
+            var videoObj = { "video": true,audio:false},
+                    flag=true,
+                    MediaErr = function (error)
+                    {
+                        flag=false;
+                        if (error.PERMISSION_DENIED)
+                        {
+                            alert('用户拒绝了浏览器请求媒体的权限', '提示');
+                        } else if (error.NOT_SUPPORTED_ERROR) {
+                            alert('对不起，您的浏览器不支持拍照功能，请使用其他浏览器', '提示');
+                        } else if (error.MANDATORY_UNSATISFIED_ERROR) {
+                            alert('指定的媒体类型未接收到媒体流', '提示');
+                        } else {
+                            alert('系统未能获取到摄像头，请确保摄像头已正确安装。或尝试刷新页面，重试', '提示');
+                        }
+                    };
+            //获取媒体的兼容代码，目前只支持（Firefox,Chrome,Opera）
+            if (navigator.getUserMedia)
+            {
+                //qq浏览器不支持
+                if (navigator.userAgent.indexOf('MQQBrowser') > -1) {
+                    alert('对不起，您的浏览器不支持拍照功能，请使用其他浏览器', '提示');
+                    return false;
+                }
+                navigator.getUserMedia(videoObj, function (stream) {
+                    video.src = stream;
+                    video.play();
+                }, MediaErr);
+            }
+            else if(navigator.webkitGetUserMedia)
+            {
+                navigator.webkitGetUserMedia(videoObj, function (stream)
+                {
+                    video.src = window.webkitURL.createObjectURL(stream);
+                    video.play();
+                }, MediaErr);
+            }
+            else if (navigator.mozGetUserMedia)
+            {
+                navigator.mozGetUserMedia(videoObj, function (stream) {
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                }, MediaErr);
+            }
+            else if (navigator.msGetUserMedia)
+            {
+                navigator.msGetUserMedia(videoObj, function (stream) {
+                    $(document).scrollTop($(window).height());
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                }, MediaErr);
+            }else{
+                alert('对不起，您的浏览器不支持拍照功能，请使用其他浏览器');
+                return false;
+            }
+            if(flag){
+                alert('为了获得更准确的测试结果，请尽量将二维码置于框中，然后进行拍摄、扫描。 请确保浏览器有权限使用摄像功能');
+            }
+            //这个是拍照按钮的事件，
+            $("#snap").click(function () {startPat();}).show();
+        }catch(e){
+            printHtml("浏览器不支持HTML5 CANVAS");
+        }
+    }, false);
+
+    //打印内容到页面
+    function printHtml(content){
+        $(window.document.body).append(content+"<br/>");
+    }
+    //开始拍照
+    function startPat(){
+        setTimeout(function(){//防止调用过快
+            if(context)
+            {
+                context.drawImage(video, 0, 0, 320, 320);
+                CatchCode();
+            }
+        },200);
+    }
+    //抓屏获取图像流，并上传到服务器
+    function CatchCode() {
+        if(canvas!=null)
+        {
+            //以下开始编 数据
+            var imgData = canvas.toDataURL();
+            //将图像转换为base64数据
+            var base64Data = imgData;//.substr(22); //在前端截取22位之后的字符串作为图像数据
+            //开始异步上
+            $.post("saveimg.php", { "img": base64Data },function (result)
+            {
+                printHtml("解析结果："+result.data);
+                if (result.status == "success" && result.data!="")
+                {
+                    printHtml("解析结果成功！");
+                }else{
+                    startPat();//如果没有解析出来则重新抓拍解析
+                }
+            },"json");
+        }
+    }
+
+
+</script>
 
     <!-- 1、引入相关的 clipboard 文件  -->
     <script src="./js/clipboard.min.js"></script>
