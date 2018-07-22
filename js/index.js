@@ -45,14 +45,14 @@ function pushTransaction(){
   });
 }
 
-var qrcode = new QRCode(document.getElementById("qrcode"), {
+var qrcodeNew = new QRCode(document.getElementById("qrcode"), {
   width : 300,
   height : 300
 });
 
 function makeCode () {
   var elText = document.getElementById("signed-message").value;
-  qrcode.makeCode(elText);
+  qrcodeNew.makeCode(elText);
 }
 
 $("#signed-message").change(function () {

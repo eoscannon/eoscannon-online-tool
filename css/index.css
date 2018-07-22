@@ -11,6 +11,7 @@ html {
 
 }
 body {
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
     font: normal .14em/1.6 "Microsoft YaHei", Verdana, Tahoma;
