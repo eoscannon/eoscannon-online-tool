@@ -1,3 +1,34 @@
+/*html{*/
+    /*width: 100%;*/
+    /*overflow-x: hidden;*/
+    /*height: 100%;*/
+/*}*/
+html {
+    font-size: 100px;
+    font-size: calc(1000vw / 32);
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+    overflow-x: hidden;
+
+}
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font: normal .14em/1.6 "Microsoft YaHei", Verdana, Tahoma;
+}
+ul, li, dl, dt, dd, ol, h1, h2, h3, h4, h5, h6, p ,span{
+    padding: 0;
+    margin: 0;
+    font-weight: normal
+}
+
+ul, ol {
+    list-style-type: none
+}
+
+a img {
+    border: 0
+}
 #qrcode img{
     display: table;
     margin: 0 auto;
@@ -11,11 +42,11 @@ ul li{
 }
 #langBox{
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 1rem;
+    right: 1rem;
     display: flex;
     align-items: center;
-    width: 12rem
+    width: 8.5rem
 }
 #myTab{
     text-align: center;
@@ -85,4 +116,18 @@ button{
 }
 .flexRight{
     justify-content: right;
+}
+select{
+    height: 2.8rem!important;
+}
+.center{
+    text-align: center;
+}
+.githubPic{
+    width: 1.5rem;
+     padding-bottom: .3rem;
+}
+.contentDetailDesc{
+    margin: 1rem 0;
+    padding: 1rem;
 }

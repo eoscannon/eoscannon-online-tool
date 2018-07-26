@@ -66,6 +66,7 @@ function updateExamples() {
   var constractName = 'constract_name';
   var tokenName = 'token_name';
   var redeemBack = 'redeem_back';
+  var qrBtnMobile = 'qrbtn_mobile';
 
   console.log('========')
   $('#toolName').html(eval(toolName))
@@ -92,5 +93,6 @@ function updateExamples() {
   $('.constract_name').html(eval(constractName))
   $('.token_name').html(eval(tokenName))
   $('.redeemBack').html(eval(redeemBack))
+  $('.qrBtnMobile').html(eval(qrBtnMobile))
 
 }
