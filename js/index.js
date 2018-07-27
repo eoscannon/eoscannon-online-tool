@@ -206,7 +206,7 @@ function search(){
     if(result.voter_info && result.voter_info.producers){
       let producer = ''
       for(let i=0;i<result.voter_info.producers.length;i++){
-        producer += result.voter_info.producers[i]
+        producer = result.voter_info.producers[i]+' , '+producer
       }
       $('.node_done').html(producer)
     }else{
