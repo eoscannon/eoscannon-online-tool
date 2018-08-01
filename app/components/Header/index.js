@@ -78,11 +78,9 @@ class HeaderComp extends React.Component {
           <Option value="main">{mainNet}</Option>
           <Option value="test">{testNet}</Option>
         </Select>
-        {/*
-         <div className="en" aria-hidden="true" onClick={this.changeLanguage}>
-         {this.props.locale === 'en' ? '中文' : 'English'}
-         </div>
-        */}
+        <div className="en" aria-hidden="true" onClick={this.changeLanguage}>
+          {this.props.locale === 'en' ? '中文' : 'English'}
+        </div>
         <Menu
           theme="dark"
           mode="horizontal"

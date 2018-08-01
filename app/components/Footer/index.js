@@ -18,11 +18,11 @@ class FooterComp extends React.PureComponent {
     const { formatMessage } = this.props.intl;
     return (
       <FooterWrapper>{formatMessage(utilsMsg.FooterCompText)}
-      <div>
-        <a href="https://github.com/eoscannon" target='_blank'>
-          <img src="./github.svg" alt="" className='githubPic'/>
-        </a>
-      </div>
+        {/*
+         <a href="https://github.com/eoscannon" target='_blank'>
+         <img src="./github.svg" alt="" className='githubPic'/>
+         </a>
+        */}
       </FooterWrapper>
     );
   }
@@ -35,7 +35,7 @@ export default injectIntl(FooterComp);
 const FooterWrapper = styled(Footer)`
   text-align: center;
    .githubPic{
-      width: 1.5rem;
-       padding-bottom: .3rem;
+     width: 1.5rem;
+     padding-bottom: .3rem;
   }
 `;
