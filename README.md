@@ -2,19 +2,23 @@
 ## 工具简介：
 EOS佳能离线工具是由EOS佳能主导，为保护数字货币投资者安全交易而开发的工具。
 
-目前工具提供**质押/解质押、设置代理、转账**等功能。工具仍在完善中，欢迎提供建议。
+目前工具提供**创建账号、质押/解质押、代理/解代理、投票、转账、赎回、购买/出售内存、修改私钥**等功能。工具仍在完善中，欢迎提供建议。
 
 免责声明：该工具仅供学习、交流，不对使用过程中产生的收益、损失负责，请知悉。
 
 ## 使用方法：
-准备两台设备：离线设备、联网设备；已安装node环境，node安装：[https://nodejs.org/zh-cn/](https://nodejs.org/zh-cn/)
-##### 首先：使用离线设备
+准备两台设备：离线设备、联网设备
+##### 首先：使用离线设备 （"重新build"、"使用已build的文件"，选择其中一种方式）
+###### 重新build：
 1. 下载项目，打开控制台
 2. cd 项目根目录
 3. npm install
 4. npm start
 5. 在浏览器地址栏输入：[http://localhost:3000](http://localhost:3000)
-##### 然后：使用联网设备
+6. 自行打包时，需注意：先将internals/webpack/webpack.base.babel.js中的 “ publicPath: '/' ” 改为：“ publicPath: './' ”，打包完成后，将其改回，避免影响 npm start。
+###### 使用已build的文件：
+1.下载build.zip文件，解压后，使用浏览器打开index.html即可使用。
+##### 然后：使用联网设备 
 1. 打开 [https://tool.eoscannon.io/](https://tool.eoscannon.io/)
 2. 点击 **复制初始化信息** 按钮
 3. ![image](https://raw.githubusercontent.com/eoscannon/EosCannon-Offline-Tools/master/docs/stepImg/1.1.jpeg)

@@ -1,0 +1,164 @@
+{
+  "Public AppHelmetTitle":
+    "Cannon large households' exclusive voting tools (off-line)",
+  "Public HeaderMenuCreateAccount": "CreateAccount",
+  "Public HeaderMenuDelegate": "Delegate",
+  "Public HeaderMenuTransfer": "Transfer",
+  "Public HeaderMenuBuyRamBytes": "Buy/Sell Ram",
+  "Public HeaderMenuVote": "Vote",
+  "Public HeaderMenuProxy": "Proxy",
+  "Public HeaderMenuUpdateAuth": "PK management",
+  "Public HeaderMenuRefund": "Refund",
+  "Public TransactionSuccessNotificationMsg":
+    "The success of generating a signature transaction",
+  "Public TransactionSuccessNotificationDescription":
+    "Please click the copy signature transaction button or scan the two-dimensional code to get the signature message.",
+  "Public TransactionFailNotificationMsg":
+    "Failure to generate a signature transaction",
+  "Public TransactionFailNotificationDescription":
+    "Please reobtain the signature transaction",
+  "Public CopyTransactionSuccessNotificationMsg": "Copy success",
+  "Public CopyTransactionSuccessNotificationDescription":
+    "The signature transaction has been copied to the clipboard. Please go to the https://tool.eoscannon.io/ network to send the transaction to the clipboard.",
+  "Public JsonAlertMessage":
+    "Please enter the Block field obtained by the network",
+  "Public JsonAlertDescription":
+    "Please go to the https://tool.eoscannon.io/ network to get the Block field，Networking to open web pages, scanning qrcode code can be obtained.。",
+  "Public JsonInfoPlaceholder":
+    "Please enter the Block field obtained by the network",
+  "Public OpenCameraButtonName": "Open Camera",
+  "Public ScanQrcodeButtonName": "Scan Qrcode",
+  "Public FieldAlertMessage":
+    "Please enter the fields required to generate a signature transaction",
+  "Public FieldAlertDescription":
+    "The page is offline, and the fields entered will not leak out. Please feel free to enter.",
+  "Public CopyAlertDescription":
+    "Please copy the following signature transaction and send it to the https://tool.eoscannon.io/ network.",
+  "Public KeyProviderFormItemLabel": "PrivateKey",
+  "Public KeyProviderFormItemPlaceholder": "Please enter the private key",
+  "Public GetTransactionFormItemButtonName": "Generating transaction",
+  "Public CopyAlertMessage": "Copy transaction / Scan qrcode",
+  "Public CopyTransactionButtonName": "Copy Transaction",
+  "Public TransactionTextAreaPlaceholder":
+    "Please copy the generated signature Transaction",
+  "Public QrCodeInitValue": "Welcome to use the EOS Cannon offline tool",
+  "Public FooterCompText": "Provided by EOS Canon ©2018",
+  "BuyRamBytesPage SwitchCheckedName": "Buy",
+  "BuyRamBytesPage SwitchUnCheckedName": "Sell",
+  "BuyRamBytesPage PayerAccountNameLabel": "Payer",
+  "BuyRamBytesPage ReceiverAccountNameLabel": "Receiver",
+  "BuyRamBytesPage BytesLabel": "Bytes",
+  "BuyRamBytesPage BuyPayerAccountNamePlaceholder":
+    "Please enter the name of the account to pay for the memory.",
+  "BuyRamBytesPage SellPayerAccountNamePlaceholder":
+    "Please enter the account name for the sale of memory",
+  "BuyRamBytesPage ReceiverAccountNamePlaceholder":
+    "Please input the account name used to accept the purchased memory. Not to be filled, the default is the payment account",
+  "BuyRamBytesPage BytesQuantityPlaceholder":
+    "Please enter the number of purchased memory bytes",
+  "CreateAccountPage CreatorLabel": "Creator",
+  "CreateAccountPage NameLabel": "Account",
+  "CreateAccountPage BytesLabel": "Bytes",
+  "CreateAccountPage CreatorAccountNamePlaceholder":
+    "Please input the creator account name",
+  "CreateAccountPage NewAccountNamePlaceholder":
+    "Please enter the account name you want to create，The account name should be 12 characters, only the lowercase letter A-Z and the number 1-5.",
+  "CreateAccountPage NewAccountNameHelp":
+    "notes：The account name should be 12 characters, only the lowercase letter A-Z and the number 1-5.",
+  "CreateAccountPage OwnerKeyPlaceholder":
+    "Please enter the ownerKey of the new account",
+  "CreateAccountPage ActiveKeyPlaceholder":
+    "Please enter the activeKey of the new account",
+  "CreateAccountPage BytesHelp":
+    "notes：The number of memory Bytes is at least 4KB，The minimum value is: 4096",
+  "CreateAccountPage BytesPlaceholder":
+    "Please enter the number of Bytes for the new account",
+  "CreateAccountPage StakeNetQuantityPlaceholder":
+    "Please enter the number of Net delegate to the new account",
+  "CreateAccountPage StakeCpuQuantityPlaceholder":
+    "Please enter the number of Cpu delegate to the new account",
+  "ProxyPage VoterPlaceholder": "Please enter your account name",
+  "ProxyPage ProxyHelp":
+    "notes：Please enter the account name of the proxy vote. Cancel the agent for the empty!",
+  "ProxyPage ProxyPlaceholder":
+    "Please enter the account name of the proxy vote. Cancel the agent for the empty",
+  "ProxyPage VoterLabel": "Voter",
+  "ProxyPage ProxyLabel": "Proxy",
+  "RefundPage RefundAlertMessage": "Manual Refund",
+  "RefundPage RefundAlertDescription":
+    "3 days after the unDelegate is released, assets can be retrieved manually by Refund.",
+  "RefundPage OwnerPlaceholder": "Please enter your account name",
+  "RefundPage OwnerLabel": "Account",
+  "StakePage DelegateSwitchCheckedName": "Delegate",
+  "StakePage DelegateSwitchUnCheckedName": "UnDelegate",
+  "StakePage DelegateFromAccountNamePlaceholder":
+    "Please enter the name of the account for the Delegate",
+  "StakePage UnDelegateFromAccountNamePlaceholder":
+    "Please enter the name of the account for the UnDelegate",
+  "StakePage DelegateReceiverAccountNamePlaceholder":
+    "Please enter the receiver name of the Delegate account，the account name for the delegate account is used by default.",
+  "StakePage UnDelegateReceiverAccountNamePlaceholder":
+    "Please enter the receiver name of the UnDelegate account，the account name for the unDelegate account is used by default.",
+  "StakePage DelegateReceiverAccountNameHelp":
+    "notes：If the account name is inconsistent with the account name used for Delegate, it is a Delegate to others.",
+  "StakePage UnDelegateReceiverAccountNameHelp":
+    "notes：If the account name is inconsistent with the account name used for UnDelegate, it is a UnDelegate to others.",
+  "StakePage DelegateStakeNetQuantityPlaceholder":
+    "Please enter the number of Net for the Delegate",
+  "StakePage UnDelegateStakeNetQuantityPlaceholder":
+    "Please enter the number of Net for the UnDelegate",
+  "StakePage DelegateStakeCpuQuantityPlaceholder":
+    "Please enter the number of Cpu for the Delegate",
+  "StakePage UnDelegateStakeCpuQuantityPlaceholder":
+    "Please enter the number of Cpu for the UnDelegate",
+  "StakePage FromLabel": "From",
+  "StakePage ReceiverLabel": "Receiver",
+  "StakePage NetQuantityLabel": "Net",
+  "StakePage CpuQuantityLabel": "Cpu",
+  "TransferPage TransferFromAccountNamePlaceholder":
+    "Please enter the form number",
+  "TransferPage TransferToAccountNamePlaceholder": "Please enter the to number",
+  "TransferPage TransferContractPlaceholder": "Please enter the Contract",
+  "TransferPage TransferQuantityPlaceholder": "Please enter the Quantity",
+  "TransferPage TransferDigitPlaceholder": "Please enter the Digit",
+  "TransferPage TransferSymbolPlaceholder": "Please enter the Symbol",
+  "TransferPage TransferMemoPlaceholder":
+    "Please enter the Memo，Exchange transfer must be filled in",
+  "TransferPage TransferMemoHelp": "notes：Exchange transfer must be filled in",
+  "TransferPage FromLabel": "From",
+  "TransferPage ToLabel": "To",
+  "TransferPage ContractLabel": "Contract",
+  "TransferPage QuantityLabel": "Quantity",
+  "TransferPage DigitLabel": "Digit",
+  "TransferPage SymbolLabel": "Symbol",
+  "UpdateAuthPage CheckPrivateKeyMessage": "Check PrivateKey",
+  "UpdateAuthPage CheckPrivateKeyPlaceholder":
+    "Please enter the PrivateKey for Check",
+  "UpdateAuthPage GetPrivateKeyButtonMessage": "Get PrivateKey",
+  "UpdateAuthPage ModifyPrivateKeyTitle": "Modify PrivateKey",
+  "UpdateAuthPage UpdateAuthAccountNamePlaceholder":
+    "Please enter the AccountName",
+  "UpdateAuthPage UpdateAuthActiveKeyPlaceholder":
+    "Please enter the activeKey you want",
+  "UpdateAuthPage UpdateAuthOwnerKeyPlaceholder":
+    "Please enter the ownerKey you want",
+  "UpdateAuthPage PrivateKeyLabel": "PrivateKey",
+  "UpdateAuthPage AccountLabel": "Account",
+  "VotePage VoterPlaceholder": "Please enter the AccountName",
+  "VotePage ProducersHelp":
+    "notes：Please select the voting node! It can be multiple selected, searchable, and input. Enter confirm!",
+  "VotePage ProducersPlaceholder":
+    "Please select the voting node! It can be multiple selected, searchable, and input. Enter confirm!",
+  "VotePage VoterLabel": "Voter",
+  "VotePage ProducersLabel": "Producers",
+  "boilerplate.containers.LocaleToggle.de": "de",
+  "boilerplate.containers.LocaleToggle.en": "en",
+  "boilerplate.containers.NotFoundPage.header": "Page not found.",
+
+  "Public HeaderMenuInfoInit": "InfoInit",
+  "Public HeaderMenuSendMessage": "Send Message",
+  "Public HeaderMenuAccountSearch": "Account Search",
+  "Public HeaderMenuOffical": "Main",
+  "Public HeaderMenuTestNet": "Test",
+  "Public ChangeTestNet": "change TestNet"
+}
