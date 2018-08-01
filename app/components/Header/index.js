@@ -74,13 +74,15 @@ class HeaderComp extends React.Component {
       <HeaderWrapper>
         <div className="logo">EOS Cannon</div>
 
-        <Select className="netWork"  labelInValue defaultValue={{ key: 'main' }} style={{ width: 80 }} onChange={this.handleChange}>
+        <Select className="netWork"  labelInValue defaultValue={{ key: 'main' }} style={{ width: 110 }} onChange={this.handleChange}>
           <Option value="main">{mainNet}</Option>
           <Option value="test">{testNet}</Option>
         </Select>
-        <div className="en" aria-hidden="true" onClick={this.changeLanguage}>
-          {this.props.locale === 'en' ? '中文' : 'English'}
-        </div>
+        {/*
+         <div className="en" aria-hidden="true" onClick={this.changeLanguage}>
+         {this.props.locale === 'en' ? '中文' : 'English'}
+         </div>
+        */}
         <Menu
           theme="dark"
           mode="horizontal"
