@@ -94,7 +94,7 @@ function getEosTest(data) {
 
 //获取初始化信息
 function getInitJsonTest(){
-  console.log("eos====",eos)
+  //console.log("eos====",eos)
   let expireInSeconds = 60 * 60; // 1 hour
   eos.getInfo({}).then((info) => {
     let chainDate = new Date(`${info.head_block_time}Z`);
@@ -123,8 +123,8 @@ function getInitJsonTest(){
 function pushTransactionTest(){
   var signed = document.getElementById('send-messageTest').value;
   eos.pushTransaction(JSON.parse(signed)).then((res) => {
-    console.log('res:',res)
-    console.log('transaction_id:',res.transaction_id)
+    //console.log('res:',res)
+    //console.log('transaction_id:',res.transaction_id)
     alert(`发送报文成功,请在页尾查看transaction_id=${res.transaction_id}`);
     $(".transactionId").html(res.transaction_id)
   }).catch((err) => {
@@ -170,7 +170,7 @@ function getChainId(){
     url: document.getElementById('nodeUrlTest').value + "/v1/chain/get_info",
     type: 'get',
     success: function(data,state){
-      console.log('state:',state)
+      //console.log('state:',state)
       //这里显示从服务器返回的数据 // 获取EOS
       getEosTest(data);
       //// 获取初始化信息，将其赋值到信息框中
@@ -183,7 +183,7 @@ function getChainId(){
 }
 
 function search(){
-  console.log("signed====",$('.accountName').val())
+  //console.log("signed====",$('.accountName').val())
   var signed = $('.accountName').val();
   eos.getAccount({'account_name': signed}).then(result => {
     console.log(result);
@@ -198,6 +198,12 @@ function search(){
     $('.createdTime').html(time)
     $('.Cpu').html(result.total_resources.cpu_weight)
     $('.network').html(result.total_resources.net_weight)
+
+    if(result.refund_request){
+      $('.cpuBar').css('width',(result.total_resources.cpu_weight/result.refund_request.cpu_amount).toFixed(2).slice(2,4)+"%")
+      $('.networkBar').css('width',(result.total_resources.net_weight/result.refund_request.net_amount).toFixed(2).slice(2,4)+"%")
+
+    }
     if(result.voter_info && result.voter_info.staked){
       $('.mortgage').html(result.voter_info.staked / 10000+' EOS')
     }else{
@@ -222,9 +228,13 @@ function search(){
       let netNum = result.net_limit.used + ' bytes/' +((result.net_limit.max/1024)/1024).toFixed(2)+' Mib'
       $('.network_Proportion').html(netNum)
     }
+    //console.log('====result.ram_usage',result.ram_usage)
+    //console.log('====result.ram_quota',result.ram_quota)
+
     if(result.ram_usage && result.ram_usage){
       let ramNum = (result.ram_usage/1024).toFixed(2)+' Kib/' + (result.ram_quota/1024).toFixed(2)+' Kib'
       $('.memory_Proportion').html(ramNum)
+      $('.memorybar').css('width',(result.ram_usage/result.ram_quota).toFixed(2).slice(2,4)+"%")
     }
     if(result.refund_request){
       $('.Cpu_back').html(result.refund_request.cpu_amount)
@@ -256,10 +266,10 @@ function search(){
   });
 }
 function searchTest(){
-  console.log("signed====",$('.accountNameTest').val())
+  //console.log("signed====",$('.accountNameTest').val())
   var signed = $('.accountNameTest').val();
   eos.getAccount({'account_name': signed}).then(result => {
-    console.log(result);
+    //console.log(result);
     let time = filterTime(result.created)
     $('.contentTest').css('display','flex')
     $('.createdTimeTest').html(time)
@@ -314,7 +324,7 @@ function searchTest(){
       $('.balanceTest').html('0 EOS')
     }
     // 4.1版本如果Balance为0,返回空数组
-    console.log(res);
+    //console.log(res);
   }).catch((err)=>{
     console.log('err:',err)
     $('.balance').html('0 EOS')
