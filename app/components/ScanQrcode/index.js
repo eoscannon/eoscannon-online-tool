@@ -76,7 +76,6 @@ export default class ScanQrcode extends Component {
             message={message}
             description={description}
             type="info"
-            closable
           />
         </FormItem>
         {this.state.VideoElement}
@@ -102,14 +101,13 @@ export default class ScanQrcode extends Component {
         <FormItem>
           {getFieldDecorator('jsonInfo', {
             rules: [{ required: true, message: JsonInfoPlaceholder }],
-          })(<TextArea placeholder={JsonInfoPlaceholder} />)}
+          })(<TextArea placeholder={JsonInfoPlaceholder} rows='6'/>)}
         </FormItem>
         <FormItem>
           <Alert
             message={FieldAlertMessage}
             description={FieldAlertDescription}
             type="info"
-            closable
           />
         </FormItem>
       </div>

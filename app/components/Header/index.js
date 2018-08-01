@@ -6,15 +6,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Layout } from 'antd';
+import { Layout, Select } from 'antd';
 import { Menu } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
-import { makeSelectLocale } from '../../containers/LanguageProvider/selectors';
+import { storage } from 'utils/storage';
+
+import { makeSelectLocale,makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 const { Header } = Layout;
+const Option = Select.Option;
 
 class HeaderComp extends React.Component {
   constructor(props) {
@@ -29,25 +32,10 @@ class HeaderComp extends React.Component {
   componentWillMount() {
     let defaultSelectedKeys = '8';
     switch (window.location.hash.substring(1)) {
-      case '/proxy':
-        defaultSelectedKeys = '2';
-        break;
-      case '/transfer':
+      case '/accountSearch':
         defaultSelectedKeys = '3';
         break;
-      case '/refund':
-        defaultSelectedKeys = '4';
-        break;
-      case '/buyrambytes':
-        defaultSelectedKeys = '5';
-        break;
-      case '/vote':
-        defaultSelectedKeys = '6';
-        break;
-      case '/updateauth':
-        defaultSelectedKeys = '7';
-        break;
-      case '/stake':
+      case '/sendMessage':
         defaultSelectedKeys = '1';
         break;
       default:
@@ -62,20 +50,34 @@ class HeaderComp extends React.Component {
     const localeLanguage = this.props.locale === 'en' ? 'de' : 'en';
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };
+  handleChange=(value)=> {
+    console.log(value); // { key: "lucy", label: "Lucy (101)" }
+    //if(value.key=='test') {
+    //  storage.setNetwork('https://tool.eoscannon.io/jungle')
+    //}else if(value.key=='main'){
+    //  storage.setNetwork('https://mainnet.eoscannon.io')
+    //}
+    console.log('this.props.network header====',this.props.netWork )
+    const network = this.props.netWork === 'main' ? 'test' : 'main';
+    this.props.onDispatchChangeNetworkReducer(network);
+  }
 
   render() {
     const { formatMessage } = this.props.intl;
-    const createAccount = formatMessage(utilsMsg.HeaderMenuCreateAccount);
-    const stake = formatMessage(utilsMsg.HeaderMenuDelegate);
-    const transfer = formatMessage(utilsMsg.HeaderMenuTransfer);
-    const buyRamBytes = formatMessage(utilsMsg.HeaderMenuBuyRamBytes);
-    const vote = formatMessage(utilsMsg.HeaderMenuVote);
-    const proxy = formatMessage(utilsMsg.HeaderMenuProxy);
-    const updateAuth = formatMessage(utilsMsg.HeaderMenuUpdateAuth);
-    const refund = formatMessage(utilsMsg.HeaderMenuRefund);
+    const createAccount = formatMessage(utilsMsg.HeaderMenuInfoInit);
+    const stake = formatMessage(utilsMsg.HeaderMenuSendMessage);
+    const accountSearch = formatMessage(utilsMsg.HeaderMenuAccountSearch);
+    const mainNet = formatMessage(utilsMsg.HeaderMenuOffical);
+    const testNet = formatMessage(utilsMsg.HeaderMenuTestNet);
+
     return (
       <HeaderWrapper>
         <div className="logo">EOS Cannon</div>
+
+        <Select className="netWork"  labelInValue defaultValue={{ key: 'main' }} style={{ width: 80 }} onChange={this.handleChange}>
+          <Option value="main">{mainNet}</Option>
+          <Option value="test">{testNet}</Option>
+        </Select>
         <div className="en" aria-hidden="true" onClick={this.changeLanguage}>
           {this.props.locale === 'en' ? '中文' : 'English'}
         </div>
@@ -86,45 +88,21 @@ class HeaderComp extends React.Component {
           style={{ lineHeight: '64px' }}
         >
           <Menu.Item key="8">
-            <Link href="/createaccount" to="/createaccount">
+            <Link href="/infoInit" to="/infoInit">
               {createAccount}
             </Link>
           </Menu.Item>
           <Menu.Item key="1">
-            <Link href="/stake" to="/stake">
+            <Link href="/sendMessage" to="/sendMessage">
               {stake}
             </Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link href="/transfer" to="/transfer">
-              {transfer}
+            <Link href="/accountSearch" to="/accountSearch">
+              {accountSearch}
             </Link>
           </Menu.Item>
-          <Menu.Item key="5">
-            <Link href="/buyrambytes" to="/buyrambytes">
-              {buyRamBytes}
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="6">
-            <Link href="/vote" to="/vote">
-              {vote}
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Link href="/proxy" to="/proxy">
-              {proxy}
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="7">
-            <Link href="/updateauth" to="/updateauth">
-              {updateAuth}
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Link href="/refund" to="/refund">
-              {refund}
-            </Link>
-          </Menu.Item>
+
         </Menu>
       </HeaderWrapper>
     );
@@ -134,6 +112,7 @@ HeaderComp.propTypes = {
   intl: PropTypes.object,
   locale: PropTypes.string,
   onDispatchChangeLanguageReducer: PropTypes.func,
+  onDispatchChangeNetworkReducer: PropTypes.func,
 };
 
 const HeaderCompIntl = injectIntl(HeaderComp);
@@ -143,16 +122,19 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     onDispatchChangeLanguageReducer: locale =>
       dispatch({ type: 'app/LanguageToggle/CHANGE_LOCALE', locale }),
+    onDispatchChangeNetworkReducer: locale =>
+      dispatch({ type: 'app/Network/CHANGE_LOCALE', locale }),
   };
 }
 
-const mapStateToProps = createSelector(makeSelectLocale(), locale => ({
-  locale,
-}));
+const mapStateToProps = createStructuredSelector({
+  netWork: makeSelectNetwork(),
+  locale: makeSelectLocale(),
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(HeaderCompIntl);
 
 const HeaderWrapper = styled(Header)`
@@ -178,6 +160,23 @@ const HeaderWrapper = styled(Header)`
     color: #f5cb48;
     text-align: right;
     float: right;
+
+    &:hover {
+      color: #aaa;
+    }
+  }
+  .netWork {
+    cursor: pointer;
+    width: 40px;
+    height: 31px;
+    line-height: 64px;
+    font-size: 12px;
+    color: #f5cb48;
+    text-align: right;
+    float: right;
+    position: fixed;
+    right: 7rem;
+    top: 1rem;
     &:hover {
       color: #aaa;
     }

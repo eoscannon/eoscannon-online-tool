@@ -153,5 +153,12 @@
   "VotePage ProducersLabel": "Producers",
   "boilerplate.containers.LocaleToggle.de": "de",
   "boilerplate.containers.LocaleToggle.en": "en",
-  "boilerplate.containers.NotFoundPage.header": "Page not found."
+  "boilerplate.containers.NotFoundPage.header": "Page not found.",
+
+  "Public HeaderMenuInfoInit": "InfoInit",
+  "Public HeaderMenuSendMessage": "Send Message",
+  "Public HeaderMenuAccountSearch": "Account Search",
+  "Public HeaderMenuOffical": "Main",
+  "Public HeaderMenuTestNet": "Test",
+  "Public ChangeTestNet": "change TestNet"
 }

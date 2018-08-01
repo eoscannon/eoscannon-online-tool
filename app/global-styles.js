@@ -10,8 +10,11 @@ injectGlobal`
 
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #fff;
   }
-
+  .ant-layout-content{
+    background: #fff;
+  }
   body.fontLoaded {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
@@ -26,5 +29,8 @@ injectGlobal`
   label {
     font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
+  }
+  .ant-layout-footer{
+    padding: 14px 50px!important;
   }
 `;

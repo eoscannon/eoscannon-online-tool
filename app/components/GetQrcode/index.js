@@ -2,7 +2,6 @@
  * GetQrcode
  *
  */
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Input, Alert, Icon } from 'antd';
@@ -20,85 +19,56 @@ export default class GetQrcode extends Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const keyProviderLabel = this.props.formatMessage(
-      utilsMsg.KeyProviderFormItemLabel,
-    );
-    const keyProviderPlaceholder = this.props.formatMessage(
-      utilsMsg.KeyProviderFormItemPlaceholder,
-    );
-    const GetTransactionButtonName = this.props.formatMessage(
-      utilsMsg.GetTransactionFormItemButtonName,
-    );
-    const CopyAlertMessage = this.props.formatMessage(
-      utilsMsg.CopyAlertMessage,
-    );
-    const CopyAlertDescription = this.props.formatMessage(
-      utilsMsg.CopyAlertDescription,
-    );
-    const TransactionTextAreaPlaceholder = this.props.formatMessage(
-      utilsMsg.TransactionTextAreaPlaceholder,
-    );
-    const CopyTransactionButtonName = this.props.formatMessage(
-      utilsMsg.CopyTransactionButtonName,
-    );
-    console.log(!this.props.CopyTransactionButtonState);
+    //const {  } = this.props.form;
+    //const keyProviderLabel = this.props.formatMessage(
+    //  utilsMsg.KeyProviderFormItemLabel,
+    //);
+    //const keyProviderPlaceholder = this.props.formatMessage(
+    //  utilsMsg.KeyProviderFormItemPlaceholder,
+    //);
+    //const GetTransactionButtonName = this.props.formatMessage(
+    //  utilsMsg.GetTransactionFormItemButtonName,
+    //);
+    //const CopyAlertMessage = this.props.formatMessage(
+    //  utilsMsg.CopyAlertMessage,
+    //);
+    //const CopyAlertDescription = this.props.formatMessage(
+    //  utilsMsg.CopyAlertDescription,
+    //);
+    //const TransactionTextAreaPlaceholder = this.props.formatMessage(
+    //  utilsMsg.TransactionTextAreaPlaceholder,
+    //);
+    //const CopyTransactionButtonName = this.props.formatMessage(
+    //  utilsMsg.CopyTransactionButtonName,
+    //);
+    //console.log(!this.props.CopyTransactionButtonState);
     return (
       <div>
-        <FormItem {...formItemLayout} label={keyProviderLabel} colon>
-          {getFieldDecorator('keyProvider', {
-            rules: [{ required: true, message: keyProviderPlaceholder }],
-          })(
-            <Input
-              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder={keyProviderPlaceholder}
-            />,
-          )}
-        </FormItem>
-        <FormItem>
-          <Button
-            type="primary"
-            className="form-button"
-            onClick={this.props.GetTransactionButtonClick}
-            loading={this.props.GetTransactionButtonLoading}
-            disabled={!this.props.GetTransactionButtonDisabled}
-          >
-            {GetTransactionButtonName}
-          </Button>
-        </FormItem>
+
         <FormItem>
           <Alert
-            message={CopyAlertMessage}
-            description={CopyAlertDescription}
+            message='此页面在线使用'
+            description='将下方信息粘贴至EOSCannon离线签名工具中。'
             type="info"
-            closable
+
           />
         </FormItem>
-        <FormItem>
-          {getFieldDecorator('transaction', {
-            rules: [
-              { required: true, message: TransactionTextAreaPlaceholder },
-            ],
-          })(
-            <TextArea
-              disabled="true"
-              placeholder={TransactionTextAreaPlaceholder}
-            />,
-          )}
-        </FormItem>
+
         <FormItem>
           <div style={{ textAlign: 'center' }}>
             <QRCode value={this.props.QrCodeValue} size={256} />
           </div>
         </FormItem>
         <FormItem>
+          <TextArea value={this.props.QrCodeValue} rows='4'></TextArea>
+        </FormItem>
+        <FormItem>
           <Button
             type="primary"
             className="form-button"
-            disabled={!this.props.CopyTransactionButtonState}
             onClick={this.props.handleCopyTransaction}
           >
-            {CopyTransactionButtonName}
+            复制
           </Button>
         </FormItem>
       </div>

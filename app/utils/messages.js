@@ -130,4 +130,30 @@ export default defineMessages({
     id: 'Public FooterCompText',
     defaultMessage: 'EOS佳能荣誉出品 ©2018',
   },
+
+
+  HeaderMenuInfoInit: {
+    id: 'Public HeaderMenuInfoInit',
+    defaultMessage: '信息初始化',
+  },
+  HeaderMenuSendMessage: {
+    id: 'Public HeaderMenuSendMessage',
+    defaultMessage: '发送报文',
+  },
+  HeaderMenuAccountSearch: {
+    id: 'Public HeaderMenuAccountSearch',
+    defaultMessage: '账户查询',
+  },
+  HeaderMenuOffical: {
+    id: 'Public HeaderMenuOffical',
+    defaultMessage: '正式网',
+  },
+  HeaderMenuTestNet: {
+    id: 'Public HeaderMenuTestNet',
+    defaultMessage: '测试网',
+  },
+  ChangeTestNet: {
+    id: 'Public ChangeTestNet',
+    defaultMessage: '变更测试网',
+  },
 });

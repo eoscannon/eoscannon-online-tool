@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import notFundImg from './images/404.gif';
+//import notFundImg from './images/404.gif';
 
 export default function NotFound() {
   const LayoutContentBoxStyle = {
@@ -21,7 +21,9 @@ export default function NotFound() {
   };
   return (
     <div style={LayoutContentBoxStyle}>
-      <img alt="404" style={imgStyle} src={notFundImg} />
+      {/*
+       <img alt="404" style={imgStyle} src={notFundImg} />
+       */}
     </div>
   );
 }

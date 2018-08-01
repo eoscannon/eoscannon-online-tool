@@ -38,14 +38,19 @@ const getChainIdFromJsonInfoOrConfig = jsonInfo => {
 };
 
 const getEos = values => {
-  const { keyProvider, jsonInfo } = values;
-  const transactionHeaders = getTransactionHeadersFromJsonInfo(jsonInfo);
-  const chainId = getChainIdFromJsonInfoOrConfig(jsonInfo);
+  //const { keyProvider, jsonInfo } = values;
+  //const transactionHeaders = getTransactionHeadersFromJsonInfo(jsonInfo);
+  //const chainId = getChainIdFromJsonInfoOrConfig(jsonInfo);
   return EOS({
-    httpEndpoint: null,
-    chainId,
-    keyProvider,
-    transactionHeaders,
+    httpEndpoint: 'https://mainnet.eoscannon.io',
+    chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+  });
+};
+
+const getEosTest = values => {
+  return EOS({
+    httpEndpoint: 'https://tool.eoscannon.io/jungle',
+    chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca'
   });
 };
 
@@ -91,6 +96,7 @@ export {
   getTransactionHeadersFromJsonInfo,
   getChainIdFromJsonInfoOrConfig,
   getEos,
+  getEosTest,
   openTransactionSuccessNotification,
   openTransactionFailNotification,
   openNotification,
