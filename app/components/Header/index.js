@@ -74,7 +74,7 @@ class HeaderComp extends React.Component {
       <HeaderWrapper>
         <div className="logo">EOS Cannon</div>
 
-        <Select className="netWork"  labelInValue defaultValue={{ key: 'main' }} style={{ width: 80 }} onChange={this.handleChange}>
+        <Select className="netWork"  labelInValue defaultValue={{ key: 'main' }} style={{ width: 110 }} onChange={this.handleChange}>
           <Option value="main">{mainNet}</Option>
           <Option value="test">{testNet}</Option>
         </Select>

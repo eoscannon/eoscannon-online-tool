@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Switch, Button, message } from 'antd';
+import { Form, Icon, Input, Switch, Button, message, Modal } from 'antd';
 import copy from 'copy-to-clipboard';
 import { storage } from 'utils/storage';
 import { connect } from 'react-redux';
@@ -31,6 +31,7 @@ import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
 const FormItem = Form.Item;
+const confirm = Modal.confirm;
 
 export class SendMessagePage extends React.Component {
   constructor(props) {
@@ -75,7 +76,17 @@ export class SendMessagePage extends React.Component {
 
     }).catch((err) => {
       console.log('Err:',err);
-      message.error('发送失败');
+       confirm({
+         title: '错误信息',
+         content: err+'' ,
+         onOk() {
+           //return new Promise((resolve, reject) => {
+           //  setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+           //}).catch(() => console.log('Oops errors!'));
+         },
+         onCancel() {},
+       });
+
       //alert('发送失败.',err.message);
     });
 
