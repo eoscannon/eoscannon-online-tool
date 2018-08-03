@@ -103,13 +103,6 @@ export default class ScanQrcode extends Component {
             rules: [{ required: true, message: JsonInfoPlaceholder }],
           })(<TextArea placeholder={JsonInfoPlaceholder} rows='6'/>)}
         </FormItem>
-        <FormItem>
-          <Alert
-            message={FieldAlertMessage}
-            description={FieldAlertDescription}
-            type="info"
-          />
-        </FormItem>
       </div>
     );
   }

@@ -16,9 +16,9 @@
   "Public CopyTransactionSuccessNotificationMsg": "已复制",
   "Public CopyTransactionSuccessNotificationDescription":
     "已将签名报文复制到剪贴板，请前往https://tool.eoscannon.io/联网将报文播报发送",
-  "Public JsonAlertMessage": "请输入联网获取的Block字段",
+  "Public JsonAlertMessage": "请输入相关交易报文",
   "Public JsonAlertDescription":
-    "请前往https://tool.eoscannon.io/获取Block字段，联网打开网页，扫描二维码即可获得。",
+    "请前往离线版工具获取交易报文，打开工具，扫描二维码即可获得。",
   "Public JsonInfoPlaceholder": "请输入联网获取的Block字段",
   "Public OpenCameraButtonName": "打开摄像头",
   "Public ScanQrcodeButtonName": "扫描二维码",

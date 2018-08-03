@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   AppHelmetTitle: {
     id: 'Public AppHelmetTitle',
-    defaultMessage: '佳能大户专属投票工具(离线版)',
+    defaultMessage: '佳能大户专属投票工具(在线版)',
   },
   HeaderMenuCreateAccount: {
     id: 'Public HeaderMenuCreateAccount',
@@ -68,11 +68,11 @@ export default defineMessages({
   },
   JsonAlertMessage: {
     id: 'Public JsonAlertMessage',
-    defaultMessage: '请输入联网获取的json字段',
+    defaultMessage: '请输入相关交易报文',
   },
   JsonAlertDescription: {
     id: 'Public JsonAlertDescription',
-    defaultMessage: `请前往https://tool.eoscannon.io/获取json字段，联网打开网页，扫描二维码即可获得。`,
+    defaultMessage: `请前往离线版工具获取交易报文，打开工具，扫描二维码即可获得。`,
   },
   FieldAlertMessage: {
     id: 'Public FieldAlertMessage',
