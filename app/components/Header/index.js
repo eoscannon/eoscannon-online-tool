@@ -10,7 +10,8 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Layout, Select } from 'antd';
+import { Layout, Select, Dropdown, Button, Icon, message  } from 'antd';
+
 import { Menu } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
 import { storage } from 'utils/storage';
@@ -57,9 +58,19 @@ class HeaderComp extends React.Component {
     //}else if(value.key=='main'){
     //  storage.setNetwork('https://mainnet.eoscannon.io')
     //}
-    console.log('this.props.network header====',this.props.netWork )
-    const network = this.props.netWork === 'main' ? 'test' : 'main';
-    this.props.onDispatchChangeNetworkReducer(network);
+    if(value.key == '1'){
+      location.href('https://github.com/eoscannon/EosCannon-Online-Tools-App/releases')
+    }else if(value.key == '2'){
+      location.href('https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases')
+    }
+  }
+
+  handleMenuClick=(value)=> {
+    //if(value.key == '1'){
+    //  location.href('https://github.com/eoscannon/EosCannon-Online-Tools-App/releases')
+    //}else if(value.key == '2'){
+    //  location.href('https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases')
+    //}
   }
 
   render() {
@@ -69,41 +80,65 @@ class HeaderComp extends React.Component {
     const accountSearch = formatMessage(utilsMsg.HeaderMenuAccountSearch);
     const mainNet = formatMessage(utilsMsg.HeaderMenuOffical);
     const testNet = formatMessage(utilsMsg.HeaderMenuTestNet);
-
+    const menu = (
+      <Menu onClick={this.handleMenuClick}>
+        <Menu.Item key="1"><a href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases"><Icon type="android" />在线APP</a></Menu.Item>
+        <Menu.Item key="2"><a href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"><Icon type="android" />离线APP</a></Menu.Item>
+      </Menu>
+    );
     return (
       <HeaderWrapper>
         <div className="logo">EOS Cannon</div>
+          <div className='headerContent'>
+            <Select className="netWork"  labelInValue defaultValue={{ key: 'main' }} style={{ width: 110 }} onChange={this.handleChange}>
+              <Option value="main">{mainNet}</Option>
+              <Option value="test">{testNet}</Option>
+            </Select>
+            <div className="en" aria-hidden="true" onClick={this.changeLanguage}>
+              {this.props.locale === 'en' ? '中文' : 'English'}
+            </div>
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={[this.state.defaultSelectedKeys]}
+              style={{ lineHeight: '64px' }}
+            >
+              <Menu.Item key="8">
+                <Link href="/infoInit" to="/infoInit">
+                  {createAccount}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="1">
+                <Link href="/sendMessage" to="/sendMessage">
+                  {stake}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Link href="/accountSearch" to="/accountSearch">
+                  {accountSearch}
+                </Link>
+              </Menu.Item>
 
-        <Select className="netWork"  labelInValue defaultValue={{ key: 'main' }} style={{ width: 110 }} onChange={this.handleChange}>
-          <Option value="main">{mainNet}</Option>
-          <Option value="test">{testNet}</Option>
-        </Select>
-        <div className="en" aria-hidden="true" onClick={this.changeLanguage}>
-          {this.props.locale === 'en' ? '中文' : 'English'}
+              <Menu.Item key="4">
+                <a  href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases" target='_blank'>
+                  在线APP下载
+                </a>
+              </Menu.Item>
+              <Menu.Item key="5">
+                <a  href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"  target='_blank'>
+                  离线APP下载
+                </a>
+              </Menu.Item>
+            </Menu>
+          </div>
+        <div className='dropDownContent'>
+          <Dropdown overlay={menu}>
+            <Button style={{ marginLeft: 8 }}>
+              APP下载 <Icon type="down" />
+            </Button>
+          </Dropdown>
         </div>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={[this.state.defaultSelectedKeys]}
-          style={{ lineHeight: '64px' }}
-        >
-          <Menu.Item key="8">
-            <Link href="/infoInit" to="/infoInit">
-              {createAccount}
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="1">
-            <Link href="/sendMessage" to="/sendMessage">
-              {stake}
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Link href="/accountSearch" to="/accountSearch">
-              {accountSearch}
-            </Link>
-          </Menu.Item>
 
-        </Menu>
       </HeaderWrapper>
     );
   }
@@ -141,6 +176,21 @@ const HeaderWrapper = styled(Header)`
   position: fixed;
   z-index: 1000;
   width: 100%;
+  .dropDownContent{
+      display: none;
+    }
+  @media (max-width: 700px) {
+    .headerContent{
+      display: none;
+
+    }
+    .dropDownContent{
+      display: block;
+      float: right;
+    }
+
+  }
+
   .logo {
     width: 113px;
     height: 31px;
@@ -150,6 +200,8 @@ const HeaderWrapper = styled(Header)`
     font-weight: bold;
     color: #f5cb48;
     float: left;
+    margin-right: 1.5rem;
+
   }
   .en {
     cursor: pointer;

@@ -12,6 +12,7 @@ import { storage } from 'utils/storage';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
+import styleComps from './styles';
 
 import {
   formItemLayout,
@@ -99,23 +100,26 @@ export class SendMessagePage extends React.Component {
     return (
       <LayoutContent>
         <LayoutContentBox>
-          <FormComp>
-            <ScanQrcode
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}/>
-          </FormComp>
-          <FormComp>
-            <Button
-              type="primary"
-              className="form-button"
-              onClick={this.sendMessage}>
-              发送
-            </Button>
+          <styleComps.ConBox>
 
-          </FormComp>
-          <FormComp>
-            <FormItem style={{ textAlign: 'center'}}>txid:{this.state.transaction_id}</FormItem>
-          </FormComp>
+            <FormComp>
+              <ScanQrcode
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}/>
+            </FormComp>
+            <FormComp>
+              <Button
+                type="primary"
+                className="form-button"
+                onClick={this.sendMessage}>
+                发送
+              </Button>
+
+            </FormComp>
+            <FormComp>
+              <FormItem style={{ textAlign: 'center'}}>txid:{this.state.transaction_id}</FormItem>
+            </FormComp>
+          </styleComps.ConBox>
         </LayoutContentBox>
       </LayoutContent>
     );

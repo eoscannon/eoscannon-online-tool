@@ -108,8 +108,14 @@ export class AccountSearchPage extends React.Component {
         symbolCode: key.key,
       })
     }).catch((err)=>{
-      message.error('服务器错误');
+      message.error('暂无数据');
       console.log('err:',err)
+      this.setState(
+        { balance:  0 ,
+          symbolBlance:  0,
+          symbolCode: ""
+        }
+      )
     });
   }
   /**
@@ -188,11 +194,11 @@ export class AccountSearchPage extends React.Component {
           }
         )
       }).catch((err)=>{
-        message.error('服务器错误');
+        message.error('暂无数据');
         console.log('err:',err)
       });
     }).catch((err)=>{
-      message.error('服务器错误');
+      message.error('暂无数据');
       console.log('err:',err)
     });
 
@@ -202,7 +208,6 @@ export class AccountSearchPage extends React.Component {
 
 
   render() {
-
     const  columnsBlance= [{
       title: '余额',
       dataIndex: 'name',
@@ -235,21 +240,21 @@ export class AccountSearchPage extends React.Component {
       address:  this.state.ownerAdd,
     }];
 
-    const { getFieldDecorator } = this.props.form;
-    const TransferFromAccountNamePlaceholder = this.state.formatMessage(
-      messages.TransferFromAccountNamePlaceholder
-    );
-    const TransferToAccountNamePlaceholder = this.state.formatMessage(
-      messages.TransferToAccountNamePlaceholder
-    );
+    //const { getFieldDecorator } = this.props.form;
+    //const TransferFromAccountNamePlaceholder = this.state.formatMessage(
+    //  messages.TransferFromAccountNamePlaceholder
+    //);
+    //const TransferToAccountNamePlaceholder = this.state.formatMessage(
+    //  messages.TransferToAccountNamePlaceholder
+    //);
 
-    console.log('state:',this.state)
-    const FromLabel = this.state.formatMessage(messages.FromLabel);
-    const ToLabel = this.state.formatMessage(messages.ToLabel);
-    const ContractLabel = this.state.formatMessage(messages.ContractLabel);
-    const QuantityLabel = this.state.formatMessage(messages.QuantityLabel);
-    const DigitLabel = this.state.formatMessage(messages.DigitLabel);
-    const SymbolLabel = this.state.formatMessage(messages.SymbolLabel);
+    //console.log('state:',this.state)
+    //const FromLabel = this.state.formatMessage(messages.FromLabel);
+    //const ToLabel = this.state.formatMessage(messages.ToLabel);
+    //const ContractLabel = this.state.formatMessage(messages.ContractLabel);
+    //const QuantityLabel = this.state.formatMessage(messages.QuantityLabel);
+    //const DigitLabel = this.state.formatMessage(messages.DigitLabel);
+    //const SymbolLabel = this.state.formatMessage(messages.SymbolLabel);
     return (
       <LayoutContent>
         <LayoutContentBox>
@@ -308,7 +313,7 @@ export class AccountSearchPage extends React.Component {
                       <div style={{padding:'1rem 0'}}>
                         <span>代币：</span>
                         <Select labelInValue defaultValue={{ key: 'EOS' }} style={{ width: 120 }} onChange={this.handleChange}>
-                          <Option value="EOS">EOS</Option>
+                          <Option value="eosio.token">EOS</Option>
                           <Option value="everipediaiq">IQ</Option>
                           <Option value="gyztomjugage">CETOS</Option>
                           <Option value="eoxeoxeoxeox">EOX</Option>
