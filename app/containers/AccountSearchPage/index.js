@@ -212,8 +212,6 @@ export class AccountSearchPage extends React.Component {
       this.setState({info : ''})
       console.log('err:',err)
     });
-
-
   }
 
 
@@ -326,6 +324,7 @@ export class AccountSearchPage extends React.Component {
                         <Select labelInValue defaultValue={{ key: 'EOS' }} style={{ width: 120 }} onChange={this.handleChange}>
                           <Option value="eosio.token">EOS</Option>
                           <Option value="everipediaiq">IQ</Option>
+                          <Option value="eosiomeetone">MEETONE</Option>
                           <Option value="gyztomjugage">CETOS</Option>
                           <Option value="eoxeoxeoxeox">EOX</Option>
                           <Option value="ednazztokens">EDNA</Option>

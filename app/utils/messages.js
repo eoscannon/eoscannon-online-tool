@@ -156,4 +156,12 @@ export default defineMessages({
     id: 'Public ChangeTestNet',
     defaultMessage: '变更测试网',
   },
+  HeaderOnlineAppDownLoad: {
+    id: 'Public HeaderOnlineAppDownLoad',
+    defaultMessage: '在线APP下载',
+  },
+  HeaderOfflineAppDownLoad: {
+    id: 'Public HeaderOfflineAppDownLoad',
+    defaultMessage: '离线APP下载',
+  },
 });
