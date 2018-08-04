@@ -52,12 +52,8 @@ class HeaderComp extends React.Component {
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };
   handleChange=(value)=> {
-    console.log(value); // { key: "lucy", label: "Lucy (101)" }
-    //if(value.key=='test') {
-    //  storage.setNetwork('https://tool.eoscannon.io/jungle')
-    //}else if(value.key=='main'){
-    //  storage.setNetwork('https://mainnet.eoscannon.io')
-    //}
+    //console.log(value); // { key: "lucy", label: "Lucy (101)" }
+
     console.log('this.props.network header====',this.props.netWork )
     const network = this.props.netWork === 'main' ? 'test' : 'main';
     this.props.onDispatchChangeNetworkReducer(network);
@@ -79,6 +75,8 @@ class HeaderComp extends React.Component {
     const accountSearch = formatMessage(utilsMsg.HeaderMenuAccountSearch);
     const mainNet = formatMessage(utilsMsg.HeaderMenuOffical);
     const testNet = formatMessage(utilsMsg.HeaderMenuTestNet);
+    const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
+    const OfflineAppDownLoad = formatMessage(utilsMsg.HeaderOfflineAppDownLoad);
     const menu = (
       <Menu onClick={this.handleMenuClick}>
         <Menu.Item key="1"><a href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases"><Icon type="android" />在线APP</a></Menu.Item>
@@ -120,12 +118,12 @@ class HeaderComp extends React.Component {
 
               <Menu.Item key="4">
                 <a  href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases" target='_blank'>
-                  在线APP下载
+                  {OnlineAppDownLoad}
                 </a>
               </Menu.Item>
               <Menu.Item key="5">
                 <a  href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"  target='_blank'>
-                  离线APP下载
+                  {OfflineAppDownLoad}
                 </a>
               </Menu.Item>
             </Menu>

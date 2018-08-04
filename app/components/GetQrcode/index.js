@@ -19,9 +19,9 @@ export default class GetQrcode extends Component {
   }
 
   render() {
-    //const {  } = this.props.form;
+    //const { getFieldDecorator } = this.props.form;
     //const keyProviderLabel = this.props.formatMessage(
-    //  utilsMsg.KeyProviderFormItemLabel,
+    //  utilsMsg.KeyProviderFormItemLabel
     //);
     //const keyProviderPlaceholder = this.props.formatMessage(
     //  utilsMsg.KeyProviderFormItemPlaceholder,
@@ -50,7 +50,6 @@ export default class GetQrcode extends Component {
             message='此页面在线使用'
             description='将下方信息粘贴至EOSCannon离线签名工具中。'
             type="info"
-
           />
         </FormItem>
 

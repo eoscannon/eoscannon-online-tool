@@ -134,5 +134,7 @@
   "Public HeaderMenuAccountSearch": "账户查询",
   "Public HeaderMenuOffical": "正式网",
   "Public HeaderMenuTestNet": "测试网",
-  "Public ChangeTestNet": ""
+  "Public ChangeTestNet": "变更测试网",
+  "Public HeaderOnlineAppDownLoad": "在线APP下载",
+  "Public HeaderOfflineAppDownLoad": "离线APP下载"
 }

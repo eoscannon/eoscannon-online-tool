@@ -155,10 +155,11 @@
   "boilerplate.containers.LocaleToggle.en": "en",
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
 
-  "Public HeaderMenuInfoInit": "InfoInit",
+  "Public HeaderMenuInfoInit": "Intial Block Info",
   "Public HeaderMenuSendMessage": "Send Message",
   "Public HeaderMenuAccountSearch": "Account Search",
   "Public HeaderMenuOffical": "Main",
   "Public HeaderMenuTestNet": "Test",
-  "Public ChangeTestNet": "change TestNet"
+  "Public HeaderOnlineAppDownLoad": "Online Tools DownLoad",
+  "Public HeaderOfflineAppDownLoad": "Offline Tools DownLoad"
 }
