@@ -45,6 +45,7 @@ export class AccountSearchPage extends React.Component {
       balance:0,
       stake:0,
       voteNode:'暂无',
+      voteNodeStatus: true,
       memoryContent:'',
       cpuContent:'',
       networkContent:'',
@@ -61,6 +62,7 @@ export class AccountSearchPage extends React.Component {
       activeAdd: '',
       ownerAdd: '',
       symbolCode: '',
+      voteProxy: '暂无',
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
     };
   }
@@ -69,11 +71,14 @@ export class AccountSearchPage extends React.Component {
    * */
   componentWillReceiveProps(nextProps) {
     this.setState({netWorkStatus: nextProps.netWork})
+    console.log("nextProps netWork",nextProps.netWork)
 
   }
 
   componentWillMount(){
     this.setState({netWorkStatus: this.props.netWork})
+    console.log("this.props netWork",this.props.netWork)
+
   }
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
@@ -138,9 +143,14 @@ export class AccountSearchPage extends React.Component {
     let stake = 0
     let cpuBack, netWork ,cpuScale , netScale
     eos.getAccount({'account_name': value}).then((info) => {
-      if(info.voter_info && info.voter_info.producers) {
-        for (let i = 0; i < info.voter_info.producers.length; i++) {
-          producer = info.voter_info.producers[i] + ' , ' + producer
+      if(info.voter_info ) {
+        this.setState({voteProxy : info.voter_info.proxy })
+        if(info.voter_info.producers.length < 1){
+          this.setState({voteNodeStatus :false})
+        }else{
+          for (let i = 0; i < info.voter_info.producers.length; i++) {
+            producer = info.voter_info.producers[i] + ' , ' + producer
+          }
         }
       }
       if(info.voter_info){
@@ -154,12 +164,12 @@ export class AccountSearchPage extends React.Component {
         netWork = '0 EOS'
       }
       if(info.cpu_limit.used){
-        cpuScale = ((info.cpu_limit.used / info.cpu_limit.max)*100).toFixed(1)
+        cpuScale = ((info.cpu_limit.used / info.cpu_limit.max)*100).toFixed(2)
       }else{
         cpuScale = 0
       }
       if(info.net_limit.used){
-        netScale = ((info.net_limit.used / info.net_limit.max)*100).toFixed(1)
+        netScale = ((info.net_limit.used / info.net_limit.max)*100).toFixed(2)
       }else{
         netScale = 0
       }
@@ -173,7 +183,7 @@ export class AccountSearchPage extends React.Component {
           networkContent: info.net_limit.used + ' bytes/' +((info.net_limit.max/1024)/1024).toFixed(2)+' Mib',
           cpuMortgage: cpuBack,
           networkMortgage: netWork,
-          memoryScale: ((parseInt(info.ram_usage)/parseInt(info.ram_quota))).toFixed(2).slice(2,4),
+          memoryScale: ((parseInt(info.ram_usage)/parseInt(info.ram_quota))*100).toFixed(2),
           cpuScale: cpuScale,
           networkScale: netScale,
           activeAdd: info.permissions[0].required_auth.keys[0].key,
@@ -199,6 +209,7 @@ export class AccountSearchPage extends React.Component {
       });
     }).catch((err)=>{
       message.error('暂无数据');
+      this.setState({info : ''})
       console.log('err:',err)
     });
 
@@ -269,15 +280,15 @@ export class AccountSearchPage extends React.Component {
           </FormComp>
             {this.state.info ? (
               <div>
-
-
                 <div className='content'>
                   <div className='firstContent'>
                     <span>账户：{this.state.account}</span>
                     <span>创建时间：{this.state.createTime}</span>
                     <span>EOS余额：{this.state.balance}</span>
                     <span>EOS抵押：{this.state.stake}</span>
-                    <span>已投节点：{this.state.voteNode}</span>
+                    <span>已投代理：{this.state.voteProxy}</span>
+                    {this.state.voteNodeStatus ? (<span>已投节点：{this.state.voteNode}</span>) : (<span></span>)}
+
                   </div>
                   <div className='secondContent'>
                     <div className='contentDetail'>
@@ -293,7 +304,7 @@ export class AccountSearchPage extends React.Component {
                         <span>{this.state.cpuContent}</span>
                         <span className='contentDetailDescTitle'>CPU</span>
                         <span>抵押：{this.state.cpuStake}</span>
-                        <span>赎回：{this.state.cpuStake }</span>
+                        <span>赎回中：{this.state.cpuMortgage }</span>
                       </div>
                     </div>
                     <div className='contentDetail'>
@@ -302,7 +313,7 @@ export class AccountSearchPage extends React.Component {
                         <span>{this.state.networkContent}</span>
                         <span className='contentDetailDescTitle'>网络</span>
                         <span>抵押：{this.state.networkStake}</span>
-                        <span>赎回：{this.state.networkMortgage}</span>
+                        <span>赎回中：{this.state.networkMortgage}</span>
                       </div>
                     </div>
                   </div>

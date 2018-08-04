@@ -58,11 +58,10 @@ class HeaderComp extends React.Component {
     //}else if(value.key=='main'){
     //  storage.setNetwork('https://mainnet.eoscannon.io')
     //}
-    if(value.key == '1'){
-      location.href('https://github.com/eoscannon/EosCannon-Online-Tools-App/releases')
-    }else if(value.key == '2'){
-      location.href('https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases')
-    }
+    console.log('this.props.network header====',this.props.netWork )
+    const network = this.props.netWork === 'main' ? 'test' : 'main';
+    this.props.onDispatchChangeNetworkReducer(network);
+
   }
 
   handleMenuClick=(value)=> {
