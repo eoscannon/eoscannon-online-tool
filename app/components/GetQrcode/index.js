@@ -19,36 +19,35 @@ export default class GetQrcode extends Component {
   }
 
   render() {
-    //const { getFieldDecorator } = this.props.form;
-    //const keyProviderLabel = this.props.formatMessage(
+    // const { getFieldDecorator } = this.props.form;
+    // const keyProviderLabel = this.props.formatMessage(
     //  utilsMsg.KeyProviderFormItemLabel
-    //);
-    //const keyProviderPlaceholder = this.props.formatMessage(
+    // );
+    // const keyProviderPlaceholder = this.props.formatMessage(
     //  utilsMsg.KeyProviderFormItemPlaceholder,
-    //);
-    //const GetTransactionButtonName = this.props.formatMessage(
+    // );
+    // const GetTransactionButtonName = this.props.formatMessage(
     //  utilsMsg.GetTransactionFormItemButtonName,
-    //);
-    //const CopyAlertMessage = this.props.formatMessage(
+    // );
+    // const CopyAlertMessage = this.props.formatMessage(
     //  utilsMsg.CopyAlertMessage,
-    //);
-    //const CopyAlertDescription = this.props.formatMessage(
+    // );
+    // const CopyAlertDescription = this.props.formatMessage(
     //  utilsMsg.CopyAlertDescription,
-    //);
-    //const TransactionTextAreaPlaceholder = this.props.formatMessage(
+    // );
+    // const TransactionTextAreaPlaceholder = this.props.formatMessage(
     //  utilsMsg.TransactionTextAreaPlaceholder,
-    //);
-    //const CopyTransactionButtonName = this.props.formatMessage(
+    // );
+    // const CopyTransactionButtonName = this.props.formatMessage(
     //  utilsMsg.CopyTransactionButtonName,
-    //);
-    //console.log(!this.props.CopyTransactionButtonState);
+    // );
+    // console.log(!this.props.CopyTransactionButtonState);
     return (
       <div>
-
         <FormItem>
           <Alert
-            message='此页面在线使用'
-            description='将下方信息粘贴至EOSCannon离线签名工具中。'
+            message="此页面在线使用"
+            description="将下方信息粘贴至EOSCannon离线签名工具中。"
             type="info"
           />
         </FormItem>
@@ -59,7 +58,7 @@ export default class GetQrcode extends Component {
           </div>
         </FormItem>
         <FormItem>
-          <TextArea value={this.props.QrCodeValue} rows='4'></TextArea>
+          <TextArea value={this.props.QrCodeValue} rows="4" />
         </FormItem>
         <FormItem>
           <Button

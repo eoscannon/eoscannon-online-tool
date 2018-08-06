@@ -5,10 +5,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Input, Alert, Icon } from 'antd';
+import { Form, Button, Input, Alert } from 'antd';
 import QRCode from 'qrcode.react';
+import copy from 'copy-to-clipboard';
 import utilsMsg from '../../utils/messages';
-import { formItemLayout } from '../../utils/utils';
+import { openNotification } from '../../utils/utils';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -16,17 +17,36 @@ const { TextArea } = Input;
 export default class DealGetQrcode extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      CopyTransactionButtonState: false,
+    };
   }
+
+  /**
+   * 输入框内容变化时，改变按钮状态
+   * */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.transaction) {
+      this.setState({
+        CopyTransactionButtonState:
+          nextProps.GetTransactionButtonState && !!nextProps.transaction,
+      });
+    }
+  }
+
+  /**
+   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
+   * */
+  handleCopyTransaction = () => {
+    if (!this.state.CopyTransactionButtonState) {
+      return;
+    }
+    copy(this.props.transaction);
+    openNotification(this.props.formatMessage);
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const keyProviderLabel = this.props.formatMessage(
-      utilsMsg.KeyProviderFormItemLabel,
-    );
-    const keyProviderPlaceholder = this.props.formatMessage(
-      utilsMsg.KeyProviderFormItemPlaceholder,
-    );
     const GetTransactionButtonName = this.props.formatMessage(
       utilsMsg.GetTransactionFormItemButtonName,
     );
@@ -42,7 +62,6 @@ export default class DealGetQrcode extends Component {
     const CopyTransactionButtonName = this.props.formatMessage(
       utilsMsg.CopyTransactionButtonName,
     );
-    console.log(!this.props.CopyTransactionButtonState);
     return (
       <div>
         <FormItem>
@@ -50,8 +69,7 @@ export default class DealGetQrcode extends Component {
             type="primary"
             className="form-button"
             onClick={this.props.GetTransactionButtonClick}
-            loading={this.props.GetTransactionButtonLoading}
-            disabled={!this.props.GetTransactionButtonDisabled}
+            disabled={!this.props.GetTransactionButtonState}
           >
             {GetTransactionButtonName}
           </Button>
@@ -85,8 +103,8 @@ export default class DealGetQrcode extends Component {
           <Button
             type="primary"
             className="form-button"
-            disabled={!this.props.CopyTransactionButtonState}
-            onClick={this.props.handleCopyTransaction}
+            disabled={!this.state.CopyTransactionButtonState}
+            onClick={this.handleCopyTransaction}
           >
             {CopyTransactionButtonName}
           </Button>
@@ -100,9 +118,7 @@ DealGetQrcode.propTypes = {
   form: PropTypes.object,
   formatMessage: PropTypes.func,
   GetTransactionButtonClick: PropTypes.func,
-  GetTransactionButtonLoading: PropTypes.bool,
-  GetTransactionButtonDisabled: PropTypes.bool,
+  GetTransactionButtonState: PropTypes.bool,
   QrCodeValue: PropTypes.string,
-  CopyTransactionButtonState: PropTypes.bool,
-  handleCopyTransaction: PropTypes.func,
+  transaction: PropTypes.string,
 };
