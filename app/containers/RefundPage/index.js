@@ -21,7 +21,7 @@ import {
   FormComp,
 } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
-import GetQrcode from '../../components/GetQrcode';
+import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
@@ -49,13 +49,12 @@ export class RefundPage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
-    const { jsonInfo, keyProvider, AccountName, transaction } = values;
+    const { AccountName, transaction } = values;
     this.setState({
-      GetTransactionButtonState: jsonInfo && keyProvider && AccountName,
+      GetTransactionButtonState: AccountName,
     });
     this.setState({
-      CopyTransactionButtonState:
-        jsonInfo && keyProvider && AccountName && transaction,
+      CopyTransactionButtonState: AccountName && transaction,
     });
   };
   /**
@@ -72,9 +71,15 @@ export class RefundPage extends React.Component {
     const eos = getEos(values);
     const { AccountName } = values;
     eos
-      .refund({
-        owner: AccountName,
-      })
+      .refund(
+        {
+          owner: AccountName,
+        },
+        {
+          sign: false,
+          broadcast: false,
+        },
+      )
       .then(tr => {
         this.props.form.setFieldsValue({
           transaction: JSON.stringify(tr.transaction),
@@ -129,10 +134,6 @@ export class RefundPage extends React.Component {
                 closable
               />
             </FormItem>
-            <ScanQrcode
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-            />
             <FormItem {...formItemLayout} label={OwnerLabel} colon>
               {getFieldDecorator('AccountName', {
                 rules: [{ required: true, message: OwnerPlaceholder }],
@@ -145,19 +146,21 @@ export class RefundPage extends React.Component {
                 />,
               )}
             </FormItem>
-            <GetQrcode
+            <DealGetQrcode
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
               GetTransactionButtonLoading={
                 this.state.GetTransactionButtonLoading
               }
-              GetTransactionButtonDisabled={
-                this.state.GetTransactionButtonState
-              }
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
               CopyTransactionButtonState={this.state.CopyTransactionButtonState}
               handleCopyTransaction={this.handleCopyTransaction}
+            />
+            <ScanQrcode
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
             />
           </FormComp>
         </LayoutContentBox>

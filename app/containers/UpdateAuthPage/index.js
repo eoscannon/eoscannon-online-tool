@@ -22,7 +22,7 @@ import {
   FormComp,
 } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
-import GetQrcode from '../../components/GetQrcode';
+import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
@@ -57,8 +57,7 @@ export class UpdateAuthPage extends React.Component {
     const values = nextProps.form.getFieldsValue();
     const {
       CheckKeyProvide,
-      jsonInfo,
-      keyProvider,
+
       AccountName,
       ActiveKey,
       OwnerKey,
@@ -68,16 +67,11 @@ export class UpdateAuthPage extends React.Component {
       GetCheckPrivateKeyButtonState: !CheckKeyProvide,
     });
     this.setState({
-      GetTransactionButtonState:
-        jsonInfo && keyProvider && AccountName && (ActiveKey || OwnerKey),
+      GetTransactionButtonState: AccountName && (ActiveKey || OwnerKey),
     });
     this.setState({
       CopyTransactionButtonState:
-        jsonInfo &&
-        keyProvider &&
-        AccountName &&
-        (ActiveKey || OwnerKey) &&
-        transaction,
+        AccountName && (ActiveKey || OwnerKey) && transaction,
     });
   };
   /**
@@ -179,9 +173,15 @@ export class UpdateAuthPage extends React.Component {
       actions.push(UpdateOwnerKeyAction);
     }
     eos
-      .transaction({
-        actions,
-      })
+      .transaction(
+        {
+          actions,
+        },
+        {
+          sign: false,
+          broadcast: false,
+        },
+      )
       .then(tr => {
         this.props.form.setFieldsValue({
           transaction: JSON.stringify(tr.transaction),
@@ -298,10 +298,6 @@ export class UpdateAuthPage extends React.Component {
               </FormItem>
             </Card>
             <Card title={ModifyPrivateKeyTitle}>
-              <ScanQrcode
-                form={this.props.form}
-                formatMessage={this.state.formatMessage}
-              />
               <FormItem {...formItemLayout} label={AccountLabel} colon>
                 {getFieldDecorator('AccountName', {
                   rules: [
@@ -359,16 +355,14 @@ export class UpdateAuthPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <GetQrcode
+              <DealGetQrcode
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}
                 GetTransactionButtonClick={this.handleGetTransaction}
                 GetTransactionButtonLoading={
                   this.state.GetTransactionButtonLoading
                 }
-                GetTransactionButtonDisabled={
-                  this.state.GetTransactionButtonState
-                }
+                GetTransactionButtonState={this.state.GetTransactionButtonState}
                 QrCodeValue={this.state.QrCodeValue}
                 CopyTransactionButtonState={
                   this.state.CopyTransactionButtonState
@@ -376,6 +370,10 @@ export class UpdateAuthPage extends React.Component {
                 handleCopyTransaction={this.handleCopyTransaction}
               />
             </Card>
+            <ScanQrcode
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
+            />
           </FormComp>
         </LayoutContentBox>
       </LayoutContent>

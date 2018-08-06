@@ -10,10 +10,6 @@ export default defineMessages({
     id: 'Public AppHelmetTitle',
     defaultMessage: '佳能大户专属投票工具(在线版)',
   },
-  HeaderMenuCreateAccount: {
-    id: 'Public HeaderMenuCreateAccount',
-    defaultMessage: '账号创建',
-  },
   HeaderMenuDelegate: {
     id: 'Public HeaderMenuDelegate',
     defaultMessage: '质押/解质押',

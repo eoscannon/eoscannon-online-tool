@@ -50,8 +50,6 @@ export class CreateAccountPage extends React.Component {
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
     const {
-      jsonInfo,
-      //keyProvider,
       AccountName,
       NewAccountName,
       ActiveKey,
@@ -59,12 +57,21 @@ export class CreateAccountPage extends React.Component {
       Bytes,
       StakeNetQuantity,
       StakeCpuQuantity,
-      transaction,
     } = values;
+    console.log('values===', values);
     this.setState({
       GetTransactionButtonState:
-        jsonInfo &&
-        //keyProvider &&
+        !!AccountName &&
+        !!NewAccountName &&
+        !!ActiveKey &&
+        !!OwnerKey &&
+        !!Bytes &&
+        !!StakeNetQuantity &&
+        !!StakeCpuQuantity,
+    });
+
+    this.setState({
+      CopyTransactionButtonState:
         AccountName &&
         NewAccountName &&
         ActiveKey &&
@@ -72,19 +79,6 @@ export class CreateAccountPage extends React.Component {
         Bytes &&
         StakeNetQuantity &&
         StakeCpuQuantity,
-    });
-    this.setState({
-      CopyTransactionButtonState:
-        jsonInfo &&
-        //keyProvider &&
-        AccountName &&
-        NewAccountName &&
-        ActiveKey &&
-        OwnerKey &&
-        Bytes &&
-        StakeNetQuantity &&
-        StakeCpuQuantity &&
-        transaction,
     });
   };
   /**
@@ -165,9 +159,15 @@ export class CreateAccountPage extends React.Component {
     };
     actions.push(DelegateBwAction);
     eos
-      .transaction({
-        actions,
-      })
+      .transaction(
+        {
+          actions,
+        },
+        {
+          sign: false,
+          broadcast: false,
+        },
+      )
       .then(tr => {
         this.props.form.setFieldsValue({
           transaction: JSON.stringify(tr.transaction),
@@ -199,6 +199,10 @@ export class CreateAccountPage extends React.Component {
   };
 
   render() {
+    console.log(
+      'this.state.GetTransactionButtonState:',
+      this.state.GetTransactionButtonState,
+    );
     const { getFieldDecorator } = this.props.form;
     const CreatorAccountNamePlaceholder = this.state.formatMessage(
       messages.CreatorAccountNamePlaceholder,
@@ -232,10 +236,6 @@ export class CreateAccountPage extends React.Component {
       <LayoutContent>
         <LayoutContentBox>
           <FormComp>
-            <ScanQrcode
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-            />
             <FormItem {...formItemLayout} label={CreatorLabel} colon>
               {getFieldDecorator('AccountName', {
                 rules: [
@@ -287,7 +287,7 @@ export class CreateAccountPage extends React.Component {
                     <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
                   }
                   placeholder={OwnerKeyPlaceholder}
-                />
+                />,
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="ActiveKey" colon>
@@ -296,15 +296,15 @@ export class CreateAccountPage extends React.Component {
                   {
                     required: true,
                     message: ActiveKeyPlaceholder,
-                  }
-                ]
+                  },
+                ],
               })(
                 <Input
                   prefix={
                     <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
                   }
                   placeholder={ActiveKeyPlaceholder}
-                />
+                />,
               )}
             </FormItem>
             <FormItem
@@ -329,7 +329,7 @@ export class CreateAccountPage extends React.Component {
                     />
                   }
                   placeholder={BytesPlaceholder}
-                />
+                />,
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="StakeNet" colon>
@@ -349,7 +349,7 @@ export class CreateAccountPage extends React.Component {
                     />
                   }
                   placeholder={StakeNetQuantityPlaceholder}
-                />
+                />,
               )}
             </FormItem>
             <FormItem {...formItemLayout} label="StakeCpu" colon>
@@ -369,7 +369,7 @@ export class CreateAccountPage extends React.Component {
                     />
                   }
                   placeholder={StakeCpuQuantityPlaceholder}
-                />
+                />,
               )}
             </FormItem>
             <DealGetQrcode
@@ -379,12 +379,14 @@ export class CreateAccountPage extends React.Component {
               GetTransactionButtonLoading={
                 this.state.GetTransactionButtonLoading
               }
-              GetTransactionButtonDisabled={
-                this.state.GetTransactionButtonState
-              }
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
               CopyTransactionButtonState={this.state.CopyTransactionButtonState}
               handleCopyTransaction={this.handleCopyTransaction}
+            />
+            <ScanQrcode
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
             />
           </FormComp>
         </LayoutContentBox>

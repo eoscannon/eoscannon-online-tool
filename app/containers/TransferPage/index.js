@@ -23,7 +23,7 @@ import {
   FormComp,
 } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
-import GetQrcode from '../../components/GetQrcode';
+import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
@@ -53,8 +53,8 @@ export class TransferPage extends React.Component {
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
     const {
-      jsonInfo,
-      keyProvider,
+      // jsonInfo,
+      // keyProvider,
       FromAccountName,
       ToAccountName,
       transferContract,
@@ -65,8 +65,8 @@ export class TransferPage extends React.Component {
     } = values;
     this.setState({
       GetTransactionButtonState:
-        jsonInfo &&
-        keyProvider &&
+        // jsonInfo &&
+        // keyProvider &&
         FromAccountName &&
         ToAccountName &&
         transferContract &&
@@ -76,8 +76,8 @@ export class TransferPage extends React.Component {
     });
     this.setState({
       CopyTransactionButtonState:
-        jsonInfo &&
-        keyProvider &&
+        // jsonInfo &&
+        // keyProvider &&
         FromAccountName &&
         ToAccountName &&
         transferContract &&
@@ -118,28 +118,34 @@ export class TransferPage extends React.Component {
       }
     }
     eos
-      .transaction({
-        actions: [
-          {
-            account: transferContract,
-            name: 'transfer',
-            authorization: [
-              {
-                actor: FromAccountName,
-                permission: 'active',
+      .transaction(
+        {
+          actions: [
+            {
+              account: transferContract,
+              name: 'transfer',
+              authorization: [
+                {
+                  actor: FromAccountName,
+                  permission: 'active',
+                },
+              ],
+              data: {
+                from: FromAccountName,
+                to: ToAccountName,
+                quantity: `${Number(transferQuantity).toFixed(
+                  Number(transferDigit),
+                )} ${transferSymbol.toUpperCase()}`,
+                memo: transferMemo || '',
               },
-            ],
-            data: {
-              from: FromAccountName,
-              to: ToAccountName,
-              quantity: `${Number(transferQuantity).toFixed(
-                Number(transferDigit),
-              )} ${transferSymbol.toUpperCase()}`,
-              memo: transferMemo || '',
             },
-          },
-        ],
-      })
+          ],
+        },
+        {
+          sign: false,
+          broadcast: false,
+        },
+      )
       .then(tr => {
         this.props.form.setFieldsValue({
           transaction: JSON.stringify(tr.transaction),
@@ -206,10 +212,6 @@ export class TransferPage extends React.Component {
       <LayoutContent>
         <LayoutContentBox>
           <FormComp>
-            <ScanQrcode
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-            />
             <FormItem {...formItemLayout} label={FromLabel} colon>
               {getFieldDecorator('FromAccountName', {
                 rules: [
@@ -335,19 +337,21 @@ export class TransferPage extends React.Component {
                 />,
               )}
             </FormItem>
-            <GetQrcode
+            <DealGetQrcode
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
               GetTransactionButtonLoading={
                 this.state.GetTransactionButtonLoading
               }
-              GetTransactionButtonDisabled={
-                this.state.GetTransactionButtonState
-              }
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
               CopyTransactionButtonState={this.state.CopyTransactionButtonState}
               handleCopyTransaction={this.handleCopyTransaction}
+            />
+            <ScanQrcode
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
             />
           </FormComp>
         </LayoutContentBox>

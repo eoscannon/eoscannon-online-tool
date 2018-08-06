@@ -61,8 +61,6 @@ export class StakePage extends React.Component {
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
     const {
-      jsonInfo,
-      //keyProvider,
       FromAccountName,
       stakeNetQuantity,
       stakeCpuQuantity,
@@ -70,20 +68,11 @@ export class StakePage extends React.Component {
     } = values;
     this.setState({
       GetTransactionButtonState:
-        jsonInfo &&
-        //keyProvider &&
-        FromAccountName &&
-        stakeNetQuantity &&
-        stakeCpuQuantity,
+        FromAccountName && stakeNetQuantity && stakeCpuQuantity,
     });
     this.setState({
       CopyTransactionButtonState:
-        jsonInfo &&
-        //keyProvider &&
-        FromAccountName &&
-        stakeNetQuantity &&
-        stakeCpuQuantity &&
-        transaction,
+        FromAccountName && stakeNetQuantity && stakeCpuQuantity && transaction,
     });
   };
   /**
@@ -98,7 +87,7 @@ export class StakePage extends React.Component {
     });
     const values = this.props.form.getFieldsValue();
     const eos = getEos(values);
-    const opts = {sign: false, broadcast: false}
+    const opts = { sign: false, broadcast: false };
 
     const {
       FromAccountName,
@@ -108,13 +97,16 @@ export class StakePage extends React.Component {
     } = values;
     if (this.state.isDelegatebw) {
       eos
-        .delegatebw({
-          from: FromAccountName,
-          receiver: ReceiverAccountName || FromAccountName,
-          stake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
-          stake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
-          transfer: 0,
-        },opts)
+        .delegatebw(
+          {
+            from: FromAccountName,
+            receiver: ReceiverAccountName || FromAccountName,
+            stake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
+            stake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
+            transfer: 0,
+          },
+          opts,
+        )
         .then(tr => {
           this.props.form.setFieldsValue({
             transaction: JSON.stringify(tr.transaction),
@@ -213,10 +205,6 @@ export class StakePage extends React.Component {
       <LayoutContent>
         <LayoutContentBox>
           <FormComp>
-            <ScanQrcode
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-            />
             <FormItem>
               <Switch
                 checkedChildren={DelegateSwitchCheckedName}
@@ -308,12 +296,14 @@ export class StakePage extends React.Component {
               GetTransactionButtonLoading={
                 this.state.GetTransactionButtonLoading
               }
-              GetTransactionButtonDisabled={
-                this.state.GetTransactionButtonState
-              }
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
               CopyTransactionButtonState={this.state.CopyTransactionButtonState}
               handleCopyTransaction={this.handleCopyTransaction}
+            />
+            <ScanQrcode
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
             />
           </FormComp>
         </LayoutContentBox>

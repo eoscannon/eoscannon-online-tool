@@ -60,6 +60,8 @@ export class BuyRamBytesPage extends React.Component {
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
     const { PayerAccountName, BytesQuantity } = values;
+    console.log('values:', values);
+
     this.setState({
       GetTransactionButtonState: !!PayerAccountName && !!BytesQuantity,
     });
