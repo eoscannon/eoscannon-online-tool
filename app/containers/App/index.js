@@ -22,6 +22,9 @@ import RefundPage from 'containers/RefundPage/Loadable';
 import BuyRamBytesPage from 'containers/BuyRamBytesPage/Loadable';
 import UpdateAuthPage from 'containers/UpdateAuthPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import StakePage from 'containers/StakePage/Loadable';
+import TransferPage from 'containers/TransferPage/Loadable';
+import CreateAccountPage from 'containers/CreateAccountPage/Loadable';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -48,11 +51,14 @@ class App extends React.PureComponent {
           <Route exact path="/" component={InfoInitPage} />
           <Route path="/infoInit" component={InfoInitPage} />
           <Route path="/sendMessage" component={SendMessagePage} />
+          <Route path="/transfer" component={TransferPage} />
           <Route path="/proxy" component={ProxyPage} />
           <Route path="/vote" component={VotePage} />
           <Route path="/accountSearch" component={AccountSearchPage} />
           <Route path="/refund" component={RefundPage} />
+          <Route path="/stake" component={StakePage} />
           <Route path="/buyrambytes" component={BuyRamBytesPage} />
+          <Route path="/createAccount" component={CreateAccountPage} />
           <Route path="/updateauth" component={UpdateAuthPage} />
           <Route path="" component={NotFoundPage} />
         </Switch>

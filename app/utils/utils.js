@@ -37,14 +37,54 @@ const getChainIdFromJsonInfoOrConfig = jsonInfo => {
   return chainId;
 };
 
-const getEos = values => {
-  //const { keyProvider, jsonInfo } = values;
-  //const transactionHeaders = getTransactionHeadersFromJsonInfo(jsonInfo);
-  //const chainId = getChainIdFromJsonInfoOrConfig(jsonInfo);
+const getEosInfo = values => {
   return EOS({
     httpEndpoint: 'https://mainnet.eoscannon.io',
     //httpEndpoint: 'https://api.eoseco.com',
     chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+  });
+};
+
+const getEosInfoDetail = values => {
+  let eos
+  if(values.netWork=='main'){
+    eos = getEosInfo();
+  }else if(values.netWork == 'test'){
+    eos = getEosTest();
+  }else{
+    return
+  }
+  const expireInSeconds = 60 * 60; // 1 hour
+  eos.getInfo({}).then((info) => {
+    const chainDate = new Date(`${info.head_block_time}Z`);
+    const expiration = new Date(chainDate.getTime() + expireInSeconds * 1000);
+    const expirationStr = expiration.toISOString().split('.')[0];
+    const refBlockNum = info.last_irreversible_block_num & 0xffff;
+    eos.getBlock(info.last_irreversible_block_num).then(block => {
+      const refBlockPrefix = block.ref_block_prefix;
+      const transactionHeaders = {
+        expiration: expirationStr,
+        refBlockNum: refBlockNum,
+        refBlockPrefix: refBlockPrefix,
+        chainId: info.chain_id
+      };
+      return  JSON.stringify(transactionHeaders)
+
+    });
+  }).catch(err => {
+    openTransactionFailNotification(this.state.formatMessage, err.name);
+  });
+};
+
+const getEos = values => {
+  const { keyProvider, jsonInfo } = values;
+  const transactionHeaders = getTransactionHeadersFromJsonInfo(jsonInfo);
+  const chainId = getChainIdFromJsonInfoOrConfig(jsonInfo);
+  return EOS({
+    httpEndpoint: null,
+    chainId,
+    //keyProvider:false,
+    transactionHeaders,
   });
 };
 
@@ -98,6 +138,8 @@ export {
   getChainIdFromJsonInfoOrConfig,
   getEos,
   getEosTest,
+  getEosInfo,
+  getEosInfoDetail,
   openTransactionSuccessNotification,
   openTransactionFailNotification,
   openNotification,

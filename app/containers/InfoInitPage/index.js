@@ -17,6 +17,7 @@ import {
   getEos,
   openTransactionFailNotification,
   getEosTest,
+  getEosInfo,
   openNotification,
 } from '../../utils/utils';
 import {
@@ -82,7 +83,7 @@ export class CreateAccountPage extends React.Component {
     }
     console.log('this.props.netWork value===',value)
     this.handleGetTransaction(value)
-  }
+  };
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -90,7 +91,7 @@ export class CreateAccountPage extends React.Component {
     //let network = storage.getNetwork()
     let eos
     if(netWork=='main'){
-       eos = getEos();
+       eos = getEosInfo();
     }else if(netWork == 'test'){
       eos = getEosTest();
     }else{

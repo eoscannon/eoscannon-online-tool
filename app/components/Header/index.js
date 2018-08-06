@@ -19,6 +19,7 @@ import { storage } from 'utils/storage';
 import { makeSelectLocale,makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 const { Header } = Layout;
 const Option = Select.Option;
+const SubMenu = Menu.SubMenu;
 
 class HeaderComp extends React.Component {
   constructor(props) {
@@ -34,10 +35,34 @@ class HeaderComp extends React.Component {
     let defaultSelectedKeys = '8';
     switch (window.location.hash.substring(1)) {
       case '/accountSearch':
+        defaultSelectedKeys = '9';
+        break;
+      case '/createAccount':
+        defaultSelectedKeys = '10';
+        break;
+      case '/proxy':
+        defaultSelectedKeys = '2';
+        break;
+      case '/transfer':
         defaultSelectedKeys = '3';
         break;
-      case '/sendMessage':
+      case '/refund':
+        defaultSelectedKeys = '4';
+        break;
+      case '/buyrambytes':
+        defaultSelectedKeys = '5';
+        break;
+      case '/vote':
+        defaultSelectedKeys = '6';
+        break;
+      case '/updateauth':
+        defaultSelectedKeys = '7';
+        break;
+      case '/stake':
         defaultSelectedKeys = '1';
+        break;
+      case '/sendMessage':
+        defaultSelectedKeys = '0';
         break;
       default:
         defaultSelectedKeys = '8';
@@ -52,8 +77,6 @@ class HeaderComp extends React.Component {
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };
   handleChange=(value)=> {
-    //console.log(value); // { key: "lucy", label: "Lucy (101)" }
-
     console.log('this.props.network header====',this.props.netWork )
     const network = this.props.netWork === 'main' ? 'test' : 'main';
     this.props.onDispatchChangeNetworkReducer(network);
@@ -73,6 +96,12 @@ class HeaderComp extends React.Component {
     const createAccount = formatMessage(utilsMsg.HeaderMenuInfoInit);
     const stake = formatMessage(utilsMsg.HeaderMenuSendMessage);
     const accountSearch = formatMessage(utilsMsg.HeaderMenuAccountSearch);
+    const transfer = formatMessage(utilsMsg.HeaderMenuTransfer);
+    const buyRamBytes = formatMessage(utilsMsg.HeaderMenuBuyRamBytes);
+    const vote = formatMessage(utilsMsg.HeaderMenuVote);
+    const proxy = formatMessage(utilsMsg.HeaderMenuProxy);
+    const updateAuth = formatMessage(utilsMsg.HeaderMenuUpdateAuth);
+    const refund = formatMessage(utilsMsg.HeaderMenuRefund);
     const mainNet = formatMessage(utilsMsg.HeaderMenuOffical);
     const testNet = formatMessage(utilsMsg.HeaderMenuTestNet);
     const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
@@ -102,30 +131,85 @@ class HeaderComp extends React.Component {
             >
               <Menu.Item key="8">
                 <Link href="/infoInit" to="/infoInit">
-                  {createAccount}
+                  信息初始化
                 </Link>
               </Menu.Item>
-              <Menu.Item key="1">
+
+              <SubMenu title={<span>交易管理</span>}>
+                <Menu.Item key="10">
+                  <Link href="/createAccount" to="/createAccount">
+                    {createAccount}
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="1">
+                  <Link href="/stake" to="/stake">
+                    质押
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="3">
+                  <Link href="/transfer" to="/transfer">
+                    {transfer}
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="5">
+                  <Link href="/buyrambytes" to="/buyrambytes">
+                    {buyRamBytes}
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="6">
+                  <Link href="/vote" to="/vote">
+                    {vote}
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Link href="/proxy" to="/proxy">
+                    {proxy}
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="7">
+                  <Link href="/updateauth" to="/updateauth">
+                    {updateAuth}
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="4">
+                  <Link href="/refund" to="/refund">
+                    {refund}
+                  </Link>
+                </Menu.Item>
+
+              </SubMenu>
+              <Menu.Item key="0">
                 <Link href="/sendMessage" to="/sendMessage">
                   {stake}
                 </Link>
               </Menu.Item>
-              <Menu.Item key="3">
+              <Menu.Item key="9">
                 <Link href="/accountSearch" to="/accountSearch">
                   {accountSearch}
                 </Link>
               </Menu.Item>
+              <SubMenu title={<span>APP下载</span>}>
+                <Menu.Item key="setting:1">
+                  <a  href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"  target='_blank'>
+                  在线工具
+                    </a>
+                </Menu.Item>
+                <Menu.Item key="setting:2">
+                  <a  href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases" target='_blank'>
+                  离线工具
+                    </a>
+                </Menu.Item>
 
-              <Menu.Item key="4">
-                <a  href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases" target='_blank'>
-                  {OnlineAppDownLoad}
-                </a>
-              </Menu.Item>
-              <Menu.Item key="5">
-                <a  href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"  target='_blank'>
-                  {OfflineAppDownLoad}
-                </a>
-              </Menu.Item>
+              </SubMenu>
+
+              {/*
+               <Menu.Item key="10">
+               {OnlineAppDownLoad}
+               </Menu.Item>
+               <Menu.Item key="11">
+               {OfflineAppDownLoad}
+               </Menu.Item>
+              */}
             </Menu>
           </div>
         <div className='dropDownContent'>
