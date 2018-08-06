@@ -65,6 +65,13 @@ async function getEosInfoDetail(type) {
   };
 }
 
+const getEosInfo = values =>
+  EOS({
+    // httpEndpoint: 'https://mainnet.eoscannon.io',
+    httpEndpoint: 'https://api.eoseco.com',
+    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+  });
+
 /**
  * 提示用户签名成功
  * */

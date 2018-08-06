@@ -10,13 +10,16 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Layout, Select, Dropdown, Button, Icon, message  } from 'antd';
+import { Layout, Select, Dropdown, Button, Icon, message } from 'antd';
 
 import { Menu } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
 import { storage } from 'utils/storage';
 
-import { makeSelectLocale,makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
+import {
+  makeSelectLocale,
+  makeSelectNetwork,
+} from '../../containers/LanguageProvider/selectors';
 const { Header } = Layout;
 const Option = Select.Option;
 const SubMenu = Menu.SubMenu;
@@ -76,25 +79,27 @@ class HeaderComp extends React.Component {
     const localeLanguage = this.props.locale === 'en' ? 'de' : 'en';
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };
-  handleChange=(value)=> {
-    console.log('this.props.network header====',this.props.netWork )
+  handleChange = value => {
+    console.log('this.props.network header====', this.props.netWork);
     const network = this.props.netWork === 'main' ? 'test' : 'main';
     this.props.onDispatchChangeNetworkReducer(network);
+  };
 
-  }
-
-  handleMenuClick=(value)=> {
-    //if(value.key == '1'){
+  handleMenuClick = value => {
+    // if(value.key == '1'){
     //  location.href('https://github.com/eoscannon/EosCannon-Online-Tools-App/releases')
-    //}else if(value.key == '2'){
+    // }else if(value.key == '2'){
     //  location.href('https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases')
-    //}
-  }
+    // }
+  };
 
   render() {
     const { formatMessage } = this.props.intl;
-    const createAccount = formatMessage(utilsMsg.HeaderMenuInfoInit);
-    const stake = formatMessage(utilsMsg.HeaderMenuSendMessage);
+    const initInfo = formatMessage(utilsMsg.HeaderMenuInfoInit);
+    const createAccount = formatMessage(utilsMsg.HeaderMenuCreateAccount);
+    const tradeManage = formatMessage(utilsMsg.HeaderMenuTradeManage);
+    const stake = formatMessage(utilsMsg.HeaderMenuStake);
+    const sendMessage = formatMessage(utilsMsg.HeaderMenuSendMessage);
     const accountSearch = formatMessage(utilsMsg.HeaderMenuAccountSearch);
     const transfer = formatMessage(utilsMsg.HeaderMenuTransfer);
     const buyRamBytes = formatMessage(utilsMsg.HeaderMenuBuyRamBytes);
@@ -105,104 +110,123 @@ class HeaderComp extends React.Component {
     const mainNet = formatMessage(utilsMsg.HeaderMenuOffical);
     const testNet = formatMessage(utilsMsg.HeaderMenuTestNet);
     const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
+    const AppDownLoad = formatMessage(utilsMsg.HeaderAppDownLoad);
     const OfflineAppDownLoad = formatMessage(utilsMsg.HeaderOfflineAppDownLoad);
     const menu = (
       <Menu onClick={this.handleMenuClick}>
-        <Menu.Item key="1"><a href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases"><Icon type="android" />在线APP</a></Menu.Item>
-        <Menu.Item key="2"><a href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"><Icon type="android" />离线APP</a></Menu.Item>
+        <Menu.Item key="1">
+          <a href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases">
+            <Icon type="android" />在线APP
+          </a>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <a href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases">
+            <Icon type="android" />离线APP
+          </a>
+        </Menu.Item>
       </Menu>
     );
     return (
       <HeaderWrapper>
         <div className="logo">EOS Cannon</div>
-          <div className='headerContent'>
-            <Select className="netWork"  labelInValue defaultValue={{ key: 'main' }} style={{ width: 110 }} onChange={this.handleChange}>
-              <Option value="main">{mainNet}</Option>
-              <Option value="test">{testNet}</Option>
-            </Select>
-            <div className="en" aria-hidden="true" onClick={this.changeLanguage}>
-              {this.props.locale === 'en' ? '中文' : 'English'}
-            </div>
-            <Menu
-              theme="dark"
-              mode="horizontal"
-              defaultSelectedKeys={[this.state.defaultSelectedKeys]}
-              style={{ lineHeight: '64px' }}
-            >
-              <Menu.Item key="8">
-                <Link href="/infoInit" to="/infoInit">
-                  信息初始化
+        <div className="headerContent">
+          <Select
+            className="netWork"
+            labelInValue
+            defaultValue={{ key: 'main' }}
+            style={{ width: 110 }}
+            onChange={this.handleChange}
+          >
+            <Option value="main">{mainNet}</Option>
+            <Option value="test">{testNet}</Option>
+          </Select>
+          <div className="en" aria-hidden="true" onClick={this.changeLanguage}>
+            {this.props.locale === 'en' ? '中文' : 'English'}
+          </div>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={[this.state.defaultSelectedKeys]}
+            style={{ lineHeight: '64px' }}
+          >
+            <Menu.Item key="8">
+              <Link href="/infoInit" to="/infoInit">
+                {initInfo}
+              </Link>
+            </Menu.Item>
+
+            <SubMenu title={<span>{tradeManage}</span>}>
+              <Menu.Item key="10">
+                <Link href="/createAccount" to="/createAccount">
+                  {createAccount}
                 </Link>
               </Menu.Item>
-
-              <SubMenu title={<span>交易管理</span>}>
-                <Menu.Item key="10">
-                  <Link href="/createAccount" to="/createAccount">
-                    {createAccount}
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="1">
-                  <Link href="/stake" to="/stake">
-                    质押
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="3">
-                  <Link href="/transfer" to="/transfer">
-                    {transfer}
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="5">
-                  <Link href="/buyrambytes" to="/buyrambytes">
-                    {buyRamBytes}
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="6">
-                  <Link href="/vote" to="/vote">
-                    {vote}
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="2">
-                  <Link href="/proxy" to="/proxy">
-                    {proxy}
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="7">
-                  <Link href="/updateauth" to="/updateauth">
-                    {updateAuth}
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="4">
-                  <Link href="/refund" to="/refund">
-                    {refund}
-                  </Link>
-                </Menu.Item>
-
-              </SubMenu>
-              <Menu.Item key="0">
-                <Link href="/sendMessage" to="/sendMessage">
+              <Menu.Item key="1">
+                <Link href="/stake" to="/stake">
                   {stake}
                 </Link>
               </Menu.Item>
-              <Menu.Item key="9">
-                <Link href="/accountSearch" to="/accountSearch">
-                  {accountSearch}
+              <Menu.Item key="3">
+                <Link href="/transfer" to="/transfer">
+                  {transfer}
                 </Link>
               </Menu.Item>
-              <SubMenu title={<span>APP下载</span>}>
-                <Menu.Item key="setting:1">
-                  <a  href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"  target='_blank'>
-                  在线工具
-                    </a>
-                </Menu.Item>
-                <Menu.Item key="setting:2">
-                  <a  href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases" target='_blank'>
-                  离线工具
-                    </a>
-                </Menu.Item>
+              <Menu.Item key="5">
+                <Link href="/buyrambytes" to="/buyrambytes">
+                  {buyRamBytes}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="6">
+                <Link href="/vote" to="/vote">
+                  {vote}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link href="/proxy" to="/proxy">
+                  {proxy}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="7">
+                <Link href="/updateauth" to="/updateauth">
+                  {updateAuth}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="4">
+                <Link href="/refund" to="/refund">
+                  {refund}
+                </Link>
+              </Menu.Item>
+            </SubMenu>
+            <Menu.Item key="0">
+              <Link href="/sendMessage" to="/sendMessage">
+                {sendMessage}
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="9">
+              <Link href="/accountSearch" to="/accountSearch">
+                {accountSearch}
+              </Link>
+            </Menu.Item>
+            <SubMenu title={<span>{AppDownLoad}</span>}>
+              <Menu.Item key="setting:1">
+                <a
+                  href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"
+                  target="_blank"
+                >
+                  {OnlineAppDownLoad}
+                </a>
+              </Menu.Item>
+              <Menu.Item key="setting:2">
+                <a
+                  href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases"
+                  target="_blank"
+                >
+                  {OfflineAppDownLoad}
+                </a>
+              </Menu.Item>
+            </SubMenu>
 
-              </SubMenu>
-
-              {/*
+            {/*
                <Menu.Item key="10">
                {OnlineAppDownLoad}
                </Menu.Item>
@@ -210,16 +234,15 @@ class HeaderComp extends React.Component {
                {OfflineAppDownLoad}
                </Menu.Item>
               */}
-            </Menu>
-          </div>
-        <div className='dropDownContent'>
+          </Menu>
+        </div>
+        <div className="dropDownContent">
           <Dropdown overlay={menu}>
             <Button style={{ marginLeft: 8 }}>
               APP下载 <Icon type="down" />
             </Button>
           </Dropdown>
         </div>
-
       </HeaderWrapper>
     );
   }
@@ -250,26 +273,24 @@ const mapStateToProps = createStructuredSelector({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(HeaderCompIntl);
 
 const HeaderWrapper = styled(Header)`
   position: fixed;
   z-index: 1000;
   width: 100%;
-  .dropDownContent{
-      display: none;
-    }
+  .dropDownContent {
+    display: none;
+  }
   @media (max-width: 700px) {
-    .headerContent{
+    .headerContent {
       display: none;
-
     }
-    .dropDownContent{
+    .dropDownContent {
       display: block;
       float: right;
     }
-
   }
 
   .logo {
@@ -282,7 +303,6 @@ const HeaderWrapper = styled(Header)`
     color: #f5cb48;
     float: left;
     margin-right: 1.5rem;
-
   }
   .en {
     cursor: pointer;

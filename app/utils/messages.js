@@ -131,10 +131,13 @@ export default defineMessages({
     defaultMessage: 'EOS佳能荣誉出品 ©2018',
   },
 
-
   HeaderMenuInfoInit: {
     id: 'Public HeaderMenuInfoInit',
     defaultMessage: '信息初始化',
+  },
+  HeaderMenuCreateAccount: {
+    id: 'Public HeaderMenuCreateAccount',
+    defaultMessage: '创建账号',
   },
   HeaderMenuSendMessage: {
     id: 'Public HeaderMenuSendMessage',
@@ -152,9 +155,21 @@ export default defineMessages({
     id: 'Public HeaderMenuTestNet',
     defaultMessage: '测试网',
   },
+  HeaderMenuStake: {
+    id: 'Public HeaderMenuStake',
+    defaultMessage: '质押',
+  },
   ChangeTestNet: {
     id: 'Public ChangeTestNet',
     defaultMessage: '变更测试网',
+  },
+  HeaderMenuTradeManage: {
+    id: 'Public HeaderMenuTradeManage',
+    defaultMessage: '交易管理',
+  },
+  HeaderAppDownLoad: {
+    id: 'Public HeaderAppDownLoad',
+    defaultMessage: 'APP下载',
   },
   HeaderOnlineAppDownLoad: {
     id: 'Public HeaderOnlineAppDownLoad',
