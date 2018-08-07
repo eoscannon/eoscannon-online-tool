@@ -5,6 +5,8 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { Form, Icon, Input, Select } from 'antd';
 import copy from 'copy-to-clipboard';
 import eosioAbi from './abi';
@@ -27,6 +29,8 @@ import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
+import { makeSelectNetwork } from '../LanguageProvider/selectors';
+
 const FormItem = Form.Item;
 const { Option } = Select;
 
@@ -38,6 +42,7 @@ export class TransferPage extends React.Component {
       GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       CopyTransactionButtonState: false, // 复制报文按钮可点击状态
+      SendSignTransactionButtonState: false, // 发送报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
     };
   }
@@ -83,8 +88,7 @@ export class TransferPage extends React.Component {
         transferContract &&
         transferQuantity &&
         transferDigit &&
-        transferSymbol &&
-        transaction,
+        transferSymbol
     });
   };
   /**
@@ -98,7 +102,7 @@ export class TransferPage extends React.Component {
       GetTransactionButtonLoading: true,
     });
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
+    const eos = getEos(this.props.SelectedNetWork);
     const {
       FromAccountName,
       ToAccountName,
@@ -147,14 +151,10 @@ export class TransferPage extends React.Component {
         },
       )
       .then(tr => {
-        this.props.form.setFieldsValue({
-          transaction: JSON.stringify(tr.transaction),
-        });
         this.setState({
-          GetTransactionButtonLoading: false,
-          QrCodeValue: JSON.stringify(tr.transaction),
-        });
-        openTransactionSuccessNotification(this.state.formatMessage);
+          transaction :  tr.transaction,
+          QrCodeValue: JSON.stringify(tr.transaction)
+        })
       })
       .catch(err => {
         this.setState({
@@ -172,6 +172,7 @@ export class TransferPage extends React.Component {
     }
     const values = this.props.form.getFieldsValue();
     const { transaction } = values;
+    console.log('transaction====',transaction)
     copy(transaction);
     openNotification(this.state.formatMessage);
   };
@@ -341,17 +342,16 @@ export class TransferPage extends React.Component {
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonLoading={
-                this.state.GetTransactionButtonLoading
-              }
               GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              CopyTransactionButtonState={this.state.CopyTransactionButtonState}
-              handleCopyTransaction={this.handleCopyTransaction}
+              transaction={this.state.transaction}
             />
             <ScanQrcode
               form={this.props.form}
               formatMessage={this.state.formatMessage}
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>
@@ -367,5 +367,8 @@ TransferPage.propTypes = {
 
 const TransferPageIntl = injectIntl(TransferPage);
 const TransferPageForm = Form.create()(TransferPageIntl);
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
 
-export default TransferPageForm;
+export default connect(mapStateToProps)(TransferPageForm);

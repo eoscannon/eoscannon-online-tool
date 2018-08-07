@@ -20,21 +20,16 @@ export default class GetQrcode extends Component {
 
   render() {
     // const { getFieldDecorator } = this.props.form;
-    // const keyProviderLabel = this.props.formatMessage(
-    //  utilsMsg.KeyProviderFormItemLabel
-    // );
-    // const keyProviderPlaceholder = this.props.formatMessage(
-    //  utilsMsg.KeyProviderFormItemPlaceholder,
-    // );
-    // const GetTransactionButtonName = this.props.formatMessage(
-    //  utilsMsg.GetTransactionFormItemButtonName,
-    // );
-    // const CopyAlertMessage = this.props.formatMessage(
-    //  utilsMsg.CopyAlertMessage,
-    // );
-    // const CopyAlertDescription = this.props.formatMessage(
-    //  utilsMsg.CopyAlertDescription,
-    // );
+     const keyProviderLabel = this.props.formatMessage(
+      utilsMsg.KeyProviderFormItemLabel
+     );
+     const keyProviderPlaceholder = this.props.formatMessage(
+      utilsMsg.KeyProviderFormItemPlaceholder,
+     );
+     const CopyMessage = this.props.formatMessage(
+      utilsMsg.CopyMessage,
+     );
+
     // const TransactionTextAreaPlaceholder = this.props.formatMessage(
     //  utilsMsg.TransactionTextAreaPlaceholder,
     // );
@@ -46,8 +41,8 @@ export default class GetQrcode extends Component {
       <div>
         <FormItem>
           <Alert
-            message="此页面在线使用"
-            description="将下方信息粘贴至EOSCannon离线签名工具中。"
+            message={keyProviderLabel}
+            description={keyProviderPlaceholder}
             type="info"
           />
         </FormItem>
@@ -66,7 +61,7 @@ export default class GetQrcode extends Component {
             className="form-button"
             onClick={this.props.handleCopyTransaction}
           >
-            复制
+            {CopyMessage}
           </Button>
         </FormItem>
       </div>

@@ -8,6 +8,11 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input, Alert } from 'antd';
 import copy from 'copy-to-clipboard';
+
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectNetwork } from '../LanguageProvider/selectors';
+
 import {
   formItemLayout,
   getEos,
@@ -68,7 +73,7 @@ export class RefundPage extends React.Component {
       GetTransactionButtonLoading: true,
     });
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
+    const eos = getEos(this.props.SelectedNetWork);
     const { AccountName } = values;
     eos
       .refund(
@@ -81,14 +86,10 @@ export class RefundPage extends React.Component {
         },
       )
       .then(tr => {
-        this.props.form.setFieldsValue({
-          transaction: JSON.stringify(tr.transaction),
-        });
         this.setState({
-          GetTransactionButtonLoading: false,
-          QrCodeValue: JSON.stringify(tr.transaction),
-        });
-        openTransactionSuccessNotification(this.state.formatMessage);
+          transaction :  tr.transaction,
+          QrCodeValue: JSON.stringify(tr.transaction)
+        })
       })
       .catch(err => {
         this.setState({
@@ -150,17 +151,16 @@ export class RefundPage extends React.Component {
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonLoading={
-                this.state.GetTransactionButtonLoading
-              }
               GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              CopyTransactionButtonState={this.state.CopyTransactionButtonState}
-              handleCopyTransaction={this.handleCopyTransaction}
+              transaction={this.state.transaction}
             />
             <ScanQrcode
               form={this.props.form}
               formatMessage={this.state.formatMessage}
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>
@@ -172,9 +172,12 @@ export class RefundPage extends React.Component {
 RefundPage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
 
 const RefundPageIntl = injectIntl(RefundPage);
 const RefundPageForm = Form.create()(RefundPageIntl);
-
-export default RefundPageForm;
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
+export default connect(mapStateToProps)(RefundPageForm);

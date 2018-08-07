@@ -12,8 +12,13 @@ import { Form, Input, Button, Alert } from 'antd';
 import QRCode from 'qrcode.react';
 import copy from 'copy-to-clipboard';
 
+
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import { getEosInfoDetail, openNotification } from '../../utils/utils';
+
+import messages from './messages';
+import utilsMsg from '../../utils/messages';
+
 import {
   LayoutContentBox,
   LayoutContent,
@@ -66,6 +71,16 @@ export class CreateAccountPage extends React.Component {
     openNotification(this.state.formatMessage);
   };
   render() {
+    const infoAlertMessage = this.state.formatMessage(
+      messages.infoAlertMessage,
+    );
+    const infoAlertDescription = this.state.formatMessage(
+      messages.infoAlertDescription,
+    );
+    const infoAlertCopy = this.state.formatMessage(
+      messages.infoAlertCopy,
+    );
+
     return (
       <LayoutContent>
         <LayoutContentBox>
@@ -83,8 +98,8 @@ export class CreateAccountPage extends React.Component {
             {/* ) : null} */}
             <FormItem>
               <Alert
-                message="此页面在线使用"
-                description="将下方信息粘贴至EOSCannon离线签名工具中。"
+                message={infoAlertMessage}
+                description={infoAlertDescription}
                 type="info"
               />
             </FormItem>
@@ -106,7 +121,7 @@ export class CreateAccountPage extends React.Component {
                 className="form-button"
                 onClick={this.handleCopyTransaction}
               >
-                复制
+                {infoAlertCopy}
               </Button>
             </FormItem>
           </FormComp>

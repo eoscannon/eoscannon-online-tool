@@ -11,12 +11,12 @@ import copy from 'copy-to-clipboard';
 import eosioAbi from './abi';
 import eosIqAbi from './iqAbi';
 import styleComps from './styles';
+import ecc from  'eosjs-ecc'
+var Fcbuffer = require('fcbuffer');
 
 import {
   formItemLayout,
   getEos,
-  getEosInfo,
-  getEosTest,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -72,12 +72,10 @@ export class AccountSearchPage extends React.Component {
    * */
   componentWillReceiveProps(nextProps) {
     this.setState({ netWorkStatus: nextProps.netWork });
-    console.log('nextProps netWork', nextProps.netWork);
   }
 
   componentWillMount() {
     this.setState({ netWorkStatus: this.props.netWork });
-    console.log('this.props netWork', this.props.netWork);
   }
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
@@ -92,11 +90,11 @@ export class AccountSearchPage extends React.Component {
     console.log(key);
     let eos;
     console.log('this.state.netWorkStatus====', this.state.netWorkStatus);
-    if (this.state.netWorkStatus == 'main') {
-      eos = getEosInfo();
-    } else {
-      eos = getEosTest();
-    }
+    //if (this.state.netWorkStatus == 'main') {
+      eos = getEos(this.state.netWorkStatus);
+    //} else {
+    //  eos = getEosTest();
+    //}
 
     eos
       .getCurrencyBalance({
@@ -130,11 +128,8 @@ export class AccountSearchPage extends React.Component {
       account: value,
     });
     let eos;
-    if (this.state.netWorkStatus == 'main') {
-      eos = getEosInfo();
-    } else {
-      eos = getEosTest();
-    }
+    eos = getEos(this.state.netWorkStatus);
+
     const expireInSeconds = 60 * 60; // 1 hour
     let producer = '';
     let stake = 0;
@@ -477,9 +472,7 @@ export class AccountSearchPage extends React.Component {
                   </Tabs>
                 </div>
               </div>
-            ) : (
-              <span />
-            )}
+            ) : null}
           </styleComps.ConBox>
         </LayoutContentBox>
       </LayoutContent>

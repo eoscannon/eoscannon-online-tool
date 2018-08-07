@@ -26,6 +26,10 @@ import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectNetwork } from '../LanguageProvider/selectors';
+
 const FormItem = Form.Item;
 
 export class UpdateAuthPage extends React.Component {
@@ -131,7 +135,7 @@ export class UpdateAuthPage extends React.Component {
       GetTransactionButtonLoading: true,
     });
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
+    const eos = getEos(this.props.SelectedNetWork);
     const { AccountName, ActiveKey, OwnerKey } = values;
     const actions = [];
     if (ActiveKey) {
@@ -183,14 +187,10 @@ export class UpdateAuthPage extends React.Component {
         },
       )
       .then(tr => {
-        this.props.form.setFieldsValue({
-          transaction: JSON.stringify(tr.transaction),
-        });
         this.setState({
-          GetTransactionButtonLoading: false,
-          QrCodeValue: JSON.stringify(tr.transaction),
-        });
-        openTransactionSuccessNotification(this.state.formatMessage);
+          transaction :  tr.transaction,
+          QrCodeValue: JSON.stringify(tr.transaction)
+        })
       })
       .catch(err => {
         this.setState({
@@ -241,40 +241,42 @@ export class UpdateAuthPage extends React.Component {
       <LayoutContent>
         <LayoutContentBox>
           <FormComp>
-            <Card title={CheckPrivateKeyMessage} style={{ marginBottom: 24 }}>
-              <FormItem>
-                <Alert
-                  message={CheckPrivateKeyMessage}
-                  description={this.state.CheckDescription}
-                  type="info"
-                />
-              </FormItem>
-              <FormItem {...formItemLayout} label={PrivateKeyLabel} colon>
-                {getFieldDecorator('CheckPrivateKey', {
-                  rules: [
-                    { required: true, message: CheckPrivateKeyPlaceholder },
-                  ],
-                })(
-                  <Input
-                    prefix={
-                      <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                    }
-                    placeholder={CheckPrivateKeyPlaceholder}
-                  />,
-                )}
-              </FormItem>
-              <FormItem>
-                <Button
-                  type="primary"
-                  className="form-button"
-                  loading={this.state.GetCheckPrivateKeyButtonLoading}
-                  disabled={!this.state.GetCheckPrivateKeyButtonState}
-                  onClick={this.handleCheckPrivateKey}
-                >
-                  {CheckPrivateKeyMessage}
-                </Button>
-              </FormItem>
-            </Card>
+            {/*
+             <Card title={CheckPrivateKeyMessage} style={{ marginBottom: 24 }}>
+             <FormItem>
+             <Alert
+             message={CheckPrivateKeyMessage}
+             description={this.state.CheckDescription}
+             type="info"
+             />
+             </FormItem>
+             <FormItem {...formItemLayout} label={PrivateKeyLabel} colon>
+             {getFieldDecorator('CheckPrivateKey', {
+             rules: [
+             { required: true, message: CheckPrivateKeyPlaceholder },
+             ],
+             })(
+             <Input
+             prefix={
+             <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
+             }
+             placeholder={CheckPrivateKeyPlaceholder}
+             />,
+             )}
+             </FormItem>
+             <FormItem>
+             <Button
+             type="primary"
+             className="form-button"
+             loading={this.state.GetCheckPrivateKeyButtonLoading}
+             disabled={!this.state.GetCheckPrivateKeyButtonState}
+             onClick={this.handleCheckPrivateKey}
+             >
+             {CheckPrivateKeyMessage}
+             </Button>
+             </FormItem>
+             </Card>
+            */}
             <Card
               title={GetPrivateKeyButtonMessage}
               style={{ marginBottom: 24 }}
@@ -359,20 +361,18 @@ export class UpdateAuthPage extends React.Component {
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}
                 GetTransactionButtonClick={this.handleGetTransaction}
-                GetTransactionButtonLoading={
-                  this.state.GetTransactionButtonLoading
-                }
                 GetTransactionButtonState={this.state.GetTransactionButtonState}
                 QrCodeValue={this.state.QrCodeValue}
-                CopyTransactionButtonState={
-                  this.state.CopyTransactionButtonState
-                }
-                handleCopyTransaction={this.handleCopyTransaction}
+                transaction={this.state.transaction}
               />
             </Card>
+
             <ScanQrcode
               form={this.props.form}
               formatMessage={this.state.formatMessage}
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>
@@ -384,9 +384,14 @@ export class UpdateAuthPage extends React.Component {
 UpdateAuthPage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
 
 const UpdateAuthPageIntl = injectIntl(UpdateAuthPage);
 const UpdateAuthPageForm = Form.create()(UpdateAuthPageIntl);
 
-export default UpdateAuthPageForm;
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
+
+export default connect(mapStateToProps)(UpdateAuthPageForm);

@@ -7,7 +7,10 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input } from 'antd';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import copy from 'copy-to-clipboard';
+
 import {
   formItemLayout,
   getEos,
@@ -20,6 +23,7 @@ import {
   LayoutContent,
   FormComp,
 } from '../../components/NodeComp';
+
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
@@ -42,7 +46,7 @@ export class CreateAccountPage extends React.Component {
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps(nextProps) {
-    this.onValuesChange(nextProps);
+    //this.onValuesChange(nextProps);
   }
   /**
    * 输入框内容变化时，改变按钮状态
@@ -58,7 +62,6 @@ export class CreateAccountPage extends React.Component {
       StakeNetQuantity,
       StakeCpuQuantity,
     } = values;
-    console.log('values===', values);
     this.setState({
       GetTransactionButtonState:
         !!AccountName &&
@@ -92,7 +95,7 @@ export class CreateAccountPage extends React.Component {
       GetTransactionButtonLoading: true,
     });
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
+    const eos = getEos(this.props.SelectedNetWork);
     const {
       AccountName,
       NewAccountName,
@@ -169,14 +172,10 @@ export class CreateAccountPage extends React.Component {
         },
       )
       .then(tr => {
-        this.props.form.setFieldsValue({
-          transaction: JSON.stringify(tr.transaction),
-        });
         this.setState({
-          GetTransactionButtonLoading: false,
-          QrCodeValue: JSON.stringify(tr.transaction),
-        });
-        openTransactionSuccessNotification(this.state.formatMessage);
+          transaction :  tr.transaction,
+          QrCodeValue: JSON.stringify(tr.transaction)
+        })
       })
       .catch(err => {
         this.setState({
@@ -185,24 +184,8 @@ export class CreateAccountPage extends React.Component {
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
   };
-  /**
-   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
-   * */
-  handleCopyTransaction = () => {
-    if (!this.state.CopyTransactionButtonState) {
-      return;
-    }
-    const values = this.props.form.getFieldsValue();
-    const { transaction } = values;
-    copy(transaction);
-    openNotification(this.state.formatMessage);
-  };
 
   render() {
-    console.log(
-      'this.state.GetTransactionButtonState:',
-      this.state.GetTransactionButtonState,
-    );
     const { getFieldDecorator } = this.props.form;
     const CreatorAccountNamePlaceholder = this.state.formatMessage(
       messages.CreatorAccountNamePlaceholder,
@@ -376,17 +359,16 @@ export class CreateAccountPage extends React.Component {
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonLoading={
-                this.state.GetTransactionButtonLoading
-              }
               GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              CopyTransactionButtonState={this.state.CopyTransactionButtonState}
-              handleCopyTransaction={this.handleCopyTransaction}
+              transaction={this.state.transaction}
             />
             <ScanQrcode
               form={this.props.form}
               formatMessage={this.state.formatMessage}
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>
@@ -398,8 +380,13 @@ export class CreateAccountPage extends React.Component {
 CreateAccountPage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
 const CreateAccountPageIntl = injectIntl(CreateAccountPage);
 const CreateAccountPageForm = Form.create()(CreateAccountPageIntl);
 
-export default CreateAccountPageForm;
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
+
+export default connect(mapStateToProps)(CreateAccountPageForm);

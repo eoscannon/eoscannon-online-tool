@@ -80,15 +80,9 @@ export class SendMessagePage extends React.Component {
        confirm({
          title: '错误信息',
          content: err+'' ,
-         onOk() {
-           //return new Promise((resolve, reject) => {
-           //  setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-           //}).catch(() => console.log('Oops errors!'));
-         },
+         onOk() {},
          onCancel() {},
        });
-
-      //alert('发送失败.',err.message);
     });
 
   }
@@ -107,15 +101,17 @@ export class SendMessagePage extends React.Component {
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}/>
             </FormComp>
-            <FormComp>
-              <Button
-                type="primary"
-                className="form-button"
-                onClick={this.sendMessage}>
-                发送
-              </Button>
+            {/*
+             <FormComp>
+             <Button
+             type="primary"
+             className="form-button"
+             onClick={this.sendMessage}>
+             发送
+             </Button>
 
-            </FormComp>
+             </FormComp>
+            */}
             <FormComp>
               <FormItem style={{ textAlign: 'center'}}>txid:{this.state.transaction_id}</FormItem>
             </FormComp>

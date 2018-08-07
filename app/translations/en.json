@@ -34,8 +34,10 @@
     "The page is offline, and the fields entered will not leak out. Please feel free to enter.",
   "Public CopyAlertDescription":
     "Please copy the following signature transaction and send it to the https://tool.eoscannon.io/ network.",
-  "Public KeyProviderFormItemLabel": "PrivateKey",
-  "Public KeyProviderFormItemPlaceholder": "Please enter the private key",
+  "Public KeyProviderFormItemLabel":
+    "Please enter the relevant transaction message",
+  "Public KeyProviderFormItemPlaceholder":
+    "Please go to the offline version of the tool to get the transaction message, open the tool, scan the QR code to get it.",
   "Public GetTransactionFormItemButtonName": "Generating transaction",
   "Public CopyAlertMessage": "Copy transaction / Scan qrcode",
   "Public CopyTransactionButtonName": "Copy Transaction",
@@ -183,5 +185,9 @@
   "TransferPage FunctionSearchAccountBalance": "Account Balance",
   "TransferPage FunctionSearchAccountSyblom": "symbol",
   "TransferPage FunctionSearchAccountTableBalance": "Balance",
-  "TransferPage FunctionSearchAccountTableContact": "contract"
+  "TransferPage FunctionSearchAccountTableContact": "contract",
+  "InfoInitPage infoAlertMessage": "This page is used online",
+  "InfoInitPage infoAlertDescription":
+    "Paste the information below into the EOSCannon offline signature tool",
+  "InfoInitPage infoAlertCopy": "Copy"
 }

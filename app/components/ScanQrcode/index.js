@@ -5,13 +5,14 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Input, Alert } from 'antd';
+import { Form, Button, Input, Alert, Modal } from 'antd';
 import { BrowserQRCodeReader } from '../../utils/zxing.qrcodereader.min';
 import utilsMsg from '../../utils/messages';
 import { getEos } from '../../utils/utils';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
+const confirm = Modal.confirm;
 
 export default class ScanQrcode extends Component {
   constructor(props) {
@@ -19,18 +20,27 @@ export default class ScanQrcode extends Component {
     this.state = {
       VideoElement: null,
       OpenCameraButtonState: false,
-      SendSignTransactionButtonState: false,
+      GetTransactionButtonState: false,
+      SendTransaction : ''
     };
   }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps(nextProps) {
-    if (nextProps.UnSignedTransaction) {
+    if (nextProps.transaction) {
       this.setState({
-        OpenCameraButtonState: !!nextProps.UnSignedTransaction,
+        OpenCameraButtonState: !!nextProps.transaction,
       });
     }
+  }
+
+  /**
+   * 输入框内容变化时，改变按钮状态
+   * */
+  onValuesChange = nextProps => {
+    const values = nextProps.form.getFieldsValue();
+
   }
   /**
    * 根据URL地址，重新设置默认菜单选项
@@ -54,29 +64,45 @@ export default class ScanQrcode extends Component {
       codeReader
         .decodeFromInputVideoDevice(videoInputDevices[0].deviceId, 'video')
         .then(result => {
-          this.props.form.setFieldsValue({
-            signature: result.text,
-          });
-          this.setState({
-            SendSignTransactionButtonState: true,
-          });
+          this.getSendSignTransaction(result.text)
         });
     });
   };
 
+  getSendSignTransaction=(signature)=>{
+    let transaction = this.props.transaction;
+    transaction.signature = signature
+    this.props.form.setFieldsValue({
+      signature: JSON.stringify(transaction),
+    });
+    this.setState({
+      SendTransaction : transaction,
+      GetTransactionButtonState: true,
+    });
+  }
+
   handleSendSignTransaction = () => {
-    const values = this.props.form.getFieldsValue();
-    const { UnSignedTransaction } = this.props;
-    UnSignedTransaction.signature = values.signature;
-    // console.log(this.state.UnSignedTransaction);
+    const values = this.state.SendTransaction;
     const eos = getEos(this.props.SelectedNetWork);
     eos
-      .pushTransaction(UnSignedTransaction)
+      .pushTransaction(values)
       .then(res => {
         console.log(res);
+        confirm({
+          title: '发送成功！',
+          content: res+'' ,
+          onOk() {},
+          onCancel() {},
+        });
       })
       .catch(err => {
         console.log(err);
+        confirm({
+          title: '错误信息',
+          content: err+'' ,
+          onOk() {},
+          onCancel() {},
+        });
       });
   };
 
@@ -101,7 +127,7 @@ export default class ScanQrcode extends Component {
             type="primary"
             className="form-button"
             onClick={this.handleOpenCamera}
-            disabled={!this.state.OpenCameraButtonState}
+            disabled={!this.props.transaction}
           >
             {OpenCameraButtonName}
           </Button>
@@ -116,7 +142,7 @@ export default class ScanQrcode extends Component {
             type="primary"
             className="form-button"
             onClick={this.handleSendSignTransaction}
-            disabled={!this.state.SendSignTransactionButtonState}
+            disabled={!this.props.transaction}
           >
             发送报文
           </Button>
@@ -129,7 +155,7 @@ export default class ScanQrcode extends Component {
 ScanQrcode.propTypes = {
   form: PropTypes.object,
   formatMessage: PropTypes.func,
-  UnSignedTransaction: PropTypes.string,
+  transaction: PropTypes.string,
   GetTransactionButtonState: PropTypes.bool,
   SelectedNetWork: PropTypes.string,
 };

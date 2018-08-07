@@ -60,8 +60,6 @@ export class BuyRamBytesPage extends React.Component {
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
     const { PayerAccountName, BytesQuantity } = values;
-    console.log('values:', values);
-
     this.setState({
       GetTransactionButtonState: !!PayerAccountName && !!BytesQuantity,
     });
@@ -110,15 +108,10 @@ export class BuyRamBytesPage extends React.Component {
         },
       )
       .then(tr => {
-        const transaction = JSON.stringify(tr.transaction);
-        this.props.form.setFieldsValue({
-          transaction,
-        });
         this.setState({
-          transaction,
-          QrCodeValue: transaction,
-        });
-        openTransactionSuccessNotification(this.state.formatMessage);
+          transaction :  tr.transaction,
+          QrCodeValue: JSON.stringify(tr.transaction)
+        })
       })
       .catch(err => {
         openTransactionFailNotification(this.state.formatMessage, err.name);
@@ -234,8 +227,8 @@ export class BuyRamBytesPage extends React.Component {
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonState={this.state.GetTransactionButtonState}
-              UnSignedTransaction={this.state.transaction}
               SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>

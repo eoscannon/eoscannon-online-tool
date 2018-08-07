@@ -58,6 +58,10 @@ export default defineMessages({
     id: 'Public CopyTransactionSuccessNotificationMsg',
     defaultMessage: '已复制',
   },
+  CopyMessage: {
+    id: 'InfoInitPage infoAlertCopy',
+    defaultMessage: '复制',
+  },
   CopyTransactionSuccessNotificationDescription: {
     id: 'Public CopyTransactionSuccessNotificationDescription',
     defaultMessage: `已将签名报文复制到剪贴板，请前往https://tool.eoscannon.io/联网将报文播报发送`,
@@ -88,11 +92,11 @@ export default defineMessages({
   },
   KeyProviderFormItemLabel: {
     id: 'Public KeyProviderFormItemLabel',
-    defaultMessage: '私钥',
+    defaultMessage: '请输入相关交易报文',
   },
   KeyProviderFormItemPlaceholder: {
     id: 'Public KeyProviderFormItemPlaceholder',
-    defaultMessage: '请输入私钥',
+    defaultMessage: '请前往离线版工具获取交易报文，打开工具，扫描二维码即可获得。',
   },
   GetTransactionFormItemButtonName: {
     id: 'Public GetTransactionFormItemButtonName',

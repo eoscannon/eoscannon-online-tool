@@ -27,8 +27,9 @@
     "该页面为离线页面，输入的字段不会向外界泄露，请放心输入。",
   "Public CopyAlertDescription":
     "请将下面的签名报文复制后，前往https://tool.eoscannon.io/联网后进行播报发送。",
-  "Public KeyProviderFormItemLabel": "私钥",
-  "Public KeyProviderFormItemPlaceholder": "请输入私钥",
+  "Public KeyProviderFormItemLabel": "请输入相关交易报文",
+  "Public KeyProviderFormItemPlaceholder":
+    "请前往离线版工具获取交易报文，打开工具，扫描二维码即可获得。",
   "Public GetTransactionFormItemButtonName": "生成签名报文",
   "Public CopyAlertMessage": "复制签名报文/扫描二维码",
   "Public CopyTransactionButtonName": "复制签名报文",
@@ -157,5 +158,10 @@
   "TransferPage FunctionSearchAccountSyblom": "币种",
   "TransferPage FunctionSearchAccountBalance": "账户余额",
   "TransferPage FunctionSearchAccountTableBalance": "余额",
-  "TransferPage FunctionSearchAccountTableContact": "合约名"
+  "TransferPage FunctionSearchAccountTableContact": "合约名",
+
+  "InfoInitPage infoAlertMessage": "此页面在线使用",
+  "InfoInitPage infoAlertDescription":
+    "将下方信息粘贴至EOSCannon离线签名工具中",
+  "InfoInitPage infoAlertCopy": "复制"
 }

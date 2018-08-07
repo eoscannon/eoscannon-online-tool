@@ -85,14 +85,10 @@ export class VotePage extends React.Component {
         },
       )
       .then(tr => {
-        this.props.form.setFieldsValue({
-          transaction: JSON.stringify(tr.transaction),
-        });
         this.setState({
-          GetTransactionButtonLoading: false,
-          QrCodeValue: JSON.stringify(tr.transaction),
-        });
-        openTransactionSuccessNotification(this.state.formatMessage);
+          transaction :  tr.transaction,
+          QrCodeValue: JSON.stringify(tr.transaction)
+        })
       })
       .catch(err => {
         this.setState({
@@ -170,17 +166,16 @@ export class VotePage extends React.Component {
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonLoading={
-                this.state.GetTransactionButtonLoading
-              }
               GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              CopyTransactionButtonState={this.state.CopyTransactionButtonState}
-              handleCopyTransaction={this.handleCopyTransaction}
+              transaction={this.state.transaction}
             />
             <ScanQrcode
               form={this.props.form}
               formatMessage={this.state.formatMessage}
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>

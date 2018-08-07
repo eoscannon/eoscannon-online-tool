@@ -8,11 +8,15 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input, Switch } from 'antd';
 import copy from 'copy-to-clipboard';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import ecc from  'eosjs-ecc'
+import Fcbuffer from 'fcbuffer';
+
 import {
   formItemLayout,
   getEos,
-  getEosTest,
-  getEosInfo,
+  getEosInfoDetail,
   openTransactionFailNotification,
   openTransactionSuccessNotification,
   openNotification,
@@ -26,6 +30,8 @@ import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
+
+import { makeSelectNetwork } from '../LanguageProvider/selectors';
 
 const FormItem = Form.Item;
 
@@ -63,17 +69,13 @@ export class StakePage extends React.Component {
     const {
       FromAccountName,
       stakeNetQuantity,
-      stakeCpuQuantity,
-      transaction,
+      stakeCpuQuantity
     } = values;
     this.setState({
       GetTransactionButtonState:
         FromAccountName && stakeNetQuantity && stakeCpuQuantity,
     });
-    this.setState({
-      CopyTransactionButtonState:
-        FromAccountName && stakeNetQuantity && stakeCpuQuantity && transaction,
-    });
+
   };
   /**
    * 用户点击生成报文，根据用户输入参数、选择的质押/解质押，生成签名报文，并将其赋值到文本框和生成对应的二维码
@@ -86,7 +88,9 @@ export class StakePage extends React.Component {
       GetTransactionButtonLoading: true,
     });
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
+    console.log('SelectedNetWork=====',this.props.SelectedNetWork)
+    const eos = getEos(this.props.SelectedNetWork);
+    console.log('')
     const opts = { sign: false, broadcast: false };
 
     const {
@@ -105,23 +109,30 @@ export class StakePage extends React.Component {
             stake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
             transfer: 0,
           },
-          opts,
+          opts
         )
         .then(tr => {
-          this.props.form.setFieldsValue({
-            transaction: JSON.stringify(tr.transaction),
-          });
+          //console.log('tr====',tr)
           this.setState({
-            GetTransactionButtonLoading: false,
-            QrCodeValue: JSON.stringify(tr.transaction),
-          });
-          this.openTransactionSuccessNotification();
+            transaction :  tr.transaction,
+            QrCodeValue: JSON.stringify(tr.transaction)
+          })
+          //this.props.form.setFieldsValue({
+          //  transaction: JSON.stringify(tr.transaction),
+          //});
+          //this.setState({
+          //  transaction,
+          //  GetTransactionButtonLoading: false,
+          //  QrCodeValue: JSON.stringify(tr.transaction),
+          //});
+          //openTransactionSuccessNotification(this.state.formatMessage);
         })
         .catch(err => {
           this.setState({
             GetTransactionButtonLoading: false,
           });
-          openTransactionFailNotification(err.name);
+          console.log('err====',err)
+          openTransactionFailNotification(this.state.formatMessage,err.name);
         });
     } else {
       eos
@@ -130,25 +141,23 @@ export class StakePage extends React.Component {
           receiver: ReceiverAccountName,
           unstake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
           unstake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
-        })
+        },opts)
         .then(tr => {
-          this.props.form.setFieldsValue({
-            transaction: JSON.stringify(tr.transaction),
-          });
           this.setState({
-            GetTransactionButtonLoading: false,
-            QrCodeValue: JSON.stringify(tr.transaction),
-          });
-          openTransactionSuccessNotification(this.state.formatMessage);
+            transaction :  tr.transaction,
+            QrCodeValue: JSON.stringify(tr.transaction)
+          })
         })
         .catch(err => {
           this.setState({
             GetTransactionButtonLoading: false,
           });
+          console.log('err====',err)
           openTransactionFailNotification(this.state.formatMessage, err.name);
         });
     }
   };
+
   /**
    * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
    * */
@@ -293,17 +302,16 @@ export class StakePage extends React.Component {
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonLoading={
-                this.state.GetTransactionButtonLoading
-              }
               GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              CopyTransactionButtonState={this.state.CopyTransactionButtonState}
-              handleCopyTransaction={this.handleCopyTransaction}
+              transaction={this.state.transaction}
             />
             <ScanQrcode
               form={this.props.form}
               formatMessage={this.state.formatMessage}
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>
@@ -315,9 +323,15 @@ export class StakePage extends React.Component {
 StakePage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
+
 };
 
-const StakePageIntl = injectIntl(StakePage);
-const StakePageForm = Form.create()(StakePageIntl);
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
 
-export default StakePageForm;
+const StakePageIntl = injectIntl(StakePage);
+const StakePageForm = Form.create(mapStateToProps)(StakePageIntl);
+
+export default connect(mapStateToProps)(StakePageForm);
