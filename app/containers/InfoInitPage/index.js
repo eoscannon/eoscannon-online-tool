@@ -41,17 +41,17 @@ export class CreateAccountPage extends React.Component {
       nextProps.SelectedNetWork &&
       nextProps.SelectedNetWork !== this.props.SelectedNetWork
     ) {
-      this.handleGetTransaction();
+      this.handleGetTransaction(nextProps.SelectedNetWork);
     }
   }
   componentDidMount() {
-    this.handleGetTransaction();
+    this.handleGetTransaction(this.props.SelectedNetWork);
   }
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
-  handleGetTransaction = () => {
-    getEosInfoDetail(this.props.SelectedNetWork).then(BlockInfo => {
+  handleGetTransaction = SelectedNetWork => {
+    getEosInfoDetail(SelectedNetWork).then(BlockInfo => {
       this.props.form.setFieldsValue({
         transaction: JSON.stringify(BlockInfo),
       });
