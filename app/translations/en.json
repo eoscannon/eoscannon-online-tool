@@ -186,8 +186,13 @@
   "TransferPage FunctionSearchAccountSyblom": "symbol",
   "TransferPage FunctionSearchAccountTableBalance": "Balance",
   "TransferPage FunctionSearchAccountTableContact": "contract",
+  "TransferPage FunctionSearchAccountTableGroup": "Group",
+  "TransferPage FunctionSearchAccountTableAddress": "Address",
+  "TransferPage FunctionSearchNoData": "no data",
+
   "InfoInitPage infoAlertMessage": "This page is used online",
   "InfoInitPage infoAlertDescription":
     "Paste the information below into the EOSCannon offline signature tool",
-  "InfoInitPage infoAlertCopy": "Copy"
+  "InfoInitPage infoAlertCopy": "Copy",
+  "Public FieldAlertSendMessage": "Send Transcation"
 }

@@ -140,4 +140,16 @@ export default defineMessages({
     id: 'TransferPage FunctionSearchAccountTableContact',
     defaultMessage: '合约名',
   },
+  FunctionSearchAccountTableGroup: {
+    id: 'TransferPage FunctionSearchAccountTableGroup',
+    defaultMessage: '组名',
+  },
+  FunctionSearchAccountTableAddress: {
+    id: 'TransferPage FunctionSearchAccountTableAddress',
+    defaultMessage: '地址/账户',
+  },
+  FunctionSearchNoData: {
+    id: 'TransferPage FunctionSearchNoData',
+    defaultMessage: '暂无数据',
+  },
 });

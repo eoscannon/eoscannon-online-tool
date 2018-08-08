@@ -1,5 +1,5 @@
 /*
- * ScanSendQrcode
+ * ScanQrcode
  *
  */
 
@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import { Form, Button, Input, Alert } from 'antd';
 import { BrowserQRCodeReader } from '../../utils/zxing.qrcodereader.min';
 import utilsMsg from '../../utils/messages';
-import { getEos } from '../../utils/utils';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -18,19 +17,8 @@ export default class ScanQrcode extends Component {
     super(props);
     this.state = {
       VideoElement: null,
-      OpenCameraButtonState: false,
-      SendSignTransactionButtonState: false,
+      ScanQrcodeButtonDisable: true,
     };
-  }
-  /**
-   * 输入框内容变化时，改变按钮状态
-   * */
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.UnSignedTransaction) {
-      this.setState({
-        OpenCameraButtonState: !!nextProps.UnSignedTransaction,
-      });
-    }
   }
   /**
    * 根据URL地址，重新设置默认菜单选项
@@ -44,6 +32,7 @@ export default class ScanQrcode extends Component {
           </video>
         </FormItem>
       ),
+      ScanQrcodeButtonDisable: false,
     });
     this.handleScanQrcode();
   };
@@ -55,28 +44,35 @@ export default class ScanQrcode extends Component {
         .decodeFromInputVideoDevice(videoInputDevices[0].deviceId, 'video')
         .then(result => {
           this.props.form.setFieldsValue({
-            signature: result.text,
-          });
-          this.setState({
-            SendSignTransactionButtonState: true,
+            jsonInfo: result.text,
           });
         });
     });
   };
 
+  //发送报文
   handleSendSignTransaction = () => {
-    const values = this.props.form.getFieldsValue();
-    const { UnSignedTransaction } = this.props;
-    UnSignedTransaction.signature = values.signature;
-    // console.log(this.state.UnSignedTransaction);
+    const values = this.state.SendTransaction;
     const eos = getEos(this.props.SelectedNetWork);
     eos
-      .pushTransaction(UnSignedTransaction)
+      .pushTransaction(values)
       .then(res => {
         console.log(res);
+        confirm({
+          title: '发送成功！',
+          content: res+'' ,
+          onOk() {},
+          onCancel() {},
+        });
       })
       .catch(err => {
         console.log(err);
+        confirm({
+          title: '错误信息',
+          content: err+'' ,
+          onOk() {},
+          onCancel() {},
+        });
       });
   };
 
@@ -87,38 +83,60 @@ export default class ScanQrcode extends Component {
     const OpenCameraButtonName = this.props.formatMessage(
       utilsMsg.OpenCameraButtonName,
     );
+    const ScanQrcodeButtonName = this.props.formatMessage(
+      utilsMsg.ScanQrcodeButtonName,
+    );
     const JsonInfoPlaceholder = this.props.formatMessage(
       utilsMsg.JsonInfoPlaceholder,
+    );
+    const FieldAlertSendMessage = this.props.formatMessage(
+      utilsMsg.FieldAlertSendMessage,
+    );
+    const FieldAlertDescription = this.props.formatMessage(
+      utilsMsg.FieldAlertDescription,
     );
     return (
       <div>
         <FormItem>
-          <Alert message={message} description={description} type="info" />
+          <Alert
+            message={message}
+            description={description}
+            type="info"
+          />
         </FormItem>
         {this.state.VideoElement}
         <FormItem style={{ textAlign: 'center' }}>
           <Button
             type="primary"
             className="form-button"
+            style={{ display: 'inline', marginRight: 5 }}
             onClick={this.handleOpenCamera}
-            disabled={!this.state.OpenCameraButtonState}
           >
             {OpenCameraButtonName}
           </Button>
+          <Button
+            type="primary"
+            className="form-button"
+            style={{ display: 'inline', marginLeft: 5 }}
+            onClick={this.handleScanQrcode}
+            disabled={this.state.ScanQrcodeButtonDisable}
+          >
+            {ScanQrcodeButtonName}
+          </Button>
         </FormItem>
         <FormItem>
-          {getFieldDecorator('signature', {
+          {getFieldDecorator('jsonInfo', {
             rules: [{ required: true, message: JsonInfoPlaceholder }],
-          })(<TextArea placeholder={JsonInfoPlaceholder} rows="6" />)}
+          })(<TextArea placeholder={JsonInfoPlaceholder} rows='6'/>)}
         </FormItem>
         <FormItem style={{ textAlign: 'center' }}>
           <Button
             type="primary"
             className="form-button"
             onClick={this.handleSendSignTransaction}
-            disabled={!this.state.SendSignTransactionButtonState}
+            disabled={!this.props.transaction}
           >
-            发送报文
+            {FieldAlertSendMessage}
           </Button>
         </FormItem>
       </div>
@@ -129,7 +147,4 @@ export default class ScanQrcode extends Component {
 ScanQrcode.propTypes = {
   form: PropTypes.object,
   formatMessage: PropTypes.func,
-  UnSignedTransaction: PropTypes.string,
-  GetTransactionButtonState: PropTypes.bool,
-  SelectedNetWork: PropTypes.string,
 };

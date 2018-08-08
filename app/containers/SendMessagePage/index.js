@@ -26,8 +26,8 @@ import {
   LayoutContent,
   FormComp,
 } from '../../components/NodeComp';
+
 import ScanSendQrcode from '../../components/ScanSendQrcode';
-import GetQrcode from '../../components/GetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
@@ -99,6 +99,7 @@ export class SendMessagePage extends React.Component {
             <FormComp>
               <ScanSendQrcode
                 form={this.props.form}
+                transaction={this.state.transaction}
                 formatMessage={this.state.formatMessage}/>
             </FormComp>
             {/*

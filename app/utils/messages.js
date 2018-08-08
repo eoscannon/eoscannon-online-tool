@@ -179,4 +179,8 @@ export default defineMessages({
     id: 'Public HeaderOfflineAppDownLoad',
     defaultMessage: '离线APP下载',
   },
+  FieldAlertSendMessage: {
+    id: 'Public FieldAlertSendMessage',
+    defaultMessage: '发送报文',
+  },
 });

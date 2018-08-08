@@ -11,8 +11,6 @@ import copy from 'copy-to-clipboard';
 import eosioAbi from './abi';
 import eosIqAbi from './iqAbi';
 import styleComps from './styles';
-import ecc from  'eosjs-ecc'
-var Fcbuffer = require('fcbuffer');
 
 import {
   formItemLayout,
@@ -45,7 +43,7 @@ export class AccountSearchPage extends React.Component {
       createTime: '',
       balance: 0,
       stake: 0,
-      voteNode: '暂无',
+      voteNode: '',
       voteNodeStatus: true,
       memoryContent: '',
       cpuContent: '',
@@ -63,12 +61,12 @@ export class AccountSearchPage extends React.Component {
       activeAdd: '',
       ownerAdd: '',
       symbolCode: '',
-      voteProxy: '暂无',
+      voteProxy: '',
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
     };
   }
   /**
-   * 输入框内容变化时，改变按钮状态
+   * 输入框内容变化时，改变按钮状态  huangxiaolei
    * */
   componentWillReceiveProps(nextProps) {
     this.setState({ netWorkStatus: nextProps.netWork });
@@ -87,14 +85,8 @@ export class AccountSearchPage extends React.Component {
   };
 
   handleChange = key => {
-    console.log(key);
     let eos;
-    console.log('this.state.netWorkStatus====', this.state.netWorkStatus);
-    //if (this.state.netWorkStatus == 'main') {
-      eos = getEos(this.state.netWorkStatus);
-    //} else {
-    //  eos = getEosTest();
-    //}
+    eos = getEos(this.state.netWorkStatus);
 
     eos
       .getCurrencyBalance({
@@ -110,7 +102,9 @@ export class AccountSearchPage extends React.Component {
         });
       })
       .catch(err => {
-        message.error('暂无数据');
+        message.error(this.state.formatMessage(
+          messages.FunctionSearchNoData
+        ));
         console.log('err:', err);
         this.setState({
           balance: 0,
@@ -123,7 +117,7 @@ export class AccountSearchPage extends React.Component {
    * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
    * */
   handleSearch = value => {
-    console.log('value:', value);
+    //console.log('value:', value);
     this.setState({
       account: value,
     });
@@ -217,12 +211,16 @@ export class AccountSearchPage extends React.Component {
             });
           })
           .catch(err => {
-            message.error('暂无数据');
+            message.error(this.state.formatMessage(
+              messages.FunctionSearchNoData
+            ));
             console.log('err:', err);
           });
       })
       .catch(err => {
-        message.error('暂无数据');
+        message.error(this.state.formatMessage(
+          messages.FunctionSearchNoData
+        ));
         this.setState({ info: '' });
         console.log('err:', err);
       });
@@ -287,13 +285,20 @@ export class AccountSearchPage extends React.Component {
       messages.FunctionSearchAccountTableContact,
     );
 
+    const FunctionSearchAccountTableGroup = this.state.formatMessage(
+      messages.FunctionSearchAccountTableGroup,
+    );
+    const FunctionSearchAccountTableAddress = this.state.formatMessage(
+      messages.FunctionSearchAccountTableAddress,
+    );
+
     const columnsBlance = [
       {
-        title: '账户余额',
+        title: FunctionSearchAccountTableBalance,
         dataIndex: 'name',
       },
       {
-        title: '合约地址',
+        title: FunctionSearchAccountTableContact,
         dataIndex: 'address',
       },
     ];
@@ -308,11 +313,11 @@ export class AccountSearchPage extends React.Component {
 
     const columns = [
       {
-        title: '组名',
+        title: FunctionSearchAccountTableGroup,
         dataIndex: 'name',
       },
       {
-        title: '地址/账户',
+        title: FunctionSearchAccountTableAddress,
         dataIndex: 'address',
       },
     ];
@@ -330,15 +335,6 @@ export class AccountSearchPage extends React.Component {
       },
     ];
 
-    const { getFieldDecorator } = this.props.form;
-    const TransferFromAccountNamePlaceholder = this.state.formatMessage(
-      messages.TransferFromAccountNamePlaceholder,
-    );
-    const TransferToAccountNamePlaceholder = this.state.formatMessage(
-      messages.TransferToAccountNamePlaceholder,
-    );
-
-    console.log('state:', this.state);
     return (
       <LayoutContent>
         <LayoutContentBox>
@@ -462,7 +458,7 @@ export class AccountSearchPage extends React.Component {
                         />
                       </div>
                     </TabPane>
-                    <TabPane tab="账户公钥" key="2">
+                    <TabPane tab={FunctionSearchAccountPublic} key="2">
                       <Table
                         columns={columns}
                         dataSource={data}

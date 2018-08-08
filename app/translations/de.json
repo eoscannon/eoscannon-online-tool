@@ -159,9 +159,13 @@
   "TransferPage FunctionSearchAccountBalance": "账户余额",
   "TransferPage FunctionSearchAccountTableBalance": "余额",
   "TransferPage FunctionSearchAccountTableContact": "合约名",
+  "TransferPage FunctionSearchAccountTableGroup": "组名",
+  "TransferPage FunctionSearchAccountTableAddress": "地址/账户",
+  "TransferPage FunctionSearchNoData": "暂无数据",
 
   "InfoInitPage infoAlertMessage": "此页面在线使用",
   "InfoInitPage infoAlertDescription":
     "将下方信息粘贴至EOSCannon离线签名工具中",
-  "InfoInitPage infoAlertCopy": "复制"
+  "InfoInitPage infoAlertCopy": "复制",
+  "Public FieldAlertSendMessage": "发送交易"
 }
