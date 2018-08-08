@@ -7,14 +7,14 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input, Select } from 'antd';
-import copy from 'copy-to-clipboard';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import {
   formItemLayout,
   voteNodes,
   getEos,
   openTransactionFailNotification,
-  openTransactionSuccessNotification,
-  openNotification,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -33,11 +33,11 @@ export class VotePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      eos: null,
       formatMessage: this.props.intl.formatMessage,
-      GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
-      CopyTransactionButtonState: false, // 复制报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
+      transaction: {},
     };
   }
   /**
@@ -51,12 +51,9 @@ export class VotePage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
-    const { voter, producers, transaction } = values;
+    const { voter, producers } = values;
     this.setState({
-      GetTransactionButtonState: voter && producers,
-    });
-    this.setState({
-      CopyTransactionButtonState: voter && producers && transaction,
+      GetTransactionButtonState: !!voter && !!producers,
     });
   };
   /**
@@ -66,11 +63,8 @@ export class VotePage extends React.Component {
     if (!this.state.GetTransactionButtonState) {
       return;
     }
-    this.setState({
-      GetTransactionButtonLoading: true,
-    });
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
+    const eos = getEos(this.props.SelectedNetWork);
     const { voter, producers } = values;
     eos
       .voteproducer(
@@ -86,28 +80,13 @@ export class VotePage extends React.Component {
       )
       .then(tr => {
         this.setState({
-          transaction :  tr.transaction,
-          QrCodeValue: JSON.stringify(tr.transaction)
-        })
+          eos,
+          transaction: tr.transaction,
+        });
       })
       .catch(err => {
-        this.setState({
-          GetTransactionButtonLoading: false,
-        });
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
-  };
-  /**
-   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
-   * */
-  handleCopyTransaction = () => {
-    if (!this.state.CopyTransactionButtonState) {
-      return;
-    }
-    const values = this.props.form.getFieldsValue();
-    const { transaction } = values;
-    copy(transaction);
-    openNotification(this.state.formatMessage);
   };
 
   render() {
@@ -163,6 +142,7 @@ export class VotePage extends React.Component {
               )}
             </FormItem>
             <DealGetQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
@@ -171,9 +151,9 @@ export class VotePage extends React.Component {
               transaction={this.state.transaction}
             />
             <ScanQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
               SelectedNetWork={this.props.SelectedNetWork}
               transaction={this.state.transaction}
             />
@@ -187,9 +167,14 @@ export class VotePage extends React.Component {
 VotePage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
 
 const VotePageIntl = injectIntl(VotePage);
 const VotePageForm = Form.create()(VotePageIntl);
 
-export default VotePageForm;
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
+
+export default connect(mapStateToProps)(VotePageForm);

@@ -48,20 +48,6 @@ async function getEosInfoDetail(type) {
   };
 }
 
-// 获取TransactionHeaders
-async function getEosTransactionHeaders(type) {
-  const eos = getEos(type);
-  const Info = await eos.getInfo({});
-  const chainDate = new Date(`${Info.head_block_time}Z`);
-  const expiration = new Date(chainDate.getTime() + 60 * 60 * 1000);
-  const Block = await eos.getBlock(Info.last_irreversible_block_num);
-  return {
-    expiration: expiration.toISOString().split('.')[0],
-    ref_block_num: Info.last_irreversible_block_num & 0xffff,
-    ref_block_prefix: Block.ref_block_prefix,
-  };
-}
-
 /**
  * 提示用户签名成功
  * */
@@ -101,7 +87,6 @@ const openNotification = formatMessage => {
 export {
   voteNodes,
   formItemLayout,
-  getEosTransactionHeaders,
   getEos,
   getEosTest,
   getEosMain,

@@ -9,15 +9,12 @@ import PropTypes from 'prop-types';
 import { Form, Icon, Input } from 'antd';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import copy from 'copy-to-clipboard';
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 
 import {
   formItemLayout,
   getEos,
   openTransactionFailNotification,
-  openTransactionSuccessNotification,
-  openNotification,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -36,11 +33,11 @@ export class CreateAccountPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      eos: null,
       formatMessage: this.props.intl.formatMessage,
-      GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
-      CopyTransactionButtonState: false, // 复制报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
+      transaction: {},
     };
   }
   /**
@@ -73,17 +70,6 @@ export class CreateAccountPage extends React.Component {
         !!StakeNetQuantity &&
         !!StakeCpuQuantity,
     });
-
-    this.setState({
-      CopyTransactionButtonState:
-        AccountName &&
-        NewAccountName &&
-        ActiveKey &&
-        OwnerKey &&
-        Bytes &&
-        StakeNetQuantity &&
-        StakeCpuQuantity,
-    });
   };
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
@@ -92,9 +78,6 @@ export class CreateAccountPage extends React.Component {
     if (!this.state.GetTransactionButtonState) {
       return;
     }
-    this.setState({
-      GetTransactionButtonLoading: true,
-    });
     const values = this.props.form.getFieldsValue();
     const eos = getEos(this.props.SelectedNetWork);
     const {
@@ -174,14 +157,11 @@ export class CreateAccountPage extends React.Component {
       )
       .then(tr => {
         this.setState({
-          transaction :  tr.transaction,
-          QrCodeValue: JSON.stringify(tr.transaction)
-        })
+          eos,
+          transaction: tr.transaction,
+        });
       })
       .catch(err => {
-        this.setState({
-          GetTransactionButtonLoading: false,
-        });
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
   };
@@ -357,6 +337,7 @@ export class CreateAccountPage extends React.Component {
               )}
             </FormItem>
             <DealGetQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
@@ -365,9 +346,9 @@ export class CreateAccountPage extends React.Component {
               transaction={this.state.transaction}
             />
             <ScanQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
               SelectedNetWork={this.props.SelectedNetWork}
               transaction={this.state.transaction}
             />

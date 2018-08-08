@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Form, Icon, Input, Select } from 'antd';
-import copy from 'copy-to-clipboard';
 import eosioAbi from './abi';
 import eosIqAbi from './iqAbi';
 import adcAbi from './adcAbi';
@@ -16,8 +15,6 @@ import {
   formItemLayout,
   getEos,
   openTransactionFailNotification,
-  openTransactionSuccessNotification,
-  openNotification,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -38,12 +35,11 @@ export class TransferPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      eos: null,
       formatMessage: this.props.intl.formatMessage,
-      GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
-      CopyTransactionButtonState: false, // 复制报文按钮可点击状态
-      SendSignTransactionButtonState: false, // 发送报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
+      transaction: {},
     };
   }
   /**
@@ -58,37 +54,21 @@ export class TransferPage extends React.Component {
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
     const {
-      // jsonInfo,
-      // keyProvider,
       FromAccountName,
       ToAccountName,
       transferContract,
       transferQuantity,
       transferDigit,
       transferSymbol,
-      transaction,
     } = values;
     this.setState({
       GetTransactionButtonState:
-        // jsonInfo &&
-        // keyProvider &&
-        FromAccountName &&
-        ToAccountName &&
-        transferContract &&
-        transferQuantity &&
-        transferDigit &&
-        transferSymbol,
-    });
-    this.setState({
-      CopyTransactionButtonState:
-        // jsonInfo &&
-        // keyProvider &&
-        FromAccountName &&
-        ToAccountName &&
-        transferContract &&
-        transferQuantity &&
-        transferDigit &&
-        transferSymbol
+        !!FromAccountName &&
+        !!ToAccountName &&
+        !!transferContract &&
+        !!transferQuantity &&
+        !!transferDigit &&
+        !!transferSymbol,
     });
   };
   /**
@@ -98,9 +78,6 @@ export class TransferPage extends React.Component {
     if (!this.state.GetTransactionButtonState) {
       return;
     }
-    this.setState({
-      GetTransactionButtonLoading: true,
-    });
     const values = this.props.form.getFieldsValue();
     const eos = getEos(this.props.SelectedNetWork);
     const {
@@ -152,29 +129,13 @@ export class TransferPage extends React.Component {
       )
       .then(tr => {
         this.setState({
-          transaction :  tr.transaction,
-          QrCodeValue: JSON.stringify(tr.transaction)
-        })
+          eos,
+          transaction: tr.transaction,
+        });
       })
       .catch(err => {
-        this.setState({
-          GetTransactionButtonLoading: false,
-        });
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
-  };
-  /**
-   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
-   * */
-  handleCopyTransaction = () => {
-    if (!this.state.CopyTransactionButtonState) {
-      return;
-    }
-    const values = this.props.form.getFieldsValue();
-    const { transaction } = values;
-    console.log('transaction====',transaction)
-    copy(transaction);
-    openNotification(this.state.formatMessage);
   };
 
   render() {
@@ -339,6 +300,7 @@ export class TransferPage extends React.Component {
               )}
             </FormItem>
             <DealGetQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
@@ -347,9 +309,9 @@ export class TransferPage extends React.Component {
               transaction={this.state.transaction}
             />
             <ScanQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
               SelectedNetWork={this.props.SelectedNetWork}
               transaction={this.state.transaction}
             />
@@ -363,6 +325,7 @@ export class TransferPage extends React.Component {
 TransferPage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
 
 const TransferPageIntl = injectIntl(TransferPage);

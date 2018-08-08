@@ -7,19 +7,13 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input, Switch } from 'antd';
-import copy from 'copy-to-clipboard';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import ecc from  'eosjs-ecc'
-import Fcbuffer from 'fcbuffer';
 
 import {
   formItemLayout,
   getEos,
-  getEosInfoDetail,
   openTransactionFailNotification,
-  openTransactionSuccessNotification,
-  openNotification,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -39,12 +33,12 @@ export class StakePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formatMessage: this.props.intl.formatMessage,
       isDelegatebw: true, // true：质押；false：解质押
-      GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
+      eos: null,
+      formatMessage: this.props.intl.formatMessage,
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
-      CopyTransactionButtonState: false, // 复制报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
+      transaction: {},
     };
   }
   /**
@@ -66,16 +60,11 @@ export class StakePage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
-    const {
-      FromAccountName,
-      stakeNetQuantity,
-      stakeCpuQuantity
-    } = values;
+    const { FromAccountName, stakeNetQuantity, stakeCpuQuantity } = values;
     this.setState({
       GetTransactionButtonState:
-        FromAccountName && stakeNetQuantity && stakeCpuQuantity,
+        !!FromAccountName && !!stakeNetQuantity && !!stakeCpuQuantity,
     });
-
   };
   /**
    * 用户点击生成报文，根据用户输入参数、选择的质押/解质押，生成签名报文，并将其赋值到文本框和生成对应的二维码
@@ -84,15 +73,8 @@ export class StakePage extends React.Component {
     if (!this.state.GetTransactionButtonState) {
       return;
     }
-    this.setState({
-      GetTransactionButtonLoading: true,
-    });
     const values = this.props.form.getFieldsValue();
-    console.log('SelectedNetWork=====',this.props.SelectedNetWork)
     const eos = getEos(this.props.SelectedNetWork);
-    console.log('')
-    const opts = { sign: false, broadcast: false };
-
     const {
       FromAccountName,
       ReceiverAccountName,
@@ -109,66 +91,44 @@ export class StakePage extends React.Component {
             stake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
             transfer: 0,
           },
-          opts
+          {
+            sign: false,
+            broadcast: false,
+          },
         )
         .then(tr => {
-          //console.log('tr====',tr)
           this.setState({
-            transaction :  tr.transaction,
-            QrCodeValue: JSON.stringify(tr.transaction)
-          })
-          //this.props.form.setFieldsValue({
-          //  transaction: JSON.stringify(tr.transaction),
-          //});
-          //this.setState({
-          //  transaction,
-          //  GetTransactionButtonLoading: false,
-          //  QrCodeValue: JSON.stringify(tr.transaction),
-          //});
-          //openTransactionSuccessNotification(this.state.formatMessage);
+            eos,
+            transaction: tr.transaction,
+          });
         })
         .catch(err => {
-          this.setState({
-            GetTransactionButtonLoading: false,
-          });
-          console.log('err====',err)
-          openTransactionFailNotification(this.state.formatMessage,err.name);
+          openTransactionFailNotification(this.state.formatMessage, err.name);
         });
     } else {
       eos
-        .undelegatebw({
-          from: FromAccountName,
-          receiver: ReceiverAccountName,
-          unstake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
-          unstake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
-        },opts)
+        .undelegatebw(
+          {
+            from: FromAccountName,
+            receiver: ReceiverAccountName,
+            unstake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
+            unstake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
+          },
+          {
+            sign: false,
+            broadcast: false,
+          },
+        )
         .then(tr => {
           this.setState({
-            transaction :  tr.transaction,
-            QrCodeValue: JSON.stringify(tr.transaction)
-          })
+            eos,
+            transaction: tr.transaction,
+          });
         })
         .catch(err => {
-          this.setState({
-            GetTransactionButtonLoading: false,
-          });
-          console.log('err====',err)
           openTransactionFailNotification(this.state.formatMessage, err.name);
         });
     }
-  };
-
-  /**
-   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
-   * */
-  handleCopyTransaction = () => {
-    if (!this.state.CopyTransactionButtonState) {
-      return;
-    }
-    const values = this.props.form.getFieldsValue();
-    const { transaction } = values;
-    copy(transaction);
-    openNotification(this.state.formatMessage);
   };
 
   render() {
@@ -299,6 +259,7 @@ export class StakePage extends React.Component {
               )}
             </FormItem>
             <DealGetQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
@@ -307,9 +268,9 @@ export class StakePage extends React.Component {
               transaction={this.state.transaction}
             />
             <ScanQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
               SelectedNetWork={this.props.SelectedNetWork}
               transaction={this.state.transaction}
             />
@@ -324,7 +285,6 @@ StakePage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
   SelectedNetWork: PropTypes.string,
-
 };
 
 const mapStateToProps = createStructuredSelector({
