@@ -64,7 +64,7 @@ export default class ScanQrcode extends Component {
   };
 
   getSendSignTransaction = signature => {
-    this.state.SendTransaction.signature = signature;
+    this.state.SendTransaction.signatures.push(signature);
     this.props.form.setFieldsValue({
       SendTransaction: JSON.stringify(this.state.SendTransaction),
     });
