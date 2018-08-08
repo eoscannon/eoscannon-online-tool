@@ -31,7 +31,7 @@ export default class DealGetQrcode extends Component {
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps====',nextProps)
+    //console.log('nextProps====',nextProps)
     if (nextProps.transaction !== this.props.transaction && nextProps.QrCodeValue) {
       this.setState({
         QrCodeValue : nextProps.transaction,
@@ -51,12 +51,14 @@ export default class DealGetQrcode extends Component {
       return;
     }
     console.log('this.props.transaction===',this.props.transaction)
+    console.log("output:" + escape(this.props.transaction));
+
     copy(JSON.stringify(this.props.transaction));
     openNotification(this.props.formatMessage);
   };
 
   //离线签名
-  sign_offline =  ()=> {
+  sign_offline =  () => {
     const chainId = this.props.SelectedNetWork == "main" ? "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906" : "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca";
     const eos = getEos(this.props.SelectedNetWork);
     const unsigned = this.props.transaction;

@@ -10,6 +10,7 @@ import { Form, Icon, Input } from 'antd';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import copy from 'copy-to-clipboard';
+import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 
 import {
   formItemLayout,
@@ -46,7 +47,7 @@ export class CreateAccountPage extends React.Component {
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps(nextProps) {
-    //this.onValuesChange(nextProps);
+    this.onValuesChange(nextProps);
   }
   /**
    * 输入框内容变化时，改变按钮状态
