@@ -15,7 +15,6 @@ import {
   formItemLayout,
   getEos,
   openTransactionFailNotification,
-  openTransactionSuccessNotification,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -33,11 +32,12 @@ export class BuyRamBytesPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      eos: null,
       formatMessage: this.props.intl.formatMessage,
       isBuyRam: true,
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
-      transaction: '',
+      transaction: {},
     };
   }
   /**
@@ -109,9 +109,9 @@ export class BuyRamBytesPage extends React.Component {
       )
       .then(tr => {
         this.setState({
-          transaction :  tr.transaction,
-          QrCodeValue: JSON.stringify(tr.transaction)
-        })
+          eos,
+          transaction: tr.transaction,
+        });
       })
       .catch(err => {
         openTransactionFailNotification(this.state.formatMessage, err.name);
@@ -154,7 +154,6 @@ export class BuyRamBytesPage extends React.Component {
                 onChange={this.onSwitchChange}
               />
             </FormItem>
-
             <FormItem {...formItemLayout} label={PayerAccountNameLabel} colon>
               {getFieldDecorator('PayerAccountName', {
                 rules: [
@@ -216,6 +215,7 @@ export class BuyRamBytesPage extends React.Component {
               )}
             </FormItem>
             <DealGetQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
@@ -224,9 +224,9 @@ export class BuyRamBytesPage extends React.Component {
               transaction={this.state.transaction}
             />
             <ScanQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
               SelectedNetWork={this.props.SelectedNetWork}
               transaction={this.state.transaction}
             />

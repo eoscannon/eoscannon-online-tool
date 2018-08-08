@@ -9,15 +9,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { IntlProvider } from 'react-intl';
 
 import { makeSelectLocale, makeSelectNetwork } from './selectors';
 
 export class LanguageProvider extends React.PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
   render() {
-    //console.log("LanguageProvider == ", this.props.netWork);
     return (
       <IntlProvider
         locale={this.props.locale}

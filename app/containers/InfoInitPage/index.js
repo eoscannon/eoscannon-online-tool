@@ -12,12 +12,9 @@ import { Form, Input, Button, Alert } from 'antd';
 import QRCode from 'qrcode.react';
 import copy from 'copy-to-clipboard';
 
-
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import { getEosInfoDetail, openNotification } from '../../utils/utils';
-
 import messages from './messages';
-import utilsMsg from '../../utils/messages';
 
 import {
   LayoutContentBox,
@@ -70,6 +67,7 @@ export class CreateAccountPage extends React.Component {
     copy(this.state.QrCodeValue);
     openNotification(this.state.formatMessage);
   };
+
   render() {
     const infoAlertMessage = this.state.formatMessage(
       messages.infoAlertMessage,
@@ -77,9 +75,7 @@ export class CreateAccountPage extends React.Component {
     const infoAlertDescription = this.state.formatMessage(
       messages.infoAlertDescription,
     );
-    const infoAlertCopy = this.state.formatMessage(
-      messages.infoAlertCopy,
-    );
+    const infoAlertCopy = this.state.formatMessage(messages.infoAlertCopy);
 
     return (
       <LayoutContent>
