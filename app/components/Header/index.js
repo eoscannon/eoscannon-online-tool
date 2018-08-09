@@ -15,7 +15,7 @@ import { Layout, Select } from 'antd';
 
 import { Menu, Icon } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
-import Footer from '../../components/Footer';
+import FooterComp from '../../components/Footer';
 
 import {
   makeSelectLocale,
@@ -277,7 +277,6 @@ class HeaderComp extends React.Component {
               onClick={this.toggle}
               style={{
                 fontSize: '18',
-                lineHeight: '64',
                 padding: '0 24px',
                 cursor: 'pointer',
                 transition: 'color .3s',
@@ -312,7 +311,7 @@ class HeaderComp extends React.Component {
               {this.props.children}
             </div>
           </Content>
-          <Footer />
+          <FooterComp />
         </Layout>
       </Layout>
     );
