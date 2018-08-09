@@ -30,7 +30,7 @@ class HeaderComp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultSelectedKeys: '1',
+      defaultSelectedKeys: '9',
       collapsed: false,
       openKeys: [],
       rootSubmenuKeys: ['1', '2', '3', '4', '5'],
@@ -40,7 +40,7 @@ class HeaderComp extends React.Component {
    * 根据URL地址，重新设置默认菜单选项
    * */
   componentWillMount() {
-    let defaultSelectedKeys = '8';
+    let defaultSelectedKeys = '9';
     switch (window.location.hash.substring(1)) {
       case '/accountSearch':
         defaultSelectedKeys = '9';
@@ -73,7 +73,7 @@ class HeaderComp extends React.Component {
         defaultSelectedKeys = '0';
         break;
       default:
-        defaultSelectedKeys = '8';
+        defaultSelectedKeys = '9';
     }
     this.setState({
       defaultSelectedKeys,
@@ -127,6 +127,7 @@ class HeaderComp extends React.Component {
     const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
     const AppDownLoad = formatMessage(utilsMsg.HeaderAppDownLoad);
     const OfflineAppDownLoad = formatMessage(utilsMsg.HeaderOfflineAppDownLoad);
+    const sendTrade = formatMessage(utilsMsg.HeaderSendTrade);
     return (
       <Layout>
         <Helmet
@@ -164,6 +165,15 @@ class HeaderComp extends React.Component {
             openKeys={this.state.openKeys}
             onOpenChange={this.onOpenChange}
           >
+            <Menu.Item key="9">
+              <Link href="/accountSearch" to="/accountSearch">
+                <Icon type="user" />
+                <span>
+                  {accountSearch}
+                </span>
+              </Link>
+            </Menu.Item>
+
             <Menu.SubMenu
               key="1"
               title={
@@ -220,7 +230,7 @@ class HeaderComp extends React.Component {
               title={
                 <span>
                   <Icon type="solution" />
-                  <span> {initInfo}</span>
+                  <span> {sendTrade}</span>
                 </span>
               }
             >
@@ -237,43 +247,24 @@ class HeaderComp extends React.Component {
             </Menu.SubMenu>
 
             <Menu.SubMenu
-              key="4"
-              title={
-                <span>
-                  <Icon type="user" />
-                  <span> {accountSearch}</span>
-                </span>
-              }
-            >
-              <Menu.Item key="9">
-                <Link href="/accountSearch" to="/accountSearch">
-                  {accountSearch}
-                </Link>
-              </Menu.Item>
-            </Menu.SubMenu>
-
-            <Menu.SubMenu
               key="5"
               title={
                 <span>
                   <Icon type="appstore-o" />
                   <span> {AppDownLoad}</span>
                 </span>
-              }
-            >
+              }>
               <Menu.Item key="setting:1">
                 <a
                   href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"
-                  target="_blank"
-                >
+                  target="_blank">
                   {OnlineAppDownLoad}
                 </a>
               </Menu.Item>
               <Menu.Item key="setting:2">
                 <a
                   href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases"
-                  target="_blank"
-                >
+                  target="_blank">
                   {OfflineAppDownLoad}
                 </a>
               </Menu.Item>

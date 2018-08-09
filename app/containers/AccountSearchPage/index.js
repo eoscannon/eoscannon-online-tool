@@ -5,7 +5,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Select, message, Tabs, Table } from 'antd';
+import { Form, Select, message, Tabs, Table, Tag } from 'antd';
 import { Progress, Input } from 'utils/antdUtils';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -53,6 +53,11 @@ export class AccountSearchPage extends React.Component {
       voteProxy: '',
     };
   }
+
+  componentDidMount(){
+    //this.handleSearch('gi3temrsg4ge')
+  }
+
   searchBlance = key => {
     console.log(key);
   };
@@ -102,9 +107,12 @@ export class AccountSearchPage extends React.Component {
           if (info.voter_info.producers.length < 1) {
             this.setState({ voteNodeStatus: false });
           } else {
-            for (let i = 0; i < info.voter_info.producers.length; i += 1) {
-              producer = `${info.voter_info.producers[i]} , ${producer}`;
-            }
+            this.setState({ voter_infoProducers: info.voter_info.producers });
+
+            //for (let i = 0; i < info.voter_info.producers.length; i += 1) {
+            //  producer = `${info.voter_info.producers[i]} , ${producer}`;
+            //}
+            //producer = producer.substring(0,producer.lastIndexOf(','))
           }
         }
         if (info.voter_info) {
@@ -135,7 +143,7 @@ export class AccountSearchPage extends React.Component {
           info,
           createTime: info.created,
           stake,
-          voteNode: producer,
+          voteNode: info.voter_info.producers,
           memoryContent: `${(info.ram_usage / 1024).toFixed(2)} Kib/${(
             info.ram_quota / 1024
           ).toFixed(2)} Kib`,
@@ -148,17 +156,21 @@ export class AccountSearchPage extends React.Component {
           ).toFixed(2)} Mib`,
           cpuMortgage: cpuBack,
           networkMortgage: netWork,
-          memoryScale: (
-            (Math.round(info.ram_usage) / Math.round(info.ram_quota)) *
-            100
-          ).toFixed(2),
-          cpuScale,
-          networkScale: netScale,
-          activeAdd: info.permissions[0].required_auth.keys[0].key,
-          ownerAdd: info.permissions[1].required_auth.keys[0].key,
+          memoryScale: Number(
+            ((Math.round(info.ram_usage) / Math.round(info.ram_quota)) * 100).toFixed(2)
+          ),
+          cpuScale: Number(Number(cpuScale).toFixed(2)),
+          networkScale: Number(Number(netScale).toFixed(2)),
+
           cpuStake: info.total_resources.cpu_weight,
           networkStake: info.total_resources.net_weight,
         });
+        if(info.permissions[0].required_auth.keys.length>0){
+          this.setState({
+            activeAdd: info.permissions[0].required_auth.keys[0].key,
+            ownerAdd: info.permissions[1].required_auth.keys[0].key,
+          })
+        }
 
         eos
           .getCurrencyBalance({
@@ -326,7 +338,8 @@ export class AccountSearchPage extends React.Component {
                     </span>
                     {this.state.voteNodeStatus ? (
                       <span>
-                        {FunctionSearchEOSVoteNode}：{this.state.voteNode}
+                        {FunctionSearchEOSVoteNode}：<br/>
+                        {this.state.voteNode.map((key, i)=>( <Tag key={i}>{key}</Tag>))}
                       </span>
                     ) : (
                       <span />
@@ -395,6 +408,7 @@ export class AccountSearchPage extends React.Component {
                           onChange={this.handleChange}
                         >
                           <Option value="eosio.token">EOS</Option>
+                          <Option value="eoscancancan">CAN</Option>
                           <Option value="everipediaiq">IQ</Option>
                           <Option value="eosiomeetone">MEETONE</Option>
                           <Option value="gyztomjugage">CETOS</Option>

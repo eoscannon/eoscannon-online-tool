@@ -12,7 +12,7 @@
   "Public TransactionSuccessNotificationMsg":
     "The success of generating a signature transaction",
   "Public TransactionSuccessNotificationDescription":
-    "Please click the copy signature transaction button or scan the two-dimensional code to get the signature message.",
+    "Please click the copy signature transaction button or scan the two-dimensional code to get the signature Transcation.",
   "Public TransactionFailNotificationMsg":
     "Failure to generate a signature transaction",
   "Public TransactionFailNotificationDescription":
@@ -158,15 +158,15 @@
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
 
   "Public HeaderMenuInfoInit": "Intial Block Info",
-  "Public HeaderMenuSendMessage": "Send Message",
+  "Public HeaderMenuSendMessage": "Send Transcation",
   "Public HeaderMenuAccountSearch": "Search",
   "Public HeaderMenuStake": "Stake",
-  "Public HeaderMenuTradeManage": "Trade Manage",
+  "Public HeaderMenuTradeManage": "Transcation Management",
   "Public HeaderMenuOffical": "Main",
   "Public HeaderMenuTestNet": "Test",
-  "Public HeaderAppDownLoad": "Tools DownLoad",
-  "Public HeaderOnlineAppDownLoad": "Online Tools DownLoad",
-  "Public HeaderOfflineAppDownLoad": "Offline Tools DownLoad",
+  "Public HeaderAppDownLoad": "APP DownLoad",
+  "Public HeaderOnlineAppDownLoad": "Online APP DownLoad",
+  "Public HeaderOfflineAppDownLoad": "Offline APP DownLoad",
   "TransferPage FunctionSearchButton": "search",
   "TransferPage FunctionSearchAccount": "Account",
   "TransferPage FunctionSearchCreateTime": "Create time",
@@ -196,7 +196,7 @@
   "InfoInitPage infoAlertCopy": "Copy",
   "Public FieldAlertSendMessage": "Send Transcation",
   "Public SendSuccessMessage":
-    "Send the message successfully, please check at the end of the page.",
+    "Send the Transcation successfully, please check at the end of the page.",
 
   "Public SendSuccess": "Send success",
   "Public ScanCodeSendSuccessMessage":
