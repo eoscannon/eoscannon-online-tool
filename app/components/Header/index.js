@@ -6,6 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
+import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -123,6 +124,15 @@ class HeaderComp extends React.Component {
     const OfflineAppDownLoad = formatMessage(utilsMsg.HeaderOfflineAppDownLoad);
     return (
       <Layout>
+        <Helmet
+          titleTemplate={`%s -${formatMessage(utilsMsg.AppHelmetTitle)}`}
+          defaultTitle={formatMessage(utilsMsg.AppHelmetTitle)}
+        >
+          <meta
+            name="description"
+            content={formatMessage(utilsMsg.AppHelmetTitle)}
+          />
+        </Helmet>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <div
             className="logo"
