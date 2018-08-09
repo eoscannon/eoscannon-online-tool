@@ -31,7 +31,7 @@ export class SendMessagePage extends React.Component {
     this.state = {
       SendButtonDisable: true,
       transaction_id: '',
-      formatMessage: this.props.intl.formatMessage
+      formatMessage: this.props.intl.formatMessage,
     };
   }
 
@@ -72,7 +72,9 @@ export class SendMessagePage extends React.Component {
       .pushTransaction(JSON.parse(this.props.form.getFieldsValue().jsonInfo))
       .then(res => {
         message.success(
-          `${this.state.formatMessage(utilsMsg.SendSuccessMessage)}transaction_id=${res.transaction_id}`,
+          `${this.state.formatMessage(
+            utilsMsg.SendSuccessMessage,
+          )}transaction_id=${res.transaction_id}`,
         );
         this.setState({ transaction_id: res.transaction_id });
       })
@@ -128,7 +130,7 @@ export class SendMessagePage extends React.Component {
               <FormItem style={{ textAlign: 'left' }}>
                 {this.state.transaction_id
                   ? `txid：${this.state.transaction_id}`
-                  : "''"}
+                  : ''}
               </FormItem>
             </FormComp>
           </styleComps.ConBox>

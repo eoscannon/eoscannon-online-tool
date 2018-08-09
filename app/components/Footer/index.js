@@ -20,7 +20,7 @@ class FooterComp extends React.PureComponent {
     return (
       <FooterWrapper>
         {formatMessage(utilsMsg.FooterCompText)}
-        <a href="https://github.com/eoscannon">
+        <a href="https://github.com/eoscannon" target="_blank">
           <img src={github} alt="" width="19" />
         </a>
       </FooterWrapper>

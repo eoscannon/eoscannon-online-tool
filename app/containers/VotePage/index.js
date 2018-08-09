@@ -148,6 +148,7 @@ export class VotePage extends React.Component {
               GetTransactionButtonClick={this.handleGetTransaction}
               GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
+              SelectedNetWork={this.props.SelectedNetWork}
               transaction={this.state.transaction}
             />
             <ScanQrcode

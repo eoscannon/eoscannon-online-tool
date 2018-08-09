@@ -16,7 +16,11 @@ import {
   getEos,
   openTransactionFailNotification,
 } from '../../utils/utils';
-import { FormComp } from '../../components/NodeComp';
+import {
+  LayoutContentBox,
+  LayoutContent,
+  FormComp,
+} from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
@@ -139,86 +143,97 @@ export class BuyRamBytesPage extends React.Component {
     );
     const BytesLabel = this.state.formatMessage(messages.BytesLabel);
     return (
-      <FormComp>
-        <FormItem>
-          <Switch
-            checkedChildren={SwitchCheckedName}
-            unCheckedChildren={SwitchUnCheckedName}
-            defaultChecked={this.state.isBuyRam}
-            onChange={this.onSwitchChange}
-          />
-        </FormItem>
-        <FormItem {...formItemLayout} label={PayerAccountNameLabel} colon>
-          {getFieldDecorator('PayerAccountName', {
-            rules: [
-              {
-                required: true,
-                message: PayerAccountNamePlaceholder,
-              },
-            ],
-          })(
-            <Input
-              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder={PayerAccountNamePlaceholder}
-            />,
-          )}
-        </FormItem>
-        {this.state.isBuyRam ? (
-          <FormItem {...formItemLayout} label={ReceiverAccountNameLabel} colon>
-            {getFieldDecorator('ReceiverAccountName', {
-              rules: [
-                {
-                  required: false,
-                  message: ReceiverAccountNamePlaceholder,
-                },
-              ],
-            })(
-              <Input
-                prefix={
-                  <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                }
-                placeholder={ReceiverAccountNamePlaceholder}
-              />,
-            )}
-          </FormItem>
-        ) : null}
-        <FormItem {...formItemLayout} label={BytesLabel} colon>
-          {getFieldDecorator('BytesQuantity', {
-            rules: [
-              {
-                required: true,
-                message: BytesQuantityPlaceholder,
-              },
-            ],
-          })(
-            <Input
-              prefix={
-                <Icon
-                  type="pay-circle-o"
-                  style={{ color: 'rgba(0,0,0,.25)' }}
-                />
-              }
-              placeholder={BytesQuantityPlaceholder}
-            />,
-          )}
-        </FormItem>
-        <DealGetQrcode
-          eos={this.state.eos}
-          form={this.props.form}
-          formatMessage={this.state.formatMessage}
-          GetTransactionButtonClick={this.handleGetTransaction}
-          GetTransactionButtonState={this.state.GetTransactionButtonState}
-          QrCodeValue={this.state.QrCodeValue}
-          transaction={this.state.transaction}
-        />
-        <ScanQrcode
-          eos={this.state.eos}
-          form={this.props.form}
-          formatMessage={this.state.formatMessage}
-          SelectedNetWork={this.props.SelectedNetWork}
-          transaction={this.state.transaction}
-        />
-      </FormComp>
+      <LayoutContent>
+        <LayoutContentBox>
+          <FormComp>
+            <FormItem>
+              <Switch
+                checkedChildren={SwitchCheckedName}
+                unCheckedChildren={SwitchUnCheckedName}
+                defaultChecked={this.state.isBuyRam}
+                onChange={this.onSwitchChange}
+              />
+            </FormItem>
+            <FormItem {...formItemLayout} label={PayerAccountNameLabel} colon>
+              {getFieldDecorator('PayerAccountName', {
+                rules: [
+                  {
+                    required: true,
+                    message: PayerAccountNamePlaceholder,
+                  },
+                ],
+              })(
+                <Input
+                  prefix={
+                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
+                  placeholder={PayerAccountNamePlaceholder}
+                />,
+              )}
+            </FormItem>
+            {this.state.isBuyRam ? (
+              <FormItem
+                {...formItemLayout}
+                label={ReceiverAccountNameLabel}
+                colon
+              >
+                {getFieldDecorator('ReceiverAccountName', {
+                  rules: [
+                    {
+                      required: false,
+                      message: ReceiverAccountNamePlaceholder,
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
+                    placeholder={ReceiverAccountNamePlaceholder}
+                  />,
+                )}
+              </FormItem>
+            ) : null}
+            <FormItem {...formItemLayout} label={BytesLabel} colon>
+              {getFieldDecorator('BytesQuantity', {
+                rules: [
+                  {
+                    required: true,
+                    message: BytesQuantityPlaceholder,
+                  },
+                ],
+              })(
+                <Input
+                  prefix={
+                    <Icon
+                      type="pay-circle-o"
+                      style={{ color: 'rgba(0,0,0,.25)' }}
+                    />
+                  }
+                  placeholder={BytesQuantityPlaceholder}
+                />,
+              )}
+            </FormItem>
+            <DealGetQrcode
+              eos={this.state.eos}
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
+              GetTransactionButtonClick={this.handleGetTransaction}
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
+              QrCodeValue={this.state.QrCodeValue}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
+            />
+            <ScanQrcode
+              eos={this.state.eos}
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
+            />
+          </FormComp>
+        </LayoutContentBox>
+      </LayoutContent>
     );
   }
 }

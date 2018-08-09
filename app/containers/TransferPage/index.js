@@ -307,6 +307,7 @@ export class TransferPage extends React.Component {
               GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
               transaction={this.state.transaction}
+              SelectedNetWork={this.props.SelectedNetWork}
             />
             <ScanQrcode
               eos={this.state.eos}
