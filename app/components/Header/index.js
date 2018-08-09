@@ -9,7 +9,6 @@ import { injectIntl } from 'react-intl';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Layout, Select } from 'antd';
 
@@ -100,8 +99,7 @@ class HeaderComp extends React.Component {
   };
 
   handleChange = value => {
-    const network = value === 'main' ? 'test' : 'main';
-    this.props.onDispatchChangeNetworkReducer(network);
+    this.props.onDispatchChangeNetworkReducer(value);
   };
 
   toggle = () => {
@@ -301,8 +299,7 @@ class HeaderComp extends React.Component {
             >
               <Select
                 className="netWork"
-                labelInValue
-                defaultValue={{ key: 'main' }}
+                defaultValue="main"
                 style={{ width: 110 }}
                 onChange={this.handleChange}
               >
@@ -359,78 +356,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(HeaderCompIntl);
-
-const HeaderWrapper = styled(Header)`
-  .dropDownContent {
-    display: none;
-  }
-
-  #components-layout-demo-custom-trigger .trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-
-  #components-layout-demo-custom-trigger .trigger:hover {
-    color: #1890ff;
-  }
-
-  #components-layout-demo-custom-trigger .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px;
-  }
-
-  @media (max-width: 700px) {
-    .headerContent {
-      display: none;
-    }
-    .dropDownContent {
-      display: block;
-      float: right;
-    }
-  }
-
-  .logo {
-    width: 113px;
-    height: 31px;
-    margin: 16px 0;
-    line-height: 31px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #f5cb48;
-    float: left;
-    margin: 1.5rem;
-  }
-  .en {
-    cursor: pointer;
-    width: 40px;
-    line-height: 64px;
-    font-size: 12px;
-    color: #f5cb48;
-    text-align: right;
-    float: right;
-
-    &:hover {
-      color: #aaa;
-    }
-  }
-  .netWork {
-    cursor: pointer;
-    width: 40px;
-    height: 31px;
-    line-height: 64px;
-    font-size: 12px;
-    color: #f5cb48;
-    text-align: right;
-    float: right;
-    position: fixed;
-    right: 7rem;
-    top: 1rem;
-    &:hover {
-      color: #aaa;
-    }
-  }
-`;
