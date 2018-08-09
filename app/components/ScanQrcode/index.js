@@ -110,20 +110,20 @@ export default class ScanQrcode extends Component {
       .pushTransaction(values)
       .then(res => {
         Modal.confirm({
-          title: '发送成功',
-          content:  `发送成功，已将相关操作广播，交易ID：${
+          title: this.props.formatMessage(utilsMsg.ScanCodeSendSuccess),
+          content:  `${this.props.formatMessage(utilsMsg.ScanCodeSendSuccessMessage)}${
             res.transaction_id
             }`,
-          okText: '确认',
-          cancelText: '取消',
+          okText: this.props.formatMessage(utilsMsg.ScanCodeSendSure),
+          cancelText: this.props.formatMessage(utilsMsg.ScanCodeSendCancel),
         });
       })
       .catch(err => {
         Modal.confirm({
-          title: '发送失败',
+          title: this.props.formatMessage(utilsMsg.ScanCodeSendFailed),
           content: err +'',
-          okText: '确认',
-          cancelText: '取消',
+          okText: this.props.formatMessage(utilsMsg.ScanCodeSendSure),
+          cancelText: this.props.formatMessage(utilsMsg.ScanCodeSendCancel),
         });
       });
   };

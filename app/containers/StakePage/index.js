@@ -272,14 +272,14 @@ export class StakePage extends React.Component {
               GetTransactionButtonClick={this.handleGetTransaction}
               GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              SelectedNetWork={this.state.SelectedNetWork}
+              SelectedNetWork={this.props.SelectedNetWork}
               transaction={this.state.transaction}
             />
             <ScanQrcode
               eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
-              SelectedNetWork={this.state.SelectedNetWork}
+              SelectedNetWork={this.props.SelectedNetWork}
               transaction={this.state.transaction}
             />
           </FormComp>

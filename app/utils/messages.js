@@ -188,4 +188,24 @@ export default defineMessages({
     id: 'Public SendSuccessMessage',
     defaultMessage: '发送报文成功,请在页尾查看',
   },
+  ScanCodeSendSuccess: {
+    id: 'Public SendSuccess',
+    defaultMessage: '发送成功',
+  },
+  ScanCodeSendSuccessMessage: {
+    id: 'Public ScanCodeSendSuccessMessage',
+    defaultMessage: '发送成功，已将相关操作广播，交易ID：',
+  },
+  ScanCodeSendFailed: {
+    id: 'Public ScanCodeSendFailed',
+    defaultMessage: '发送失败',
+  },
+  ScanCodeSendSure: {
+    id: 'Public ScanCodeSendSure',
+    defaultMessage: '确认',
+  },
+  ScanCodeSendCancel: {
+    id: 'Public ScanCodeSendCancel',
+    defaultMessage: '取消',
+  },
 });

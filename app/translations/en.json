@@ -196,5 +196,12 @@
   "InfoInitPage infoAlertCopy": "Copy",
   "Public FieldAlertSendMessage": "Send Transcation",
   "Public SendSuccessMessage":
-    "Send the message successfully, please check at the end of the page."
+    "Send the message successfully, please check at the end of the page.",
+
+  "Public SendSuccess": "Send success",
+  "Public ScanCodeSendSuccessMessage":
+    "Successful transmission, related operation broadcast, transaction ID:",
+  "Public ScanCodeSendFailed": "Send failed",
+  "Public ScanCodeSendSure": "OK",
+  "Public ScanCodeSendCancel": "Cancel"
 }
