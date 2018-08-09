@@ -46,21 +46,23 @@ class App extends React.PureComponent {
             content={formatMessage(utilsMsg.AppHelmetTitle)}
           />
         </Helmet>
-        <Header />
+
         <Switch>
-          <Route exact path="/" component={InfoInitPage} />
-          <Route path="/infoInit" component={InfoInitPage} />
-          <Route path="/sendMessage" component={SendMessagePage} />
-          <Route path="/transfer" component={TransferPage} />
-          <Route path="/proxy" component={ProxyPage} />
-          <Route path="/vote" component={VotePage} />
-          <Route path="/accountSearch" component={AccountSearchPage} />
-          <Route path="/refund" component={RefundPage} />
-          <Route path="/stake" component={StakePage} />
-          <Route path="/buyrambytes" component={BuyRamBytesPage} />
-          <Route path="/createAccount" component={CreateAccountPage} />
-          <Route path="/updateauth" component={UpdateAuthPage} />
-          <Route path="" component={NotFoundPage} />
+          <Header>
+            <Route exact path="/" component={InfoInitPage} />
+            <Route path="/infoInit" component={InfoInitPage} />
+            <Route path="/sendMessage" component={SendMessagePage} />
+            <Route path="/transfer" component={TransferPage} />
+            <Route path="/proxy" component={ProxyPage} />
+            <Route path="/vote" component={VotePage} />
+            <Route path="/accountSearch" component={AccountSearchPage} />
+            <Route path="/refund" component={RefundPage} />
+            <Route path="/stake" component={StakePage} />
+            <Route path="/buyrambytes" component={BuyRamBytesPage} />
+            <Route path="/createAccount" component={CreateAccountPage} />
+            <Route path="/updateauth" component={UpdateAuthPage} />
+            <Route path="" component={NotFoundPage} />
+          </Header>
         </Switch>
         <Footer />
       </Layout>
