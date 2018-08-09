@@ -210,7 +210,7 @@ class HeaderComp extends React.Component {
               </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.SubMenu key="3" title={<span><Icon type="user" /><span>{sendMessage}</span></span>}>
+            <Menu.SubMenu key="3" title={<span><Icon type="upload" /><span>{sendMessage}</span></span>}>
               <Menu.Item key="0">
                 <Link  to="/sendMessage">
                   {sendMessage}
@@ -218,7 +218,7 @@ class HeaderComp extends React.Component {
               </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.SubMenu key="4" title={<span><Icon type="appstore-o" />矿池</span>}>
+            <Menu.SubMenu key="4" title={<span><Icon type="user" />{accountSearch}</span>}>
               <Menu.Item key="9">
                 <Link href="/accountSearch" to="/accountSearch">
                   {accountSearch}
