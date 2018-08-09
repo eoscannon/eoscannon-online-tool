@@ -6,26 +6,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Layout, Select, Dropdown, Button, message ,Avatar } from 'antd';
+import { Layout, Select } from 'antd';
 
-import { Menu , Icon} from '../../utils/antdUtils';
+import { Menu, Icon } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
-import { storage } from 'utils/storage';
-import styleComps from './styles'
-
-// 自定义变量
-const { Header, Sider, Content } = Layout
+import Footer from '../../components/Footer';
 
 import {
   makeSelectLocale,
   makeSelectNetwork,
 } from '../../containers/LanguageProvider/selectors';
-const Option = Select.Option;
-const SubMenu = Menu.SubMenu;
+
+// 自定义变量
+const { Header, Sider, Content } = Layout;
+const { Option } = Select;
 
 class HeaderComp extends React.Component {
   constructor(props) {
@@ -84,14 +82,16 @@ class HeaderComp extends React.Component {
    * 菜单选项卡打开或者闭合时调用；
    * openKeys = ['']，SubMenu的参数；
    * */
-  onOpenChange = (openKeys) => {
-    const latestOpenKey = openKeys.find((key) => this.state.openKeys.indexOf(key) === -1)
+  onOpenChange = openKeys => {
+    const latestOpenKey = openKeys.find(
+      key => this.state.openKeys.indexOf(key) === -1,
+    );
     if (this.state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      this.setState({ openKeys })
+      this.setState({ openKeys });
     } else {
       this.setState({
-        openKeys: latestOpenKey ? [latestOpenKey] : []
-      })
+        openKeys: latestOpenKey ? [latestOpenKey] : [],
+      });
     }
   };
 
@@ -100,7 +100,6 @@ class HeaderComp extends React.Component {
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };
   handleChange = value => {
-    //console.log('this.props.network header====', this.props.netWork);
     const network = this.props.netWork === 'main' ? 'test' : 'main';
     this.props.onDispatchChangeNetworkReducer(network);
   };
@@ -114,8 +113,6 @@ class HeaderComp extends React.Component {
   };
 
   render() {
-    console.log('this.props.children==',this.props.children)
-
     const { formatMessage } = this.props.intl;
     const initInfo = formatMessage(utilsMsg.HeaderMenuInfoInit);
     const createAccount = formatMessage(utilsMsg.HeaderMenuCreateAccount);
@@ -149,44 +146,63 @@ class HeaderComp extends React.Component {
       </Menu>
     );
     return (
-
       <Layout>
-
-        <Sider
-          trigger={null}
-          collapsible
-          collapsed={this.state.collapsed}
-        >
-          <div className="logo" style={{height: '32px',color: '#f5cb48',margin: '1.5rem',fontSize: '18px',fontWeight: 'bold'}}>EOS Cannon</div>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['8']}  openKeys={this.state.openKeys} onOpenChange={this.onOpenChange}>
-            <Menu.SubMenu key="1" title={<span><Icon type="area-chart" /><span>{tradeManage}</span></span>}>
+        <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
+          <div
+            className="logo"
+            style={{
+              height: '32px',
+              color: '#f5cb48',
+              margin: '1.5rem',
+              fontSize: '18px',
+              fontWeight: 'bold',
+            }}
+          >
+            EOS Cannon
+          </div>
+          <Menu
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={[this.state.defaultSelectedKeys]}
+            openKeys={this.state.openKeys}
+            onOpenChange={this.onOpenChange}
+          >
+            <Menu.SubMenu
+              key="1"
+              title={
+                <span>
+                  <Icon type="area-chart" />
+                  <span>{tradeManage}</span>
+                </span>
+              }
+            >
               <Menu.Item key="10">
-                <Link to="/createAccount">
+                <Link to="/createAccount" href="/createAccount">
                   {createAccount}
                 </Link>
               </Menu.Item>
               <Menu.Item key="1">
-                <Link to="/stake">
+                <Link to="/stake" href="/stake">
                   {stake}
                 </Link>
               </Menu.Item>
               <Menu.Item key="3">
-                <Link to="/transfer">
+                <Link to="/transfer" href="/transfer">
                   {transfer}
                 </Link>
               </Menu.Item>
               <Menu.Item key="5">
-                <Link to="/buyrambytes">
+                <Link to="/buyrambytes" href="/buyRamBytes">
                   {buyRamBytes}
                 </Link>
               </Menu.Item>
               <Menu.Item key="6">
-                <Link to="/vote">
+                <Link to="/vote" href="/vote">
                   {vote}
                 </Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <Link to="/proxy">
+                <Link to="/proxy" href="/proxy">
                   {proxy}
                 </Link>
               </Menu.Item>
@@ -202,23 +218,47 @@ class HeaderComp extends React.Component {
               </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.SubMenu key="2" title={<span><Icon type="solution" /><span> {initInfo}</span></span>}>
+            <Menu.SubMenu
+              key="2"
+              title={
+                <span>
+                  <Icon type="solution" />
+                  <span> {initInfo}</span>
+                </span>
+              }
+            >
               <Menu.Item key="8">
-                <Link  to="/infoInit">
+                <Link to="/infoInit" href="/infoInit">
                   {initInfo}
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.SubMenu key="3" title={<span><Icon type="upload" /><span>{sendMessage}</span></span>}>
+            <Menu.SubMenu
+              key="3"
+              title={
+                <span>
+                  <Icon type="upload" />
+                  <span>{sendMessage}</span>
+                </span>
+              }
+            >
               <Menu.Item key="0">
-                <Link  to="/sendMessage">
+                <Link to="/sendMessage" href="/sendMessage">
                   {sendMessage}
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.SubMenu key="4" title={<span><Icon type="user" />{accountSearch}</span>}>
+            <Menu.SubMenu
+              key="4"
+              title={
+                <span>
+                  <Icon type="user" />
+                  {accountSearch}
+                </span>
+              }
+            >
               <Menu.Item key="9">
                 <Link href="/accountSearch" to="/accountSearch">
                   {accountSearch}
@@ -226,7 +266,15 @@ class HeaderComp extends React.Component {
               </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.SubMenu key="5" title={<span><Icon type="appstore-o" />{AppDownLoad}</span>}>
+            <Menu.SubMenu
+              key="5"
+              title={
+                <span>
+                  <Icon type="appstore-o" />
+                  {AppDownLoad}
+                </span>
+              }
+            >
               <Menu.Item key="setting:1">
                 <a
                   href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"
@@ -244,7 +292,6 @@ class HeaderComp extends React.Component {
                 </a>
               </Menu.Item>
             </Menu.SubMenu>
-
           </Menu>
         </Sider>
         <Layout>
@@ -253,9 +300,18 @@ class HeaderComp extends React.Component {
               className="trigger"
               type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
-              style={{ fontSize: '18',lineHeight: '64',padding: '0 24px',cursor: 'pointer',transition: 'color .3s'}}
+              style={{
+                fontSize: '18',
+                lineHeight: '64',
+                padding: '0 24px',
+                cursor: 'pointer',
+                transition: 'color .3s',
+              }}
             />
-            <div className="userBox" style={{float: 'right',display: 'flex',alignItems: 'center'}}>
+            <div
+              className="userBox"
+              style={{ float: 'right', display: 'flex', alignItems: 'center' }}
+            >
               <Select
                 className="netWork"
                 labelInValue
@@ -266,24 +322,30 @@ class HeaderComp extends React.Component {
                 <Option value="main">{mainNet}</Option>
                 <Option value="test">{testNet}</Option>
               </Select>
-              <div className="en" aria-hidden="true" onClick={this.changeLanguage} style={{padding: '0 1rem',color: 'blue'}}>
+              <div
+                className="en"
+                aria-hidden="true"
+                onClick={this.changeLanguage}
+                style={{ padding: '0 1rem', color: 'blue' }}
+              >
                 {this.props.locale === 'en' ? '中文' : 'English'}
               </div>
             </div>
           </Header>
-          <Content style={{ margin: '24px 16px', background: '#fff', minHeight: 280 }}>
+          <Content style={{ margin: '24px 16px', background: '#fff' }}>
             {this.props.children}
           </Content>
+          <Footer />
         </Layout>
       </Layout>
 
-      //<div className="dropDownContent">
+      // <div className="dropDownContent">
       //  <Dropdown overlay={menu}>
       //    <Button style={{ marginLeft: 8 }}>
       //      APP下载 <Icon type="down" />
       //    </Button>
       //  </Dropdown>
-      //</div>
+      // </div>
     );
   }
 }
@@ -327,7 +389,7 @@ const HeaderWrapper = styled(Header)`
     line-height: 64px;
     padding: 0 24px;
     cursor: pointer;
-    transition: color .3s;
+    transition: color 0.3s;
   }
 
   #components-layout-demo-custom-trigger .trigger:hover {
@@ -336,7 +398,7 @@ const HeaderWrapper = styled(Header)`
 
   #components-layout-demo-custom-trigger .logo {
     height: 32px;
-    background: rgba(255,255,255,.2);
+    background: rgba(255, 255, 255, 0.2);
     margin: 16px;
   }
 

@@ -26,7 +26,6 @@ import StakePage from 'containers/StakePage/Loadable';
 import TransferPage from 'containers/TransferPage/Loadable';
 import CreateAccountPage from 'containers/CreateAccountPage/Loadable';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 
 import utilsMsg from '../../utils/messages';
 
@@ -64,7 +63,6 @@ class App extends React.PureComponent {
             <Route path="" component={NotFoundPage} />
           </Header>
         </Switch>
-        <Footer />
       </Layout>
     );
   }
