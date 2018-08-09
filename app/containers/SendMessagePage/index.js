@@ -31,6 +31,7 @@ export class SendMessagePage extends React.Component {
     this.state = {
       SendButtonDisable: true,
       transaction_id: '',
+      formatMessage: this.props.intl.formatMessage
     };
   }
 
@@ -71,7 +72,7 @@ export class SendMessagePage extends React.Component {
       .pushTransaction(JSON.parse(this.props.form.getFieldsValue().jsonInfo))
       .then(res => {
         message.success(
-          `发送报文成功,请在页尾查看transaction_id=${res.transaction_id}`,
+          `${this.state.formatMessage(utilsMsg.SendSuccessMessage)}transaction_id=${res.transaction_id}`,
         );
         this.setState({ transaction_id: res.transaction_id });
       })
@@ -93,7 +94,7 @@ export class SendMessagePage extends React.Component {
             <FormComp>
               <FormItem>
                 <Alert
-                  message="发送报文"
+                  message={FieldAlertSendMessage}
                   description={description}
                   type="info"
                 />

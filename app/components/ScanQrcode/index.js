@@ -5,11 +5,14 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Input, Alert } from 'antd';
+import { Form, Button, Input, Alert , Modal } from 'antd';
 import { BrowserQRCodeReader } from '../../utils/zxing.qrcodereader.min';
 import utilsMsg from '../../utils/messages';
 import { getEos } from '../../utils/utils';
 import { notification } from 'antd/lib/index';
+
+//import ecc from 'eosjs-ecc'
+//var Fcbuffer = require('fcbuffer');
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -29,10 +32,12 @@ export default class ScanQrcode extends Component {
    * */
   componentWillReceiveProps(nextProps) {
     if (nextProps.transaction !== this.props.transaction) {
+      console.log('nextProps====',nextProps.transaction)
       this.setState({
         SendTransaction: nextProps.transaction,
         OpenCameraButtonState: JSON.stringify(nextProps.transaction) !== '{}',
       });
+
     }
   }
 
@@ -63,8 +68,31 @@ export default class ScanQrcode extends Component {
     });
   };
 
-  getSendSignTransaction = signature => {
-    this.state.SendTransaction.signatures.push(signature);
+  getSendSignTransaction = (sig) => {
+    //const MainChainId =
+    //  'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
+    //const TestChainId =
+    //  '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca';
+    //const chainId =
+    //  this.props.SelectedNetWork === 'main' ? MainChainId : TestChainId;
+    //const buf = Fcbuffer.toBuffer(
+    //  this.props.eos.fc.structs.transaction,
+    //  this.props.transaction.transaction,
+    //);
+    //const chainIdBuf =   Buffer.from(chainId,'hex');
+    //const UnSignedBuffer = Buffer.concat([
+    //  chainIdBuf,
+    //  buf,
+    //  Buffer.from(new Uint8Array(32)),
+    //]);
+    //const siglocal = ecc.sign(UnSignedBuffer, '5JYHNcQWyvNLMeFQW3tbbtBk1P1pFKHPfnwaAXEHnGauJHd1spP');
+
+    const output = {
+      compression: 'none',
+      transaction: this.state.SendTransaction.transaction,
+      signatures: [sig],
+    }
+    this.state.SendTransaction= output;
     this.props.form.setFieldsValue({
       SendTransaction: JSON.stringify(this.state.SendTransaction),
     });
@@ -72,6 +100,7 @@ export default class ScanQrcode extends Component {
       SendTransaction: this.state.SendTransaction,
       SendTransactionButtonState: true,
     });
+
   };
 
   handleSendSignTransaction = () => {
@@ -80,19 +109,21 @@ export default class ScanQrcode extends Component {
     eos
       .pushTransaction(values)
       .then(res => {
-        notification.success({
-          message: '发送成功',
-          description: `发送成功，已将相关操作广播，交易ID：${
+        Modal.confirm({
+          title: '发送成功',
+          content:  `发送成功，已将相关操作广播，交易ID：${
             res.transaction_id
-          }`,
-          duration: 3,
+            }`,
+          okText: '确认',
+          cancelText: '取消',
         });
       })
       .catch(err => {
-        notification.error({
-          message: '发送失败',
-          description: JSON.stringify(err),
-          duration: 3,
+        Modal.confirm({
+          title: '发送失败',
+          content: err +'',
+          okText: '确认',
+          cancelText: '取消',
         });
       });
   };

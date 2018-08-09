@@ -16,7 +16,7 @@ const ConBox = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  min-height: ${windowHeight}px ;
+
   .content{
     display:flex;
     padding-top:2rem;

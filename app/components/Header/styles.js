@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-const windowHeight = document.body.clientHeight - 170;
 
 const BodyBox = styled.article`
   background: #262626;

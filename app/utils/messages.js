@@ -183,4 +183,8 @@ export default defineMessages({
     id: 'Public FieldAlertSendMessage',
     defaultMessage: '发送报文',
   },
+  SendSuccessMessage: {
+    id: 'Public SendSuccessMessage',
+    defaultMessage: '发送报文成功,请在页尾查看',
+  },
 });

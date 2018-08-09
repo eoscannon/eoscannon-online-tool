@@ -167,5 +167,6 @@
   "InfoInitPage infoAlertDescription":
     "将下方信息粘贴至EOSCannon离线签名工具中",
   "InfoInitPage infoAlertCopy": "复制",
-  "Public FieldAlertSendMessage": "发送交易"
+  "Public FieldAlertSendMessage": "发送交易",
+  "Public SendSuccessMessage": "发送报文成功,请在页尾查看"
 }

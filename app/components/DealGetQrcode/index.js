@@ -9,6 +9,7 @@ import { Form, Button, Input, Alert } from 'antd';
 import QRCode from 'qrcode.react';
 import copy from 'copy-to-clipboard';
 import Fcbuffer from 'fcbuffer';
+import ecc from 'eosjs-ecc';
 
 import utilsMsg from '../../utils/messages';
 import {
@@ -34,6 +35,7 @@ export default class DealGetQrcode extends Component {
    * */
   componentWillReceiveProps(nextProps) {
     if (nextProps.eos && nextProps.transaction !== this.props.transaction) {
+      console.log('nextProps.transaction====',nextProps.transaction)
       this.setState({ eos: nextProps.eos }, this.getUnSignedBuffer);
     }
   }
@@ -50,22 +52,25 @@ export default class DealGetQrcode extends Component {
       this.state.eos.fc.structs.transaction,
       this.props.transaction.transaction,
     );
-    const chainIdBuf = new Buffer(chainId, 'hex');
+    //const chainIdBuf = new Buffer(chainId);
+    const chainIdBuf = Buffer.from(chainId,'hex');
     const UnSignedBuffer = Buffer.concat([
       chainIdBuf,
       buf,
-      new Buffer(new Uint8Array(32)),
+      Buffer.from(new Uint8Array(32)),
     ]);
+    let hexStr = UnSignedBuffer.toString('hex')
 
     this.props.form.setFieldsValue({
-      transactionTextArea: JSON.stringify(UnSignedBuffer),
+      transactionTextArea: hexStr,
     });
     this.setState({
-      QrCodeValue: JSON.stringify(UnSignedBuffer),
+      QrCodeValue: hexStr,
       CopyTransactionButtonState: true,
     });
     openTransactionSuccessNotification(this.props.formatMessage);
   };
+
 
   /**
    * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
@@ -112,7 +117,6 @@ export default class DealGetQrcode extends Component {
             message={CopyAlertMessage}
             description={CopyAlertDescription}
             type="info"
-            closable
           />
         </FormItem>
         <FormItem>

@@ -21,7 +21,7 @@ injectGlobal`
 
   #app {
     background-color: #fafafa;
-    min-height: 100%;
+    height: 100%;
     min-width: 100%;
   }
 
@@ -32,5 +32,8 @@ injectGlobal`
   }
   .ant-layout-footer{
     padding: 14px 50px!important;
+  }
+  .ant-layout{
+    height: 100%;
   }
 `;
