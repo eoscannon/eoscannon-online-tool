@@ -16,6 +16,7 @@ import { Layout, Select } from 'antd';
 import { Menu, Icon } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
 import FooterComp from '../../components/Footer';
+import eosCannonLogo from '../../images/eosLogo.png';
 
 import {
   makeSelectLocale,
@@ -103,6 +104,12 @@ class HeaderComp extends React.Component {
     this.props.onDispatchChangeNetworkReducer(network);
   };
 
+  toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  };
+
   render() {
     const { formatMessage } = this.props.intl;
     const initInfo = formatMessage(utilsMsg.HeaderMenuInfoInit);
@@ -144,7 +151,13 @@ class HeaderComp extends React.Component {
               fontWeight: 'bold',
             }}
           >
-            EOS Cannon
+            {this.state.collapsed ? (
+              <img src={eosCannonLogo} alt="" width="32" />
+            ) : (
+              <span>
+                <img src={eosCannonLogo} alt="" width="32" />EOS Cannon
+              </span>
+            )}
           </div>
           <Menu
             theme="dark"
@@ -230,7 +243,7 @@ class HeaderComp extends React.Component {
               title={
                 <span>
                   <Icon type="user" />
-                  {accountSearch}
+                  <span> {accountSearch}</span>
                 </span>
               }
             >
@@ -246,7 +259,7 @@ class HeaderComp extends React.Component {
               title={
                 <span>
                   <Icon type="appstore-o" />
-                  {AppDownLoad}
+                  <span> {AppDownLoad}</span>
                 </span>
               }
             >
