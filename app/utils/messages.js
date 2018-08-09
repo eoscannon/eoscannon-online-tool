@@ -96,7 +96,8 @@ export default defineMessages({
   },
   KeyProviderFormItemPlaceholder: {
     id: 'Public KeyProviderFormItemPlaceholder',
-    defaultMessage: '请前往离线版工具获取交易报文，打开工具，扫描二维码即可获得。',
+    defaultMessage:
+      '请前往离线版工具获取交易报文，打开工具，扫描二维码即可获得。',
   },
   GetTransactionFormItemButtonName: {
     id: 'Public GetTransactionFormItemButtonName',
@@ -145,7 +146,7 @@ export default defineMessages({
   },
   HeaderMenuAccountSearch: {
     id: 'Public HeaderMenuAccountSearch',
-    defaultMessage: '账户查询',
+    defaultMessage: '查询',
   },
   HeaderMenuOffical: {
     id: 'Public HeaderMenuOffical',

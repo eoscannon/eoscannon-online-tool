@@ -218,17 +218,6 @@ class HeaderComp extends React.Component {
                   {initInfo}
                 </Link>
               </Menu.Item>
-            </Menu.SubMenu>
-
-            <Menu.SubMenu
-              key="3"
-              title={
-                <span>
-                  <Icon type="upload" />
-                  <span>{sendMessage}</span>
-                </span>
-              }
-            >
               <Menu.Item key="0">
                 <Link to="/sendMessage" href="/sendMessage">
                   {sendMessage}

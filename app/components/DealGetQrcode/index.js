@@ -35,13 +35,14 @@ export default class DealGetQrcode extends Component {
    * */
   componentWillReceiveProps(nextProps) {
     if (nextProps.eos && nextProps.transaction !== this.props.transaction) {
-      console.log('nextProps.transaction====',nextProps.transaction)
+      console.log('nextProps.transaction====', nextProps.transaction);
       this.setState({ eos: nextProps.eos }, this.getUnSignedBuffer);
     }
   }
 
   // 离线签名
   getUnSignedBuffer = () => {
+    console.log('this.props.SelectedNetWork===', this.props.SelectedNetWork);
     const MainChainId =
       'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
     const TestChainId =
@@ -52,14 +53,14 @@ export default class DealGetQrcode extends Component {
       this.state.eos.fc.structs.transaction,
       this.props.transaction.transaction,
     );
-    //const chainIdBuf = new Buffer(chainId);
-    const chainIdBuf = Buffer.from(chainId,'hex');
+    // const chainIdBuf = new Buffer(chainId);
+    const chainIdBuf = Buffer.from(chainId, 'hex');
     const UnSignedBuffer = Buffer.concat([
       chainIdBuf,
       buf,
       Buffer.from(new Uint8Array(32)),
     ]);
-    let hexStr = UnSignedBuffer.toString('hex')
+    const hexStr = UnSignedBuffer.toString('hex');
 
     this.props.form.setFieldsValue({
       transactionTextArea: hexStr,
@@ -70,7 +71,6 @@ export default class DealGetQrcode extends Component {
     });
     openTransactionSuccessNotification(this.props.formatMessage);
   };
-
 
   /**
    * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功

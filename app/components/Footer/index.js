@@ -36,7 +36,7 @@ const FooterWrapper = styled(Footer)`
   text-align: center;
   a {
     img {
-      padding: 0 0 0.1rem 0.1rem;
+      margin: 0 0 0.2rem 0.2rem;
     }
   }
 `;

@@ -39,6 +39,7 @@ export class StakePage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
+      SelectedNetWork: 'main',
     };
   }
   /**
@@ -46,6 +47,13 @@ export class StakePage extends React.Component {
    * */
   componentWillReceiveProps(nextProps) {
     this.onValuesChange(nextProps);
+    console.log('nextProps SelectedNetWork====', nextProps.SelectedNetWork);
+    if (
+      nextProps.SelectedNetWork &&
+      nextProps.SelectedNetWork !== this.props.SelectedNetWork
+    ) {
+      this.setState({ SelectedNetWork: nextProps.SelectedNetWork });
+    }
   }
   /**
    * 用户选择质押/解质押
@@ -265,14 +273,14 @@ export class StakePage extends React.Component {
               GetTransactionButtonClick={this.handleGetTransaction}
               GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              SelectedNetWork={this.props.SelectedNetWork}
+              SelectedNetWork={this.state.SelectedNetWork}
               transaction={this.state.transaction}
             />
             <ScanQrcode
               eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
-              SelectedNetWork={this.props.SelectedNetWork}
+              SelectedNetWork={this.state.SelectedNetWork}
               transaction={this.state.transaction}
             />
           </FormComp>

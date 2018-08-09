@@ -44,7 +44,7 @@
   "Public TransactionTextAreaPlaceholder":
     "Please copy the generated signature Transaction",
   "Public QrCodeInitValue": "Welcome to use the EOS Cannon offline tool",
-  "Public FooterCompText": "Provided by EOS Canon ©2018",
+  "Public FooterCompText": "Provided by EOSCannon ©2018",
   "BuyRamBytesPage SwitchCheckedName": "Buy",
   "BuyRamBytesPage SwitchUnCheckedName": "Sell",
   "BuyRamBytesPage PayerAccountNameLabel": "Payer",
@@ -159,7 +159,7 @@
 
   "Public HeaderMenuInfoInit": "Intial Block Info",
   "Public HeaderMenuSendMessage": "Send Message",
-  "Public HeaderMenuAccountSearch": "Account Search",
+  "Public HeaderMenuAccountSearch": "Search",
   "Public HeaderMenuStake": "Stake",
   "Public HeaderMenuTradeManage": "Trade Manage",
   "Public HeaderMenuOffical": "Main",
