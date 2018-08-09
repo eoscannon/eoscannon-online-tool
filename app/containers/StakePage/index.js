@@ -47,7 +47,6 @@ export class StakePage extends React.Component {
    * */
   componentWillReceiveProps(nextProps) {
     this.onValuesChange(nextProps);
-    console.log('nextProps SelectedNetWork====', nextProps.SelectedNetWork);
     if (
       nextProps.SelectedNetWork &&
       nextProps.SelectedNetWork !== this.props.SelectedNetWork

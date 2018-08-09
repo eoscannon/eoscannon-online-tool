@@ -5,33 +5,24 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Select, Button, message, Tabs, Table } from 'antd';
-import { Progress, Input, Menu } from 'utils/antdUtils';
-import copy from 'copy-to-clipboard';
-import eosioAbi from './abi';
-import eosIqAbi from './iqAbi';
+import { Form, Select, message, Tabs, Table } from 'antd';
+import { Progress, Input } from 'utils/antdUtils';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 import styleComps from './styles';
 
-import {
-  formItemLayout,
-  getEos,
-} from '../../utils/utils';
+import { getEos } from '../../utils/utils';
 import {
   LayoutContentBox,
   LayoutContent,
   FormComp,
 } from '../../components/NodeComp';
-import ScanQrcode from '../../components/ScanQrcode';
-import GetQrcode from '../../components/GetQrcode';
 import messages from './messages';
-import utilsMsg from '../../utils/messages';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
-import { Link } from 'react-router-dom';
-const Search = Input.Search;
-const Option = Select.Option;
-const TabPane = Tabs.TabPane;
+
+const { Search } = Input;
+const { Option } = Select;
+const { TabPane } = Tabs;
 
 export class AccountSearchPage extends React.Component {
   constructor(props) {
@@ -55,39 +46,19 @@ export class AccountSearchPage extends React.Component {
       memoryScale: 0,
       cpuScale: 0,
       networkScale: 0,
-      netWorkStatus: '',
       symbolBlance: 0,
-      defaultSelectedKeys: '1',
       activeAdd: '',
       ownerAdd: '',
       symbolCode: '',
       voteProxy: '',
-      QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
     };
   }
-  /**
-   * 输入框内容变化时，改变按钮状态  huangxiaolei
-   * */
-  componentWillReceiveProps(nextProps) {
-    this.setState({ netWorkStatus: nextProps.netWork });
-  }
-
-  componentWillMount() {
-    this.setState({ netWorkStatus: this.props.netWork });
-  }
-  /**
-   * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
-   * */
-  handleGetTransaction = value => {};
-
   searchBlance = key => {
     console.log(key);
   };
 
   handleChange = key => {
-    let eos;
-    eos = getEos(this.state.netWorkStatus);
-
+    const eos = getEos(this.props.SelectedNetWork);
     eos
       .getCurrencyBalance({
         code: key.key,
@@ -95,17 +66,14 @@ export class AccountSearchPage extends React.Component {
         symbol: key.label,
       })
       .then(res => {
-        console.log('res===', res);
         this.setState({
           symbolBlance: res[0] || 0,
           symbolCode: key.key,
         });
       })
       .catch(err => {
-        message.error(this.state.formatMessage(
-          messages.FunctionSearchNoData
-        ));
         console.log('err:', err);
+        message.error(this.state.formatMessage(messages.FunctionSearchNoData));
         this.setState({
           balance: 0,
           symbolBlance: 0,
@@ -113,18 +81,13 @@ export class AccountSearchPage extends React.Component {
         });
       });
   };
-  /**
-   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
-   * */
+
   handleSearch = value => {
-    //console.log('value:', value);
     this.setState({
       account: value,
     });
-    let eos;
-    eos = getEos(this.state.netWorkStatus);
+    const eos = getEos(this.props.SelectedNetWork);
 
-    const expireInSeconds = 60 * 60; // 1 hour
     let producer = '';
     let stake = 0;
     let cpuBack;
@@ -139,7 +102,7 @@ export class AccountSearchPage extends React.Component {
           if (info.voter_info.producers.length < 1) {
             this.setState({ voteNodeStatus: false });
           } else {
-            for (let i = 0; i < info.voter_info.producers.length; i++) {
+            for (let i = 0; i < info.voter_info.producers.length; i += 1) {
               producer = `${info.voter_info.producers[i]} , ${producer}`;
             }
           }
@@ -186,7 +149,7 @@ export class AccountSearchPage extends React.Component {
           cpuMortgage: cpuBack,
           networkMortgage: netWork,
           memoryScale: (
-            (parseInt(info.ram_usage) / parseInt(info.ram_quota)) *
+            (Math.round(info.ram_usage) / Math.round(info.ram_quota)) *
             100
           ).toFixed(2),
           cpuScale,
@@ -211,16 +174,14 @@ export class AccountSearchPage extends React.Component {
             });
           })
           .catch(err => {
-            message.error(this.state.formatMessage(
-              messages.FunctionSearchNoData
-            ));
+            message.error(
+              this.state.formatMessage(messages.FunctionSearchNoData),
+            );
             console.log('err:', err);
           });
       })
       .catch(err => {
-        message.error(this.state.formatMessage(
-          messages.FunctionSearchNoData
-        ));
+        message.error(this.state.formatMessage(messages.FunctionSearchNoData));
         this.setState({ info: '' });
         console.log('err:', err);
       });
@@ -253,9 +214,6 @@ export class AccountSearchPage extends React.Component {
     );
     const FunctionSearchCPUStake = this.state.formatMessage(
       messages.FunctionSearchCPUStake,
-    );
-    const FunctionSearchCPU = this.state.formatMessage(
-      messages.FunctionSearchCPU,
     );
     const FunctionSearchNetStake = this.state.formatMessage(
       messages.FunctionSearchNetStake,
@@ -477,11 +435,12 @@ export class AccountSearchPage extends React.Component {
 }
 
 AccountSearchPage.propTypes = {
-  form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
+
 const mapStateToProps = createStructuredSelector({
-  netWork: makeSelectNetwork(),
+  SelectedNetWork: makeSelectNetwork(),
 });
 const AccountSearchPageIntl = injectIntl(AccountSearchPage);
 const AccountSearchPageForm = Form.create()(AccountSearchPageIntl);

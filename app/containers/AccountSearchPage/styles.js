@@ -1,57 +1,43 @@
 import styled from 'styled-components';
 
-const windowHeight = document.body.clientHeight - 170;
-
-const BodyBox = styled.article`
-  background: #262626;
-  color: #eee;
-  .ant-layout{
-    background: none;
-  }
-  .ant-btn{
-    color: #fff;
-  }
-`;
 const ConBox = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  .content{
-    display:flex;
-    padding-top:2rem;
+  .content {
+    display: flex;
+    padding-top: 2rem;
   }
-  .firstContent{
-    width:50%;
-    span{
-      display:block;
+  .firstContent {
+    width: 50%;
+    span {
+      display: block;
       padding-bottom: 1.2rem;
     }
   }
-  .contentDetail{
+  .contentDetail {
     text-align: center;
   }
-  .secondContent{
-    display:flex;
-    width:100%;
+  .secondContent {
+    display: flex;
+    width: 100%;
     justify-content: space-around;
   }
 
-  .contentDetailDesc{
-    display:block;
-    .contentDetailDescTitle{
-      padding-top:1rem;
-      font-weight:bold;
+  .contentDetailDesc {
+    display: block;
+    .contentDetailDescTitle {
+      padding-top: 1rem;
+      font-weight: bold;
     }
-    span{
-      text-align:center;
-      display:block;
+    span {
+      text-align: center;
+      display: block;
     }
   }
-
 `;
 
 const styleComps = {
-  BodyBox,
   ConBox,
 };
 

@@ -5,7 +5,6 @@
  */
 
 import React from 'react';
-//import notFundImg from './images/404.gif';
 
 export default function NotFound() {
   const LayoutContentBoxStyle = {
@@ -13,17 +12,7 @@ export default function NotFound() {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: 480,
     marginTop: 64,
   };
-  const imgStyle = {
-    maxWidth: '100%',
-  };
-  return (
-    <div style={LayoutContentBoxStyle}>
-      {/*
-       <img alt="404" style={imgStyle} src={notFundImg} />
-       */}
-    </div>
-  );
+  return <div style={LayoutContentBoxStyle} />;
 }

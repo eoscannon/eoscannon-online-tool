@@ -30,7 +30,6 @@ import AccountSearchPage from 'containers/AccountSearchPage/Loadable';
 import RefundPage from 'containers/RefundPage/Loadable';
 import BuyRamBytesPage from 'containers/BuyRamBytesPage/Loadable';
 import UpdateAuthPage from 'containers/UpdateAuthPage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import StakePage from 'containers/StakePage/Loadable';
 import TransferPage from 'containers/TransferPage/Loadable';
 import CreateAccountPage from 'containers/CreateAccountPage/Loadable';

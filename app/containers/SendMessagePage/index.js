@@ -82,6 +82,7 @@ export class SendMessagePage extends React.Component {
         message.error(`发送失败，原因：${err}`);
       });
   };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { formatMessage } = this.props.intl;
