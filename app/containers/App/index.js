@@ -45,9 +45,8 @@ class App extends React.PureComponent {
             content={formatMessage(utilsMsg.AppHelmetTitle)}
           />
         </Helmet>
-
-        <Switch>
-          <Header>
+        <Header>
+          <Switch>
             <Route exact path="/" component={InfoInitPage} />
             <Route path="/infoInit" component={InfoInitPage} />
             <Route path="/sendMessage" component={SendMessagePage} />
@@ -61,8 +60,8 @@ class App extends React.PureComponent {
             <Route path="/createAccount" component={CreateAccountPage} />
             <Route path="/updateauth" component={UpdateAuthPage} />
             <Route path="" component={NotFoundPage} />
-          </Header>
-        </Switch>
+          </Switch>
+        </Header>
       </Layout>
     );
   }

@@ -1,17 +1,11 @@
 import styled from 'styled-components';
-import { Layout, Form } from 'antd';
+import { Form } from 'antd';
 
-const { Content } = Layout;
-
-const LayoutContent = styled(Content)`
-  padding: 0 50px;
-  margin-top: 64px;
+const LayoutContent = styled.div`
+  background: #fff;
 `;
 
 const LayoutContentBox = styled.div`
-  min-height: 480px;
-  margin-top: 24px;
-  padding: 24px;
   background: #fff;
 `;
 

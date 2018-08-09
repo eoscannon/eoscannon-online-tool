@@ -78,10 +78,7 @@ class HeaderComp extends React.Component {
       defaultSelectedKeys,
     });
   }
-  /**
-   * 菜单选项卡打开或者闭合时调用；
-   * openKeys = ['']，SubMenu的参数；
-   * */
+
   onOpenChange = openKeys => {
     const latestOpenKey = openKeys.find(
       key => this.state.openKeys.indexOf(key) === -1,
@@ -99,17 +96,10 @@ class HeaderComp extends React.Component {
     const localeLanguage = this.props.locale === 'en' ? 'de' : 'en';
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };
-  handleChange = value => {
-    const network = this.props.netWork === 'main' ? 'test' : 'main';
-    this.props.onDispatchChangeNetworkReducer(network);
-  };
 
-  handleMenuClick = value => {
-    // if(value.key == '1'){
-    //  location.href('https://github.com/eoscannon/EosCannon-Online-Tools-App/releases')
-    // }else if(value.key == '2'){
-    //  location.href('https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases')
-    // }
+  handleChange = value => {
+    const network = value === 'main' ? 'test' : 'main';
+    this.props.onDispatchChangeNetworkReducer(network);
   };
 
   render() {
@@ -131,20 +121,6 @@ class HeaderComp extends React.Component {
     const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
     const AppDownLoad = formatMessage(utilsMsg.HeaderAppDownLoad);
     const OfflineAppDownLoad = formatMessage(utilsMsg.HeaderOfflineAppDownLoad);
-    const menu = (
-      <Menu onClick={this.handleMenuClick}>
-        <Menu.Item key="1">
-          <a href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases">
-            <Icon type="android" />在线APP
-          </a>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <a href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases">
-            <Icon type="android" />离线APP
-          </a>
-        </Menu.Item>
-      </Menu>
-    );
     return (
       <Layout>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -332,20 +308,14 @@ class HeaderComp extends React.Component {
               </div>
             </div>
           </Header>
-          <Content style={{ margin: '24px 16px', background: '#fff' }}>
-            {this.props.children}
+          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+            <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+              {this.props.children}
+            </div>
           </Content>
           <Footer />
         </Layout>
       </Layout>
-
-      // <div className="dropDownContent">
-      //  <Dropdown overlay={menu}>
-      //    <Button style={{ marginLeft: 8 }}>
-      //      APP下载 <Icon type="down" />
-      //    </Button>
-      //  </Dropdown>
-      // </div>
     );
   }
 }
