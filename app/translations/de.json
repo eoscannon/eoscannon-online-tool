@@ -7,7 +7,7 @@
   "Public HeaderMenuVote": "投票",
   "Public HeaderMenuProxy": "代理投票",
   "Public HeaderMenuUpdateAuth": "私钥管理",
-  "Public HeaderMenuRefund": "手动Refund",
+  "Public HeaderMenuRefund": "Refund",
   "Public TransactionSuccessNotificationMsg": "生成签名报文成功",
   "Public TransactionSuccessNotificationDescription":
     "请点击下面的复制签名报文按钮或者扫描二维码获取签名报文",
@@ -162,6 +162,7 @@
   "TransferPage FunctionSearchAccountTableGroup": "组名",
   "TransferPage FunctionSearchAccountTableAddress": "地址/账户",
   "TransferPage FunctionSearchNoData": "暂无数据",
+  "TransferPage FunctionSearchAccountPlaceHolder": "请输入账号",
 
   "InfoInitPage infoAlertMessage": "此页面在线使用",
   "InfoInitPage infoAlertDescription":

@@ -247,6 +247,9 @@ export class AccountSearchPage extends React.Component {
     const FunctionSearchAccountTableAddress = this.state.formatMessage(
       messages.FunctionSearchAccountTableAddress,
     );
+    const FunctionSearchAccountPlaceHolder = this.state.formatMessage(
+      messages.FunctionSearchAccountPlaceHolder,
+    );
 
     const columnsBlance = [
       {
@@ -297,7 +300,7 @@ export class AccountSearchPage extends React.Component {
           <styleComps.ConBox>
             <FormComp>
               <Search
-                placeholder="search account"
+                placeholder={FunctionSearchAccountPlaceHolder}
                 enterButton={FunctionSearchButton}
                 size="large"
                 onSearch={this.handleSearch}

@@ -189,6 +189,8 @@
   "TransferPage FunctionSearchAccountTableGroup": "Group",
   "TransferPage FunctionSearchAccountTableAddress": "Address",
   "TransferPage FunctionSearchNoData": "no data",
+  "TransferPage FunctionSearchAccountPlaceHolder":
+    "Please enter the accountName",
 
   "InfoInitPage infoAlertMessage": "This page is used online",
   "InfoInitPage infoAlertDescription":
