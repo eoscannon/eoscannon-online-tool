@@ -189,6 +189,8 @@
   "TransferPage FunctionSearchAccountTableGroup": "Group",
   "TransferPage FunctionSearchAccountTableAddress": "Address",
   "TransferPage FunctionSearchNoData": "no data",
+  "TransferPage FunctionSearchAccountPlaceHolder":
+    "Please enter the accountName",
 
   "InfoInitPage infoAlertMessage": "This page is used online",
   "InfoInitPage infoAlertDescription":
@@ -203,5 +205,7 @@
     "Successful transmission, related operation broadcast, transaction ID:",
   "Public ScanCodeSendFailed": "Send failed",
   "Public ScanCodeSendSure": "OK",
-  "Public ScanCodeSendCancel": "Cancel"
+  "Public ScanCodeSendCancel": "Cancel",
+  "Public ProducersDealTranscation": "Generating transaction",
+  "Public ProducersSendTranscation": "Send transaction"
 }

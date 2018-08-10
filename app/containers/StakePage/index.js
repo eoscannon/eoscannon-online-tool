@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Switch } from 'antd';
+import { Form, Icon, Input, Switch, Card, Col, Row  } from 'antd';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
@@ -177,113 +177,121 @@ export class StakePage extends React.Component {
     const CpuQuantityLabel = this.state.formatMessage(
       messages.CpuQuantityLabel,
     );
+    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
+    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
     return (
       <LayoutContent>
-        <LayoutContentBox>
-          <FormComp>
-            <FormItem>
-              <Switch
-                checkedChildren={DelegateSwitchCheckedName}
-                unCheckedChildren={DelegateSwitchUnCheckedName}
-                defaultChecked={this.state.isDelegatebw}
-                onChange={this.onSwitchChange}
+        <Row gutter={16}>
+          <Col lg={12} xs={24}>
+            <Card title={ProducersDealTranscation} bordered={false}>
+              <FormItem>
+                <Switch
+                  checkedChildren={DelegateSwitchCheckedName}
+                  unCheckedChildren={DelegateSwitchUnCheckedName}
+                  defaultChecked={this.state.isDelegatebw}
+                  onChange={this.onSwitchChange}
+                />
+              </FormItem>
+              <FormItem {...formItemLayout} label={FromLabel} colon>
+                {getFieldDecorator('FromAccountName', {
+                  rules: [
+                    { required: true, message: FromAccountNamePlaceholder },
+                  ],
+                })(
+                  <Input
+                    prefix={
+                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
+                    placeholder={FromAccountNamePlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem
+                help={ReceiverAccountNameHelp}
+                {...formItemLayout}
+                label={ReceiverLabel}
+                colon
+              >
+                {getFieldDecorator('ReceiverAccountName', {
+                  rules: [
+                    {
+                      required: true,
+                      message: ReceiverAccountNamePlaceholder,
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={
+                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
+                    placeholder={ReceiverAccountNamePlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label={NetQuantityLabel} colon>
+                {getFieldDecorator('stakeNetQuantity', {
+                  rules: [
+                    {
+                      required: true,
+                      message: StakeNetQuantityPlaceholder,
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={
+                    <Icon
+                      type="pay-circle-o"
+                      style={{ color: 'rgba(0,0,0,.25)' }}
+                    />
+                  }
+                    placeholder={StakeNetQuantityPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label={CpuQuantityLabel} colon>
+                {getFieldDecorator('stakeCpuQuantity', {
+                  rules: [
+                    {
+                      required: true,
+                      message: StakeCpuQuantityPlaceholder,
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={
+                    <Icon
+                      type="pay-circle-o"
+                      style={{ color: 'rgba(0,0,0,.25)' }}
+                    />
+                  }
+                    placeholder={StakeCpuQuantityPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <DealGetQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                GetTransactionButtonClick={this.handleGetTransaction}
+                GetTransactionButtonState={this.state.GetTransactionButtonState}
+                QrCodeValue={this.state.QrCodeValue}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
               />
-            </FormItem>
-            <FormItem {...formItemLayout} label={FromLabel} colon>
-              {getFieldDecorator('FromAccountName', {
-                rules: [
-                  { required: true, message: FromAccountNamePlaceholder },
-                ],
-              })(
-                <Input
-                  prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
-                  placeholder={FromAccountNamePlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem
-              help={ReceiverAccountNameHelp}
-              {...formItemLayout}
-              label={ReceiverLabel}
-              colon
-            >
-              {getFieldDecorator('ReceiverAccountName', {
-                rules: [
-                  {
-                    required: true,
-                    message: ReceiverAccountNamePlaceholder,
-                  },
-                ],
-              })(
-                <Input
-                  prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
-                  placeholder={ReceiverAccountNamePlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label={NetQuantityLabel} colon>
-              {getFieldDecorator('stakeNetQuantity', {
-                rules: [
-                  {
-                    required: true,
-                    message: StakeNetQuantityPlaceholder,
-                  },
-                ],
-              })(
-                <Input
-                  prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
-                  placeholder={StakeNetQuantityPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label={CpuQuantityLabel} colon>
-              {getFieldDecorator('stakeCpuQuantity', {
-                rules: [
-                  {
-                    required: true,
-                    message: StakeCpuQuantityPlaceholder,
-                  },
-                ],
-              })(
-                <Input
-                  prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
-                  placeholder={StakeCpuQuantityPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <DealGetQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
-              QrCodeValue={this.state.QrCodeValue}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-            <ScanQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-          </FormComp>
-        </LayoutContentBox>
+            </Card>
+          </Col>
+          <Col lg={12} xs={24}>
+            <Card title={ProducersSendTranscation} bordered={false}>
+              <ScanQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
+            </Card>
+          </Col>
+        </Row>
       </LayoutContent>
     );
   }

@@ -152,4 +152,8 @@ export default defineMessages({
     id: 'TransferPage FunctionSearchNoData',
     defaultMessage: '暂无数据',
   },
+  FunctionSearchAccountPlaceHolder: {
+    id: 'TransferPage FunctionSearchAccountPlaceHolder',
+    defaultMessage: '请输入账号',
+  },
 });

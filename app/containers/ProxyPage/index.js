@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import { Form, Icon, Input } from 'antd';
+import { Form, Icon, Input, Card, Col, Row  } from 'antd';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -98,63 +98,72 @@ export class ProxyPage extends React.Component {
     );
     const VoterLabel = this.state.formatMessage(messages.VoterLabel);
     const ProxyLabel = this.state.formatMessage(messages.ProxyLabel);
+    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
+    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
     return (
       <LayoutContent>
-        <LayoutContentBox>
-          <FormComp>
-            <FormItem {...formItemLayout} label={VoterLabel} colon>
-              {getFieldDecorator('voter', {
-                rules: [{ required: true, message: VoterPlaceholder }],
-              })(
-                <Input
-                  prefix={
+        <Row gutter={16}>
+          <Col span={12}>
+            <Card title={ProducersDealTranscation} bordered={false}>
+              <FormItem {...formItemLayout} label={VoterLabel} colon>
+                {getFieldDecorator('voter', {
+                  rules: [{ required: true, message: VoterPlaceholder }],
+                })(
+                  <Input
+                    prefix={
                     <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                   }
-                  placeholder={VoterPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem
-              help={ProxyHelp}
-              {...formItemLayout}
-              label={ProxyLabel}
-              colon
-            >
-              {getFieldDecorator('proxy', {
-                rules: [
-                  {
-                    required: true,
-                    message: ProxyPlaceholder,
-                  },
-                ],
-              })(
-                <Input
-                  prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
-                  placeholder={ProxyPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <DealGetQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
-              QrCodeValue={this.state.QrCodeValue}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-            <ScanQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-          </FormComp>
-        </LayoutContentBox>
+                    placeholder={VoterPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem
+                help={ProxyHelp}
+                {...formItemLayout}
+                label={ProxyLabel}
+                colon
+              >
+                {getFieldDecorator('proxy', {
+                  rules: [
+                    {
+                      required: true,
+                      message: ProxyPlaceholder,
+                    },
+                  ],
+                  initialValue: 'cannonproxy1',
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
+                    placeholder={ProxyPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <DealGetQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                GetTransactionButtonClick={this.handleGetTransaction}
+                GetTransactionButtonState={this.state.GetTransactionButtonState}
+                QrCodeValue={this.state.QrCodeValue}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title={ProducersSendTranscation} bordered={false}>
+              <ScanQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
+            </Card>
+          </Col>
+        </Row>
       </LayoutContent>
     );
   }

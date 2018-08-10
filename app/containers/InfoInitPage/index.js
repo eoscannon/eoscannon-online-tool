@@ -78,51 +78,49 @@ export class CreateAccountPage extends React.Component {
     const infoAlertCopy = this.state.formatMessage(messages.infoAlertCopy);
 
     return (
-      <LayoutContent>
-        <LayoutContentBox>
-          <FormComp>
-            {/* {this.props.SelectedNetWork === 'test' ? ( */}
-            {/* <FormItem style={{ textAlign: 'center', margin: '0 5% 5%' }}> */}
-            {/* <Search */}
-            {/* placeholder="network url" */}
-            {/* enterButton="变更测试网" */}
-            {/* size="default" */}
-            {/* defaultValue={this.state.network} */}
-            {/* onSearch={this.handleSearch} */}
-            {/* /> */}
-            {/* </FormItem> */}
-            {/* ) : null} */}
-            <FormItem>
-              <Alert
-                message={infoAlertMessage}
-                description={infoAlertDescription}
-                type="info"
-              />
-            </FormItem>
-            <FormItem>
-              <div style={{ textAlign: 'center' }}>
-                <QRCode value={this.state.QrCodeValue} size={256} />
-              </div>
-            </FormItem>
-            <FormItem>
+      <LayoutContentBox>
+        <FormComp>
+          {/* {this.props.SelectedNetWork === 'test' ? ( */}
+          {/* <FormItem style={{ textAlign: 'center', margin: '0 5% 5%' }}> */}
+          {/* <Search */}
+          {/* placeholder="network url" */}
+          {/* enterButton="变更测试网" */}
+          {/* size="default" */}
+          {/* defaultValue={this.state.network} */}
+          {/* onSearch={this.handleSearch} */}
+          {/* /> */}
+          {/* </FormItem> */}
+          {/* ) : null} */}
+          <FormItem>
+            <Alert
+              message={infoAlertMessage}
+              description={infoAlertDescription}
+              type="info"
+            />
+          </FormItem>
+          <FormItem>
+            <div style={{ textAlign: 'center' }}>
+              <QRCode value={this.state.QrCodeValue} size={256} />
+            </div>
+          </FormItem>
+          <FormItem>
               <TextArea
                 value={this.state.QrCodeValue}
                 rows="4"
                 disabled="true"
               />
-            </FormItem>
-            <FormItem>
-              <Button
-                type="primary"
-                className="form-button"
-                onClick={this.handleCopyTransaction}
-              >
-                {infoAlertCopy}
-              </Button>
-            </FormItem>
-          </FormComp>
-        </LayoutContentBox>
-      </LayoutContent>
+          </FormItem>
+          <FormItem>
+            <Button
+              type="primary"
+              className="form-button"
+              onClick={this.handleCopyTransaction}
+            >
+              {infoAlertCopy}
+            </Button>
+          </FormItem>
+        </FormComp>
+      </LayoutContentBox>
     );
   }
 }

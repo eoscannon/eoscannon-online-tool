@@ -35,14 +35,12 @@ export default class DealGetQrcode extends Component {
    * */
   componentWillReceiveProps(nextProps) {
     if (nextProps.eos && nextProps.transaction !== this.props.transaction) {
-      console.log('nextProps.transaction====', nextProps.transaction);
       this.setState({ eos: nextProps.eos }, this.getUnSignedBuffer);
     }
   }
 
-  // 离线签名
+  // 生成报文
   getUnSignedBuffer = () => {
-    console.log('this.props.SelectedNetWork===', this.props.SelectedNetWork);
     const MainChainId =
       'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
     const TestChainId =
@@ -102,7 +100,7 @@ export default class DealGetQrcode extends Component {
     );
     return (
       <div>
-        <FormItem>
+        <FormItem style={{ textAlign: 'center' }}>
           <Button
             type="primary"
             className="form-button"
@@ -136,7 +134,7 @@ export default class DealGetQrcode extends Component {
             <QRCode value={this.state.QrCodeValue} size={256} />
           </div>
         </FormItem>
-        <FormItem>
+        <FormItem style={{ textAlign: 'center' }}>
           <Button
             type="primary"
             className="form-button"
