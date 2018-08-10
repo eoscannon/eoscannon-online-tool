@@ -259,7 +259,7 @@ class HeaderComp extends React.Component {
 
             <Menu.Item key="5">
               <a
-                href="https://tool.eoscannon.io/offline.1.1.0.apk"
+                href="https://tool.eoscannon.io:444/offline.1.1.0.apk"
                 target="_blank"
               >
                 <Icon type="appstore-o" />
