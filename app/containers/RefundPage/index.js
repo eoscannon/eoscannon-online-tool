@@ -7,13 +7,15 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input, Alert } from 'antd';
-import copy from 'copy-to-clipboard';
+
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectNetwork } from '../LanguageProvider/selectors';
+
 import {
   formItemLayout,
   getEos,
   openTransactionFailNotification,
-  openTransactionSuccessNotification,
-  openNotification,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -21,7 +23,7 @@ import {
   FormComp,
 } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
-import GetQrcode from '../../components/GetQrcode';
+import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
@@ -31,11 +33,11 @@ export class RefundPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      eos: null,
       formatMessage: this.props.intl.formatMessage,
-      GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
-      CopyTransactionButtonState: false, // 复制报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
+      transaction: {},
     };
   }
   /**
@@ -49,13 +51,9 @@ export class RefundPage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
-    const { jsonInfo, keyProvider, AccountName, transaction } = values;
+    const { AccountName } = values;
     this.setState({
-      GetTransactionButtonState: jsonInfo && keyProvider && AccountName,
-    });
-    this.setState({
-      CopyTransactionButtonState:
-        jsonInfo && keyProvider && AccountName && transaction,
+      GetTransactionButtonState: !!AccountName,
     });
   };
   /**
@@ -65,44 +63,28 @@ export class RefundPage extends React.Component {
     if (!this.state.GetTransactionButtonState) {
       return;
     }
-    this.setState({
-      GetTransactionButtonLoading: true,
-    });
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
+    const eos = getEos(this.props.SelectedNetWork);
     const { AccountName } = values;
     eos
-      .refund({
-        owner: AccountName,
-      })
+      .refund(
+        {
+          owner: AccountName,
+        },
+        {
+          sign: false,
+          broadcast: false,
+        },
+      )
       .then(tr => {
-        this.props.form.setFieldsValue({
-          transaction: JSON.stringify(tr.transaction),
-        });
         this.setState({
-          GetTransactionButtonLoading: false,
-          QrCodeValue: JSON.stringify(tr.transaction),
+          eos,
+          transaction: tr.transaction,
         });
-        openTransactionSuccessNotification(this.state.formatMessage);
       })
       .catch(err => {
-        this.setState({
-          GetTransactionButtonLoading: false,
-        });
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
-  };
-  /**
-   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
-   * */
-  handleCopyTransaction = () => {
-    if (!this.state.CopyTransactionButtonState) {
-      return;
-    }
-    const values = this.props.form.getFieldsValue();
-    const { transaction } = values;
-    copy(transaction);
-    openNotification(this.state.formatMessage);
   };
 
   render() {
@@ -129,10 +111,6 @@ export class RefundPage extends React.Component {
                 closable
               />
             </FormItem>
-            <ScanQrcode
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-            />
             <FormItem {...formItemLayout} label={OwnerLabel} colon>
               {getFieldDecorator('AccountName', {
                 rules: [{ required: true, message: OwnerPlaceholder }],
@@ -145,19 +123,22 @@ export class RefundPage extends React.Component {
                 />,
               )}
             </FormItem>
-            <GetQrcode
+            <DealGetQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonLoading={
-                this.state.GetTransactionButtonLoading
-              }
-              GetTransactionButtonDisabled={
-                this.state.GetTransactionButtonState
-              }
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              CopyTransactionButtonState={this.state.CopyTransactionButtonState}
-              handleCopyTransaction={this.handleCopyTransaction}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
+            />
+            <ScanQrcode
+              eos={this.state.eos}
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>
@@ -169,9 +150,12 @@ export class RefundPage extends React.Component {
 RefundPage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
 
 const RefundPageIntl = injectIntl(RefundPage);
 const RefundPageForm = Form.create()(RefundPageIntl);
-
-export default RefundPageForm;
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
+export default connect(mapStateToProps)(RefundPageForm);

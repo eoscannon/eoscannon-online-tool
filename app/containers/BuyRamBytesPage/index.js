@@ -6,14 +6,15 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { Form, Icon, Input, Switch } from 'antd';
-import copy from 'copy-to-clipboard';
+
+import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import {
   formItemLayout,
   getEos,
   openTransactionFailNotification,
-  openTransactionSuccessNotification,
-  openNotification,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -21,7 +22,7 @@ import {
   FormComp,
 } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
-import GetQrcode from '../../components/GetQrcode';
+import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
@@ -31,12 +32,12 @@ export class BuyRamBytesPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      eos: null,
       formatMessage: this.props.intl.formatMessage,
       isBuyRam: true,
-      GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
-      CopyTransactionButtonState: false, // 复制报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
+      transaction: {},
     };
   }
   /**
@@ -58,24 +59,9 @@ export class BuyRamBytesPage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
-    const {
-      jsonInfo,
-      keyProvider,
-      PayerAccountName,
-      BytesQuantity,
-      transaction,
-    } = values;
+    const { PayerAccountName, BytesQuantity } = values;
     this.setState({
-      GetTransactionButtonState:
-        jsonInfo && keyProvider && PayerAccountName && BytesQuantity,
-    });
-    this.setState({
-      CopyTransactionButtonState:
-        jsonInfo &&
-        keyProvider &&
-        PayerAccountName &&
-        BytesQuantity &&
-        transaction,
+      GetTransactionButtonState: !!PayerAccountName && !!BytesQuantity,
     });
   };
   /**
@@ -85,11 +71,8 @@ export class BuyRamBytesPage extends React.Component {
     if (!this.state.GetTransactionButtonState) {
       return;
     }
-    this.setState({
-      GetTransactionButtonLoading: true,
-    });
+    const eos = getEos(this.props.SelectedNetWork);
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
     const { PayerAccountName, ReceiverAccountName, BytesQuantity } = values;
     const actionsName = this.state.isBuyRam ? 'buyrambytes' : 'sellram';
     const data = this.state.isBuyRam
@@ -103,49 +86,36 @@ export class BuyRamBytesPage extends React.Component {
           bytes: Number(BytesQuantity),
         };
     eos
-      .transaction({
-        actions: [
-          {
-            account: 'eosio',
-            name: actionsName,
-            authorization: [
-              {
-                actor: PayerAccountName,
-                permission: 'active',
-              },
-            ],
-            data,
-          },
-        ],
-      })
+      .transaction(
+        {
+          actions: [
+            {
+              account: 'eosio',
+              name: actionsName,
+              authorization: [
+                {
+                  actor: PayerAccountName,
+                  permission: 'active',
+                },
+              ],
+              data,
+            },
+          ],
+        },
+        {
+          sign: false,
+          broadcast: false,
+        },
+      )
       .then(tr => {
-        this.props.form.setFieldsValue({
-          transaction: JSON.stringify(tr.transaction),
-        });
         this.setState({
-          GetTransactionButtonLoading: false,
-          QrCodeValue: JSON.stringify(tr.transaction),
+          eos,
+          transaction: tr.transaction,
         });
-        openTransactionSuccessNotification(this.state.formatMessage);
       })
       .catch(err => {
-        this.setState({
-          GetTransactionButtonLoading: false,
-        });
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
-  };
-  /**
-   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
-   * */
-  handleCopyTransaction = () => {
-    if (!this.state.CopyTransactionButtonState) {
-      return;
-    }
-    const values = this.props.form.getFieldsValue();
-    const { transaction } = values;
-    copy(transaction);
-    openNotification(this.state.formatMessage);
   };
 
   render() {
@@ -176,10 +146,6 @@ export class BuyRamBytesPage extends React.Component {
       <LayoutContent>
         <LayoutContentBox>
           <FormComp>
-            <ScanQrcode
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-            />
             <FormItem>
               <Switch
                 checkedChildren={SwitchCheckedName}
@@ -188,7 +154,6 @@ export class BuyRamBytesPage extends React.Component {
                 onChange={this.onSwitchChange}
               />
             </FormItem>
-
             <FormItem {...formItemLayout} label={PayerAccountNameLabel} colon>
               {getFieldDecorator('PayerAccountName', {
                 rules: [
@@ -249,19 +214,22 @@ export class BuyRamBytesPage extends React.Component {
                 />,
               )}
             </FormItem>
-            <GetQrcode
+            <DealGetQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonLoading={
-                this.state.GetTransactionButtonLoading
-              }
-              GetTransactionButtonDisabled={
-                this.state.GetTransactionButtonState
-              }
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              CopyTransactionButtonState={this.state.CopyTransactionButtonState}
-              handleCopyTransaction={this.handleCopyTransaction}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
+            />
+            <ScanQrcode
+              eos={this.state.eos}
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>
@@ -273,8 +241,13 @@ export class BuyRamBytesPage extends React.Component {
 BuyRamBytesPage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
 const BuyRamBytesPageIntl = injectIntl(BuyRamBytesPage);
 const BuyRamBytesPageForm = Form.create()(BuyRamBytesPageIntl);
 
-export default BuyRamBytesPageForm;
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
+
+export default connect(mapStateToProps)(BuyRamBytesPageForm);

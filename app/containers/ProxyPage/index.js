@@ -5,15 +5,15 @@
 
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
 import { Form, Icon, Input } from 'antd';
-import copy from 'copy-to-clipboard';
+import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import {
   formItemLayout,
   getEos,
   openTransactionFailNotification,
-  openTransactionSuccessNotification,
-  openNotification,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -21,7 +21,7 @@ import {
   FormComp,
 } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
-import GetQrcode from '../../components/GetQrcode';
+import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
@@ -31,11 +31,11 @@ export class ProxyPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      eos: null,
       formatMessage: this.props.intl.formatMessage,
-      GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
-      CopyTransactionButtonState: false, // 复制报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
+      transaction: {},
     };
   }
   /**
@@ -49,13 +49,9 @@ export class ProxyPage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
-    const { jsonInfo, keyProvider, voter, transaction } = values;
+    const { voter } = values;
     this.setState({
-      GetTransactionButtonState: jsonInfo && keyProvider && voter,
-    });
-    this.setState({
-      CopyTransactionButtonState:
-        jsonInfo && keyProvider && voter && transaction,
+      GetTransactionButtonState: !!voter,
     });
   };
   /**
@@ -65,46 +61,30 @@ export class ProxyPage extends React.Component {
     if (!this.state.GetTransactionButtonState) {
       return;
     }
-    this.setState({
-      GetTransactionButtonLoading: true,
-    });
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
+    const eos = getEos(this.props.SelectedNetWork);
     const { voter, proxy } = values;
     eos
-      .voteproducer({
-        voter,
-        proxy: proxy || '',
-        producers: [],
-      })
+      .voteproducer(
+        {
+          voter,
+          proxy: proxy || '',
+          producers: [],
+        },
+        {
+          sign: false,
+          broadcast: false,
+        },
+      )
       .then(tr => {
-        this.props.form.setFieldsValue({
-          transaction: JSON.stringify(tr.transaction),
-        });
         this.setState({
-          GetTransactionButtonLoading: false,
-          QrCodeValue: JSON.stringify(tr.transaction),
+          eos,
+          transaction: tr.transaction,
         });
-        openTransactionSuccessNotification(this.state.formatMessage);
       })
       .catch(err => {
-        this.setState({
-          GetTransactionButtonLoading: false,
-        });
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
-  };
-  /**
-   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
-   * */
-  handleCopyTransaction = () => {
-    if (!this.state.CopyTransactionButtonState) {
-      return;
-    }
-    const values = this.props.form.getFieldsValue();
-    const { transaction } = values;
-    copy(transaction);
-    openNotification(this.state.formatMessage);
   };
 
   render() {
@@ -122,10 +102,6 @@ export class ProxyPage extends React.Component {
       <LayoutContent>
         <LayoutContentBox>
           <FormComp>
-            <ScanQrcode
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-            />
             <FormItem {...formItemLayout} label={VoterLabel} colon>
               {getFieldDecorator('voter', {
                 rules: [{ required: true, message: VoterPlaceholder }],
@@ -160,19 +136,22 @@ export class ProxyPage extends React.Component {
                 />,
               )}
             </FormItem>
-            <GetQrcode
+            <DealGetQrcode
+              eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonLoading={
-                this.state.GetTransactionButtonLoading
-              }
-              GetTransactionButtonDisabled={
-                this.state.GetTransactionButtonState
-              }
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
               QrCodeValue={this.state.QrCodeValue}
-              CopyTransactionButtonState={this.state.CopyTransactionButtonState}
-              handleCopyTransaction={this.handleCopyTransaction}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
+            />
+            <ScanQrcode
+              eos={this.state.eos}
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
             />
           </FormComp>
         </LayoutContentBox>
@@ -184,9 +163,14 @@ export class ProxyPage extends React.Component {
 ProxyPage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
 
 const ProxyPageIntl = injectIntl(ProxyPage);
 const ProxyPageForm = Form.create()(ProxyPageIntl);
 
-export default ProxyPageForm;
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
+
+export default connect(mapStateToProps)(ProxyPageForm);

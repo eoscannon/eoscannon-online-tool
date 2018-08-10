@@ -4,14 +4,10 @@ import { Layout, Form } from 'antd';
 const { Content } = Layout;
 
 const LayoutContent = styled(Content)`
-  padding: 0 50px;
-  margin-top: 64px;
+  background: #fff;
 `;
 
 const LayoutContentBox = styled.div`
-  min-height: 480px;
-  margin-top: 24px;
-  padding: 24px;
   background: #fff;
 `;
 

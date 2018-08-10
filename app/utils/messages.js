@@ -10,10 +10,6 @@ export default defineMessages({
     id: 'Public AppHelmetTitle',
     defaultMessage: '佳能大户专属投票工具(在线版)',
   },
-  HeaderMenuCreateAccount: {
-    id: 'Public HeaderMenuCreateAccount',
-    defaultMessage: '账号创建',
-  },
   HeaderMenuDelegate: {
     id: 'Public HeaderMenuDelegate',
     defaultMessage: '质押/解质押',
@@ -62,6 +58,10 @@ export default defineMessages({
     id: 'Public CopyTransactionSuccessNotificationMsg',
     defaultMessage: '已复制',
   },
+  CopyMessage: {
+    id: 'InfoInitPage infoAlertCopy',
+    defaultMessage: '复制',
+  },
   CopyTransactionSuccessNotificationDescription: {
     id: 'Public CopyTransactionSuccessNotificationDescription',
     defaultMessage: `已将签名报文复制到剪贴板，请前往https://tool.eoscannon.io/联网将报文播报发送`,
@@ -92,11 +92,12 @@ export default defineMessages({
   },
   KeyProviderFormItemLabel: {
     id: 'Public KeyProviderFormItemLabel',
-    defaultMessage: '私钥',
+    defaultMessage: '请输入相关交易报文',
   },
   KeyProviderFormItemPlaceholder: {
     id: 'Public KeyProviderFormItemPlaceholder',
-    defaultMessage: '请输入私钥',
+    defaultMessage:
+      '请前往离线版工具获取交易报文，打开工具，扫描二维码即可获得。',
   },
   GetTransactionFormItemButtonName: {
     id: 'Public GetTransactionFormItemButtonName',
@@ -131,10 +132,13 @@ export default defineMessages({
     defaultMessage: 'EOS佳能荣誉出品 ©2018',
   },
 
-
   HeaderMenuInfoInit: {
     id: 'Public HeaderMenuInfoInit',
     defaultMessage: '信息初始化',
+  },
+  HeaderMenuCreateAccount: {
+    id: 'Public HeaderMenuCreateAccount',
+    defaultMessage: '创建账号',
   },
   HeaderMenuSendMessage: {
     id: 'Public HeaderMenuSendMessage',
@@ -142,7 +146,7 @@ export default defineMessages({
   },
   HeaderMenuAccountSearch: {
     id: 'Public HeaderMenuAccountSearch',
-    defaultMessage: '账户查询',
+    defaultMessage: '查询',
   },
   HeaderMenuOffical: {
     id: 'Public HeaderMenuOffical',
@@ -152,9 +156,21 @@ export default defineMessages({
     id: 'Public HeaderMenuTestNet',
     defaultMessage: '测试网',
   },
+  HeaderMenuStake: {
+    id: 'Public HeaderMenuStake',
+    defaultMessage: '质押',
+  },
   ChangeTestNet: {
     id: 'Public ChangeTestNet',
     defaultMessage: '变更测试网',
+  },
+  HeaderMenuTradeManage: {
+    id: 'Public HeaderMenuTradeManage',
+    defaultMessage: '交易管理',
+  },
+  HeaderAppDownLoad: {
+    id: 'Public HeaderAppDownLoad',
+    defaultMessage: 'APP下载',
   },
   HeaderOnlineAppDownLoad: {
     id: 'Public HeaderOnlineAppDownLoad',
@@ -163,5 +179,37 @@ export default defineMessages({
   HeaderOfflineAppDownLoad: {
     id: 'Public HeaderOfflineAppDownLoad',
     defaultMessage: '离线APP下载',
+  },
+  FieldAlertSendMessage: {
+    id: 'Public FieldAlertSendMessage',
+    defaultMessage: '发送报文',
+  },
+  HeaderSendTrade: {
+    id: 'Public FieldAlertSendMessage',
+    defaultMessage: '发送交易',
+  },
+  SendSuccessMessage: {
+    id: 'Public SendSuccessMessage',
+    defaultMessage: '发送报文成功,请在页尾查看',
+  },
+  ScanCodeSendSuccess: {
+    id: 'Public SendSuccess',
+    defaultMessage: '发送成功',
+  },
+  ScanCodeSendSuccessMessage: {
+    id: 'Public ScanCodeSendSuccessMessage',
+    defaultMessage: '发送成功，已将相关操作广播，交易ID：',
+  },
+  ScanCodeSendFailed: {
+    id: 'Public ScanCodeSendFailed',
+    defaultMessage: '发送失败',
+  },
+  ScanCodeSendSure: {
+    id: 'Public ScanCodeSendSure',
+    defaultMessage: '确认',
+  },
+  ScanCodeSendCancel: {
+    id: 'Public ScanCodeSendCancel',
+    defaultMessage: '取消',
   },
 });

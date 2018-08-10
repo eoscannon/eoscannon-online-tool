@@ -6,118 +6,133 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Switch, Button, message, Modal } from 'antd';
-import copy from 'copy-to-clipboard';
-import { storage } from 'utils/storage';
+import { Form, Alert, Button, Input, message } from 'antd';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 import styleComps from './styles';
 
-import {
-  formItemLayout,
-  getEos,
-  getEosTest,
-  openTransactionSuccessNotification,
-  openNotification,
-} from '../../utils/utils';
+import { getEos } from '../../utils/utils';
 import {
   LayoutContentBox,
   LayoutContent,
   FormComp,
 } from '../../components/NodeComp';
-import ScanQrcode from '../../components/ScanQrcode';
-import GetQrcode from '../../components/GetQrcode';
-import messages from './messages';
+
 import utilsMsg from '../../utils/messages';
+import { BrowserQRCodeReader } from '../../utils/zxing.qrcodereader.min';
 
 const FormItem = Form.Item;
-const confirm = Modal.confirm;
+const { TextArea } = Input;
 
 export class SendMessagePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      SendButtonDisable: true,
+      transaction_id: '',
       formatMessage: this.props.intl.formatMessage,
-      isDelegatebw: true, // true：质押；false：解质押
-      GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
-      GetTransactionButtonState: false, // 获取报文按钮可点击状态
-      CopyTransactionButtonState: false, // 复制报文按钮可点击状态
-      transaction_id:'',
-      netWork:'',
-      QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
     };
   }
-  /**
-   * 输入框内容变化时，改变按钮状态
-   * */
-  componentWillReceiveProps(nextProps) {
-    this.setState({netWork: nextProps.netWork})
-  }
-  componentWillMount(){
-    let netWork  = storage.getNetwork()
-    this.setState({netWork: this.props.netWork})
 
-  }
+  handleOpenCamera = () => {
+    this.setState({
+      VideoElement: (
+        <FormItem>
+          <video id="video" width="500" height="200">
+            <track kind="captions" />
+          </video>
+        </FormItem>
+      ),
+    });
+    this.handleScanQrcode();
+  };
+
+  handleScanQrcode = () => {
+    const codeReader = new BrowserQRCodeReader();
+    codeReader.getVideoInputDevices().then(videoInputDevices => {
+      codeReader
+        .decodeFromInputVideoDevice(videoInputDevices[0].deviceId, 'video')
+        .then(result => {
+          this.props.form.setFieldsValue({
+            jsonInfo: result.text,
+          });
+          this.setState({
+            SendButtonDisable: false,
+          });
+        });
+    });
+  };
   /**
    * 用户点击发送签名报文，并提示用户已发送
    * */
-  sendMessage= () => {
-    let eos = null
-    console.log("this.state.netWork====",this.state.netWork)
-    if(this.state.netWork =='main'){
-      eos = getEos()
-    }else{
-      eos = getEosTest()
-    }
-   eos.pushTransaction(JSON.parse(this.props.form.getFieldsValue().jsonInfo)).then((res) => {
+  sendMessage = () => {
+    const eos = getEos(this.props.SelectedNetWork);
+    eos
+      .pushTransaction(JSON.parse(this.props.form.getFieldsValue().jsonInfo))
+      .then(res => {
+        message.success(
+          `${this.state.formatMessage(
+            utilsMsg.SendSuccessMessage,
+          )}transaction_id=${res.transaction_id}`,
+        );
+        this.setState({ transaction_id: res.transaction_id });
+      })
+      .catch(err => {
+        message.error(`发送失败，原因：${err}`);
+      });
+  };
 
-      message.success(`发送报文成功,请在页尾查看transaction_id=${res.transaction_id}`);
-      this.setState({transaction_id: res.transaction_id})
-
-    }).catch((err) => {
-      console.log('Err:',err);
-       confirm({
-         title: '错误信息',
-         content: err+'' ,
-         onOk() {
-           //return new Promise((resolve, reject) => {
-           //  setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-           //}).catch(() => console.log('Oops errors!'));
-         },
-         onCancel() {},
-       });
-
-      //alert('发送失败.',err.message);
-    });
-
-  }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const DelegateSwitchCheckedName = this.state.formatMessage(
-      messages.DelegateSwitchCheckedName
-    );
+    const { formatMessage } = this.props.intl;
+    const description = formatMessage(utilsMsg.JsonAlertDescription);
+    const OpenCameraButtonName = formatMessage(utilsMsg.OpenCameraButtonName);
+    const JsonInfoPlaceholder = formatMessage(utilsMsg.JsonInfoPlaceholder);
+    const FieldAlertSendMessage = formatMessage(utilsMsg.FieldAlertSendMessage);
     return (
       <LayoutContent>
         <LayoutContentBox>
           <styleComps.ConBox>
-
             <FormComp>
-              <ScanQrcode
-                form={this.props.form}
-                formatMessage={this.state.formatMessage}/>
-            </FormComp>
-            <FormComp>
-              <Button
-                type="primary"
-                className="form-button"
-                onClick={this.sendMessage}>
-                发送
-              </Button>
-
-            </FormComp>
-            <FormComp>
-              <FormItem style={{ textAlign: 'center'}}>txid:{this.state.transaction_id}</FormItem>
+              <FormItem>
+                <Alert
+                  message={FieldAlertSendMessage}
+                  description={description}
+                  type="info"
+                />
+              </FormItem>
+              {this.state.VideoElement}
+              <FormItem style={{ textAlign: 'center' }}>
+                <Button
+                  type="primary"
+                  className="form-button"
+                  style={{ display: 'inline', marginRight: 5 }}
+                  onClick={this.handleOpenCamera}
+                >
+                  {OpenCameraButtonName}
+                </Button>
+              </FormItem>
+              <FormItem>
+                {getFieldDecorator('jsonInfo', {
+                  rules: [{ required: true, message: JsonInfoPlaceholder }],
+                })(<TextArea placeholder={JsonInfoPlaceholder} rows="6" />)}
+              </FormItem>
+              <FormItem style={{ textAlign: 'center' }}>
+                <Button
+                  type="primary"
+                  className="form-button"
+                  onClick={this.sendMessage}
+                  disabled={this.state.SendButtonDisable}
+                >
+                  {FieldAlertSendMessage}
+                </Button>
+              </FormItem>
+              <FormItem style={{ textAlign: 'left' }}>
+                {this.state.transaction_id
+                  ? `txid：${this.state.transaction_id}`
+                  : ''}
+              </FormItem>
             </FormComp>
           </styleComps.ConBox>
         </LayoutContentBox>
@@ -129,15 +144,14 @@ export class SendMessagePage extends React.Component {
 SendMessagePage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
-
-const mapStateToProps = createStructuredSelector({
-  netWork: makeSelectNetwork(),
-});
 
 const SendMessagePageIntl = injectIntl(SendMessagePage);
 const SendMessagePageForm = Form.create()(SendMessagePageIntl);
 
-export default connect(
-  mapStateToProps
-)(SendMessagePageForm);
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
+
+export default connect(mapStateToProps)(SendMessagePageForm);

@@ -12,20 +12,28 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { Router, Switch, Route } from 'react-router-dom';
 import FontFaceObserver from 'fontfaceobserver';
 import createHashHistory from 'history/createHashHistory';
 import 'sanitize.css/sanitize.css';
-
-// Import root app
-import App from 'containers/App';
-
-// Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
 
 // Load the favicon and the .htaccess file
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
-import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line import/extensions
+
+// Import root app
+import InfoInitPage from 'containers/InfoInitPage/Loadable';
+import SendMessagePage from 'containers/SendMessagePage/Loadable';
+import ProxyPage from 'containers/ProxyPage/Loadable';
+import VotePage from 'containers/VotePage/Loadable';
+import AccountSearchPage from 'containers/AccountSearchPage/Loadable';
+import RefundPage from 'containers/RefundPage/Loadable';
+import BuyRamBytesPage from 'containers/BuyRamBytesPage/Loadable';
+import UpdateAuthPage from 'containers/UpdateAuthPage/Loadable';
+import StakePage from 'containers/StakePage/Loadable';
+import TransferPage from 'containers/TransferPage/Loadable';
+import CreateAccountPage from 'containers/CreateAccountPage/Loadable';
+import Header from 'components/Header';
 
 import configureStore from './configureStore';
 
@@ -54,12 +62,27 @@ const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <Router history={history}>
+          <Switch>
+            <Header>
+              <Route exact path="/" component={AccountSearchPage} />
+              <Route path="/infoInit" component={InfoInitPage} />
+              <Route path="/sendMessage" component={SendMessagePage} />
+              <Route path="/transfer" component={TransferPage} />
+              <Route path="/proxy" component={ProxyPage} />
+              <Route path="/vote" component={VotePage} />
+              <Route path="/accountSearch" component={AccountSearchPage} />
+              <Route path="/refund" component={RefundPage} />
+              <Route path="/stake" component={StakePage} />
+              <Route path="/buyrambytes" component={BuyRamBytesPage} />
+              <Route path="/createAccount" component={CreateAccountPage} />
+              <Route path="/updateauth" component={UpdateAuthPage} />
+            </Header>
+          </Switch>
+        </Router>
       </LanguageProvider>
     </Provider>,
-    MOUNT_NODE
+    MOUNT_NODE,
   );
 };
 

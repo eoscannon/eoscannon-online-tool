@@ -5,7 +5,6 @@ import { initialState } from './reducer';
  * Direct selector to the languageToggle state domain
  */
 const selectLanguage = state => state.get('language', initialState);
-//const selectnetWork = state => state.get('netWork', initialState);
 
 /**
  * Select the language locale

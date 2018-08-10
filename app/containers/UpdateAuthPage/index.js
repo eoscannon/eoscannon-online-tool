@@ -6,15 +6,14 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Alert, Card, Button } from 'antd';
-import copy from 'copy-to-clipboard';
-import ecc from 'eosjs-ecc';
+import { Form, Icon, Input } from 'antd';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import {
   formItemLayout,
   getEos,
   openTransactionFailNotification,
-  openTransactionSuccessNotification,
-  openNotification,
 } from '../../utils/utils';
 import {
   LayoutContentBox,
@@ -22,7 +21,7 @@ import {
   FormComp,
 } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
-import GetQrcode from '../../components/GetQrcode';
+import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
@@ -32,16 +31,11 @@ export class UpdateAuthPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      eos: null,
       formatMessage: this.props.intl.formatMessage,
-      GetTransactionButtonLoading: false, // 点击获取报文时，按钮加载状态
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
-      CopyTransactionButtonState: false, // 复制报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
-      GetPrivateKeyButtonLoading: false,
-      KeyDescription: '',
-      GetCheckPrivateKeyButtonLoading: false,
-      GetCheckPrivateKeyButtonState: false,
-      CheckDescription: '',
+      transaction: {},
     };
   }
   /**
@@ -55,75 +49,9 @@ export class UpdateAuthPage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
-    const {
-      CheckKeyProvide,
-      jsonInfo,
-      keyProvider,
-      AccountName,
-      ActiveKey,
-      OwnerKey,
-      transaction,
-    } = values;
+    const { AccountName, ActiveKey, OwnerKey } = values;
     this.setState({
-      GetCheckPrivateKeyButtonState: !CheckKeyProvide,
-    });
-    this.setState({
-      GetTransactionButtonState:
-        jsonInfo && keyProvider && AccountName && (ActiveKey || OwnerKey),
-    });
-    this.setState({
-      CopyTransactionButtonState:
-        jsonInfo &&
-        keyProvider &&
-        AccountName &&
-        (ActiveKey || OwnerKey) &&
-        transaction,
-    });
-  };
-  /**
-   * 校验私钥
-   * */
-  handleCheckPrivateKey = () => {
-    this.setState({
-      GetCheckPrivateKeyButtonLoading: true,
-    });
-    const values = this.props.form.getFieldsValue();
-    const { CheckPrivateKey } = values;
-    const CheckDescription =
-      ecc.isValidPrivate(CheckPrivateKey) === true ? (
-        <div>
-          <p>私钥 Private Key: {CheckPrivateKey}</p>
-          <p>公钥 Public Key: {ecc.privateToPublic(CheckPrivateKey)}</p>
-        </div>
-      ) : (
-        <div>
-          <p>您的私钥 Private Key: {CheckPrivateKey} 是不合法的私钥</p>
-        </div>
-      );
-    this.setState({
-      CheckDescription,
-      GetCheckPrivateKeyButtonLoading: false,
-    });
-  };
-  /**
-   * 生成公私钥
-   * */
-  handleCreatePrivateKey = () => {
-    this.setState({
-      GetPrivateKeyButtonLoading: true,
-    });
-    ecc.randomKey().then(privateKey => {
-      const KeyDescription = (
-        <div>
-          <p>公钥 Public Key: {ecc.privateToPublic(privateKey)}</p>
-          <p>私钥 Private Key: {privateKey}</p>
-          <p>如果使用该公私钥，请记下私钥，请不要在网络上传输私钥。</p>
-        </div>
-      );
-      this.setState({
-        KeyDescription,
-        GetPrivateKeyButtonLoading: false,
-      });
+      GetTransactionButtonState: !!AccountName && (!!ActiveKey || !!OwnerKey),
     });
   };
   /**
@@ -133,11 +61,8 @@ export class UpdateAuthPage extends React.Component {
     if (!this.state.GetTransactionButtonState) {
       return;
     }
-    this.setState({
-      GetTransactionButtonLoading: true,
-    });
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(values);
+    const eos = getEos(this.props.SelectedNetWork);
     const { AccountName, ActiveKey, OwnerKey } = values;
     const actions = [];
     if (ActiveKey) {
@@ -179,53 +104,28 @@ export class UpdateAuthPage extends React.Component {
       actions.push(UpdateOwnerKeyAction);
     }
     eos
-      .transaction({
-        actions,
-      })
+      .transaction(
+        {
+          actions,
+        },
+        {
+          sign: false,
+          broadcast: false,
+        },
+      )
       .then(tr => {
-        this.props.form.setFieldsValue({
-          transaction: JSON.stringify(tr.transaction),
-        });
         this.setState({
-          GetTransactionButtonLoading: false,
-          QrCodeValue: JSON.stringify(tr.transaction),
+          eos,
+          transaction: tr.transaction,
         });
-        openTransactionSuccessNotification(this.state.formatMessage);
       })
       .catch(err => {
-        this.setState({
-          GetTransactionButtonLoading: false,
-        });
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
-  };
-  /**
-   * 用户点击复制签名报文，将报文赋值到剪贴板，并提示用户已复制成功
-   * */
-  handleCopyTransaction = () => {
-    if (!this.state.CopyTransactionButtonState) {
-      return;
-    }
-    const values = this.props.form.getFieldsValue();
-    const { transaction } = values;
-    copy(transaction);
-    openNotification(this.state.formatMessage);
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const CheckPrivateKeyMessage = this.state.formatMessage(
-      messages.CheckPrivateKeyMessage,
-    );
-    const CheckPrivateKeyPlaceholder = this.state.formatMessage(
-      messages.CheckPrivateKeyPlaceholder,
-    );
-    const GetPrivateKeyButtonMessage = this.state.formatMessage(
-      messages.GetPrivateKeyButtonMessage,
-    );
-    const ModifyPrivateKeyTitle = this.state.formatMessage(
-      messages.ModifyPrivateKeyTitle,
-    );
     const UpdateAuthAccountNamePlaceholder = this.state.formatMessage(
       messages.UpdateAuthAccountNamePlaceholder,
     );
@@ -235,147 +135,79 @@ export class UpdateAuthPage extends React.Component {
     const UpdateAuthOwnerKeyPlaceholder = this.state.formatMessage(
       messages.UpdateAuthOwnerKeyPlaceholder,
     );
-    const PrivateKeyLabel = this.state.formatMessage(messages.PrivateKeyLabel);
     const AccountLabel = this.state.formatMessage(messages.AccountLabel);
     return (
       <LayoutContent>
         <LayoutContentBox>
           <FormComp>
-            <Card title={CheckPrivateKeyMessage} style={{ marginBottom: 24 }}>
-              <FormItem>
-                <Alert
-                  message={CheckPrivateKeyMessage}
-                  description={this.state.CheckDescription}
-                  type="info"
-                />
-              </FormItem>
-              <FormItem {...formItemLayout} label={PrivateKeyLabel} colon>
-                {getFieldDecorator('CheckPrivateKey', {
-                  rules: [
-                    { required: true, message: CheckPrivateKeyPlaceholder },
-                  ],
-                })(
-                  <Input
-                    prefix={
-                      <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                    }
-                    placeholder={CheckPrivateKeyPlaceholder}
-                  />,
-                )}
-              </FormItem>
-              <FormItem>
-                <Button
-                  type="primary"
-                  className="form-button"
-                  loading={this.state.GetCheckPrivateKeyButtonLoading}
-                  disabled={!this.state.GetCheckPrivateKeyButtonState}
-                  onClick={this.handleCheckPrivateKey}
-                >
-                  {CheckPrivateKeyMessage}
-                </Button>
-              </FormItem>
-            </Card>
-            <Card
-              title={GetPrivateKeyButtonMessage}
-              style={{ marginBottom: 24 }}
-            >
-              <FormItem>
-                <Alert
-                  message={GetPrivateKeyButtonMessage}
-                  description={this.state.KeyDescription}
-                  type="info"
-                />
-              </FormItem>
-              <FormItem>
-                <Button
-                  type="primary"
-                  className="form-button"
-                  loading={this.state.GetPrivateKeyButtonLoading}
-                  onClick={this.handleCreatePrivateKey}
-                >
-                  {GetPrivateKeyButtonMessage}
-                </Button>
-              </FormItem>
-            </Card>
-            <Card title={ModifyPrivateKeyTitle}>
-              <ScanQrcode
-                form={this.props.form}
-                formatMessage={this.state.formatMessage}
-              />
-              <FormItem {...formItemLayout} label={AccountLabel} colon>
-                {getFieldDecorator('AccountName', {
-                  rules: [
-                    {
-                      required: true,
-                      message: UpdateAuthAccountNamePlaceholder,
-                    },
-                  ],
-                })(
-                  <Input
-                    prefix={
-                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                    }
-                    placeholder={UpdateAuthAccountNamePlaceholder}
-                  />,
-                )}
-              </FormItem>
-              <FormItem {...formItemLayout} label="ActiveKey" colon>
-                {getFieldDecorator('ActiveKey', {
-                  rules: [
-                    {
-                      required: true,
-                      message: UpdateAuthActiveKeyPlaceholder,
-                    },
-                  ],
-                })(
-                  <Input
-                    prefix={
-                      <Icon
-                        type="unlock"
-                        style={{ color: 'rgba(0,0,0,.25)' }}
-                      />
-                    }
-                    placeholder={UpdateAuthActiveKeyPlaceholder}
-                  />,
-                )}
-              </FormItem>
-              <FormItem {...formItemLayout} label="OwnerKey" colon>
-                {getFieldDecorator('OwnerKey', {
-                  rules: [
-                    {
-                      required: false,
-                      message: UpdateAuthOwnerKeyPlaceholder,
-                    },
-                  ],
-                })(
-                  <Input
-                    prefix={
-                      <Icon
-                        type="unlock"
-                        style={{ color: 'rgba(0,0,0,.25)' }}
-                      />
-                    }
-                    placeholder={UpdateAuthOwnerKeyPlaceholder}
-                  />,
-                )}
-              </FormItem>
-              <GetQrcode
-                form={this.props.form}
-                formatMessage={this.state.formatMessage}
-                GetTransactionButtonClick={this.handleGetTransaction}
-                GetTransactionButtonLoading={
-                  this.state.GetTransactionButtonLoading
-                }
-                GetTransactionButtonDisabled={
-                  this.state.GetTransactionButtonState
-                }
-                QrCodeValue={this.state.QrCodeValue}
-                CopyTransactionButtonState={
-                  this.state.CopyTransactionButtonState
-                }
-                handleCopyTransaction={this.handleCopyTransaction}
-              />
-            </Card>
+            <FormItem {...formItemLayout} label={AccountLabel} colon>
+              {getFieldDecorator('AccountName', {
+                rules: [
+                  {
+                    required: true,
+                    message: UpdateAuthAccountNamePlaceholder,
+                  },
+                ],
+              })(
+                <Input
+                  prefix={
+                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
+                  placeholder={UpdateAuthAccountNamePlaceholder}
+                />,
+              )}
+            </FormItem>
+            <FormItem {...formItemLayout} label="ActiveKey" colon>
+              {getFieldDecorator('ActiveKey', {
+                rules: [
+                  {
+                    required: true,
+                    message: UpdateAuthActiveKeyPlaceholder,
+                  },
+                ],
+              })(
+                <Input
+                  prefix={
+                    <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
+                  placeholder={UpdateAuthActiveKeyPlaceholder}
+                />,
+              )}
+            </FormItem>
+            <FormItem {...formItemLayout} label="OwnerKey" colon>
+              {getFieldDecorator('OwnerKey', {
+                rules: [
+                  {
+                    required: false,
+                    message: UpdateAuthOwnerKeyPlaceholder,
+                  },
+                ],
+              })(
+                <Input
+                  prefix={
+                    <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
+                  placeholder={UpdateAuthOwnerKeyPlaceholder}
+                />,
+              )}
+            </FormItem>
+            <DealGetQrcode
+              eos={this.state.eos}
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
+              GetTransactionButtonClick={this.handleGetTransaction}
+              GetTransactionButtonState={this.state.GetTransactionButtonState}
+              QrCodeValue={this.state.QrCodeValue}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
+            />
+            <ScanQrcode
+              eos={this.state.eos}
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
+            />
           </FormComp>
         </LayoutContentBox>
       </LayoutContent>
@@ -386,9 +218,14 @@ export class UpdateAuthPage extends React.Component {
 UpdateAuthPage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
+  SelectedNetWork: PropTypes.string,
 };
 
 const UpdateAuthPageIntl = injectIntl(UpdateAuthPage);
 const UpdateAuthPageForm = Form.create()(UpdateAuthPageIntl);
 
-export default UpdateAuthPageForm;
+const mapStateToProps = createStructuredSelector({
+  SelectedNetWork: makeSelectNetwork(),
+});
+
+export default connect(mapStateToProps)(UpdateAuthPageForm);

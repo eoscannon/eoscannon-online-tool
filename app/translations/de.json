@@ -1,5 +1,5 @@
 {
-  "Public AppHelmetTitle": "佳能大户专属投票工具(离线版)",
+  "Public AppHelmetTitle": "佳能大户专属投票工具(在线版)",
   "Public HeaderMenuCreateAccount": "账号创建",
   "Public HeaderMenuDelegate": "质押/解质押",
   "Public HeaderMenuTransfer": "转账",
@@ -27,8 +27,9 @@
     "该页面为离线页面，输入的字段不会向外界泄露，请放心输入。",
   "Public CopyAlertDescription":
     "请将下面的签名报文复制后，前往https://tool.eoscannon.io/联网后进行播报发送。",
-  "Public KeyProviderFormItemLabel": "私钥",
-  "Public KeyProviderFormItemPlaceholder": "请输入私钥",
+  "Public KeyProviderFormItemLabel": "请输入相关交易报文",
+  "Public KeyProviderFormItemPlaceholder":
+    "请前往离线版工具获取交易报文，打开工具，扫描二维码即可获得。",
   "Public GetTransactionFormItemButtonName": "生成签名报文",
   "Public CopyAlertMessage": "复制签名报文/扫描二维码",
   "Public CopyTransactionButtonName": "复制签名报文",
@@ -128,13 +129,50 @@
   "boilerplate.containers.LocaleToggle.en": "",
   "boilerplate.containers.NotFoundPage.header": "Seite nicht gefunden.",
 
-
   "Public HeaderMenuInfoInit": "信息初始化",
   "Public HeaderMenuSendMessage": "发送报文",
-  "Public HeaderMenuAccountSearch": "账户查询",
+  "Public HeaderMenuAccountSearch": "查询",
+  "Public HeaderMenuStake": "质押",
+  "Public HeaderMenuTradeManage": "交易管理",
   "Public HeaderMenuOffical": "正式网",
   "Public HeaderMenuTestNet": "测试网",
   "Public ChangeTestNet": "变更测试网",
+  "Public HeaderAppDownLoad": "APP下载",
   "Public HeaderOnlineAppDownLoad": "在线APP下载",
-  "Public HeaderOfflineAppDownLoad": "离线APP下载"
+  "Public HeaderOfflineAppDownLoad": "离线APP下载",
+  "TransferPage FunctionSearchButton": "查询",
+  "TransferPage FunctionSearchAccount": "账户",
+  "TransferPage FunctionSearchCreateTime": "创建时间",
+  "TransferPage FunctionSearchEOSBalance": "EOS余额",
+  "TransferPage FunctionSearchEOSStake": "EOS抵押",
+  "TransferPage FunctionSearchEOSVoteProxy": "已投代理",
+  "TransferPage FunctionSearchEOSVoteNode": "已投节点",
+  "TransferPage FunctionSearchMemory": "内存",
+  "TransferPage FunctionSearchCPU": "CPU",
+  "TransferPage FunctionSearchCPUStake": "抵押",
+  "TransferPage FunctionSearchNetStake": "抵押",
+  "TransferPage FunctionSearchNet": "网络",
+  "TransferPage FunctionSearchCPURefund": "赎回中",
+  "TransferPage FunctionSearchNetRefund": "赎回中",
+  "TransferPage FunctionSearchAccountPublic": "账户地址",
+  "TransferPage FunctionSearchAccountSyblom": "币种",
+  "TransferPage FunctionSearchAccountBalance": "账户余额",
+  "TransferPage FunctionSearchAccountTableBalance": "余额",
+  "TransferPage FunctionSearchAccountTableContact": "合约名",
+  "TransferPage FunctionSearchAccountTableGroup": "组名",
+  "TransferPage FunctionSearchAccountTableAddress": "地址/账户",
+  "TransferPage FunctionSearchNoData": "暂无数据",
+
+  "InfoInitPage infoAlertMessage": "此页面在线使用",
+  "InfoInitPage infoAlertDescription":
+    "将下方信息粘贴至EOSCannon离线签名工具中",
+  "InfoInitPage infoAlertCopy": "复制",
+  "Public FieldAlertSendMessage": "发送交易",
+  "Public SendSuccessMessage": "发送报文成功,请在页尾查看",
+
+  "Public SendSuccess": "发送成功",
+  "Public ScanCodeSendSuccessMessage": "发送成功，已将相关操作广播，交易ID：",
+  "Public ScanCodeSendFailed": "发送失败",
+  "Public ScanCodeSendSure": "确认",
+  "Public ScanCodeSendCancel": "取消"
 }
