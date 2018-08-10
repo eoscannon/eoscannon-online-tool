@@ -256,15 +256,45 @@ class HeaderComp extends React.Component {
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
+
             <Menu.Item key="5">
               <a
-                href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"
+                href="https://tool.eoscannon.io/offline.1.1.0.apk"
                 target="_blank"
               >
                 <Icon type="appstore-o" />
                 {OfflineAppDownLoad}
               </a>
             </Menu.Item>
+
+            {/*
+             <Menu.SubMenu
+             key="5"
+             title={
+             <span>
+             <Icon type="appstore-o" />
+             <span> {AppDownLoad}</span>
+             </span>
+             }
+             >
+             <Menu.Item key="setting:1">
+             <a
+             href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"
+             target="_blank"
+             >
+             {OnlineAppDownLoad}
+             </a>
+             </Menu.Item>
+             <Menu.Item key="setting:2">
+             <a
+             href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases"
+             target="_blank"
+             >
+             {OfflineAppDownLoad}
+             </a>
+             </Menu.Item>
+             </Menu.SubMenu>
+            */}
           </Menu>
         </Sider>
         <Layout>
@@ -304,7 +334,7 @@ class HeaderComp extends React.Component {
             </div>
           </Header>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div style={{ background: '#fff', minHeight: 280 }}>
+            <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
               {this.props.children}
             </div>
           </Content>
