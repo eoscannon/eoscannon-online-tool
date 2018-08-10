@@ -258,7 +258,7 @@ class HeaderComp extends React.Component {
             </Menu.SubMenu>
             <Menu.Item key="5">
               <a
-                href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases"
+                href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"
                 target="_blank"
               >
                 <Icon type="appstore-o" />
