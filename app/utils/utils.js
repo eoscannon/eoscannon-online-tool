@@ -86,6 +86,24 @@ const openNotification = formatMessage => {
     duration: 3,
   });
 };
+/**
+ * 币种列表
+ * */
+const symbolList =[
+  { symbol: 'EOS', contract: 'eosio', digit: 4 },
+  { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
+  { symbol: 'IQ', contract: 'everipediaiq', digit: 3 },
+  { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 3 },
+  { symbol: 'CETOS', contract: 'gyztomjugage', digit: 3 },
+  { symbol: 'EOX', contract: 'eoxeoxeoxeox', digit: 3 },
+  { symbol: 'EDNA', contract: 'ednazztokens', digit: 3 },
+  { symbol: 'HORUS', contract: 'horustokenio', digit: 3 },
+  { symbol: 'CHL', contract: 'challengedac', digit: 3 },
+  { symbol: 'BLACK', contract: 'eosblackteam', digit: 3 },
+  { symbol: 'ADD', contract: 'eosadddddddd', digit: 3 },
+  { symbol: 'CET', contract: 'eosiochaince', digit: 3 },
+];
+
 export {
   voteNodes,
   formItemLayout,
@@ -96,4 +114,5 @@ export {
   openTransactionSuccessNotification,
   openTransactionFailNotification,
   openNotification,
+  symbolList
 };

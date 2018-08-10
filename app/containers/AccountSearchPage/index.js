@@ -101,6 +101,7 @@ export class AccountSearchPage extends React.Component {
             });
           }
         }
+        //this.handleChange({ key: 'EOS', label :'eosio.token' })
         if (info.voter_info) {
           stake = `${info.voter_info.staked / 10000} EOS`;
         }
