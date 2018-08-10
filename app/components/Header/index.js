@@ -30,6 +30,7 @@ class HeaderComp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      LogoName: 'EOS Cannon',
       defaultSelectedKeys: '9',
       collapsed: false,
       openKeys: [],
@@ -103,9 +104,24 @@ class HeaderComp extends React.Component {
   };
 
   toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
+    this.setState(
+      {
+        collapsed: !this.state.collapsed,
+      },
+      () => {
+        if (this.state.collapsed) {
+          this.setState({
+            LogoName: '',
+          });
+        } else {
+          setTimeout(() => {
+            this.setState({
+              LogoName: 'EOS Cannon',
+            });
+          }, 150);
+        }
+      },
+    );
   };
 
   render() {
@@ -150,13 +166,10 @@ class HeaderComp extends React.Component {
               fontWeight: 'bold',
             }}
           >
-            {this.state.collapsed ? (
+            <span>
               <img src={eosCannonLogo} alt="" width="32" />
-            ) : (
-              <span>
-                <img src={eosCannonLogo} alt="" width="32" />EOS Cannon
-              </span>
-            )}
+              {this.state.LogoName}
+            </span>
           </div>
           <Menu
             theme="dark"
@@ -168,9 +181,7 @@ class HeaderComp extends React.Component {
             <Menu.Item key="9">
               <Link href="/accountSearch" to="/accountSearch">
                 <Icon type="user" />
-                <span>
-                  {accountSearch}
-                </span>
+                <span>{accountSearch}</span>
               </Link>
             </Menu.Item>
 
@@ -253,18 +264,21 @@ class HeaderComp extends React.Component {
                   <Icon type="appstore-o" />
                   <span> {AppDownLoad}</span>
                 </span>
-              }>
+              }
+            >
               <Menu.Item key="setting:1">
                 <a
                   href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"
-                  target="_blank">
+                  target="_blank"
+                >
                   {OnlineAppDownLoad}
                 </a>
               </Menu.Item>
               <Menu.Item key="setting:2">
                 <a
                   href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases"
-                  target="_blank">
+                  target="_blank"
+                >
                   {OfflineAppDownLoad}
                 </a>
               </Menu.Item>
