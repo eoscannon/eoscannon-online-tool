@@ -4,10 +4,9 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Input, Alert, Icon } from 'antd';
+import { Form, Button, Input, Alert } from 'antd';
 import QRCode from 'qrcode.react';
 import utilsMsg from '../../utils/messages';
-import { formItemLayout } from '../../utils/utils';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -19,24 +18,13 @@ export default class GetQrcode extends Component {
   }
 
   render() {
-    // const { getFieldDecorator } = this.props.form;
-     const keyProviderLabel = this.props.formatMessage(
-      utilsMsg.KeyProviderFormItemLabel
-     );
-     const keyProviderPlaceholder = this.props.formatMessage(
+    const keyProviderLabel = this.props.formatMessage(
+      utilsMsg.KeyProviderFormItemLabel,
+    );
+    const keyProviderPlaceholder = this.props.formatMessage(
       utilsMsg.KeyProviderFormItemPlaceholder,
-     );
-     const CopyMessage = this.props.formatMessage(
-      utilsMsg.CopyMessage,
-     );
-
-    // const TransactionTextAreaPlaceholder = this.props.formatMessage(
-    //  utilsMsg.TransactionTextAreaPlaceholder,
-    // );
-    // const CopyTransactionButtonName = this.props.formatMessage(
-    //  utilsMsg.CopyTransactionButtonName,
-    // );
-    // console.log(!this.props.CopyTransactionButtonState);
+    );
+    const CopyMessage = this.props.formatMessage(utilsMsg.CopyMessage);
     return (
       <div>
         <FormItem>
@@ -46,7 +34,6 @@ export default class GetQrcode extends Component {
             type="info"
           />
         </FormItem>
-
         <FormItem>
           <div style={{ textAlign: 'center' }}>
             <QRCode value={this.props.QrCodeValue} size={256} />
@@ -70,12 +57,7 @@ export default class GetQrcode extends Component {
 }
 
 GetQrcode.propTypes = {
-  form: PropTypes.object,
   formatMessage: PropTypes.func,
-  GetTransactionButtonClick: PropTypes.func,
-  GetTransactionButtonLoading: PropTypes.bool,
-  GetTransactionButtonDisabled: PropTypes.bool,
   QrCodeValue: PropTypes.string,
-  CopyTransactionButtonState: PropTypes.bool,
   handleCopyTransaction: PropTypes.func,
 };

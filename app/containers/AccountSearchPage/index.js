@@ -54,14 +54,6 @@ export class AccountSearchPage extends React.Component {
     };
   }
 
-  componentDidMount(){
-    //this.handleSearch('gi3temrsg4ge')
-  }
-
-  searchBlance = key => {
-    console.log(key);
-  };
-
   handleChange = key => {
     const eos = getEos(this.props.SelectedNetWork);
     eos
@@ -76,8 +68,7 @@ export class AccountSearchPage extends React.Component {
           symbolCode: key.key,
         });
       })
-      .catch(err => {
-        console.log('err:', err);
+      .catch(() => {
         message.error(this.state.formatMessage(messages.FunctionSearchNoData));
         this.setState({
           balance: 0,
@@ -93,7 +84,6 @@ export class AccountSearchPage extends React.Component {
     });
     const eos = getEos(this.props.SelectedNetWork);
 
-    let producer = '';
     let stake = 0;
     let cpuBack;
     let netWork;
@@ -106,13 +96,6 @@ export class AccountSearchPage extends React.Component {
           this.setState({ voteProxy: info.voter_info.proxy });
           if (info.voter_info.producers.length < 1) {
             this.setState({ voteNodeStatus: false });
-          } else {
-            this.setState({ voter_infoProducers: info.voter_info.producers });
-
-            //for (let i = 0; i < info.voter_info.producers.length; i += 1) {
-            //  producer = `${info.voter_info.producers[i]} , ${producer}`;
-            //}
-            //producer = producer.substring(0,producer.lastIndexOf(','))
           }
         }
         if (info.voter_info) {
@@ -157,7 +140,10 @@ export class AccountSearchPage extends React.Component {
           cpuMortgage: cpuBack,
           networkMortgage: netWork,
           memoryScale: Number(
-            ((Math.round(info.ram_usage) / Math.round(info.ram_quota)) * 100).toFixed(2)
+            (
+              (Math.round(info.ram_usage) / Math.round(info.ram_quota)) *
+              100
+            ).toFixed(2),
           ),
           cpuScale: Number(Number(cpuScale).toFixed(2)),
           networkScale: Number(Number(netScale).toFixed(2)),
@@ -165,11 +151,11 @@ export class AccountSearchPage extends React.Component {
           cpuStake: info.total_resources.cpu_weight,
           networkStake: info.total_resources.net_weight,
         });
-        if(info.permissions[0].required_auth.keys.length>0){
+        if (info.permissions[0].required_auth.keys.length > 0) {
           this.setState({
             activeAdd: info.permissions[0].required_auth.keys[0].key,
             ownerAdd: info.permissions[1].required_auth.keys[0].key,
-          })
+          });
         }
 
         eos
@@ -338,8 +324,10 @@ export class AccountSearchPage extends React.Component {
                     </span>
                     {this.state.voteNodeStatus ? (
                       <span>
-                        {FunctionSearchEOSVoteNode}：<br/>
-                        {this.state.voteNode.map((key, i)=>( <Tag key={i}>{key}</Tag>))}
+                        {FunctionSearchEOSVoteNode}：<br />
+                        {this.state.voteNode.map((item, index) => (
+                          <Tag key={index}>{item}</Tag>
+                        ))}
                       </span>
                     ) : (
                       <span />
@@ -397,7 +385,7 @@ export class AccountSearchPage extends React.Component {
                   </div>
                 </div>
                 <div style={{ padding: '2rem 0' }}>
-                  <Tabs defaultActiveKey="1" onChange={this.searchBlance}>
+                  <Tabs defaultActiveKey="1">
                     <TabPane tab={FunctionSearchAccountBalance} key="1">
                       <div style={{ padding: '1rem 0' }}>
                         <span>{FunctionSearchAccountSyblom}：</span>

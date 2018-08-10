@@ -5,14 +5,10 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Input, Alert , Modal } from 'antd';
+import { Form, Button, Input, Alert, Modal } from 'antd';
 import { BrowserQRCodeReader } from '../../utils/zxing.qrcodereader.min';
 import utilsMsg from '../../utils/messages';
 import { getEos } from '../../utils/utils';
-import { notification } from 'antd/lib/index';
-
-//import ecc from 'eosjs-ecc'
-//var Fcbuffer = require('fcbuffer');
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -32,12 +28,10 @@ export default class ScanQrcode extends Component {
    * */
   componentWillReceiveProps(nextProps) {
     if (nextProps.transaction !== this.props.transaction) {
-      console.log('nextProps====',nextProps.transaction)
       this.setState({
         SendTransaction: nextProps.transaction,
         OpenCameraButtonState: JSON.stringify(nextProps.transaction) !== '{}',
       });
-
     }
   }
 
@@ -68,31 +62,31 @@ export default class ScanQrcode extends Component {
     });
   };
 
-  getSendSignTransaction = (sig) => {
-    //const MainChainId =
+  getSendSignTransaction = sig => {
+    // const MainChainId =
     //  'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
-    //const TestChainId =
+    // const TestChainId =
     //  '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca';
-    //const chainId =
+    // const chainId =
     //  this.props.SelectedNetWork === 'main' ? MainChainId : TestChainId;
-    //const buf = Fcbuffer.toBuffer(
+    // const buf = Fcbuffer.toBuffer(
     //  this.props.eos.fc.structs.transaction,
     //  this.props.transaction.transaction,
-    //);
-    //const chainIdBuf =   Buffer.from(chainId,'hex');
-    //const UnSignedBuffer = Buffer.concat([
+    // );
+    // const chainIdBuf =   Buffer.from(chainId,'hex');
+    // const UnSignedBuffer = Buffer.concat([
     //  chainIdBuf,
     //  buf,
     //  Buffer.from(new Uint8Array(32)),
-    //]);
-    //const siglocal = ecc.sign(UnSignedBuffer, '5JYHNcQWyvNLMeFQW3tbbtBk1P1pFKHPfnwaAXEHnGauJHd1spP');
+    // ]);
+    // const siglocal = ecc.sign(UnSignedBuffer, '5JYHNcQWyvNLMeFQW3tbbtBk1P1pFKHPfnwaAXEHnGauJHd1spP');
 
     const output = {
       compression: 'none',
       transaction: this.state.SendTransaction.transaction,
       signatures: [sig],
-    }
-    this.state.SendTransaction= output;
+    };
+    this.state.SendTransaction = output;
     this.props.form.setFieldsValue({
       SendTransaction: JSON.stringify(this.state.SendTransaction),
     });
@@ -100,7 +94,6 @@ export default class ScanQrcode extends Component {
       SendTransaction: this.state.SendTransaction,
       SendTransactionButtonState: true,
     });
-
   };
 
   handleSendSignTransaction = () => {
@@ -111,9 +104,9 @@ export default class ScanQrcode extends Component {
       .then(res => {
         Modal.confirm({
           title: this.props.formatMessage(utilsMsg.ScanCodeSendSuccess),
-          content:  `${this.props.formatMessage(utilsMsg.ScanCodeSendSuccessMessage)}${
-            res.transaction_id
-            }`,
+          content: `${this.props.formatMessage(
+            utilsMsg.ScanCodeSendSuccessMessage,
+          )}${res.transaction_id}`,
           okText: this.props.formatMessage(utilsMsg.ScanCodeSendSure),
           cancelText: this.props.formatMessage(utilsMsg.ScanCodeSendCancel),
         });
@@ -121,7 +114,7 @@ export default class ScanQrcode extends Component {
       .catch(err => {
         Modal.confirm({
           title: this.props.formatMessage(utilsMsg.ScanCodeSendFailed),
-          content: err +'',
+          content: `${err}`,
           okText: this.props.formatMessage(utilsMsg.ScanCodeSendSure),
           cancelText: this.props.formatMessage(utilsMsg.ScanCodeSendCancel),
         });
