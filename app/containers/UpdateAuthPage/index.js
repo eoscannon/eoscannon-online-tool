@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input } from 'antd';
+import { Form, Icon, Input, Card, Col, Row  } from 'antd';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
@@ -136,80 +136,88 @@ export class UpdateAuthPage extends React.Component {
       messages.UpdateAuthOwnerKeyPlaceholder,
     );
     const AccountLabel = this.state.formatMessage(messages.AccountLabel);
+    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
+    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
     return (
       <LayoutContent>
-        <LayoutContentBox>
-          <FormComp>
-            <FormItem {...formItemLayout} label={AccountLabel} colon>
-              {getFieldDecorator('AccountName', {
-                rules: [
-                  {
-                    required: true,
-                    message: UpdateAuthAccountNamePlaceholder,
-                  },
-                ],
-              })(
-                <Input
-                  prefix={
+        <Row gutter={16}>
+          <Col span={12}>
+            <Card title={ProducersDealTranscation} bordered={false}>
+              <FormItem {...formItemLayout} label={AccountLabel} colon>
+                {getFieldDecorator('AccountName', {
+                  rules: [
+                    {
+                      required: true,
+                      message: UpdateAuthAccountNamePlaceholder,
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={
                     <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                   }
-                  placeholder={UpdateAuthAccountNamePlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label="ActiveKey" colon>
-              {getFieldDecorator('ActiveKey', {
-                rules: [
-                  {
-                    required: true,
-                    message: UpdateAuthActiveKeyPlaceholder,
-                  },
-                ],
-              })(
-                <Input
-                  prefix={
+                    placeholder={UpdateAuthAccountNamePlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label="ActiveKey" colon>
+                {getFieldDecorator('ActiveKey', {
+                  rules: [
+                    {
+                      required: true,
+                      message: UpdateAuthActiveKeyPlaceholder,
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={
                     <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
                   }
-                  placeholder={UpdateAuthActiveKeyPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label="OwnerKey" colon>
-              {getFieldDecorator('OwnerKey', {
-                rules: [
-                  {
-                    required: false,
-                    message: UpdateAuthOwnerKeyPlaceholder,
-                  },
-                ],
-              })(
-                <Input
-                  prefix={
+                    placeholder={UpdateAuthActiveKeyPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label="OwnerKey" colon>
+                {getFieldDecorator('OwnerKey', {
+                  rules: [
+                    {
+                      required: false,
+                      message: UpdateAuthOwnerKeyPlaceholder,
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={
                     <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
                   }
-                  placeholder={UpdateAuthOwnerKeyPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <DealGetQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
-              QrCodeValue={this.state.QrCodeValue}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-            <ScanQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-          </FormComp>
-        </LayoutContentBox>
+                    placeholder={UpdateAuthOwnerKeyPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <DealGetQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                GetTransactionButtonClick={this.handleGetTransaction}
+                GetTransactionButtonState={this.state.GetTransactionButtonState}
+                QrCodeValue={this.state.QrCodeValue}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title={ProducersSendTranscation} bordered={false}>
+              <ScanQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
+            </Card>
+          </Col>
+        </Row>
       </LayoutContent>
     );
   }

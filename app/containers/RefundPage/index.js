@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Alert } from 'antd';
+import { Form, Icon, Input, Alert, Card, Col, Row  } from 'antd';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -99,49 +99,56 @@ export class RefundPage extends React.Component {
       messages.OwnerPlaceholder,
     );
     const OwnerLabel = this.state.formatMessage(messages.OwnerLabel);
+    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
+    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
     return (
       <LayoutContent>
-        <LayoutContentBox>
-          <FormComp>
-            <FormItem>
-              <Alert
-                message={RefundAlertMessage}
-                description={RefundAlertDescription}
-                type="error"
-                closable
-              />
-            </FormItem>
-            <FormItem {...formItemLayout} label={OwnerLabel} colon>
-              {getFieldDecorator('AccountName', {
-                rules: [{ required: true, message: OwnerPlaceholder }],
-              })(
-                <Input
-                  prefix={
+        <Row gutter={16}>
+          <Col span={12}>
+            <Card title={ProducersDealTranscation} bordered={false}>
+              <FormItem>
+                <Alert
+                  message={RefundAlertMessage}
+                  description={RefundAlertDescription}
+                  type="error"
+                />
+              </FormItem>
+              <FormItem {...formItemLayout} label={OwnerLabel} colon>
+                {getFieldDecorator('AccountName', {
+                  rules: [{ required: true, message: OwnerPlaceholder }],
+                })(
+                  <Input
+                    prefix={
                     <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                   }
-                  placeholder={OwnerPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <DealGetQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
-              QrCodeValue={this.state.QrCodeValue}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-            <ScanQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-          </FormComp>
-        </LayoutContentBox>
+                    placeholder={OwnerPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <DealGetQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                GetTransactionButtonClick={this.handleGetTransaction}
+                GetTransactionButtonState={this.state.GetTransactionButtonState}
+                QrCodeValue={this.state.QrCodeValue}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title={ProducersSendTranscation} bordered={false}>
+              <ScanQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
+            </Card>
+          </Col>
+        </Row>
       </LayoutContent>
     );
   }

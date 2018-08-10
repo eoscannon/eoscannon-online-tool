@@ -102,7 +102,7 @@ export default class DealGetQrcode extends Component {
     );
     return (
       <div>
-        <FormItem>
+        <FormItem style={{ textAlign: 'center' }}>
           <Button
             type="primary"
             className="form-button"
@@ -136,7 +136,7 @@ export default class DealGetQrcode extends Component {
             <QRCode value={this.state.QrCodeValue} size={256} />
           </div>
         </FormItem>
-        <FormItem>
+        <FormItem style={{ textAlign: 'center' }}>
           <Button
             type="primary"
             className="form-button"

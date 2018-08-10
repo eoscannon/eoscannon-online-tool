@@ -175,5 +175,7 @@
   "Public ScanCodeSendSuccessMessage": "发送成功，已将相关操作广播，交易ID：",
   "Public ScanCodeSendFailed": "发送失败",
   "Public ScanCodeSendSure": "确认",
-  "Public ScanCodeSendCancel": "取消"
+  "Public ScanCodeSendCancel": "取消",
+  "Public ProducersDealTranscation": "生成交易",
+  "Public ProducersSendTranscation": "发送交易"
 }

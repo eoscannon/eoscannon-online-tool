@@ -4,11 +4,13 @@ import { Layout, Form } from 'antd';
 const { Content } = Layout;
 
 const LayoutContent = styled(Content)`
-  background: #fff;
+  background: #ececec;
+  padding: 16px;
 `;
 
 const LayoutContentBox = styled.div`
   background: #fff;
+  padding: 16px;
 `;
 
 const FormComp = styled(Form)`

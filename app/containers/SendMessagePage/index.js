@@ -91,52 +91,50 @@ export class SendMessagePage extends React.Component {
     const JsonInfoPlaceholder = formatMessage(utilsMsg.JsonInfoPlaceholder);
     const FieldAlertSendMessage = formatMessage(utilsMsg.FieldAlertSendMessage);
     return (
-      <LayoutContent>
-        <LayoutContentBox>
-          <styleComps.ConBox>
-            <FormComp>
-              <FormItem>
-                <Alert
-                  message={FieldAlertSendMessage}
-                  description={description}
-                  type="info"
-                />
-              </FormItem>
-              {this.state.VideoElement}
-              <FormItem style={{ textAlign: 'center' }}>
-                <Button
-                  type="primary"
-                  className="form-button"
-                  style={{ display: 'inline', marginRight: 5 }}
-                  onClick={this.handleOpenCamera}
-                >
-                  {OpenCameraButtonName}
-                </Button>
-              </FormItem>
-              <FormItem>
-                {getFieldDecorator('jsonInfo', {
-                  rules: [{ required: true, message: JsonInfoPlaceholder }],
-                })(<TextArea placeholder={JsonInfoPlaceholder} rows="6" />)}
-              </FormItem>
-              <FormItem style={{ textAlign: 'center' }}>
-                <Button
-                  type="primary"
-                  className="form-button"
-                  onClick={this.sendMessage}
-                  disabled={this.state.SendButtonDisable}
-                >
-                  {FieldAlertSendMessage}
-                </Button>
-              </FormItem>
-              <FormItem style={{ textAlign: 'left' }}>
-                {this.state.transaction_id
-                  ? `txid：${this.state.transaction_id}`
-                  : ''}
-              </FormItem>
-            </FormComp>
-          </styleComps.ConBox>
-        </LayoutContentBox>
-      </LayoutContent>
+      <LayoutContentBox>
+        <styleComps.ConBox>
+          <FormComp>
+            <FormItem>
+              <Alert
+                message={FieldAlertSendMessage}
+                description={description}
+                type="info"
+              />
+            </FormItem>
+            {this.state.VideoElement}
+            <FormItem style={{ textAlign: 'center' }}>
+              <Button
+                type="primary"
+                className="form-button"
+                style={{ display: 'inline', marginRight: 5 }}
+                onClick={this.handleOpenCamera}
+              >
+                {OpenCameraButtonName}
+              </Button>
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('jsonInfo', {
+                rules: [{ required: true, message: JsonInfoPlaceholder }],
+              })(<TextArea placeholder={JsonInfoPlaceholder} rows="6" />)}
+            </FormItem>
+            <FormItem style={{ textAlign: 'center' }}>
+              <Button
+                type="primary"
+                className="form-button"
+                onClick={this.sendMessage}
+                disabled={this.state.SendButtonDisable}
+              >
+                {FieldAlertSendMessage}
+              </Button>
+            </FormItem>
+            <FormItem style={{ textAlign: 'left' }}>
+              {this.state.transaction_id
+                ? `txid：${this.state.transaction_id}`
+                : ''}
+            </FormItem>
+          </FormComp>
+        </styleComps.ConBox>
+      </LayoutContentBox>
     );
   }
 }

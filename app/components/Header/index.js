@@ -322,7 +322,7 @@ class HeaderComp extends React.Component {
             </div>
           </Header>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+            <div style={{ background: '#fff', minHeight: 280 }}>
               {this.props.children}
             </div>
           </Content>

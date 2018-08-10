@@ -14,6 +14,7 @@ injectGlobal`
   }
   .ant-layout-content{
     background: #fff;
+    margin : 0!important;
   }
   body.fontLoaded {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -32,6 +33,7 @@ injectGlobal`
   }
   .ant-layout-footer{
     padding: 14px 50px!important;
+    background: #ececec!important;
   }
   .ant-layout{
     height: 100%;

@@ -7,7 +7,7 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Form, Icon, Input, Select } from 'antd';
+import { Form, Icon, Input, Select, Card, Col, Row } from 'antd';
 import eosioAbi from './abi';
 import eosIqAbi from './iqAbi';
 import adcAbi from './adcAbi';
@@ -170,154 +170,162 @@ export class TransferPage extends React.Component {
     const QuantityLabel = this.state.formatMessage(messages.QuantityLabel);
     const DigitLabel = this.state.formatMessage(messages.DigitLabel);
     const SymbolLabel = this.state.formatMessage(messages.SymbolLabel);
+    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
+    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
     return (
       <LayoutContent>
-        <LayoutContentBox>
-          <FormComp>
-            <FormItem {...formItemLayout} label={FromLabel} colon>
-              {getFieldDecorator('FromAccountName', {
-                rules: [
-                  {
-                    required: true,
-                    message: TransferFromAccountNamePlaceholder,
-                  },
-                ],
-              })(
-                <Input
-                  prefix={
+        <Row gutter={16}>
+          <Col span={12}>
+            <Card title={ProducersDealTranscation} bordered={false}>
+              <FormItem {...formItemLayout} label={FromLabel} colon>
+                {getFieldDecorator('FromAccountName', {
+                  rules: [
+                    {
+                      required: true,
+                      message: TransferFromAccountNamePlaceholder,
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={
                     <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                   }
-                  placeholder={TransferFromAccountNamePlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label={ToLabel} colon>
-              {getFieldDecorator('ToAccountName', {
-                rules: [
-                  { required: true, message: TransferToAccountNamePlaceholder },
-                ],
-              })(
-                <Input
-                  prefix={
+                    placeholder={TransferFromAccountNamePlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label={ToLabel} colon>
+                {getFieldDecorator('ToAccountName', {
+                  rules: [
+                    { required: true, message: TransferToAccountNamePlaceholder },
+                  ],
+                })(
+                  <Input
+                    prefix={
                     <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                   }
-                  placeholder={TransferToAccountNamePlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label={ContractLabel} colon>
-              {getFieldDecorator('transferContract', {
-                initialValue: 'eosio.token',
-                rules: [
-                  { required: true, message: TransferContractPlaceholder },
-                ],
-              })(
-                <Input
-                  prefix={
+                    placeholder={TransferToAccountNamePlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label={ContractLabel} colon>
+                {getFieldDecorator('transferContract', {
+                  initialValue: 'eosio.token',
+                  rules: [
+                    { required: true, message: TransferContractPlaceholder },
+                  ],
+                })(
+                  <Input
+                    prefix={
                     <Icon
                       type="pay-circle-o"
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder={TransferContractPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label={QuantityLabel} colon>
-              {getFieldDecorator('transferQuantity', {
-                rules: [
-                  { required: true, message: TransferQuantityPlaceholder },
-                ],
-              })(
-                <Input
-                  prefix={
+                    placeholder={TransferContractPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label={QuantityLabel} colon>
+                {getFieldDecorator('transferQuantity', {
+                  rules: [
+                    { required: true, message: TransferQuantityPlaceholder },
+                  ],
+                })(
+                  <Input
+                    prefix={
                     <Icon
                       type="pay-circle-o"
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder={TransferQuantityPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label={DigitLabel} colon>
-              {getFieldDecorator('transferDigit', {
-                rules: [
-                  {
-                    required: true,
-                    message: TransferDigitPlaceholder,
-                  },
-                ],
-                initialValue: '4',
-              })(
-                <Select
-                  style={{ width: '100%' }}
-                  placeholder={TransferDigitPlaceholder}
-                >
-                  <Option key="4" value="4">
-                    4
-                  </Option>
-                  <Option key="3" value="3">
-                    3
-                  </Option>
-                </Select>,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label={SymbolLabel} colon>
-              {getFieldDecorator('transferSymbol', {
-                initialValue: 'EOS',
-                rules: [{ required: true, message: TransferSymbolPlaceholder }],
-              })(
-                <Input
-                  prefix={
+                    placeholder={TransferQuantityPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label={DigitLabel} colon>
+                {getFieldDecorator('transferDigit', {
+                  rules: [
+                    {
+                      required: true,
+                      message: TransferDigitPlaceholder,
+                    },
+                  ],
+                  initialValue: '4',
+                })(
+                  <Select
+                    style={{ width: '100%' }}
+                    placeholder={TransferDigitPlaceholder}
+                  >
+                    <Option key="4" value="4">
+                      4
+                    </Option>
+                    <Option key="3" value="3">
+                      3
+                    </Option>
+                  </Select>,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label={SymbolLabel} colon>
+                {getFieldDecorator('transferSymbol', {
+                  initialValue: 'EOS',
+                  rules: [{ required: true, message: TransferSymbolPlaceholder }],
+                })(
+                  <Input
+                    prefix={
                     <Icon
                       type="pay-circle-o"
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder={TransferSymbolPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem
-              help={TransferMemoHelp}
-              {...formItemLayout}
-              label="Memo"
-              colon
-            >
-              {getFieldDecorator('transferMemo', {
-                rules: [{ required: false, message: TransferMemoPlaceholder }],
-              })(
-                <Input
-                  prefix={
+                    placeholder={TransferSymbolPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem
+                help={TransferMemoHelp}
+                {...formItemLayout}
+                label="Memo"
+                colon
+              >
+                {getFieldDecorator('transferMemo', {
+                  rules: [{ required: false, message: TransferMemoPlaceholder }],
+                })(
+                  <Input
+                    prefix={
                     <Icon
                       type="pay-circle-o"
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder={TransferMemoPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <DealGetQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonState={this.state.GetTransactionButtonState}
-              QrCodeValue={this.state.QrCodeValue}
-              transaction={this.state.transaction}
-              SelectedNetWork={this.props.SelectedNetWork}
-            />
-            <ScanQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-          </FormComp>
-        </LayoutContentBox>
+                    placeholder={TransferMemoPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <DealGetQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                GetTransactionButtonClick={this.handleGetTransaction}
+                GetTransactionButtonState={this.state.GetTransactionButtonState}
+                QrCodeValue={this.state.QrCodeValue}
+                transaction={this.state.transaction}
+                SelectedNetWork={this.props.SelectedNetWork}
+              />
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title={ProducersSendTranscation} bordered={false}>
+              <ScanQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
+            </Card>
+          </Col>
+        </Row>
       </LayoutContent>
     );
   }

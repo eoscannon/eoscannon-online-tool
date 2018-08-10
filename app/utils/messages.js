@@ -212,4 +212,12 @@ export default defineMessages({
     id: 'Public ScanCodeSendCancel',
     defaultMessage: '取消',
   },
+  ProducersDealTranscation: {
+    id: 'Public ProducersDealTranscation',
+    defaultMessage: '生成交易',
+  },
+  ProducersSendTranscation: {
+    id: 'Public ProducersSendTranscation',
+    defaultMessage: '发送交易',
+  },
 });

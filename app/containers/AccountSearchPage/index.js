@@ -34,7 +34,7 @@ export class AccountSearchPage extends React.Component {
       createTime: '',
       balance: 0,
       stake: 0,
-      voteNode: '',
+      voteNode: [],
       voteNodeStatus: true,
       memoryContent: '',
       cpuContent: '',
@@ -95,7 +95,10 @@ export class AccountSearchPage extends React.Component {
         if (info.voter_info) {
           this.setState({ voteProxy: info.voter_info.proxy });
           if (info.voter_info.producers.length < 1) {
-            this.setState({ voteNodeStatus: false });
+            this.setState({
+              voteNodeStatus: false ,
+              voteNode: info.voter_info.producers,
+            });
           }
         }
         if (info.voter_info) {
@@ -126,7 +129,6 @@ export class AccountSearchPage extends React.Component {
           info,
           createTime: info.created,
           stake,
-          voteNode: info.voter_info.producers,
           memoryContent: `${(info.ram_usage / 1024).toFixed(2)} Kib/${(
             info.ram_quota / 1024
           ).toFixed(2)} Kib`,
@@ -295,146 +297,144 @@ export class AccountSearchPage extends React.Component {
     ];
 
     return (
-      <LayoutContent>
-        <LayoutContentBox>
-          <styleComps.ConBox>
-            <FormComp>
-              <Search
-                placeholder={FunctionSearchAccountPlaceHolder}
-                enterButton={FunctionSearchButton}
-                size="large"
-                onSearch={this.handleSearch}
-              />
-            </FormComp>
-            {this.state.info ? (
-              <div>
-                <div className="content">
-                  <div className="firstContent">
+      <LayoutContentBox>
+        <styleComps.ConBox>
+          <FormComp>
+            <Search
+              placeholder={FunctionSearchAccountPlaceHolder}
+              enterButton={FunctionSearchButton}
+              size="large"
+              onSearch={this.handleSearch}
+            />
+          </FormComp>
+          {this.state.info ? (
+            <div>
+              <div className="content">
+                <div className="firstContent">
+                  <span>
+                    {FunctionSearchAccount}：{this.state.account}
+                  </span>
+                  <span>
+                    {FunctionSearchCreateTime}：{this.state.createTime}
+                  </span>
+                  <span>
+                    {FunctionSearchEOSBalance}：{this.state.balance}
+                  </span>
+                  <span>
+                    {FunctionSearchEOSStake}：{this.state.stake}
+                  </span>
+                  <span>
+                    {FunctionSearchEOSVoteProxy}：{this.state.voteProxy}
+                  </span>
+                  {this.state.voteNodeStatus ? (
                     <span>
-                      {FunctionSearchAccount}：{this.state.account}
+                      {FunctionSearchEOSVoteNode}：<br />
+                      {this.state.voteNode.map((item, index) => (
+                        <Tag key={index}>{item}</Tag>
+                      ))}
                     </span>
-                    <span>
-                      {FunctionSearchCreateTime}：{this.state.createTime}
-                    </span>
-                    <span>
-                      {FunctionSearchEOSBalance}：{this.state.balance}
-                    </span>
-                    <span>
-                      {FunctionSearchEOSStake}：{this.state.stake}
-                    </span>
-                    <span>
-                      {FunctionSearchEOSVoteProxy}：{this.state.voteProxy}
-                    </span>
-                    {this.state.voteNodeStatus ? (
-                      <span>
-                        {FunctionSearchEOSVoteNode}：<br />
-                        {this.state.voteNode.map((item, index) => (
-                          <Tag key={index}>{item}</Tag>
-                        ))}
-                      </span>
-                    ) : (
-                      <span />
-                    )}
-                  </div>
-                  <div className="secondContent">
-                    <div className="contentDetail">
-                      <Progress
-                        type="dashboard"
-                        percent={this.state.memoryScale}
-                      />
-                      <div className="contentDetailDesc">
-                        <span>{this.state.memoryContent}</span>
-                        <span className="contentDetailDescTitle">
-                          {FunctionSearchMemory}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="contentDetail">
-                      <Progress
-                        type="dashboard"
-                        percent={this.state.cpuScale}
-                      />
-                      <div className="contentDetailDesc">
-                        <span>{this.state.cpuContent}</span>
-                        <span className="contentDetailDescTitle">CPU</span>
-                        <span>
-                          {FunctionSearchCPUStake}：{this.state.cpuStake}
-                        </span>
-                        <span>
-                          {FunctionSearchCPURefund}：{this.state.cpuMortgage}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="contentDetail">
-                      <Progress
-                        type="dashboard"
-                        percent={this.state.networkScale}
-                      />
-                      <div className="contentDetailDesc">
-                        <span>{this.state.networkContent}</span>
-                        <span className="contentDetailDescTitle">
-                          {FunctionSearchNet}
-                        </span>
-                        <span>
-                          {FunctionSearchNetStake}：{this.state.networkStake}
-                        </span>
-                        <span>
-                          {FunctionSearchNetRefund}：{
-                            this.state.networkMortgage
-                          }
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                  ) : (
+                    <span />
+                  )}
                 </div>
-                <div style={{ padding: '2rem 0' }}>
-                  <Tabs defaultActiveKey="1">
-                    <TabPane tab={FunctionSearchAccountBalance} key="1">
-                      <div style={{ padding: '1rem 0' }}>
-                        <span>{FunctionSearchAccountSyblom}：</span>
-                        <Select
-                          labelInValue
-                          defaultValue={{ key: 'EOS' }}
-                          style={{ width: 120 }}
-                          onChange={this.handleChange}
-                        >
-                          <Option value="eosio.token">EOS</Option>
-                          <Option value="eoscancancan">CAN</Option>
-                          <Option value="everipediaiq">IQ</Option>
-                          <Option value="eosiomeetone">MEETONE</Option>
-                          <Option value="gyztomjugage">CETOS</Option>
-                          <Option value="eoxeoxeoxeox">EOX</Option>
-                          <Option value="ednazztokens">EDNA</Option>
-                          <Option value="horustokenio">HORUS</Option>
-                          <Option value="therealkarma">KARMA</Option>
-                          <Option value="challengedac">CHL</Option>
-                          <Option value="eosblackteam">BLACK</Option>
-                          <Option value="eosadddddddd">ADD</Option>
-                          <Option value="eosiochaince">CET</Option>
-                        </Select>
-                      </div>
-                      <div>
-                        <Table
-                          columns={columnsBlance}
-                          dataSource={dataBlance}
-                          pagination={false}
-                        />
-                      </div>
-                    </TabPane>
-                    <TabPane tab={FunctionSearchAccountPublic} key="2">
-                      <Table
-                        columns={columns}
-                        dataSource={data}
-                        pagination={false}
-                      />
-                    </TabPane>
-                  </Tabs>
+                <div className="secondContent">
+                  <div className="contentDetail">
+                    <Progress
+                      type="dashboard"
+                      percent={this.state.memoryScale}
+                    />
+                    <div className="contentDetailDesc">
+                      <span>{this.state.memoryContent}</span>
+                      <span className="contentDetailDescTitle">
+                        {FunctionSearchMemory}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="contentDetail">
+                    <Progress
+                      type="dashboard"
+                      percent={this.state.cpuScale}
+                    />
+                    <div className="contentDetailDesc">
+                      <span>{this.state.cpuContent}</span>
+                      <span className="contentDetailDescTitle">CPU</span>
+                      <span>
+                        {FunctionSearchCPUStake}：{this.state.cpuStake}
+                      </span>
+                      <span>
+                        {FunctionSearchCPURefund}：{this.state.cpuMortgage}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="contentDetail">
+                    <Progress
+                      type="dashboard"
+                      percent={this.state.networkScale}
+                    />
+                    <div className="contentDetailDesc">
+                      <span>{this.state.networkContent}</span>
+                      <span className="contentDetailDescTitle">
+                        {FunctionSearchNet}
+                      </span>
+                      <span>
+                        {FunctionSearchNetStake}：{this.state.networkStake}
+                      </span>
+                      <span>
+                        {FunctionSearchNetRefund}：{
+                          this.state.networkMortgage
+                        }
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            ) : null}
-          </styleComps.ConBox>
-        </LayoutContentBox>
-      </LayoutContent>
+              <div style={{ padding: '2rem 0' }}>
+                <Tabs defaultActiveKey="1">
+                  <TabPane tab={FunctionSearchAccountBalance} key="1">
+                    <div style={{ padding: '1rem 0' }}>
+                      <span>{FunctionSearchAccountSyblom}：</span>
+                      <Select
+                        labelInValue
+                        defaultValue={{ key: 'EOS' }}
+                        style={{ width: 120 }}
+                        onChange={this.handleChange}
+                      >
+                        <Option value="eosio.token">EOS</Option>
+                        <Option value="eoscancancan">CAN</Option>
+                        <Option value="everipediaiq">IQ</Option>
+                        <Option value="eosiomeetone">MEETONE</Option>
+                        <Option value="gyztomjugage">CETOS</Option>
+                        <Option value="eoxeoxeoxeox">EOX</Option>
+                        <Option value="ednazztokens">EDNA</Option>
+                        <Option value="horustokenio">HORUS</Option>
+                        <Option value="therealkarma">KARMA</Option>
+                        <Option value="challengedac">CHL</Option>
+                        <Option value="eosblackteam">BLACK</Option>
+                        <Option value="eosadddddddd">ADD</Option>
+                        <Option value="eosiochaince">CET</Option>
+                      </Select>
+                    </div>
+                    <div>
+                      <Table
+                        columns={columnsBlance}
+                        dataSource={dataBlance}
+                        pagination={false}
+                      />
+                    </div>
+                  </TabPane>
+                  <TabPane tab={FunctionSearchAccountPublic} key="2">
+                    <Table
+                      columns={columns}
+                      dataSource={data}
+                      pagination={false}
+                    />
+                  </TabPane>
+                </Tabs>
+              </div>
+            </div>
+          ) : null}
+        </styleComps.ConBox>
+      </LayoutContentBox>
     );
   }
 }
