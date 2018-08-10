@@ -102,21 +102,21 @@ export default class ScanQrcode extends Component {
     eos
       .pushTransaction(values)
       .then(res => {
-        Modal.confirm({
+        Modal.success({
           title: this.props.formatMessage(utilsMsg.ScanCodeSendSuccess),
           content: `${this.props.formatMessage(
             utilsMsg.ScanCodeSendSuccessMessage,
-          )}${res.transaction_id}`,
-          okText: this.props.formatMessage(utilsMsg.ScanCodeSendSure),
-          cancelText: this.props.formatMessage(utilsMsg.ScanCodeSendCancel),
-        });
+          )} ${res.transaction_id}`,
+          //maskClosable: true,
+          okText: '知道了'
+        })
       })
       .catch(err => {
-        Modal.confirm({
+        Modal.error({
           title: this.props.formatMessage(utilsMsg.ScanCodeSendFailed),
           content: `${err}`,
-          okText: this.props.formatMessage(utilsMsg.ScanCodeSendSure),
-          cancelText: this.props.formatMessage(utilsMsg.ScanCodeSendCancel),
+          //maskClosable: true,
+          okText: '知道了'
         });
       });
   };

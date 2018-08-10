@@ -130,11 +130,12 @@ export class ProxyPage extends React.Component {
                       message: ProxyPlaceholder,
                     },
                   ],
+                  initialValue: 'cannonproxy1',
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={ProxyPlaceholder}
                   />,
                 )}
