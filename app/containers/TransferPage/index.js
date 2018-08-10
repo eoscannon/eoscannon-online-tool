@@ -14,6 +14,7 @@ import adcAbi from './adcAbi';
 import {
   formItemLayout,
   getEos,
+  symbolList,
   openTransactionFailNotification,
 } from '../../utils/utils';
 import {
@@ -40,6 +41,9 @@ export class TransferPage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
+      contract: '',
+      symbol: '',
+      digit: 4
     };
   }
   /**
@@ -56,21 +60,26 @@ export class TransferPage extends React.Component {
     const {
       FromAccountName,
       ToAccountName,
-      transferContract,
       transferQuantity,
-      transferDigit,
       transferSymbol,
     } = values;
     this.setState({
       GetTransactionButtonState:
         !!FromAccountName &&
         !!ToAccountName &&
-        !!transferContract &&
         !!transferQuantity &&
-        !!transferDigit &&
         !!transferSymbol,
     });
   };
+
+  handleChange = (val) => {
+    console.log('val ===',val)
+    this.setState({
+      contract: val.key,
+      symbol: val.label,
+    })
+
+  }
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -83,21 +92,22 @@ export class TransferPage extends React.Component {
     const {
       FromAccountName,
       ToAccountName,
-      transferContract,
       transferQuantity,
-      transferDigit,
       transferMemo,
       transferSymbol,
     } = values;
-    if (transferContract !== 'eosio' && transferContract !== 'eosio.token') {
-      if (transferContract.toUpperCase() === 'EVERIPEDIAIQ') {
-        eos.fc.abiCache.abi(transferContract, eosIqAbi);
-      } else if (transferContract.toUpperCase() === 'CHALLENGEDAC') {
-        eos.fc.abiCache.abi(transferContract, adcAbi);
+    let transferDigit = 4
+    if (this.state.contract !== 'eosio' && this.state.contract !== 'eosio.token') {
+      if (this.state.contract.toUpperCase() === 'EVERIPEDIAIQ') {
+         transferDigit = 3
+        eos.fc.abiCache.abi(this.state.contract, eosIqAbi);
+      } else if (this.state.contract.toUpperCase() === 'CHALLENGEDAC') {
+        eos.fc.abiCache.abi(this.state.contract, adcAbi);
       } else {
-        eos.fc.abiCache.abi(transferContract, eosioAbi);
+        eos.fc.abiCache.abi(this.state.contract, eosioAbi);
       }
     }
+    let transferContract = this.state.contract
     eos
       .transaction(
         {
@@ -116,7 +126,7 @@ export class TransferPage extends React.Component {
                 to: ToAccountName,
                 quantity: `${Number(transferQuantity).toFixed(
                   Number(transferDigit),
-                )} ${transferSymbol.toUpperCase()}`,
+                )} ${transferSymbol.label.toUpperCase()}`,
                 memo: transferMemo || '',
               },
             },
@@ -208,24 +218,7 @@ export class TransferPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label={ContractLabel} colon>
-                {getFieldDecorator('transferContract', {
-                  initialValue: 'eosio.token',
-                  rules: [
-                    { required: true, message: TransferContractPlaceholder },
-                  ],
-                })(
-                  <Input
-                    prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
-                    placeholder={TransferContractPlaceholder}
-                  />,
-                )}
-              </FormItem>
+
               <FormItem {...formItemLayout} label={QuantityLabel} colon>
                 {getFieldDecorator('transferQuantity', {
                   rules: [
@@ -243,43 +236,25 @@ export class TransferPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label={DigitLabel} colon>
-                {getFieldDecorator('transferDigit', {
-                  rules: [
-                    {
-                      required: true,
-                      message: TransferDigitPlaceholder,
-                    },
-                  ],
-                  initialValue: '4',
-                })(
-                  <Select
-                    style={{ width: '100%' }}
-                    placeholder={TransferDigitPlaceholder}
-                  >
-                    <Option key="4" value="4">
-                      4
-                    </Option>
-                    <Option key="3" value="3">
-                      3
-                    </Option>
-                  </Select>,
-                )}
-              </FormItem>
+
               <FormItem {...formItemLayout} label={SymbolLabel} colon>
                 {getFieldDecorator('transferSymbol', {
-                  initialValue: 'EOS',
+                  initialValue: { key: 'EOS' },
                   rules: [{ required: true, message: TransferSymbolPlaceholder }],
+
                 })(
-                  <Input
-                    prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
-                    placeholder={TransferSymbolPlaceholder}
-                  />,
+                  <Select
+                    labelInValue
+                    style={{ width: '100%' }}
+                    onChange={this.handleChange}
+                    placeholder={TransferDigitPlaceholder}
+                  >
+                    {symbolList.map((item, i) => (
+                      <Option key={ i } value={item.contract}>
+                        {item.symbol}
+                      </Option>
+                    ))}
+                  </Select>,
                 )}
               </FormItem>
               <FormItem
