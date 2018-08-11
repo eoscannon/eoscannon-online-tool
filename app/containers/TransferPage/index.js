@@ -41,7 +41,7 @@ export class TransferPage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
-      contract: '',
+      contract: 'eosio.token',
       symbol: '',
       digit: 4
     };
@@ -96,6 +96,7 @@ export class TransferPage extends React.Component {
       transferMemo,
       transferSymbol,
     } = values;
+    console.log('transferSymbol====',transferSymbol)
     let transferDigit = 4
     if (this.state.contract !== 'eosio' && this.state.contract !== 'eosio.token') {
       if (this.state.contract.toUpperCase() === 'EVERIPEDIAIQ') {
@@ -239,7 +240,7 @@ export class TransferPage extends React.Component {
 
               <FormItem {...formItemLayout} label={SymbolLabel} colon>
                 {getFieldDecorator('transferSymbol', {
-                  initialValue: { key: 'EOS' },
+                  initialValue: { key: 'EOS',label: 'EOS' },
                   rules: [{ required: true, message: TransferSymbolPlaceholder }],
 
                 })(
