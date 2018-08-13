@@ -133,7 +133,7 @@ export default class DealGetQrcode extends Component {
         <FormItem>
           <div style={{ textAlign: 'center' }}>
             {this.state.QrCodeValue  === 'Welcome to use the EOS Cannon offline tool' || this.state.QrCodeValue  === '欢迎使用EOS佳能离线工具' ? null : (
-              <QRCode value={this.state.QrCodeValue} size={256} />
+              <QRCode value={this.state.QrCodeValue} size={256} style={{ transform : ' rotate(270deg)' }} />
             )}
           </div>
         </FormItem>
