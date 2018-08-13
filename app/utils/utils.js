@@ -89,19 +89,20 @@ const openNotification = formatMessage => {
 /**
  * 币种列表
  * */
-const symbolList =[
+const symbolList = [
   { symbol: 'EOS', contract: 'eosio', digit: 4 },
   { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
   { symbol: 'IQ', contract: 'everipediaiq', digit: 3 },
-  { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 3 },
-  { symbol: 'CETOS', contract: 'gyztomjugage', digit: 3 },
-  { symbol: 'EOX', contract: 'eoxeoxeoxeox', digit: 3 },
-  { symbol: 'EDNA', contract: 'ednazztokens', digit: 3 },
-  { symbol: 'HORUS', contract: 'horustokenio', digit: 3 },
-  { symbol: 'CHL', contract: 'challengedac', digit: 3 },
-  { symbol: 'BLACK', contract: 'eosblackteam', digit: 3 },
-  { symbol: 'ADD', contract: 'eosadddddddd', digit: 3 },
-  { symbol: 'CET', contract: 'eosiochaince', digit: 3 },
+  { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 4 },
+  { symbol: 'CETOS', contract: 'gyztomjugage', digit: 4 },
+  { symbol: 'EOX', contract: 'eoxeoxeoxeox', digit: 4 },
+  { symbol: 'EDNA', contract: 'ednazztokens', digit: 4 },
+  { symbol: 'HORUS', contract: 'horustokenio', digit: 4 },
+  { symbol: 'CHL', contract: 'challengedac', digit: 4 },
+  { symbol: 'BLACK', contract: 'eosblackteam', digit: 4 },
+  { symbol: 'ADD', contract: 'eosadddddddd', digit: 4 },
+  { symbol: 'CET', contract: 'eosiochaince', digit: 4 },
+  { symbol: 'WIZZ', contract: 'wizznetwork1', digit: 4 },
 ];
 
 export {

@@ -125,7 +125,7 @@ export default defineMessages({
   },
   QrCodeInitValue: {
     id: 'Public QrCodeInitValue',
-    defaultMessage: '欢迎使用EOS佳能离线工具',
+    defaultMessage: '',
   },
   FooterCompText: {
     id: 'Public FooterCompText',

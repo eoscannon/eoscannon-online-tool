@@ -125,8 +125,9 @@
   "TransferPage TransferDigitPlaceholder": "Please enter the Digit",
   "TransferPage TransferSymbolPlaceholder": "Please enter the Symbol",
   "TransferPage TransferMemoPlaceholder":
-    "Please enter the Memo，Exchange transfer must be filled in",
-  "TransferPage TransferMemoHelp": "notes：Exchange transfer must be filled in",
+    "Please enter the Memo，Required while depositing to exchange",
+  "TransferPage TransferMemoHelp":
+    "notes：Required while depositing to exchange",
   "TransferPage FromLabel": "From",
   "TransferPage ToLabel": "To",
   "TransferPage ContractLabel": "Contract",
@@ -199,13 +200,12 @@
   "Public FieldAlertSendMessage": "Send Transcation",
   "Public SendSuccessMessage":
     "Send the Transcation successfully, please check at the end of the page.",
-
   "Public SendSuccess": "Send success",
   "Public ScanCodeSendSuccessMessage":
     "Successful transmission, related operation broadcast, transaction ID:",
   "Public ScanCodeSendFailed": "Send failed",
   "Public ScanCodeSendSure": "OK",
   "Public ScanCodeSendCancel": "Cancel",
-  "Public ProducersDealTranscation": "Generating transaction",
+  "Public ProducersDealTranscation": "Generate transaction",
   "Public ProducersSendTranscation": "Send transaction"
 }

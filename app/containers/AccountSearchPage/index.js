@@ -413,6 +413,7 @@ export class AccountSearchPage extends React.Component {
                         <Option value="eosblackteam">BLACK</Option>
                         <Option value="eosadddddddd">ADD</Option>
                         <Option value="eosiochaince">CET</Option>
+                        <Option value="wizznetwork1">WIZZ</Option>
                       </Select>
                     </div>
                     <div>

@@ -98,6 +98,7 @@ export default class DealGetQrcode extends Component {
     const CopyTransactionButtonName = this.props.formatMessage(
       utilsMsg.CopyTransactionButtonName,
     );
+    //console.log('this.state.QrCodeValue===',this.state.QrCodeValue)
     return (
       <div>
         <FormItem style={{ textAlign: 'center' }}>
@@ -131,7 +132,9 @@ export default class DealGetQrcode extends Component {
         </FormItem>
         <FormItem>
           <div style={{ textAlign: 'center' }}>
-            <QRCode value={this.state.QrCodeValue} size={256} />
+            {this.state.QrCodeValue  === 'Welcome to use the EOS Cannon offline tool' || this.state.QrCodeValue  === '欢迎使用EOS佳能离线工具' ? null : (
+              <QRCode value={this.state.QrCodeValue} size={256} />
+            )}
           </div>
         </FormItem>
         <FormItem style={{ textAlign: 'center' }}>
