@@ -10,12 +10,14 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Layout, Select } from 'antd';
+import { Layout, Select, Popover } from 'antd';
+import styled from 'styled-components';
 
 import { Menu, Icon } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
 import FooterComp from '../../components/Footer';
 import eosCannonLogo from '../../images/eosLogo.png';
+import download from './offline_tool.png';
 
 import {
   makeSelectLocale,
@@ -81,6 +83,13 @@ class HeaderComp extends React.Component {
     });
   }
 
+  componentDidMount() {
+    //console.log('navigator.language ===', navigator.language )
+    if(navigator.language === 'en' ){
+      this.props.onDispatchChangeLanguageReducer('de');
+    }
+  }
+
   onOpenChange = openKeys => {
     const latestOpenKey = openKeys.find(
       key => this.state.openKeys.indexOf(key) === -1,
@@ -144,6 +153,11 @@ class HeaderComp extends React.Component {
     const AppDownLoad = formatMessage(utilsMsg.HeaderAppDownLoad);
     const OfflineAppDownLoad = formatMessage(utilsMsg.HeaderOfflineAppDownLoad);
     const sendTrade = formatMessage(utilsMsg.HeaderSendTrade);
+    const content = (
+      <div>
+        <img src={download} alt="" style={{ width: 100 }} />
+      </div>
+    );
     return (
       <Layout>
         <Helmet
@@ -258,13 +272,15 @@ class HeaderComp extends React.Component {
             </Menu.SubMenu>
 
             <Menu.Item key="5">
-              <a
-                href="https://tool.eoscannon.io:444/offline.1.1.0.apk"
-                target="_blank"
-              >
-                <Icon type="appstore-o" />
-                {OfflineAppDownLoad}
-              </a>
+              <Popover placement="right" content={content}>
+                <a
+                  href="https://tool.eoscannon.io:444/offline.1.1.0.apk"
+                  target="_blank"
+                >
+                  <Icon type="appstore-o" />
+                  {OfflineAppDownLoad}
+                </a>
+              </Popover>
             </Menu.Item>
 
             {/*
@@ -294,7 +310,7 @@ class HeaderComp extends React.Component {
              </a>
              </Menu.Item>
              </Menu.SubMenu>
-            */}
+             */}
           </Menu>
         </Sider>
         <Layout>
@@ -373,3 +389,7 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(HeaderCompIntl);
+
+const HeaderWrapper = styled(Header, Sider, Content)`
+
+`;

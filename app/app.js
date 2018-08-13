@@ -33,6 +33,7 @@ import UpdateAuthPage from 'containers/UpdateAuthPage/Loadable';
 import StakePage from 'containers/StakePage/Loadable';
 import TransferPage from 'containers/TransferPage/Loadable';
 import CreateAccountPage from 'containers/CreateAccountPage/Loadable';
+import DescribePage from 'containers/DescribePage/Loadable';
 import Header from 'components/Header';
 
 import configureStore from './configureStore';
@@ -77,6 +78,7 @@ const render = messages => {
               <Route path="/buyrambytes" component={BuyRamBytesPage} />
               <Route path="/createAccount" component={CreateAccountPage} />
               <Route path="/updateauth" component={UpdateAuthPage} />
+              <Route path="/dscribe" component={DescribePage} />
             </Header>
           </Switch>
         </Router>

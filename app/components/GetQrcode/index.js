@@ -36,7 +36,7 @@ export default class GetQrcode extends Component {
         </FormItem>
         <FormItem>
           <div style={{ textAlign: 'center' }}>
-            <QRCode value={this.props.QrCodeValue} size={256} />
+            <QRCode value={this.props.QrCodeValue} size={256} style={{ transform : 'rotate(270deg)'}}/>
           </div>
         </FormItem>
         <FormItem>
