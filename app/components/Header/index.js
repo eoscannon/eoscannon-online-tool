@@ -83,6 +83,13 @@ class HeaderComp extends React.Component {
     });
   }
 
+  componentDidMount() {
+    //console.log('navigator.language ===', navigator.language )
+    if(navigator.language === 'en' ){
+      this.props.onDispatchChangeLanguageReducer('de');
+    }
+  }
+
   onOpenChange = openKeys => {
     const latestOpenKey = openKeys.find(
       key => this.state.openKeys.indexOf(key) === -1,
