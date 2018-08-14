@@ -87,9 +87,7 @@ class HeaderComp extends React.Component {
   }
 
   componentDidMount() {
-    if (navigator.language === 'en') {
-      this.props.onDispatchChangeLanguageReducer('de');
-    }
+
   }
 
   onOpenChange = openKeys => {
@@ -106,6 +104,7 @@ class HeaderComp extends React.Component {
   };
 
   changeLanguage = () => {
+    console.log('this.props.locale changeLanguage===',this.props.locale)
     const localeLanguage = this.props.locale === 'en' ? 'de' : 'en';
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };

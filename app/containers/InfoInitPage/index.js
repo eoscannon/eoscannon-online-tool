@@ -44,7 +44,7 @@ export class CreateAccountPage extends React.Component {
       this.handleGetTransaction(nextProps.SelectedNetWork);
     }
   }
-  componentDidMount() {
+  componentWillMount() {
     this.handleGetTransaction(this.props.SelectedNetWork);
   }
   /**
