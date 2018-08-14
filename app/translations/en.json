@@ -26,7 +26,7 @@
   "Public JsonAlertDescription":
     "Please go to offline tool to get the signature transaction, open the tools, and scan the two-dimensional code.",
   "Public JsonInfoPlaceholder":
-    "Please enter related transaction message.",
+    "Please import the message after signature.",
   "Public OpenCameraButtonName": "Open Camera",
   "Public ScanQrcodeButtonName": "Scan Qrcode",
   "Public FieldAlertMessage":
@@ -150,9 +150,9 @@
   "UpdateAuthPage AccountLabel": "Account",
   "VotePage VoterPlaceholder": "Please enter the AccountName",
   "VotePage ProducersHelp":
-    "notes：Please select the voting node! It can be multiple selected, searchable, and input. Enter confirm!",
+    "notes：Please select the voting node! It can be multiple selected, searchable, and import. Enter confirm!",
   "VotePage ProducersPlaceholder":
-    "Please select the voting node! It can be multiple selected, searchable, and input. Enter confirm!",
+    "Please select the voting node! It can be multiple selected, searchable, and import. Enter confirm!",
   "VotePage VoterLabel": "Voter",
   "VotePage ProducersLabel": "Producers",
   "boilerplate.containers.LocaleToggle.de": "de",

@@ -20,7 +20,7 @@
   "Public JsonAlertMessage": "请输入相关交易报文",
   "Public JsonAlertDescription":
     "请前往离线版工具获取签名报文，打开工具，扫描二维码即可获得。",
-  "Public JsonInfoPlaceholder": "请输入联网获取的Block字段",
+  "Public JsonInfoPlaceholder": "请输入签名后的报文",
   "Public OpenCameraButtonName": "打开摄像头",
   "Public ScanQrcodeButtonName": "扫描二维码",
   "Public FieldAlertMessage": "请输入为生成签名报文所需的字段",
