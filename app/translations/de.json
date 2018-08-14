@@ -181,7 +181,8 @@
   "Public ProducersDealTranscation": "生成交易",
   "Public ProducersSendTranscation": "发送交易",
   "AirGrabPage AirGrabAlertMessage": "领取空投",
-  "AirGrabPage AirGrabAlertDescription": "领取空投",
+  "AirGrabPage AirGrabAlertDescription":
+    "领取空投，输入领取账户，点击领取空投生成未签名报文，使用离线工具签名后广播即可获得",
   "AirGrabPage AirGrabTableColumnsSymbolTitle": "代币",
   "AirGrabPage AirGrabTableColumnsActionTitle": "操作",
   "AirGrabPage AirGrabTableActionButtonName": "领取空投",

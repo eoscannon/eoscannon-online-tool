@@ -21,12 +21,10 @@
   "Public CopyTransactionSuccessNotificationMsg": "Copy success",
   "Public CopyTransactionSuccessNotificationDescription":
     "The signature transaction has been copied to the clipboard. Please go to offline tool signature.",
-  "Public JsonAlertMessage":
-    "Please enter related transaction message.",
+  "Public JsonAlertMessage": "Please enter related transaction message.",
   "Public JsonAlertDescription":
     "Please go to offline tool to get the signature transaction, open the tools, and scan the two-dimensional code.",
-  "Public JsonInfoPlaceholder":
-    "Please import the message after signature.",
+  "Public JsonInfoPlaceholder": "Please import the message after signature.",
   "Public OpenCameraButtonName": "Open Camera",
   "Public ScanQrcodeButtonName": "Scan Qrcode",
   "Public FieldAlertMessage":
@@ -211,7 +209,8 @@
   "Public ProducersDealTranscation": "Generate transaction",
   "Public ProducersSendTranscation": "Send transaction",
   "AirGrabPage AirGrabAlertMessage": "AirGrab",
-  "AirGrabPage AirGrabAlertDescription": "AirGrab",
+  "AirGrabPage AirGrabAlertDescription":
+    "AirGrab, Input account, Click airdrop button to generate unsigned transaction. Using OfflineTools signature, broadcast can be obtained.",
   "AirGrabPage AirGrabTableColumnsSymbolTitle": "Symbol",
   "AirGrabPage AirGrabTableColumnsActionTitle": "Grab",
   "AirGrabPage AirGrabTableActionButtonName": "AirGrab",
