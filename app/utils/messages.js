@@ -228,4 +228,12 @@ export default defineMessages({
     id: 'Public ProducersSendTranscation',
     defaultMessage: '发送交易',
   },
+  JsonAlertAttention: {
+    id: 'Public JsonAlertAttention',
+    defaultMessage: '注意',
+  },
+  JsonAlertAttentionArt: {
+    id: 'Public JsonAlertAttentionArt',
+    defaultMessage: '请输入正确的报文!',
+  },
 });

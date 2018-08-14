@@ -16,7 +16,7 @@
   "Public TransactionFailNotificationDescription": "请重新获取签名报文",
   "Public CopyTransactionSuccessNotificationMsg": "已复制",
   "Public CopyTransactionSuccessNotificationDescription":
-    "已将签名报文复制到剪贴板，请前往https://tool.eoscannon.io/联网将报文播报发送",
+    "已将签名报文复制到剪贴板，请前往离线工具签名",
   "Public JsonAlertMessage": "请输入相关交易报文",
   "Public JsonAlertDescription":
     "请前往离线版工具获取签名报文，打开工具，扫描二维码即可获得。",
@@ -139,8 +139,8 @@
   "Public HeaderMenuTestNet": "测试网",
   "Public ChangeTestNet": "变更测试网",
   "Public HeaderAppDownLoad": "APP下载",
-  "Public HeaderOnlineAppDownLoad": "离线IOS APP下载",
-  "Public HeaderOfflineAppDownLoad": "离线安卓APP下载",
+  "Public HeaderOnlineAppDownLoad": "离线IOS",
+  "Public HeaderOfflineAppDownLoad": "离线安卓",
   "TransferPage FunctionSearchButton": "查询",
   "TransferPage FunctionSearchAccount": "账户",
   "TransferPage FunctionSearchCreateTime": "创建时间",
@@ -169,7 +169,7 @@
   "InfoInitPage infoAlertDescription":
     "将下方信息粘贴至EOSCannon离线签名工具中",
   "InfoInitPage infoAlertCopy": "复制",
-  "Public FieldAlertSendMessage": "发送交易(旧)",
+  "Public FieldAlertSendMessage": "发送交易(旧版)",
   "Public FieldAlertSendMessageNew": "发送交易",
   "Public SendSuccessMessage": "发送报文成功,请在页尾查看",
 
@@ -184,5 +184,7 @@
   "AirGrabPage AirGrabAlertDescription": "领取空投",
   "AirGrabPage AirGrabTableColumnsSymbolTitle": "代币",
   "AirGrabPage AirGrabTableColumnsActionTitle": "操作",
-  "AirGrabPage AirGrabTableActionButtonName": "领取空投"
+  "AirGrabPage AirGrabTableActionButtonName": "领取空投",
+  "Public JsonAlertAttention": "注意",
+  "Public JsonAlertAttentionArt": "请输入正确的报文!"
 }
