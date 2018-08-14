@@ -139,7 +139,7 @@
   "Public ChangeTestNet": "变更测试网",
   "Public HeaderAppDownLoad": "APP下载",
   "Public HeaderOnlineAppDownLoad": "离线IOS APP下载",
-  "Public HeaderOfflineAppDownLoad": "离线安卓 APP下载",
+  "Public HeaderOfflineAppDownLoad": "离线安卓APP下载",
   "TransferPage FunctionSearchButton": "查询",
   "TransferPage FunctionSearchAccount": "账户",
   "TransferPage FunctionSearchCreateTime": "创建时间",
@@ -168,7 +168,8 @@
   "InfoInitPage infoAlertDescription":
     "将下方信息粘贴至EOSCannon离线签名工具中",
   "InfoInitPage infoAlertCopy": "复制",
-  "Public FieldAlertSendMessage": "发送交易",
+  "Public FieldAlertSendMessage": "发送交易(旧)",
+  "Public FieldAlertSendMessageNew": "发送交易",
   "Public SendSuccessMessage": "发送报文成功,请在页尾查看",
 
   "Public SendSuccess": "发送成功",

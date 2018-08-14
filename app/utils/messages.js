@@ -184,6 +184,10 @@ export default defineMessages({
     id: 'Public FieldAlertSendMessage',
     defaultMessage: '发送报文',
   },
+  FieldAlertSendMessageNew: {
+    id: 'Public FieldAlertSendMessageNew',
+    defaultMessage: '发送报文',
+  },
   HeaderSendTrade: {
     id: 'Public FieldAlertSendMessage',
     defaultMessage: '发送交易',

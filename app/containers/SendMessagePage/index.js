@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Alert, Button, Input, message } from 'antd';
+import { Form, Alert, Button, Input, message, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
@@ -68,8 +68,16 @@ export class SendMessagePage extends React.Component {
    * */
   sendMessage = () => {
     const eos = getEos(this.props.SelectedNetWork);
+    let data = this.props.form.getFieldsValue().jsonInfo
+    if(!data || data.indexOf("{") === -1 ){
+      Modal.warning({
+        title: '注意',
+        content: '请输入正确的报文！',
+      });
+      return false;
+    }
     eos
-      .pushTransaction(JSON.parse(this.props.form.getFieldsValue().jsonInfo))
+      .pushTransaction(JSON.parse(data))
       .then(res => {
         message.success(
           `${this.state.formatMessage(
@@ -89,14 +97,14 @@ export class SendMessagePage extends React.Component {
     const description = formatMessage(utilsMsg.JsonAlertDescription);
     const OpenCameraButtonName = formatMessage(utilsMsg.OpenCameraButtonName);
     const JsonInfoPlaceholder = formatMessage(utilsMsg.JsonInfoPlaceholder);
-    const FieldAlertSendMessage = formatMessage(utilsMsg.FieldAlertSendMessage);
+    const FieldAlertSendMessageNew = formatMessage(utilsMsg.FieldAlertSendMessageNew);
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
           <FormComp>
             <FormItem>
               <Alert
-                message={FieldAlertSendMessage}
+                message={FieldAlertSendMessageNew}
                 description={description}
                 type="info"
               />
@@ -122,9 +130,9 @@ export class SendMessagePage extends React.Component {
                 type="primary"
                 className="form-button"
                 onClick={this.sendMessage}
-                disabled={this.state.SendButtonDisable}
+                disabled={false}
               >
-                {FieldAlertSendMessage}
+                {FieldAlertSendMessageNew}
               </Button>
             </FormItem>
             <FormItem style={{ textAlign: 'left' }}>

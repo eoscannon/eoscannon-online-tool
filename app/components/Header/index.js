@@ -271,7 +271,7 @@ class HeaderComp extends React.Component {
               </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.Item key="5">
+            <Menu.Item key="15">
               <Popover placement="right" content={content}>
                 <a
                   href="https://tool.eoscannon.io:444/offline.1.1.0.apk"

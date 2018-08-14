@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Card, Col, Row  } from 'antd';
+import { Form, Icon, Input, Card, Col, Row, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
@@ -117,6 +117,10 @@ export class UpdateAuthPage extends React.Component {
         this.setState({
           eos,
           transaction: tr.transaction,
+        });
+        Modal.warning({
+          title: '',
+          content: '修改权限请在离线工具上使用owner私钥进行签名！',
         });
       })
       .catch(err => {

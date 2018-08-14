@@ -198,6 +198,7 @@
     "Paste the information below into the EOSCannon offline signature tool",
   "InfoInitPage infoAlertCopy": "Copy",
   "Public FieldAlertSendMessage": "Send Transcation",
+  "Public FieldAlertSendMessageNew": "Send Transcation(old)",
   "Public SendSuccessMessage":
     "Send the Transcation successfully, please check at the end of the page.",
   "Public SendSuccess": "Send success",

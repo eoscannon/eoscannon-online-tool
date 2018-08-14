@@ -98,7 +98,6 @@ export default class DealGetQrcode extends Component {
     const CopyTransactionButtonName = this.props.formatMessage(
       utilsMsg.CopyTransactionButtonName,
     );
-    //console.log('this.state.QrCodeValue===',this.state.QrCodeValue)
     return (
       <div>
         <FormItem style={{ textAlign: 'center' }}>
