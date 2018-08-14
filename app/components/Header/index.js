@@ -367,7 +367,7 @@ class HeaderComp extends React.Component {
               </div>
             </div>
           </Header>
-          <Content style={{ overflow: 'initial' }}>
+          <Content>
             <div style={{ background: '#fff', minHeight: 280 }}>
               {this.props.children}
             </div>
