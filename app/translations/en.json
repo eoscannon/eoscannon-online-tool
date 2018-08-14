@@ -217,5 +217,27 @@
   "Public ProducersDealTransaction": "Generate transaction",
   "Public ProducersSendTransaction": "Send transaction",
   "Public JsonAlertAttention": "Attention",
-  "Public JsonAlertAttentionArt": "Please input the correct message.!"
+  "Public JsonAlertAttentionArt": "Please input the correct message.!",
+  "DescribePage describePageFirst":
+    "EOS Cannon Tool, always keep the private key and sign transaction on offline phone, is the safest way to use private key. It can be used as a cold wallet. We recommend you use other wallets to manage small account, and use Cannon Tool to manage large account.",
+  "DescribePage describePageSecond":
+    "Cannon Tool has two parts: offline APP + online PC",
+  "DescribePage describePageThird":
+    "Offline APP can be downloaded by clicking the left menu.",
+  "DescribePage describePageFourth":
+    "All transactions can divide into three steps:",
+  "DescribePage describePagefivth":
+    "All transactions can divide into three steps:",
+  "DescribePage describePagefivthBold": "Generate unsigned ",
+  "DescribePage describePagefivthBoldLast": "transaction",
+  "DescribePage describePageSix": "Offline APP ",
+  "DescribePage describePageSixLast": "sign transaction",
+  "DescribePage describePageSenven": "Send ",
+  "DescribePage describePageSenvenBold": "signed ",
+  "DescribePage describePageSenvenlast": "transaction",
+  "DescribePage describePageEight":
+    "Tips: For most actions, active private key is needed to sign transaction;",
+  "DescribePage describePageNinth":
+    "For changing keys, please use owner private key to sign transaction.",
+  "DescribePage describePageZero": "Cannon Tools Introduction"
 }

@@ -5,7 +5,7 @@ const { Content } = Layout;
 
 const LayoutContent = styled(Content)`
   background: #ececec;
-  padding: 0 16px;
+  padding: 16px;
   .ant-btn-sm {
     padding: 0 14px;
     font-size: 10px;

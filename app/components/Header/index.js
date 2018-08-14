@@ -160,6 +160,7 @@ class HeaderComp extends React.Component {
       <div>
         <div>
           <img src={downloadAndroid} alt="" style={{ width: 120 }} />
+          <div style={{ textAlign: 'center' }}>Android</div>
         </div>
       </div>
     );
@@ -167,6 +168,7 @@ class HeaderComp extends React.Component {
       <div>
         <div>
           <img src={downloadIos} alt="" style={{ width: 120 }} />
+          <div style={{ textAlign: 'center' }}>IOS</div>
         </div>
       </div>
     );
@@ -367,7 +369,7 @@ class HeaderComp extends React.Component {
               </div>
             </div>
           </Header>
-          <Content>
+          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div style={{ background: '#fff', minHeight: 280 }}>
               {this.props.children}
             </div>

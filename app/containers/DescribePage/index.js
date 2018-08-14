@@ -70,52 +70,83 @@ export class CreateAccountPage extends React.Component {
   };
 
   render() {
-    //const DescriblePageDescmessage = this.state.formatMessage(
-    //  messages.DescriblePageDescmessage,
-    //);
-    const infoAlertDescription = this.state.formatMessage(
-      messages.infoAlertDescription,
+    const describePageZero = this.state.formatMessage(
+      messages.describePageZero,
     );
-    const infoAlertCopy = this.state.formatMessage(messages.infoAlertCopy);
+    const describePageFirst = this.state.formatMessage(
+      messages.describePageFirst,
+    );
+    const describePageSecond = this.state.formatMessage(
+      messages.describePageSecond,
+    );
+    const describePageThird = this.state.formatMessage(
+      messages.describePageThird,
+    );
+    const describePageFourth = this.state.formatMessage(
+      messages.describePageFourth,
+    );
+    const describePagefivth = this.state.formatMessage(
+      messages.describePagefivth,
+    );
+    const describePagefivthBold = this.state.formatMessage(
+      messages.describePagefivthBold,
+    );
+    const describePagefivthBoldLast = this.state.formatMessage(
+      messages.describePagefivthBoldLast,
+    );
+    const describePageSix = this.state.formatMessage(messages.describePageSix);
+    const describePageSixLast = this.state.formatMessage(
+      messages.describePageSixLast,
+    );
+    const describePageSenven = this.state.formatMessage(
+      messages.describePageSenven,
+    );
+    const describePageSenvenBold = this.state.formatMessage(
+      messages.describePageSenvenBold,
+    );
+    const describePageSenvenlast = this.state.formatMessage(
+      messages.describePageSenvenlast,
+    );
+    const describePageEight = this.state.formatMessage(
+      messages.describePageEight,
+    );
+    const describePageNinth = this.state.formatMessage(
+      messages.describePageNinth,
+    );
 
     return (
       <LayoutContentBox>
         <FormComp>
           <FormItem>
-            <Card title="佳能工具介绍" bordered={false}>
-              <p>佳能工具，私钥和签名都在离线手机上，也就是私钥完全不接触网络，是最安全的使用私钥的方式。我们可以把它当做冷钱包使用。建议小额账户用钱包管理，大额账户用佳能工具管理。</p>
-              <p>佳能工具分为两部分：离线APP + 在线发送</p>
-              <p>离线APP可从左边菜单栏点击下载。</p>
+            <Card title={describePageZero} bordered={false}>
+              <p>{describePageFirst}</p>
+              <p>{describePageSecond}</p>
+              <p>{describePageThird}</p>
               <p>
-                所有交易分为三个步骤：<br/>
-                1.生成<b style={{color: '#000'}}>未签名</b>的交易 <br/>
-                2.<b style={{color: '#000'}}>离线</b>APP签名 <br/>
-                3.在线发送<b style={{color: '#000'}}>已签名</b>的交易 <br/>
+                {describePageFourth}
+                <br />
+                1.{describePagefivth}
+                <b style={{ color: '#000' }}>{describePagefivthBold}</b>
+                {describePagefivthBoldLast}
+                <br />
+                2.<b style={{ color: '#000' }}>{describePageSix}</b>
+                {describePageSixLast} <br />
+                3.{describePageSenven}
+                <b style={{ color: '#000' }}>{describePageSenvenBold}</b>
+                {describePageSenvenlast} <br />
               </p>
               <div>
-                <img src={teacherPic} alt=""  style={{width:'100%'}}/>
+                <img src={teacherPic} alt="" style={{ width: '100%' }} />
               </div>
-              <br/>
-              <br/>
-              <br/>
+              <br />
+              <br />
+              <br />
               <p>
-                注意：绝大部分操作，使用active私钥签名即可； <br/>
-               &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改权限的公私钥操作，请使用owner私钥签名。
-              </p>
-              <p>
-                EOS Cannon Tool, always keep the private key and sign transaction on offline phone, is the safest way to use private key. It can be used as a cold wallet. We recommend you use other wallets to manage small account, and use Cannon Tool to manage large account.
-              </p>
-              <p>Cannon Tool has two parts: offline APP + online PC</p>
-              <p>Offline APP can be downloaded by clicking the left menu.</p>
-              <p>
-                All transactions can divide into three steps: <br/>
-                1.	Generate <b style={{color: '#000'}}>unsigned </b>transaction <br/>
-                2.	<b style={{color: '#000'}}>Offline APP </b> sign transaction <br/>
-                3.	Send <b style={{color: '#000'}}>signed</b> transaction <br/>
-              </p>
-              <p>
-                Tips: For most actions,<b style={{color: '#000'}}>active</b> private key is needed to sign transaction; <br/>
-                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For changing keys, please use <b style={{color: '#000'}}>owner</b> private key to sign transaction.
+                {describePageEight} <br />
+                &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                  describePageNinth
+                }
               </p>
             </Card>
           </FormItem>
