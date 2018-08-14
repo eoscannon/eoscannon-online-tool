@@ -181,7 +181,12 @@ class HeaderComp extends React.Component {
             content={formatMessage(utilsMsg.AppHelmetTitle)}
           />
         </Helmet>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width='240'>
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={this.state.collapsed}
+          width="240"
+        >
           <div
             className="logo"
             style={{
@@ -308,9 +313,7 @@ class HeaderComp extends React.Component {
             >
               <Menu.Item key="setting:1">
                 <Popover placement="right" content={contentIos}>
-                  <a href="https://www.pgyer.com/Guv3"
-                    target="_blank"
-                  >
+                  <a href="https://www.pgyer.com/Guv3" target="_blank">
                     {OnlineAppDownLoad}
                   </a>
                 </Popover>
@@ -364,8 +367,8 @@ class HeaderComp extends React.Component {
               </div>
             </div>
           </Header>
-          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+          <Content style={{ overflow: 'initial' }}>
+            <div style={{ background: '#fff', minHeight: 280 }}>
               {this.props.children}
             </div>
           </Content>
