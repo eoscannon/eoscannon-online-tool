@@ -22,7 +22,6 @@ import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
-import { airgrabs } from './remoteConfig';
 
 const FormItem = Form.Item;
 
@@ -45,56 +44,53 @@ export class AirgrabPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.onValuesChange(nextProps);
   }
-  componentWillMount() {
-    airgrabs.forEach((item, index) => {
-      this.state.tableData.push({
-        key: index,
-        symbol: item.symbol,
-        url: item.url,
-        method: item.method,
-        account: item.account,
+  componentDidMount() {
+    fetch(
+      'https://raw.githubusercontent.com/eoscannon/eoscannon-online-tool/revision/app/containers/AirgrabPage/airgrabs.json',
+    )
+      .then(res => res.text())
+      .then(res => {
+        this.setState({
+          tableData: JSON.parse(res) || [],
+          tableColumns: [
+            {
+              title: this.state.formatMessage(
+                messages.AirGrabTableColumnsSymbolTitle,
+              ),
+              dataIndex: 'symbol',
+              key: 'symbol',
+              align: 'center',
+              width: '60%',
+              render: (text, record) => (
+                <a href={record.url} target="_blank">
+                  {text}
+                </a>
+              ),
+            },
+            {
+              title: this.state.formatMessage(
+                messages.AirGrabTableColumnsActionTitle,
+              ),
+              key: 'action',
+              align: 'center',
+              render: (text, record) => (
+                <span>
+                  <Button
+                    disabled={!this.state.GetTransactionButtonState}
+                    type="primary"
+                    size="small"
+                    onClick={() => this.handleGetTransaction(record)}
+                  >
+                    {this.state.formatMessage(
+                      messages.AirGrabTableActionButtonName,
+                    )}
+                  </Button>
+                </span>
+              ),
+            },
+          ],
+        });
       });
-    });
-    this.setState({
-      tableData: this.state.tableData,
-      tableColumns: [
-        {
-          title: this.state.formatMessage(
-            messages.AirGrabTableColumnsSymbolTitle,
-          ),
-          dataIndex: 'symbol',
-          key: 'symbol',
-          align: 'center',
-          width: '60%',
-          render: (text, record) => (
-            <a href={record.url} target="_blank">
-              {text}
-            </a>
-          ),
-        },
-        {
-          title: this.state.formatMessage(
-            messages.AirGrabTableColumnsActionTitle,
-          ),
-          key: 'action',
-          align: 'center',
-          render: (text, record) => (
-            <span>
-              <Button
-                disabled={!this.state.GetTransactionButtonState}
-                type="primary"
-                size="small"
-                onClick={() => this.handleGetTransaction(record)}
-              >
-                {this.state.formatMessage(
-                  messages.AirGrabTableActionButtonName,
-                )}
-              </Button>
-            </span>
-          ),
-        },
-      ],
-    });
   }
   /**
    * 输入框内容变化时，改变按钮状态
