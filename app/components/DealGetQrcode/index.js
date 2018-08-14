@@ -9,7 +9,6 @@ import { Form, Button, Input, Alert } from 'antd';
 import QRCode from 'qrcode.react';
 import copy from 'copy-to-clipboard';
 import Fcbuffer from 'fcbuffer';
-import ecc from 'eosjs-ecc';
 
 import utilsMsg from '../../utils/messages';
 import {
@@ -100,16 +99,18 @@ export default class DealGetQrcode extends Component {
     );
     return (
       <div>
-        <FormItem style={{ textAlign: 'center' }}>
-          <Button
-            type="primary"
-            className="form-button"
-            onClick={this.props.GetTransactionButtonClick}
-            disabled={!this.props.GetTransactionButtonState}
-          >
-            {GetTransactionButtonName}
-          </Button>
-        </FormItem>
+        {!this.props.isHiddenGetTransactionButton && (
+          <FormItem style={{ textAlign: 'center' }}>
+            <Button
+              type="primary"
+              className="form-button"
+              onClick={this.props.GetTransactionButtonClick}
+              disabled={!this.props.GetTransactionButtonState}
+            >
+              {GetTransactionButtonName}
+            </Button>
+          </FormItem>
+        )}
         <FormItem>
           <Alert
             message={CopyAlertMessage}
@@ -131,8 +132,14 @@ export default class DealGetQrcode extends Component {
         </FormItem>
         <FormItem>
           <div style={{ textAlign: 'center' }}>
-            {this.state.QrCodeValue  === 'Welcome to use the EOS Cannon offline tool' || this.state.QrCodeValue  === '欢迎使用EOS佳能离线工具' ? null : (
-              <QRCode value={this.state.QrCodeValue} size={256} style={{ transform : ' rotate(270deg)' }} />
+            {this.state.QrCodeValue ===
+              'Welcome to use the EOS Cannon offline tool' ||
+            this.state.QrCodeValue === '欢迎使用EOS佳能离线工具' ? null : (
+              <QRCode
+                value={this.state.QrCodeValue}
+                size={256}
+                style={{ transform: ' rotate(270deg)' }}
+              />
             )}
           </div>
         </FormItem>
@@ -160,4 +167,5 @@ DealGetQrcode.propTypes = {
   transaction: PropTypes.object,
   QrCodeValue: PropTypes.string,
   SelectedNetWork: PropTypes.string,
+  isHiddenGetTransactionButton: PropTypes.bool,
 };

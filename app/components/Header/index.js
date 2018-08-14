@@ -11,7 +11,6 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Select, Popover } from 'antd';
-import styled from 'styled-components';
 
 import { Menu, Icon } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
@@ -72,6 +71,9 @@ class HeaderComp extends React.Component {
       case '/stake':
         defaultSelectedKeys = '1';
         break;
+      case '/airgrab':
+        defaultSelectedKeys = '11';
+        break;
       case '/sendMessage':
         defaultSelectedKeys = '0';
         break;
@@ -84,8 +86,7 @@ class HeaderComp extends React.Component {
   }
 
   componentDidMount() {
-    //console.log('navigator.language ===', navigator.language )
-    if(navigator.language === 'en' ){
+    if (navigator.language === 'en') {
       this.props.onDispatchChangeLanguageReducer('de');
     }
   }
@@ -147,10 +148,9 @@ class HeaderComp extends React.Component {
     const proxy = formatMessage(utilsMsg.HeaderMenuProxy);
     const updateAuth = formatMessage(utilsMsg.HeaderMenuUpdateAuth);
     const refund = formatMessage(utilsMsg.HeaderMenuRefund);
+    const airgrab = formatMessage(utilsMsg.HeaderMenuAirgrab);
     const mainNet = formatMessage(utilsMsg.HeaderMenuOffical);
     const testNet = formatMessage(utilsMsg.HeaderMenuTestNet);
-    const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
-    const AppDownLoad = formatMessage(utilsMsg.HeaderAppDownLoad);
     const OfflineAppDownLoad = formatMessage(utilsMsg.HeaderOfflineAppDownLoad);
     const sendTrade = formatMessage(utilsMsg.HeaderSendTrade);
     const content = (
@@ -246,6 +246,11 @@ class HeaderComp extends React.Component {
               <Menu.Item key="4">
                 <Link href="/refund" to="/refund">
                   {refund}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="11">
+                <Link href="/airgrab" to="/airgrab">
+                  {airgrab}
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
@@ -389,7 +394,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(HeaderCompIntl);
-
-const HeaderWrapper = styled(Header, Sider, Content)`
-
-`;

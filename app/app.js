@@ -22,6 +22,7 @@ import LanguageProvider from 'containers/LanguageProvider';
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 
 // Import root app
+import AirgrabPage from 'containers/AirgrabPage/Loadable';
 import InfoInitPage from 'containers/InfoInitPage/Loadable';
 import SendMessagePage from 'containers/SendMessagePage/Loadable';
 import ProxyPage from 'containers/ProxyPage/Loadable';
@@ -79,6 +80,7 @@ const render = messages => {
               <Route path="/createAccount" component={CreateAccountPage} />
               <Route path="/updateauth" component={UpdateAuthPage} />
               <Route path="/dscribe" component={DescribePage} />
+              <Route path="/airgrab" component={AirgrabPage} />
             </Header>
           </Switch>
         </Router>

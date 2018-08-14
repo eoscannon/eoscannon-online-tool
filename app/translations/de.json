@@ -8,6 +8,7 @@
   "Public HeaderMenuProxy": "代理投票",
   "Public HeaderMenuUpdateAuth": "私钥管理",
   "Public HeaderMenuRefund": "Refund",
+  "Public HeaderMenuAirgrab": "空投",
   "Public TransactionSuccessNotificationMsg": "生成签名报文成功",
   "Public TransactionSuccessNotificationDescription":
     "请点击下面的复制签名报文按钮或者扫描二维码获取签名报文",
@@ -178,5 +179,10 @@
   "Public ScanCodeSendSure": "确认",
   "Public ScanCodeSendCancel": "取消",
   "Public ProducersDealTranscation": "生成交易",
-  "Public ProducersSendTranscation": "发送交易"
+  "Public ProducersSendTranscation": "发送交易",
+  "AirGrabPage AirGrabAlertMessage": "领取空投",
+  "AirGrabPage AirGrabAlertDescription": "领取空投",
+  "AirGrabPage AirGrabTableColumnsSymbolTitle": "代币",
+  "AirGrabPage AirGrabTableColumnsActionTitle": "操作",
+  "AirGrabPage AirGrabTableActionButtonName": "领取空投"
 }

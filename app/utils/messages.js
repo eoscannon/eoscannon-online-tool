@@ -38,6 +38,10 @@ export default defineMessages({
     id: 'Public HeaderMenuRefund',
     defaultMessage: '手动Refund',
   },
+  HeaderMenuAirgrab: {
+    id: 'Public HeaderMenuAirgrab',
+    defaultMessage: '空投',
+  },
   TransactionSuccessNotificationMsg: {
     id: 'Public TransactionSuccessNotificationMsg',
     defaultMessage: '生成签名报文成功',

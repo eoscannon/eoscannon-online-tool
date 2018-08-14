@@ -9,6 +9,7 @@
   "Public HeaderMenuProxy": "Proxy",
   "Public HeaderMenuUpdateAuth": "PK management",
   "Public HeaderMenuRefund": "Refund",
+  "Public HeaderMenuAirgrab": "Airgrab",
   "Public TransactionSuccessNotificationMsg":
     "The success of generating a signature transaction",
   "Public TransactionSuccessNotificationDescription":
@@ -208,5 +209,10 @@
   "Public ScanCodeSendSure": "OK",
   "Public ScanCodeSendCancel": "Cancel",
   "Public ProducersDealTranscation": "Generate transaction",
-  "Public ProducersSendTranscation": "Send transaction"
+  "Public ProducersSendTranscation": "Send transaction",
+  "AirGrabPage AirGrabAlertMessage": "AirGrab",
+  "AirGrabPage AirGrabAlertDescription": "AirGrab",
+  "AirGrabPage AirGrabTableColumnsSymbolTitle": "Symbol",
+  "AirGrabPage AirGrabTableColumnsActionTitle": "Grab",
+  "AirGrabPage AirGrabTableActionButtonName": "AirGrab"
 }
