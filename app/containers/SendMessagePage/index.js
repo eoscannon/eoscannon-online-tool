@@ -69,10 +69,10 @@ export class SendMessagePage extends React.Component {
   sendMessage = () => {
     const eos = getEos(this.props.SelectedNetWork);
     let data = this.props.form.getFieldsValue().jsonInfo
-    if(!data || data.indexOf("{") === -1 ){
+    if( !data || data.indexOf("{") === -1 ){
       Modal.warning({
-        title: '注意',
-        content: '请输入正确的报文！',
+        title: this.props.intl.formatMessage(utilsMsg.JsonAlertAttention),
+        content: this.props.intl.formatMessage(utilsMsg.JsonAlertAttentionArt),
       });
       return false;
     }
