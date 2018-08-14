@@ -4,11 +4,12 @@
   "Public HeaderMenuCreateAccount": "CreateAccount",
   "Public HeaderMenuDelegate": "Delegate",
   "Public HeaderMenuTransfer": "Transfer",
-  "Public HeaderMenuBuyRamBytes": "Buy/Sell Ram",
+  "Public HeaderMenuBuyRamBytes": "Buy/Sell RAM",
   "Public HeaderMenuVote": "Vote",
   "Public HeaderMenuProxy": "Proxy",
   "Public HeaderMenuUpdateAuth": "PK management",
   "Public HeaderMenuRefund": "Refund",
+  "Public HeaderMenuAirgrab": "Airgrab",
   "Public TransactionSuccessNotificationMsg":
     "The success of generating a signature transaction",
   "Public TransactionSuccessNotificationDescription":
@@ -19,13 +20,13 @@
     "Please reobtain the signature transaction",
   "Public CopyTransactionSuccessNotificationMsg": "Copy success",
   "Public CopyTransactionSuccessNotificationDescription":
-    "The signature transaction has been copied to the clipboard. Please go to the https://tool.eoscannon.io/ network to send the transaction to the clipboard.",
+    "The signature transaction has been copied to the clipboard. Please go to offline tool signature.",
   "Public JsonAlertMessage":
-    "Please enter the Block field obtained by the network",
+    "Please enter related transaction message.",
   "Public JsonAlertDescription":
-    "Please go to the https://tool.eoscannon.io/ network to get the Block field，Networking to open web pages, scanning qrcode code can be obtained.。",
+    "Please go to offline tool to get the signature transaction, open the tools, and scan the two-dimensional code.",
   "Public JsonInfoPlaceholder":
-    "Please enter the Block field obtained by the network",
+    "Please import the message after signature.",
   "Public OpenCameraButtonName": "Open Camera",
   "Public ScanQrcodeButtonName": "Scan Qrcode",
   "Public FieldAlertMessage":
@@ -57,12 +58,12 @@
   "BuyRamBytesPage ReceiverAccountNamePlaceholder":
     "Please input the account name used to accept the purchased memory. Not to be filled, the default is the payment account",
   "BuyRamBytesPage BytesQuantityPlaceholder":
-    "Please enter the number of purchased memory bytes",
+    "Please enter the amount of purchased memory bytes",
   "CreateAccountPage CreatorLabel": "Creator",
   "CreateAccountPage NameLabel": "Account",
   "CreateAccountPage BytesLabel": "Bytes",
   "CreateAccountPage CreatorAccountNamePlaceholder":
-    "Please input the creator account name",
+    "Please import the creator's account name",
   "CreateAccountPage NewAccountNamePlaceholder":
     "Please enter the account name you want to create，The account name should be 12 characters, only the lowercase letter A-Z and the number 1-5.",
   "CreateAccountPage NewAccountNameHelp":
@@ -72,13 +73,13 @@
   "CreateAccountPage ActiveKeyPlaceholder":
     "Please enter the activeKey of the new account",
   "CreateAccountPage BytesHelp":
-    "notes：The number of memory Bytes is at least 4KB，The minimum value is: 4096",
+    "notes：The amount of memory Bytes is at least 4KB，The minimum value is: 4096",
   "CreateAccountPage BytesPlaceholder":
-    "Please enter the number of Bytes for the new account",
+    "Please enter the amount of Bytes for the new account",
   "CreateAccountPage StakeNetQuantityPlaceholder":
-    "Please enter the number of Net delegate to the new account",
+    "Please enter the amount of Net delegate to the new account",
   "CreateAccountPage StakeCpuQuantityPlaceholder":
-    "Please enter the number of Cpu delegate to the new account",
+    "Please enter the amount of Cpu delegate to the new account",
   "ProxyPage VoterPlaceholder": "Please enter your account name",
   "ProxyPage ProxyHelp":
     "notes：Please enter the account name of the proxy vote. Cancel the agent for the empty!",
@@ -106,20 +107,20 @@
   "StakePage UnDelegateReceiverAccountNameHelp":
     "notes：If the account name is inconsistent with the account name used for UnDelegate, it is a UnDelegate to others.",
   "StakePage DelegateStakeNetQuantityPlaceholder":
-    "Please enter the number of Net for the Delegate",
+    "Please enter the amount of Net for the Delegate",
   "StakePage UnDelegateStakeNetQuantityPlaceholder":
-    "Please enter the number of Net for the UnDelegate",
+    "Please enter the amount of Net for the UnDelegate",
   "StakePage DelegateStakeCpuQuantityPlaceholder":
-    "Please enter the number of Cpu for the Delegate",
+    "Please enter the amount of Cpu for the Delegate",
   "StakePage UnDelegateStakeCpuQuantityPlaceholder":
-    "Please enter the number of Cpu for the UnDelegate",
+    "Please enter the amount of Cpu for the UnDelegate",
   "StakePage FromLabel": "From",
   "StakePage ReceiverLabel": "Receiver",
   "StakePage NetQuantityLabel": "Net",
   "StakePage CpuQuantityLabel": "Cpu",
   "TransferPage TransferFromAccountNamePlaceholder":
-    "Please enter the form number",
-  "TransferPage TransferToAccountNamePlaceholder": "Please enter the to number",
+    "Please enter the form amount",
+  "TransferPage TransferToAccountNamePlaceholder": "Please enter the to amount",
   "TransferPage TransferContractPlaceholder": "Please enter the Contract",
   "TransferPage TransferQuantityPlaceholder": "Please enter the Quantity",
   "TransferPage TransferDigitPlaceholder": "Please enter the Digit",
@@ -149,9 +150,9 @@
   "UpdateAuthPage AccountLabel": "Account",
   "VotePage VoterPlaceholder": "Please enter the AccountName",
   "VotePage ProducersHelp":
-    "notes：Please select the voting node! It can be multiple selected, searchable, and input. Enter confirm!",
+    "notes：Please select the voting node! It can be multiple selected, searchable, and import. Enter confirm!",
   "VotePage ProducersPlaceholder":
-    "Please select the voting node! It can be multiple selected, searchable, and input. Enter confirm!",
+    "Please select the voting node! It can be multiple selected, searchable, and import. Enter confirm!",
   "VotePage VoterLabel": "Voter",
   "VotePage ProducersLabel": "Producers",
   "boilerplate.containers.LocaleToggle.de": "de",
@@ -159,16 +160,16 @@
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
 
   "Public HeaderMenuInfoInit": "Intial Block Info",
-  "Public HeaderMenuSendMessage": "Send Transcation",
+  "Public HeaderMenuSendMessage": "Send Transaction",
   "Public HeaderMenuAccountSearch": "Search",
   "Public HeaderMenuStake": "Stake",
-  "Public HeaderMenuTradeManage": "Transcation Management",
+  "Public HeaderMenuTradeManage": "Transaction Processing",
   "Public HeaderMenuOffical": "Main",
   "Public HeaderMenuTestNet": "Test",
-  "Public HeaderAppDownLoad": "APP DownLoad",
-  "Public HeaderOnlineAppDownLoad": "Online APP DownLoad",
-  "Public HeaderOfflineAppDownLoad": "Offline APP DownLoad",
-  "TransferPage FunctionSearchButton": "search",
+  "Public HeaderAppDownLoad": "APP Download",
+  "Public HeaderOnlineAppDownLoad": "Offline IOS",
+  "Public HeaderOfflineAppDownLoad": "Offline Android",
+  "TransferPage FunctionSearchButton": "query",
   "TransferPage FunctionSearchAccount": "Account",
   "TransferPage FunctionSearchCreateTime": "Create time",
   "TransferPage FunctionSearchEOSBalance": "EOS Balance",
@@ -197,9 +198,10 @@
   "InfoInitPage infoAlertDescription":
     "Paste the information below into the EOSCannon offline signature tool",
   "InfoInitPage infoAlertCopy": "Copy",
-  "Public FieldAlertSendMessage": "Send Transcation",
+  "Public FieldAlertSendMessage": "Send Transaction(old)",
+  "Public FieldAlertSendMessageNew": "Send Transaction",
   "Public SendSuccessMessage":
-    "Send the Transcation successfully, please check at the end of the page.",
+    "Send the Transaction successfully, please check at the end of the page.",
   "Public SendSuccess": "Send success",
   "Public ScanCodeSendSuccessMessage":
     "Successful transmission, related operation broadcast, transaction ID:",
@@ -207,5 +209,14 @@
   "Public ScanCodeSendSure": "OK",
   "Public ScanCodeSendCancel": "Cancel",
   "Public ProducersDealTranscation": "Generate transaction",
-  "Public ProducersSendTranscation": "Send transaction"
+  "Public ProducersSendTranscation": "Send transaction",
+  "AirGrabPage AirGrabAlertMessage": "AirGrab",
+  "AirGrabPage AirGrabAlertDescription": "AirGrab",
+  "AirGrabPage AirGrabTableColumnsSymbolTitle": "Symbol",
+  "AirGrabPage AirGrabTableColumnsActionTitle": "Grab",
+  "AirGrabPage AirGrabTableActionButtonName": "AirGrab",
+  "Public ProducersDealTransaction": "Generate transaction",
+  "Public ProducersSendTransaction": "Send transaction",
+  "Public JsonAlertAttention": "Attention",
+  "Public JsonAlertAttentionArt": "Please input the correct message.!"
 }

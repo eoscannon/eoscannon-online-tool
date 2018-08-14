@@ -1,0 +1,30 @@
+[
+  {
+    "key": "1",
+    "symbol": "POOR",
+    "account": "poormantoken",
+    "method": "signup",
+    "url": "https://eostoolkit.io/airgrab"
+  },
+  {
+    "key": "2",
+    "symbol": "RIDL",
+    "account": "ridlridlcoin",
+    "method": "claim",
+    "url": "https://ridl.get-scatter.com"
+  },
+  {
+    "key": "3",
+    "symbol": "TRYBE",
+    "account": "trybenetwork",
+    "method": "claim",
+    "url": "https://trybe.one"
+  },
+  {
+    "key": "4",
+    "symbol": "WIZZ",
+    "account": "wizznetwork1",
+    "method": "signup",
+    "url": "https://wizz.network"
+  }
+]

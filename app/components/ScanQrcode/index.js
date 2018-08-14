@@ -131,8 +131,8 @@ export default class ScanQrcode extends Component {
     const JsonInfoPlaceholder = this.props.formatMessage(
       utilsMsg.JsonInfoPlaceholder,
     );
-    const FieldAlertSendMessage = this.props.formatMessage(
-      utilsMsg.FieldAlertSendMessage,
+    const FieldAlertSendMessageNew = this.props.formatMessage(
+      utilsMsg.FieldAlertSendMessageNew,
     );
     return (
       <div>
@@ -162,7 +162,7 @@ export default class ScanQrcode extends Component {
             onClick={this.handleSendSignTransaction}
             disabled={!this.state.SendTransactionButtonState}
           >
-            {FieldAlertSendMessage}
+            {FieldAlertSendMessageNew}
           </Button>
         </FormItem>
       </div>

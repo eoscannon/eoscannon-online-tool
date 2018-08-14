@@ -38,6 +38,10 @@ export default defineMessages({
     id: 'Public HeaderMenuRefund',
     defaultMessage: '手动Refund',
   },
+  HeaderMenuAirgrab: {
+    id: 'Public HeaderMenuAirgrab',
+    defaultMessage: '空投',
+  },
   TransactionSuccessNotificationMsg: {
     id: 'Public TransactionSuccessNotificationMsg',
     defaultMessage: '生成签名报文成功',
@@ -184,6 +188,10 @@ export default defineMessages({
     id: 'Public FieldAlertSendMessage',
     defaultMessage: '发送报文',
   },
+  FieldAlertSendMessageNew: {
+    id: 'Public FieldAlertSendMessageNew',
+    defaultMessage: '发送报文',
+  },
   HeaderSendTrade: {
     id: 'Public FieldAlertSendMessage',
     defaultMessage: '发送交易',
@@ -219,5 +227,13 @@ export default defineMessages({
   ProducersSendTranscation: {
     id: 'Public ProducersSendTranscation',
     defaultMessage: '发送交易',
+  },
+  JsonAlertAttention: {
+    id: 'Public JsonAlertAttention',
+    defaultMessage: '注意',
+  },
+  JsonAlertAttentionArt: {
+    id: 'Public JsonAlertAttentionArt',
+    defaultMessage: '请输入正确的报文!',
   },
 });

@@ -11,13 +11,13 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Select, Popover } from 'antd';
-import styled from 'styled-components';
 
 import { Menu, Icon } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
 import FooterComp from '../../components/Footer';
 import eosCannonLogo from '../../images/eosLogo.png';
-import download from './offline_tool.png';
+import downloadAndroid from './offline_tool.png';
+import downloadIos from './ios.png';
 
 import {
   makeSelectLocale,
@@ -72,6 +72,9 @@ class HeaderComp extends React.Component {
       case '/stake':
         defaultSelectedKeys = '1';
         break;
+      case '/airgrab':
+        defaultSelectedKeys = '11';
+        break;
       case '/sendMessage':
         defaultSelectedKeys = '0';
         break;
@@ -84,8 +87,7 @@ class HeaderComp extends React.Component {
   }
 
   componentDidMount() {
-    //console.log('navigator.language ===', navigator.language )
-    if(navigator.language === 'en' ){
+    if (navigator.language === 'en') {
       this.props.onDispatchChangeLanguageReducer('de');
     }
   }
@@ -147,15 +149,25 @@ class HeaderComp extends React.Component {
     const proxy = formatMessage(utilsMsg.HeaderMenuProxy);
     const updateAuth = formatMessage(utilsMsg.HeaderMenuUpdateAuth);
     const refund = formatMessage(utilsMsg.HeaderMenuRefund);
+    const airgrab = formatMessage(utilsMsg.HeaderMenuAirgrab);
     const mainNet = formatMessage(utilsMsg.HeaderMenuOffical);
     const testNet = formatMessage(utilsMsg.HeaderMenuTestNet);
-    const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
-    const AppDownLoad = formatMessage(utilsMsg.HeaderAppDownLoad);
     const OfflineAppDownLoad = formatMessage(utilsMsg.HeaderOfflineAppDownLoad);
+    const AppDownLoad = formatMessage(utilsMsg.HeaderAppDownLoad);
+    const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
     const sendTrade = formatMessage(utilsMsg.HeaderSendTrade);
-    const content = (
+    const contentAndriod = (
       <div>
-        <img src={download} alt="" style={{ width: 100 }} />
+        <div>
+          <img src={downloadAndroid} alt="" style={{ width: 120 }} />
+        </div>
+      </div>
+    );
+    const contentIos = (
+      <div>
+        <div>
+          <img src={downloadIos} alt="" style={{ width: 120 }} />
+        </div>
       </div>
     );
     return (
@@ -169,7 +181,7 @@ class HeaderComp extends React.Component {
             content={formatMessage(utilsMsg.AppHelmetTitle)}
           />
         </Helmet>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
+        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width='240'>
           <div
             className="logo"
             style={{
@@ -248,6 +260,11 @@ class HeaderComp extends React.Component {
                   {refund}
                 </Link>
               </Menu.Item>
+              <Menu.Item key="11">
+                <Link href="/airgrab" to="/airgrab">
+                  {airgrab}
+                </Link>
+              </Menu.Item>
             </Menu.SubMenu>
 
             <Menu.SubMenu
@@ -271,46 +288,44 @@ class HeaderComp extends React.Component {
               </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.Item key="5">
-              <Popover placement="right" content={content}>
-                <a
-                  href="https://tool.eoscannon.io:444/offline.1.1.0.apk"
-                  target="_blank"
-                >
-                  <Icon type="appstore-o" />
-                  {OfflineAppDownLoad}
-                </a>
-              </Popover>
-            </Menu.Item>
-
             {/*
-             <Menu.SubMenu
-             key="5"
-             title={
-             <span>
+             <Menu.Item key="16">
              <Icon type="appstore-o" />
-             <span> {AppDownLoad}</span>
-             </span>
-             }
-             >
-             <Menu.Item key="setting:1">
-             <a
-             href="https://github.com/eoscannon/EosCannon-Offline-Tools-App/releases"
-             target="_blank"
-             >
-             {OnlineAppDownLoad}
-             </a>
+             <Popover placement="right" content={content}>
+             {AppDownLoad}
+             </Popover>
              </Menu.Item>
-             <Menu.Item key="setting:2">
-             <a
-             href="https://github.com/eoscannon/EosCannon-Online-Tools-App/releases"
-             target="_blank"
-             >
-             {OfflineAppDownLoad}
-             </a>
-             </Menu.Item>
-             </Menu.SubMenu>
-             */}
+            */}
+
+            <Menu.SubMenu
+              key="15"
+              title={
+                <span>
+                  <Icon type="appstore-o" />
+                  <span> {AppDownLoad}</span>
+                </span>
+              }
+            >
+              <Menu.Item key="setting:1">
+                <Popover placement="right" content={contentIos}>
+                  <a href="https://www.pgyer.com/Guv3"
+                    target="_blank"
+                  >
+                    {OnlineAppDownLoad}
+                  </a>
+                </Popover>
+              </Menu.Item>
+              <Menu.Item key="setting:2">
+                <Popover placement="right" content={contentAndriod}>
+                  <a
+                    href="https://tool.eoscannon.io:444/offline.1.1.0.apk"
+                    target="_blank"
+                  >
+                    {OfflineAppDownLoad}
+                  </a>
+                </Popover>
+              </Menu.Item>
+            </Menu.SubMenu>
           </Menu>
         </Sider>
         <Layout>
@@ -389,7 +404,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(HeaderCompIntl);
-
-const HeaderWrapper = styled(Header, Sider, Content)`
-
-`;
