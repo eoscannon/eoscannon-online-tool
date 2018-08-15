@@ -15,6 +15,7 @@ import copy from 'copy-to-clipboard';
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import { getEosInfoDetail, openNotification } from '../../utils/utils';
 import messages from './messages';
+import teacherPic from './../../images/cannonTeach.jpg';
 
 import {
   LayoutContentBox,
@@ -69,22 +70,84 @@ export class CreateAccountPage extends React.Component {
   };
 
   render() {
-    //const DescriblePageDescmessage = this.state.formatMessage(
-    //  messages.DescriblePageDescmessage,
-    //);
-    const infoAlertDescription = this.state.formatMessage(
-      messages.infoAlertDescription,
+    const describePageZero = this.state.formatMessage(
+      messages.describePageZero,
     );
-    const infoAlertCopy = this.state.formatMessage(messages.infoAlertCopy);
+    const describePageFirst = this.state.formatMessage(
+      messages.describePageFirst,
+    );
+    const describePageSecond = this.state.formatMessage(
+      messages.describePageSecond,
+    );
+    const describePageThird = this.state.formatMessage(
+      messages.describePageThird,
+    );
+    const describePageFourth = this.state.formatMessage(
+      messages.describePageFourth,
+    );
+    const describePagefivth = this.state.formatMessage(
+      messages.describePagefivth,
+    );
+    const describePagefivthBold = this.state.formatMessage(
+      messages.describePagefivthBold,
+    );
+    const describePagefivthBoldLast = this.state.formatMessage(
+      messages.describePagefivthBoldLast,
+    );
+    const describePageSix = this.state.formatMessage(messages.describePageSix);
+    const describePageSixLast = this.state.formatMessage(
+      messages.describePageSixLast,
+    );
+    const describePageSenven = this.state.formatMessage(
+      messages.describePageSenven,
+    );
+    const describePageSenvenBold = this.state.formatMessage(
+      messages.describePageSenvenBold,
+    );
+    const describePageSenvenlast = this.state.formatMessage(
+      messages.describePageSenvenlast,
+    );
+    const describePageEight = this.state.formatMessage(
+      messages.describePageEight,
+    );
+    const describePageNinth = this.state.formatMessage(
+      messages.describePageNinth,
+    );
 
     return (
       <LayoutContentBox>
         <FormComp>
           <FormItem>
-            <Card title="使用说明" bordered={false} style={{ width: 300 }}>
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
+            <Card title={describePageZero} bordered={false}>
+              <p>{describePageFirst}</p>
+              <p>{describePageSecond}</p>
+              <p>{describePageThird}</p>
+              <p>
+                {describePageFourth}
+                <br />
+                1.{describePagefivth}
+                <b style={{ color: '#000' }}>{describePagefivthBold}</b>
+                {describePagefivthBoldLast}
+                <br />
+                2.<b style={{ color: '#000' }}>{describePageSix}</b>
+                {describePageSixLast} <br />
+                3.{describePageSenven}
+                <b style={{ color: '#000' }}>{describePageSenvenBold}</b>
+                {describePageSenvenlast} <br />
+              </p>
+              <div>
+                <img src={teacherPic} alt="" style={{ width: '100%' }} />
+              </div>
+              <br />
+              <br />
+              <br />
+              <p>
+                {describePageEight} <br />
+                &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                  describePageNinth
+                }
+              </p>
             </Card>
           </FormItem>
         </FormComp>

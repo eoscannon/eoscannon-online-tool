@@ -87,9 +87,7 @@ class HeaderComp extends React.Component {
   }
 
   componentDidMount() {
-    if (navigator.language === 'en') {
-      this.props.onDispatchChangeLanguageReducer('de');
-    }
+
   }
 
   onOpenChange = openKeys => {
@@ -106,6 +104,7 @@ class HeaderComp extends React.Component {
   };
 
   changeLanguage = () => {
+    console.log('this.props.locale changeLanguage===',this.props.locale)
     const localeLanguage = this.props.locale === 'en' ? 'de' : 'en';
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };
@@ -160,6 +159,7 @@ class HeaderComp extends React.Component {
       <div>
         <div>
           <img src={downloadAndroid} alt="" style={{ width: 120 }} />
+          <div style={{ textAlign: 'center' }}>Android</div>
         </div>
       </div>
     );
@@ -167,6 +167,7 @@ class HeaderComp extends React.Component {
       <div>
         <div>
           <img src={downloadIos} alt="" style={{ width: 120 }} />
+          <div style={{ textAlign: 'center' }}>IOS</div>
         </div>
       </div>
     );
@@ -181,7 +182,12 @@ class HeaderComp extends React.Component {
             content={formatMessage(utilsMsg.AppHelmetTitle)}
           />
         </Helmet>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed} width='240'>
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={this.state.collapsed}
+          width="240"
+        >
           <div
             className="logo"
             style={{
@@ -308,9 +314,7 @@ class HeaderComp extends React.Component {
             >
               <Menu.Item key="setting:1">
                 <Popover placement="right" content={contentIos}>
-                  <a href="https://www.pgyer.com/Guv3"
-                    target="_blank"
-                  >
+                  <a href="https://www.pgyer.com/Guv3" target="_blank">
                     {OnlineAppDownLoad}
                   </a>
                 </Popover>
@@ -365,7 +369,7 @@ class HeaderComp extends React.Component {
             </div>
           </Header>
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+            <div style={{ background: '#fff', minHeight: 280 }}>
               {this.props.children}
             </div>
           </Content>

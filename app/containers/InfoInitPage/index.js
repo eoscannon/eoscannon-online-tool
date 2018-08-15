@@ -44,7 +44,7 @@ export class CreateAccountPage extends React.Component {
       this.handleGetTransaction(nextProps.SelectedNetWork);
     }
   }
-  componentDidMount() {
+  componentWillMount() {
     this.handleGetTransaction(this.props.SelectedNetWork);
   }
   /**
@@ -79,7 +79,7 @@ export class CreateAccountPage extends React.Component {
 
     return (
       <LayoutContentBox>
-        <FormComp>
+        <FormComp style={{maxWidth: '500px'}}>
           {/* {this.props.SelectedNetWork === 'test' ? ( */}
           {/* <FormItem style={{ textAlign: 'center', margin: '0 5% 5%' }}> */}
           {/* <Search */}

@@ -16,11 +16,10 @@ const LayoutContent = styled(Content)`
 
 const LayoutContentBox = styled.div`
   background: #fff;
-  padding: 16px;
+  padding: 0 16px;
 `;
 
 const FormComp = styled(Form)`
-  max-width: 526px;
   &.ant-form {
     margin: 0 auto;
   }

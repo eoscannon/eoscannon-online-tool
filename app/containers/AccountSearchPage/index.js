@@ -83,7 +83,6 @@ export class AccountSearchPage extends React.Component {
       account: value,
     });
     const eos = getEos(this.props.SelectedNetWork);
-
     let stake = 0;
     let cpuBack;
     let netWork;
@@ -300,7 +299,7 @@ export class AccountSearchPage extends React.Component {
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
-          <FormComp>
+          <FormComp style={{ width: '50%' }}>
             <Search
               placeholder={FunctionSearchAccountPlaceHolder}
               enterButton={FunctionSearchButton}

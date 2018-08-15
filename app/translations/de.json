@@ -181,10 +181,30 @@
   "Public ProducersDealTranscation": "生成交易",
   "Public ProducersSendTranscation": "发送交易",
   "AirGrabPage AirGrabAlertMessage": "领取空投",
-  "AirGrabPage AirGrabAlertDescription": "领取空投",
+  "AirGrabPage AirGrabAlertDescription":
+    "领取空投，输入领取账户，点击领取空投生成未签名报文，使用离线工具签名后广播即可获得",
   "AirGrabPage AirGrabTableColumnsSymbolTitle": "代币",
   "AirGrabPage AirGrabTableColumnsActionTitle": "操作",
   "AirGrabPage AirGrabTableActionButtonName": "领取空投",
   "Public JsonAlertAttention": "注意",
-  "Public JsonAlertAttentionArt": "请输入正确的报文!"
+  "Public JsonAlertAttentionArt": "请输入正确的报文!",
+
+  "DescribePage describePageFirst":
+    "佳能工具，私钥和签名都在离线手机上，也就是私钥完全不接触网络，是最安全的使用私钥的方式。我们可以把它当做冷钱包使用。建议小额账户用钱包管理，大额账户用佳能工具管理。",
+  "DescribePage describePageSecond": "佳能工具分为两部分：离线APP + 在线发送",
+  "DescribePage describePageThird": "离线APP可从左边菜单栏点击下载。",
+  "DescribePage describePageFourth": "所有交易分为三个步骤：",
+  "DescribePage describePagefivth": "生成",
+  "DescribePage describePagefivthBold": "未签名",
+  "DescribePage describePagefivthBoldLast": "的交易",
+  "DescribePage describePageSix": "离线APP",
+  "DescribePage describePageSixLast": "签名",
+  "DescribePage describePageSenven": "在线发送",
+  "DescribePage describePageSenvenBold": "已签名",
+  "DescribePage describePageSenvenlast": "的交易",
+  "DescribePage describePageEight":
+    "注意：绝大部分操作，使用active私钥签名即可；",
+  "DescribePage describePageNinth":
+    "修改权限的公私钥操作，请使用owner私钥签名。",
+  "DescribePage describePageZero": "佳能工具介绍"
 }
