@@ -33,7 +33,6 @@ injectGlobal`
   }
   .ant-layout-footer{
     padding: 14px 50px!important;
-    background: #ececec!important;
   }
   .ant-layout{
     height: 100%;

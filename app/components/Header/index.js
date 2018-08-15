@@ -33,7 +33,7 @@ class HeaderComp extends React.Component {
     super(props);
     this.state = {
       LogoName: 'EOS Cannon',
-      defaultSelectedKeys: '9',
+      defaultSelectedKeys: '12',
       collapsed: false,
       openKeys: [],
       rootSubmenuKeys: ['1', '2', '3', '4', '5'],
@@ -43,8 +43,11 @@ class HeaderComp extends React.Component {
    * 根据URL地址，重新设置默认菜单选项
    * */
   componentWillMount() {
-    let defaultSelectedKeys = '9';
+    let defaultSelectedKeys = '12';
     switch (window.location.hash.substring(1)) {
+      case '/dscribe':
+        defaultSelectedKeys = '12';
+        break;
       case '/accountSearch':
         defaultSelectedKeys = '9';
         break;
@@ -79,7 +82,7 @@ class HeaderComp extends React.Component {
         defaultSelectedKeys = '0';
         break;
       default:
-        defaultSelectedKeys = '9';
+        defaultSelectedKeys = '12';
     }
     this.setState({
       defaultSelectedKeys,
@@ -104,7 +107,6 @@ class HeaderComp extends React.Component {
   };
 
   changeLanguage = () => {
-    console.log('this.props.locale changeLanguage===',this.props.locale)
     const localeLanguage = this.props.locale === 'en' ? 'de' : 'en';
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };
@@ -171,6 +173,11 @@ class HeaderComp extends React.Component {
         </div>
       </div>
     );
+
+    const refCallback = node => {
+      // `node` refers to the mounted DOM element or null when unmounted
+    }
+
     return (
       <Layout>
         <Helmet
@@ -211,7 +218,7 @@ class HeaderComp extends React.Component {
             onOpenChange={this.onOpenChange}
           >
             <Menu.Item key="9">
-              <Link href="/accountSearch" to="/accountSearch">
+              <Link href="/accountSearch" to="/accountSearch" innerRef={refCallback}>
                 <Icon type="user" />
                 <span>{accountSearch}</span>
               </Link>

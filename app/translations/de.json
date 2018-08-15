@@ -1,5 +1,5 @@
 {
-  "Public AppHelmetTitle": "佳能大户专属投票工具(在线版)",
+  "Public AppHelmetTitle": "佳能工具(在线版)",
   "Public HeaderMenuCreateAccount": "账号创建",
   "Public HeaderMenuDelegate": "质押/解质押",
   "Public HeaderMenuTransfer": "转账",
@@ -35,8 +35,8 @@
   "Public CopyAlertMessage": "复制报文/扫描二维码",
   "Public CopyTransactionButtonName": "复制报文",
   "Public TransactionTextAreaPlaceholder": "请复制生成的报文",
-  "Public QrCodeInitValue": "欢迎使用EOS佳能离线工具",
-  "Public FooterCompText": "EOS佳能荣誉出品 ©2018",
+  "Public QrCodeInitValue": "欢迎使用EOS佳能工具",
+  "Public FooterCompText": "EOS佳能 荣誉出品 ©2018",
   "BuyRamBytesPage SwitchCheckedName": "购买",
   "BuyRamBytesPage SwitchUnCheckedName": "出售",
   "BuyRamBytesPage PayerAccountNameLabel": "支付账户",

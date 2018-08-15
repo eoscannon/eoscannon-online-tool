@@ -108,7 +108,6 @@ export class AccountSearchPage extends React.Component {
             });
           }
         }
-        //this.handleChange({ key: 'EOS', label :'eosio.token' })
         if (info.voter_info) {
           stake = `${info.voter_info.staked / 10000} EOS`;
         }
@@ -413,7 +412,7 @@ export class AccountSearchPage extends React.Component {
                         <Option value="eoscancancan">CAN</Option>
                         <Option value="everipediaiq">IQ</Option>
                         <Option value="eosiomeetone">MEETONE</Option>
-                        <Option value="gyztomjugage">CETOS</Option>
+                        <Option value="eosiochaince">CET</Option>
                         <Option value="eoxeoxeoxeox">EOX</Option>
                         <Option value="ednazztokens">EDNA</Option>
                         <Option value="horustokenio">HORUS</Option>
@@ -421,7 +420,6 @@ export class AccountSearchPage extends React.Component {
                         <Option value="challengedac">CHL</Option>
                         <Option value="eosblackteam">BLACK</Option>
                         <Option value="eosadddddddd">ADD</Option>
-                        <Option value="eosiochaince">CET</Option>
                         <Option value="wizznetwork1">WIZZ</Option>
                       </Select>
                     </div>
