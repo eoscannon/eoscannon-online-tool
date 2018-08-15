@@ -94,17 +94,16 @@ export class AccountSearchPage extends React.Component {
       .then(info => {
         if (info.voter_info) {
           this.setState({ voteProxy: info.voter_info.proxy });
-          if (info.voter_info.proxy){
-            this.setState({ voteProxyStatus: true})
-          }
           if (info.voter_info.producers.length > 0) {
             this.setState({
               voteNodeStatus: true,
+              voteProxyStatus: false,
               voteNode: info.voter_info.producers,
             });
           }else{
             this.setState({
               voteNodeStatus: false,
+              voteProxyStatus: true,
               voteNode: [],
             });
           }
