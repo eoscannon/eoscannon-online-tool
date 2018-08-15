@@ -35,7 +35,8 @@ export class AccountSearchPage extends React.Component {
       balance: 0,
       stake: 0,
       voteNode: [],
-      voteNodeStatus: true,
+      voteNodeStatus: false,
+      voteProxyStatus: false,
       memoryContent: '',
       cpuContent: '',
       networkContent: '',
@@ -93,10 +94,17 @@ export class AccountSearchPage extends React.Component {
       .then(info => {
         if (info.voter_info) {
           this.setState({ voteProxy: info.voter_info.proxy });
-          if (info.voter_info.producers.length < 1) {
+          if (info.voter_info.producers.length > 0) {
             this.setState({
-              voteNodeStatus: false ,
+              voteNodeStatus: true,
+              voteProxyStatus: false,
               voteNode: info.voter_info.producers,
+            });
+          }else{
+            this.setState({
+              voteNodeStatus: false,
+              voteProxyStatus: true,
+              voteNode: [],
             });
           }
         }
@@ -323,9 +331,11 @@ export class AccountSearchPage extends React.Component {
                   <span>
                     {FunctionSearchEOSStake}：{this.state.stake}
                   </span>
-                  <span>
+                  {this.state.voteProxyStatus ? (
+                    <span>
                     {FunctionSearchEOSVoteProxy}：{this.state.voteProxy}
                   </span>
+                  ) : null}
                   {this.state.voteNodeStatus ? (
                     <span>
                       {FunctionSearchEOSVoteNode}：<br />

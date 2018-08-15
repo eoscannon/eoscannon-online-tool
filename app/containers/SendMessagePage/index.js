@@ -101,7 +101,7 @@ export class SendMessagePage extends React.Component {
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
-          <FormComp  style={{maxWidth: '500px'}}>
+          <FormComp style={{maxWidth: '500px'}}>
             <FormItem>
               <Alert
                 message={FieldAlertSendMessageNew}
