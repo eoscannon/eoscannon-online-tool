@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * SendMessagePage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the SendMessagePage component.
  */
 import { defineMessages } from 'react-intl';
 

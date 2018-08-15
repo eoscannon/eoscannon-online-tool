@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * BuyRamBytesPage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the BuyRamBytesPage component.
  */
 import { defineMessages } from 'react-intl';
 

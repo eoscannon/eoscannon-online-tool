@@ -1,5 +1,5 @@
 /*
- * TransferPage
+ * AccountSearchPage
  *
  */
 import React from 'react';
@@ -107,6 +107,12 @@ export class AccountSearchPage extends React.Component {
               voteNode: [],
             });
           }
+        }else{
+          this.setState({
+            voteNodeStatus: false,
+            voteProxyStatus: false,
+            voteNode: [],
+          });
         }
         if (info.voter_info) {
           stake = `${info.voter_info.staked / 10000} EOS`;

@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * InfoInitPage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the InfoInitPage component.
  */
 import { defineMessages } from 'react-intl';
 

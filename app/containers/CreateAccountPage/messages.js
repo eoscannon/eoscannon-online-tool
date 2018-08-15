@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * CreateAccountPage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the CreateAccountPage component.
  */
 import { defineMessages } from 'react-intl';
 

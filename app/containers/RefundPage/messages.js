@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * RefundPage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the RefundPage component.
  */
 import { defineMessages } from 'react-intl';
 

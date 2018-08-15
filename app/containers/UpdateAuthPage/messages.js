@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * UpdateAuthPage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the UpdateAuthPage component.
  */
 import { defineMessages } from 'react-intl';
 

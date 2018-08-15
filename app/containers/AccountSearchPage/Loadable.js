@@ -1,5 +1,5 @@
 /**
- * Asynchronously loads the component for HomePage
+ * Asynchronously loads the component for AccountSearchPage
  */
 import Loadable from 'react-loadable';
 

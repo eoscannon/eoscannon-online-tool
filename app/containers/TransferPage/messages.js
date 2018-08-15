@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * TransferPage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the TransferPage component.
  */
 import { defineMessages } from 'react-intl';
 
