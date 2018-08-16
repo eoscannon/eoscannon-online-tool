@@ -35,6 +35,13 @@ storage.getNetwork = function () {
   return storage.get('Network');
 };
 
+storage.setChainId = function (name) {
+  storage.set('ChainId', name);
+};
+storage.getChainId = function () {
+  return storage.get('ChainId');
+};
+
 export {
   storage,
 };

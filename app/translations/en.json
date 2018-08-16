@@ -20,20 +20,20 @@
   "Public CopyTransactionSuccessNotificationMsg": "Copy success",
   "Public CopyTransactionSuccessNotificationDescription":
     "The signature transaction has been copied to the clipboard. Please go to offline tool signature.",
-  "Public JsonAlertMessage": "Please input related transaction message.",
+  "Public JsonAlertMessage": "Input related transaction message.",
   "Public JsonAlertDescription":
     "Please go to offline tool to get the signature transaction, open the tools, and scan the two-dimensional code.",
-  "Public JsonInfoPlaceholder": "Please import the message after signature.",
+  "Public JsonInfoPlaceholder": "Import the message after signature.",
   "Public OpenCameraButtonName": "Open Camera",
   "Public ScanQrcodeButtonName": "Scan Qrcode",
   "Public FieldAlertMessage":
-    "Please input the fields required to generate a signature transaction",
+    "Input the fields required to generate a signature transaction",
   "Public FieldAlertDescription":
     "The page is offline, and the fields entered will not leak out. Please feel free to enter.",
   "Public CopyAlertDescription":
     "Please copy the unsigned transaction and sign it in the offline tool.",
   "Public KeyProviderFormItemLabel":
-    "Please input the relevant transaction message",
+    "Input the relevant transaction message",
   "Public KeyProviderFormItemPlaceholder":
     "Please go to the offline version of the tool to get the transaction message, open the tool, scan the QR code to get it.",
   "Public GetTransactionFormItemButtonName": "Generating transaction",
@@ -49,81 +49,81 @@
   "BuyRamBytesPage ReceiverAccountNameLabel": "Receiver",
   "BuyRamBytesPage BytesLabel": "Bytes",
   "BuyRamBytesPage BuyPayerAccountNamePlaceholder":
-    "Please input the name of the account to pay for the memory.",
+    "Input the name of the account to pay for the memory.",
   "BuyRamBytesPage SellPayerAccountNamePlaceholder":
-    "Please input the account name for the sale of memory",
+    "Input the account name for the sale of memory",
   "BuyRamBytesPage ReceiverAccountNamePlaceholder":
-    "Please input the account name used to accept the purchased memory. Not to be filled, the default is the payment account",
+    "Input the account name used to accept the purchased memory. Not to be filled, the default is the payment account",
   "BuyRamBytesPage BytesQuantityPlaceholder":
-    "Please input the amount of purchased memory bytes",
+    "Input the amount of purchased memory bytes",
   "CreateAccountPage CreatorLabel": "Creator",
   "CreateAccountPage NameLabel": "Account",
   "CreateAccountPage BytesLabel": "Bytes",
   "CreateAccountPage CreatorAccountNamePlaceholder":
-    "Please input the creator's account name",
+    "Input the creator's account name",
   "CreateAccountPage NewAccountNamePlaceholder":
-    "Please input the account name you want to create，The account name should be 12 characters, only the lowercase letter A-Z and the number 1-5.",
+    "Input the account name you want to create，The account name should be 12 characters, only the lowercase letter A-Z and the number 1-5.",
   "CreateAccountPage NewAccountNameHelp":
     "notes：Account name must be 12 characters and lowercase letter a-z and number 1-5 only.",
   "CreateAccountPage OwnerKeyPlaceholder":
-    "Please input the ownerKey of the new account",
+    "Input the ownerKey of the new account",
   "CreateAccountPage ActiveKeyPlaceholder":
-    "Please input the activeKey of the new account",
+    "Input the activeKey of the new account",
   "CreateAccountPage BytesHelp":
     "At least 4kb RAM required, the minimum value is: 4096",
   "CreateAccountPage BytesPlaceholder":
-    "Please input the amount of Bytes for the new account",
+    "Input the amount of Bytes for the new account",
   "CreateAccountPage StakeNetQuantityPlaceholder":
-    "Please input the amount of Net delegate to the new account",
+    "Input the amount of Net delegate to the new account",
   "CreateAccountPage StakeCpuQuantityPlaceholder":
-    "Please input the amount of Cpu delegate to the new account",
-  "ProxyPage VoterPlaceholder": "Please input your account name",
+    "Input the amount of Cpu delegate to the new account",
+  "ProxyPage VoterPlaceholder": "Input your account name",
   "ProxyPage ProxyHelp":
-    "notes：Please input the account name of the proxy vote. Cancel the agent for the empty!",
+    "notes：Input the account name of the proxy vote. Cancel the agent for the empty!",
   "ProxyPage ProxyPlaceholder":
-    "Please input the account name of the proxy vote. Cancel the agent for the empty",
+    "Input the account name of the proxy vote. Cancel the agent for the empty",
   "ProxyPage VoterLabel": "Voter",
   "ProxyPage ProxyLabel": "Proxy",
   "RefundPage RefundAlertMessage": "Manual Refund",
   "RefundPage RefundAlertDescription":
     "3 days after the unDelegate is released, assets can be retrieved manually by refund.",
-  "RefundPage OwnerPlaceholder": "Please input your account name",
+  "RefundPage OwnerPlaceholder": "Input your account name",
   "RefundPage OwnerLabel": "Account",
   "StakePage DelegateSwitchCheckedName": "Delegate",
   "StakePage DelegateSwitchUnCheckedName": "UnDelegate",
   "StakePage DelegateFromAccountNamePlaceholder":
-    "Please input the name of the account for the delegate",
+    "Input the name of the account for the delegate",
   "StakePage UnDelegateFromAccountNamePlaceholder":
-    "Please input the name of the account for the undelegate",
+    "Input the name of the account for the undelegate",
   "StakePage DelegateReceiverAccountNamePlaceholder":
-    "Please input the receiver name of the delegate account，the account name for the delegate account is used by default.",
+    "Input the receiver name of the delegate account，the account name for the delegate account is used by default.",
   "StakePage UnDelegateReceiverAccountNamePlaceholder":
-    "Please input the receiver name of the undelegate account，the account name for the unDelegate account is used by default.",
+    "Input the receiver name of the undelegate account，the account name for the unDelegate account is used by default.",
   "StakePage DelegateReceiverAccountNameHelp":
     "notes：If the account name is inconsistent with the account name used for delegate, it is a Delegate to others.",
   "StakePage UnDelegateReceiverAccountNameHelp":
     "notes：If the account name is inconsistent with the account name used for undelegate, it is a UnDelegate to others.",
   "StakePage DelegateStakeNetQuantityPlaceholder":
-    "Please input the amount of Net for the delegate",
+    "Input the amount of Net for the delegate",
   "StakePage UnDelegateStakeNetQuantityPlaceholder":
-    "Please input the amount of Net for the undelegate",
+    "Input the amount of Net for the undelegate",
   "StakePage DelegateStakeCpuQuantityPlaceholder":
-    "Please input the amount of cpu for the delegate",
+    "Input the amount of cpu for the delegate",
   "StakePage UnDelegateStakeCpuQuantityPlaceholder":
-    "Please input the amount of cpu for the undelegate",
+    "Input the amount of cpu for the undelegate",
   "StakePage FromLabel": "From",
   "StakePage ReceiverLabel": "Receiver",
   "StakePage NetQuantityLabel": "Net",
   "StakePage CpuQuantityLabel": "Cpu",
   "TransferPage TransferFromAccountNamePlaceholder":
-    "Enter the form amount",
-  "TransferPage TransferToAccountNamePlaceholder": "Enter the to amount",
-  "TransferPage TransferContractPlaceholder": "Enter the contract",
-  "TransferPage TransferQuantityPlaceholder": "Enter the quantity",
-  "TransferPage TransferDigitPlaceholder": "Enter the digit",
-  "TransferPage TransferSymbolPlaceholder": "Enter the symbol",
+    "Input the form amount",
+  "TransferPage TransferToAccountNamePlaceholder": "Input the to amount",
+  "TransferPage TransferContractPlaceholder": "Input the contract",
+  "TransferPage TransferQuantityPlaceholder": "Input the quantity",
+  "TransferPage TransferDigitPlaceholder": "Input the digit",
+  "TransferPage TransferSymbolPlaceholder": "Input the symbol",
   "TransferPage TransferMemoPlaceholder":
-    "Enter the Memo，required while depositing to exchange",
+    "Input the Memo，required while depositing to exchange",
   "TransferPage TransferMemoHelp":
     "notes：Required while depositing to exchange",
   "TransferPage FromLabel": "From",
@@ -134,18 +134,18 @@
   "TransferPage SymbolLabel": "Symbol",
   "UpdateAuthPage CheckPrivateKeyMessage": "Check PrivateKey",
   "UpdateAuthPage CheckPrivateKeyPlaceholder":
-    "Please input the PrivateKey for Check",
+    "Input the PrivateKey for Check",
   "UpdateAuthPage GetPrivateKeyButtonMessage": "Get PrivateKey",
   "UpdateAuthPage ModifyPrivateKeyTitle": "Modify PrivateKey",
   "UpdateAuthPage UpdateAuthAccountNamePlaceholder":
-    "Please input the AccountName",
+    "Input the AccountName",
   "UpdateAuthPage UpdateAuthActiveKeyPlaceholder":
-    "Please input the activeKey you want",
+    "Input the activeKey you want",
   "UpdateAuthPage UpdateAuthOwnerKeyPlaceholder":
-    "Please input the ownerKey you want",
+    "Input the ownerKey you want",
   "UpdateAuthPage PrivateKeyLabel": "PrivateKey",
   "UpdateAuthPage AccountLabel": "Account",
-  "VotePage VoterPlaceholder": "Please input the account name",
+  "VotePage VoterPlaceholder": "Input the account name",
   "VotePage ProducersHelp":
     "notes：Please select the voting node! It can be multiple selected, searchable, and import. input confirm!",
   "VotePage ProducersPlaceholder":
@@ -158,12 +158,12 @@
 
   "Public HeaderMenuInfoInit": "Intial Block Info",
   "Public HeaderMenuSendMessage": "Send Transaction",
-  "Public HeaderMenuAccountSearch": "Search",
+  "Public HeaderMenuAccountSearch": "Query",
   "Public HeaderMenuStake": "Stake",
   "Public HeaderMenuTradeManage": "Transaction Processing",
-  "Public HeaderMenuOffical": "Main",
-  "Public HeaderMenuTestNet": "Cannon Test",
-  "Public HeaderMenuOtherTestNet": "Other Test",
+  "Public HeaderMenuOffical": "MainNet",
+  "Public HeaderMenuTestNet": "Cannon TestNet",
+  "Public HeaderMenuOtherTestNet": "Other TestNet",
   "Public HeaderAppDownLoad": "APP Download",
   "Public HeaderOnlineAppDownLoad": "Offline IOS",
   "Public HeaderOfflineAppDownLoad": "Offline Android",
@@ -190,7 +190,7 @@
   "TransferPage FunctionSearchAccountTableAddress": "Address",
   "TransferPage FunctionSearchNoData": "no data",
   "TransferPage FunctionSearchAccountPlaceHolder":
-    "Please input the account name",
+    "Input the account name",
   "InfoInitPage infoAlertMessage": "This page is used online",
   "InfoInitPage infoAlertDescription":
     "Paste the information below into the EOSCannon offline signature tool",
@@ -216,7 +216,7 @@
   "Public ProducersDealTransaction": "Generate transaction",
   "Public ProducersSendTransaction": "Send transaction",
   "Public JsonAlertAttention": "Attention",
-  "Public JsonAlertAttentionArt": "Please input the correct message.!",
+  "Public JsonAlertAttentionArt": "Input the correct message.!",
   "DescribePage describePageFirst":
     "EOS Cannon Tool, always keep the private key and sign transaction on offline phone, is the safest way to use private key. It can be used as a cold wallet. We recommend you use other wallets to manage small account, and use Cannon Tool to manage large account.",
   "DescribePage describePageSecond":
@@ -240,8 +240,8 @@
     "For changing keys, please use owner private key to sign transaction.",
   "DescribePage describePageZero": "Cannon Tools Introduction",
   "Header HeaderMenuErrorMessage": "Not the right website.",
-  "Header HeaderMenuInputMessage": "Please input",
-  "Header HeaderInputTestNet": "Please input test network address.",
+  "Header HeaderMenuInputMessage": "Input",
+  "Header HeaderInputTestNet": "Input test network address.",
   "Header ScanCodeSendGetIt": "Got it"
 
 }
