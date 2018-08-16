@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * StakePage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the StakePage component.
  */
 import { defineMessages } from 'react-intl';
 

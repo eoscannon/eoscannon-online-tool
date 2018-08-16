@@ -1,5 +1,5 @@
 /*
- * StakePage
+ * SendMessagePage
  *
  */
 

@@ -1,5 +1,5 @@
 /*
- * CreateAccountPage
+ * DescribePage
  *
  */
 
@@ -24,9 +24,8 @@ import {
 } from '../../components/NodeComp';
 
 const FormItem = Form.Item;
-const { TextArea } = Input;
 
-export class CreateAccountPage extends React.Component {
+export class DescribePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -156,7 +155,7 @@ export class CreateAccountPage extends React.Component {
   }
 }
 
-CreateAccountPage.propTypes = {
+DescribePage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
   SelectedNetWork: PropTypes.string,
@@ -165,6 +164,6 @@ const mapStateToProps = createStructuredSelector({
   SelectedNetWork: makeSelectNetwork(),
 });
 
-const CreateAccountPageIntl = injectIntl(CreateAccountPage);
-const CreateAccountPageForm = Form.create()(CreateAccountPageIntl);
-export default connect(mapStateToProps)(CreateAccountPageForm);
+const DescribePageIntl = injectIntl(DescribePage);
+const DescribePageForm = Form.create()(DescribePageIntl);
+export default connect(mapStateToProps)(DescribePageForm);

@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * VotePage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the VotePage component.
  */
 import { defineMessages } from 'react-intl';
 

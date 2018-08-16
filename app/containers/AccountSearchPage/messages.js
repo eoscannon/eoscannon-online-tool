@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * AccountSearchPage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the AccountSearchPage component.
  */
 import { defineMessages } from 'react-intl';
 

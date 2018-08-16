@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * ProxyPage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the ProxyPage component.
  */
 import { defineMessages } from 'react-intl';
 

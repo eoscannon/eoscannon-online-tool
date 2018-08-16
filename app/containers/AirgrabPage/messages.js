@@ -1,7 +1,7 @@
 /*
- * FeaturePage Messages
+ * AirgrabPage Messages
  *
- * This contains all the text for the FeaturePage component.
+ * This contains all the text for the AirgrabPage component.
  */
 import { defineMessages } from 'react-intl';
 

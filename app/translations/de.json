@@ -1,5 +1,5 @@
 {
-  "Public AppHelmetTitle": "佳能大户专属投票工具(在线版)",
+  "Public AppHelmetTitle": "佳能工具(在线版)",
   "Public HeaderMenuCreateAccount": "账号创建",
   "Public HeaderMenuDelegate": "质押/解质押",
   "Public HeaderMenuTransfer": "转账",
@@ -35,8 +35,8 @@
   "Public CopyAlertMessage": "复制报文/扫描二维码",
   "Public CopyTransactionButtonName": "复制报文",
   "Public TransactionTextAreaPlaceholder": "请复制生成的报文",
-  "Public QrCodeInitValue": "欢迎使用EOS佳能离线工具",
-  "Public FooterCompText": "EOS佳能荣誉出品 ©2018",
+  "Public QrCodeInitValue": "欢迎使用EOS佳能工具",
+  "Public FooterCompText": "EOS佳能 荣誉出品 ©2018",
   "BuyRamBytesPage SwitchCheckedName": "购买",
   "BuyRamBytesPage SwitchUnCheckedName": "出售",
   "BuyRamBytesPage PayerAccountNameLabel": "支付账户",
@@ -136,7 +136,8 @@
   "Public HeaderMenuStake": "质押",
   "Public HeaderMenuTradeManage": "交易处理",
   "Public HeaderMenuOffical": "正式网",
-  "Public HeaderMenuTestNet": "测试网",
+  "Public HeaderMenuTestNet": "佳能测试网",
+  "Public HeaderMenuOtherTestNet": "其他测试网",
   "Public ChangeTestNet": "变更测试网",
   "Public HeaderAppDownLoad": "APP下载",
   "Public HeaderOnlineAppDownLoad": "离线IOS",
@@ -206,5 +207,9 @@
     "注意：绝大部分操作，使用active私钥签名即可；",
   "DescribePage describePageNinth":
     "修改权限的公私钥操作，请使用owner私钥签名。",
-  "DescribePage describePageZero": "佳能工具介绍"
+  "DescribePage describePageZero": "佳能工具介绍",
+  "Header HeaderMenuErrorMessage": "不是正确的网址",
+  "Header HeaderMenuInputMessage": "请输入",
+  "Header HeaderInputTestNet": "请输入测试网地址",
+  "Header ScanCodeSendGetIt": "知道了"
 }
