@@ -11,12 +11,14 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Select, Popover, Modal, Input, message } from 'antd';
+import EOS from 'eosjs';
 
 import { Menu, Icon } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
 import { storage } from '../../utils/storage';
 import FooterComp from '../../components/Footer';
 import eosCannonLogo from '../../images/eosLogo.png';
+import eosCannonLogoBig from '../../images/eos_cannon_logo_opacity4.png';
 import downloadAndroid from './offline_tool.png';
 import downloadIos from './ios.png';
 
@@ -33,7 +35,7 @@ class HeaderComp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      LogoName: 'EOS Cannon',
+      LogoName: true,
       defaultSelectedKeys: '12',
       collapsed: false,
       openKeys: [],
@@ -137,6 +139,13 @@ class HeaderComp extends React.Component {
       message.error(this.props.intl.formatMessage(utilsMsg.HeaderMenuInputMessage));
       return;
     }
+    const eos = EOS({
+      httpEndpoint: value,
+      chainId: null,
+    });
+    eos.getInfo({}).then( info => {
+      storage.setChainId( info.chain_id );
+    });
     storage.setNetwork(value);
     this.setState({
       visible: false,
@@ -157,12 +166,12 @@ class HeaderComp extends React.Component {
       () => {
         if (this.state.collapsed) {
           this.setState({
-            LogoName: '',
+            LogoName: false,
           });
         } else {
           setTimeout(() => {
             this.setState({
-              LogoName: 'EOS Cannon',
+              LogoName: true,
             });
           }, 150)
         }
@@ -244,10 +253,11 @@ class HeaderComp extends React.Component {
               fontWeight: 'bold',
             }}
           >
-            <span>
-              <img src={eosCannonLogo} alt="" width="32" />
-              {this.state.LogoName}
-            </span>
+              {this.state.LogoName ? (
+                <img src={eosCannonLogoBig} alt="" width="75%" />
+              ): (
+                <img src={eosCannonLogo} alt="" width="32" />
+              )}
           </div>
           <Menu
             theme="dark"
@@ -360,7 +370,7 @@ class HeaderComp extends React.Component {
             >
               <Menu.Item key="setting:1">
                 <Popover placement="right" content={contentIos}>
-                  <a href="https://www.pgyer.com/Guv3" target="_blank">
+                  <a href="https://www.pgyer.com/F7Td" target="_blank">
                     {OnlineAppDownLoad}
                   </a>
                 </Popover>

@@ -38,6 +38,7 @@ const getEosTest = () =>
 const getEosOtherTest = () =>
   EOS({
     httpEndpoint: storage.getNetwork(),
+    chainId: storage.getChainId(),
     expireInSeconds: 60 * 60,
   });
 

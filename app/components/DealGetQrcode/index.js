@@ -9,6 +9,8 @@ import { Form, Button, Input, Alert } from 'antd';
 import QRCode from 'qrcode.react';
 import copy from 'copy-to-clipboard';
 import Fcbuffer from 'fcbuffer';
+import config from "./../../config";
+import { storage } from '../../utils/storage';
 
 import utilsMsg from '../../utils/messages';
 import {
@@ -40,12 +42,18 @@ export default class DealGetQrcode extends Component {
 
   // 生成报文
   getUnSignedBuffer = () => {
-    const MainChainId =
-      'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
-    const TestChainId =
-      '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca';
-    const chainId =
-      this.props.SelectedNetWork === 'main' ? MainChainId : TestChainId;
+    const MainChainId =config.mainChainId;
+    const TestChainId =config.testChainId;
+    let chainId
+    if(this.props.SelectedNetWork === 'main'){
+      chainId  = MainChainId
+    }else if(this.props.SelectedNetWork === 'test'){
+      chainId = TestChainId
+    }else if(this.props.SelectedNetWork === 'other'){
+      chainId = storage.getChainId()
+    }
+    console.log("chainId===",chainId)
+    console.log("this.props.SelectedNetWork===",this.props.SelectedNetWork)
     const buf = Fcbuffer.toBuffer(
       this.state.eos.fc.structs.transaction,
       this.props.transaction.transaction,
@@ -97,6 +105,7 @@ export default class DealGetQrcode extends Component {
     const CopyTransactionButtonName = this.props.formatMessage(
       utilsMsg.CopyTransactionButtonName,
     );
+    console.log('transaction===',this.props.transaction)
     return (
       <div>
         {!this.props.isHiddenGetTransactionButton && (
