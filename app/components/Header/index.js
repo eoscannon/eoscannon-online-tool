@@ -10,10 +10,11 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Layout, Select, Popover } from 'antd';
+import { Layout, Select, Popover, Modal, Input, message } from 'antd';
 
 import { Menu, Icon } from '../../utils/antdUtils';
 import utilsMsg from '../../utils/messages';
+import { storage } from '../../utils/storage';
 import FooterComp from '../../components/Footer';
 import eosCannonLogo from '../../images/eosLogo.png';
 import downloadAndroid from './offline_tool.png';
@@ -37,12 +38,14 @@ class HeaderComp extends React.Component {
       collapsed: false,
       openKeys: [],
       rootSubmenuKeys: ['1', '2', '3', '4', '5'],
+      testNetUrl: '',
+      visible: false
     };
   }
   /**
    * 根据URL地址，重新设置默认菜单选项
    * */
-  componentWillMount() {
+  componentDidMount() {
     let defaultSelectedKeys = '12';
     switch (window.location.hash.substring(1)) {
       case '/dscribe':
@@ -89,10 +92,6 @@ class HeaderComp extends React.Component {
     });
   }
 
-  componentDidMount() {
-
-  }
-
   onOpenChange = openKeys => {
     const latestOpenKey = openKeys.find(
       key => this.state.openKeys.indexOf(key) === -1,
@@ -112,8 +111,43 @@ class HeaderComp extends React.Component {
   };
 
   handleChange = value => {
+    if( value ==='other' ){
+      this.setState({
+        visible: true,
+      });
+    }
     this.props.onDispatchChangeNetworkReducer(value);
   };
+
+  changeNet = (e) => {
+    const { value } = e.target;
+    console.log('value===',value)
+    this.setState({testNetUrl: value})
+  }
+
+  setNetWork = () =>{
+    let value = this.state.testNetUrl
+    if( value != ""){
+      var reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
+      if(!reg.test(value)){
+        message.error(this.props.intl.formatMessage(utilsMsg.HeaderMenuErrorMessage));
+        return;
+      }
+    } else {
+      message.error(this.props.intl.formatMessage(utilsMsg.HeaderMenuInputMessage));
+      return;
+    }
+    storage.setNetwork(value);
+    this.setState({
+      visible: false,
+    });
+  }
+
+  hideModal = () => {
+    this.setState({
+      visible: false,
+    });
+  }
 
   toggle = () => {
     this.setState(
@@ -130,9 +164,9 @@ class HeaderComp extends React.Component {
             this.setState({
               LogoName: 'EOS Cannon',
             });
-          }, 150);
+          }, 150)
         }
-      },
+      }
     );
   };
 
@@ -153,10 +187,15 @@ class HeaderComp extends React.Component {
     const airgrab = formatMessage(utilsMsg.HeaderMenuAirgrab);
     const mainNet = formatMessage(utilsMsg.HeaderMenuOffical);
     const testNet = formatMessage(utilsMsg.HeaderMenuTestNet);
+    const otherTestNet = formatMessage(utilsMsg.HeaderMenuOtherTestNet);
     const OfflineAppDownLoad = formatMessage(utilsMsg.HeaderOfflineAppDownLoad);
     const AppDownLoad = formatMessage(utilsMsg.HeaderAppDownLoad);
     const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
     const sendTrade = formatMessage(utilsMsg.HeaderSendTrade);
+    const inputTestNet = formatMessage(utilsMsg.HeaderInputTestNet);
+    //const testNet = formatMessage(utilsMsg.HeaderTestNet);
+    const sure = formatMessage(utilsMsg.ScanCodeSendSure);
+    const cancel = formatMessage(utilsMsg.ScanCodeSendCancel);
     const contentAndriod = (
       <div>
         <div>
@@ -364,6 +403,7 @@ class HeaderComp extends React.Component {
               >
                 <Option value="main">{mainNet}</Option>
                 <Option value="test">{testNet}</Option>
+                <Option value="other">{otherTestNet}</Option>
               </Select>
               <div
                 className="en"
@@ -381,11 +421,22 @@ class HeaderComp extends React.Component {
             </div>
           </Content>
           <FooterComp />
+          <Modal
+            title={inputTestNet}
+            visible={this.state.visible}
+            onOk={this.setNetWork}
+            onCancel={this.hideModal}
+            okText={sure}
+            cancelText={cancel}
+          >
+            <Input onChange={this.changeNet} />
+          </Modal>
         </Layout>
       </Layout>
     );
   }
 }
+
 HeaderComp.propTypes = {
   intl: PropTypes.object,
   locale: PropTypes.string,

@@ -136,7 +136,8 @@
   "Public HeaderMenuStake": "质押",
   "Public HeaderMenuTradeManage": "交易处理",
   "Public HeaderMenuOffical": "正式网",
-  "Public HeaderMenuTestNet": "测试网",
+  "Public HeaderMenuTestNet": "佳能测试网",
+  "Public HeaderMenuOtherTestNet": "其他测试网",
   "Public ChangeTestNet": "变更测试网",
   "Public HeaderAppDownLoad": "APP下载",
   "Public HeaderOnlineAppDownLoad": "离线IOS",
@@ -206,5 +207,9 @@
     "注意：绝大部分操作，使用active私钥签名即可；",
   "DescribePage describePageNinth":
     "修改权限的公私钥操作，请使用owner私钥签名。",
-  "DescribePage describePageZero": "佳能工具介绍"
+  "DescribePage describePageZero": "佳能工具介绍",
+  "Header HeaderMenuErrorMessage": "不是正确的网址",
+  "Header HeaderMenuInputMessage": "请输入",
+  "Header HeaderInputTestNet": "请输入测试网地址",
+  "Header ScanCodeSendGetIt": "知道了"
 }

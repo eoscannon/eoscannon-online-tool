@@ -42,13 +42,20 @@ export default class ScanQrcode extends Component {
     this.setState({
       VideoElement: (
         <FormItem>
-          <video id="video" width="500" height="200">
+          <video id="video" width="100%" height="200" style={{ width: "100%" }}>
             <track kind="captions" />
           </video>
         </FormItem>
       ),
     });
     this.handleScanQrcode();
+  };
+
+  handleCloseCamera = () => {
+    this.setState({
+      VideoElement: null,
+    });
+    const codeReader = new BrowserQRCodeReader();
   };
 
   handleScanQrcode = () => {
@@ -63,24 +70,6 @@ export default class ScanQrcode extends Component {
   };
 
   getSendSignTransaction = sig => {
-    // const MainChainId =
-    //  'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
-    // const TestChainId =
-    //  '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca';
-    // const chainId =
-    //  this.props.SelectedNetWork === 'main' ? MainChainId : TestChainId;
-    // const buf = Fcbuffer.toBuffer(
-    //  this.props.eos.fc.structs.transaction,
-    //  this.props.transaction.transaction,
-    // );
-    // const chainIdBuf =   Buffer.from(chainId,'hex');
-    // const UnSignedBuffer = Buffer.concat([
-    //  chainIdBuf,
-    //  buf,
-    //  Buffer.from(new Uint8Array(32)),
-    // ]);
-    // const siglocal = ecc.sign(UnSignedBuffer, '5JYHNcQWyvNLMeFQW3tbbtBk1P1pFKHPfnwaAXEHnGauJHd1spP');
-
     const output = {
       compression: 'none',
       transaction: this.state.SendTransaction.transaction,
@@ -108,7 +97,9 @@ export default class ScanQrcode extends Component {
             utilsMsg.ScanCodeSendSuccessMessage,
           )} ${res.transaction_id}`,
           //maskClosable: true,
-          okText: '知道了'
+          okText: this.props.formatMessage(
+            utilsMsg.ScanCodeSendGetIt,
+          )
         })
       })
       .catch(err => {
@@ -116,7 +107,9 @@ export default class ScanQrcode extends Component {
           title: this.props.formatMessage(utilsMsg.ScanCodeSendFailed),
           content: `${err}`,
           //maskClosable: true,
-          okText: '知道了'
+          okText: this.props.formatMessage(
+            utilsMsg.ScanCodeSendGetIt,
+          )
         });
       });
   };
@@ -149,6 +142,7 @@ export default class ScanQrcode extends Component {
           >
             {OpenCameraButtonName}
           </Button>
+
         </FormItem>
         <FormItem>
           {getFieldDecorator('SendTransaction', {

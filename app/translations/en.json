@@ -20,20 +20,20 @@
   "Public CopyTransactionSuccessNotificationMsg": "Copy success",
   "Public CopyTransactionSuccessNotificationDescription":
     "The signature transaction has been copied to the clipboard. Please go to offline tool signature.",
-  "Public JsonAlertMessage": "Please enter related transaction message.",
+  "Public JsonAlertMessage": "Please input related transaction message.",
   "Public JsonAlertDescription":
     "Please go to offline tool to get the signature transaction, open the tools, and scan the two-dimensional code.",
   "Public JsonInfoPlaceholder": "Please import the message after signature.",
   "Public OpenCameraButtonName": "Open Camera",
   "Public ScanQrcodeButtonName": "Scan Qrcode",
   "Public FieldAlertMessage":
-    "Please enter the fields required to generate a signature transaction",
+    "Please input the fields required to generate a signature transaction",
   "Public FieldAlertDescription":
     "The page is offline, and the fields entered will not leak out. Please feel free to enter.",
   "Public CopyAlertDescription":
     "Please copy the unsigned transaction and sign it in the offline tool.",
   "Public KeyProviderFormItemLabel":
-    "Please enter the relevant transaction message",
+    "Please input the relevant transaction message",
   "Public KeyProviderFormItemPlaceholder":
     "Please go to the offline version of the tool to get the transaction message, open the tool, scan the QR code to get it.",
   "Public GetTransactionFormItemButtonName": "Generating transaction",
@@ -49,68 +49,68 @@
   "BuyRamBytesPage ReceiverAccountNameLabel": "Receiver",
   "BuyRamBytesPage BytesLabel": "Bytes",
   "BuyRamBytesPage BuyPayerAccountNamePlaceholder":
-    "Please enter the name of the account to pay for the memory.",
+    "Please input the name of the account to pay for the memory.",
   "BuyRamBytesPage SellPayerAccountNamePlaceholder":
-    "Please enter the account name for the sale of memory",
+    "Please input the account name for the sale of memory",
   "BuyRamBytesPage ReceiverAccountNamePlaceholder":
     "Please input the account name used to accept the purchased memory. Not to be filled, the default is the payment account",
   "BuyRamBytesPage BytesQuantityPlaceholder":
-    "Please enter the amount of purchased memory bytes",
+    "Please input the amount of purchased memory bytes",
   "CreateAccountPage CreatorLabel": "Creator",
   "CreateAccountPage NameLabel": "Account",
   "CreateAccountPage BytesLabel": "Bytes",
   "CreateAccountPage CreatorAccountNamePlaceholder":
     "Please input the creator's account name",
   "CreateAccountPage NewAccountNamePlaceholder":
-    "Please enter the account name you want to create，The account name should be 12 characters, only the lowercase letter A-Z and the number 1-5.",
+    "Please input the account name you want to create，The account name should be 12 characters, only the lowercase letter A-Z and the number 1-5.",
   "CreateAccountPage NewAccountNameHelp":
     "notes：Account name must be 12 characters and lowercase letter a-z and number 1-5 only.",
   "CreateAccountPage OwnerKeyPlaceholder":
-    "Please enter the ownerKey of the new account",
+    "Please input the ownerKey of the new account",
   "CreateAccountPage ActiveKeyPlaceholder":
-    "Please enter the activeKey of the new account",
+    "Please input the activeKey of the new account",
   "CreateAccountPage BytesHelp":
     "At least 4kb RAM required, the minimum value is: 4096",
   "CreateAccountPage BytesPlaceholder":
-    "Please enter the amount of Bytes for the new account",
+    "Please input the amount of Bytes for the new account",
   "CreateAccountPage StakeNetQuantityPlaceholder":
-    "Please enter the amount of Net delegate to the new account",
+    "Please input the amount of Net delegate to the new account",
   "CreateAccountPage StakeCpuQuantityPlaceholder":
-    "Please enter the amount of Cpu delegate to the new account",
-  "ProxyPage VoterPlaceholder": "Please enter your account name",
+    "Please input the amount of Cpu delegate to the new account",
+  "ProxyPage VoterPlaceholder": "Please input your account name",
   "ProxyPage ProxyHelp":
-    "notes：Please enter the account name of the proxy vote. Cancel the agent for the empty!",
+    "notes：Please input the account name of the proxy vote. Cancel the agent for the empty!",
   "ProxyPage ProxyPlaceholder":
-    "Please enter the account name of the proxy vote. Cancel the agent for the empty",
+    "Please input the account name of the proxy vote. Cancel the agent for the empty",
   "ProxyPage VoterLabel": "Voter",
   "ProxyPage ProxyLabel": "Proxy",
   "RefundPage RefundAlertMessage": "Manual Refund",
   "RefundPage RefundAlertDescription":
     "3 days after the unDelegate is released, assets can be retrieved manually by refund.",
-  "RefundPage OwnerPlaceholder": "Please enter your account name",
+  "RefundPage OwnerPlaceholder": "Please input your account name",
   "RefundPage OwnerLabel": "Account",
   "StakePage DelegateSwitchCheckedName": "Delegate",
   "StakePage DelegateSwitchUnCheckedName": "UnDelegate",
   "StakePage DelegateFromAccountNamePlaceholder":
-    "Please enter the name of the account for the delegate",
+    "Please input the name of the account for the delegate",
   "StakePage UnDelegateFromAccountNamePlaceholder":
-    "Please enter the name of the account for the undelegate",
+    "Please input the name of the account for the undelegate",
   "StakePage DelegateReceiverAccountNamePlaceholder":
-    "Please enter the receiver name of the delegate account，the account name for the delegate account is used by default.",
+    "Please input the receiver name of the delegate account，the account name for the delegate account is used by default.",
   "StakePage UnDelegateReceiverAccountNamePlaceholder":
-    "Please enter the receiver name of the undelegate account，the account name for the unDelegate account is used by default.",
+    "Please input the receiver name of the undelegate account，the account name for the unDelegate account is used by default.",
   "StakePage DelegateReceiverAccountNameHelp":
     "notes：If the account name is inconsistent with the account name used for delegate, it is a Delegate to others.",
   "StakePage UnDelegateReceiverAccountNameHelp":
     "notes：If the account name is inconsistent with the account name used for undelegate, it is a UnDelegate to others.",
   "StakePage DelegateStakeNetQuantityPlaceholder":
-    "Please enter the amount of Net for the delegate",
+    "Please input the amount of Net for the delegate",
   "StakePage UnDelegateStakeNetQuantityPlaceholder":
-    "Please enter the amount of Net for the undelegate",
+    "Please input the amount of Net for the undelegate",
   "StakePage DelegateStakeCpuQuantityPlaceholder":
-    "Please enter the amount of cpu for the delegate",
+    "Please input the amount of cpu for the delegate",
   "StakePage UnDelegateStakeCpuQuantityPlaceholder":
-    "Please enter the amount of cpu for the undelegate",
+    "Please input the amount of cpu for the undelegate",
   "StakePage FromLabel": "From",
   "StakePage ReceiverLabel": "Receiver",
   "StakePage NetQuantityLabel": "Net",
@@ -134,22 +134,22 @@
   "TransferPage SymbolLabel": "Symbol",
   "UpdateAuthPage CheckPrivateKeyMessage": "Check PrivateKey",
   "UpdateAuthPage CheckPrivateKeyPlaceholder":
-    "Please enter the PrivateKey for Check",
+    "Please input the PrivateKey for Check",
   "UpdateAuthPage GetPrivateKeyButtonMessage": "Get PrivateKey",
   "UpdateAuthPage ModifyPrivateKeyTitle": "Modify PrivateKey",
   "UpdateAuthPage UpdateAuthAccountNamePlaceholder":
-    "Please enter the AccountName",
+    "Please input the AccountName",
   "UpdateAuthPage UpdateAuthActiveKeyPlaceholder":
-    "Please enter the activeKey you want",
+    "Please input the activeKey you want",
   "UpdateAuthPage UpdateAuthOwnerKeyPlaceholder":
-    "Please enter the ownerKey you want",
+    "Please input the ownerKey you want",
   "UpdateAuthPage PrivateKeyLabel": "PrivateKey",
   "UpdateAuthPage AccountLabel": "Account",
-  "VotePage VoterPlaceholder": "Please enter the account name",
+  "VotePage VoterPlaceholder": "Please input the account name",
   "VotePage ProducersHelp":
-    "notes：Please select the voting node! It can be multiple selected, searchable, and import. enter confirm!",
+    "notes：Please select the voting node! It can be multiple selected, searchable, and import. input confirm!",
   "VotePage ProducersPlaceholder":
-    "Please select the voting node! It can be multiple selected, searchable, and import. enter confirm!",
+    "Please select the voting node! It can be multiple selected, searchable, and import. input confirm!",
   "VotePage VoterLabel": "Voter",
   "VotePage ProducersLabel": "Producers",
   "boilerplate.containers.LocaleToggle.de": "de",
@@ -162,7 +162,8 @@
   "Public HeaderMenuStake": "Stake",
   "Public HeaderMenuTradeManage": "Transaction Processing",
   "Public HeaderMenuOffical": "Main",
-  "Public HeaderMenuTestNet": "Test",
+  "Public HeaderMenuTestNet": "Cannon Test",
+  "Public HeaderMenuOtherTestNet": "Other Test",
   "Public HeaderAppDownLoad": "APP Download",
   "Public HeaderOnlineAppDownLoad": "Offline IOS",
   "Public HeaderOfflineAppDownLoad": "Offline Android",
@@ -189,7 +190,7 @@
   "TransferPage FunctionSearchAccountTableAddress": "Address",
   "TransferPage FunctionSearchNoData": "no data",
   "TransferPage FunctionSearchAccountPlaceHolder":
-    "Please enter the account name",
+    "Please input the account name",
   "InfoInitPage infoAlertMessage": "This page is used online",
   "InfoInitPage infoAlertDescription":
     "Paste the information below into the EOSCannon offline signature tool",
@@ -237,5 +238,10 @@
     "Tips: For most actions, active private key is needed to sign transaction;",
   "DescribePage describePageNinth":
     "For changing keys, please use owner private key to sign transaction.",
-  "DescribePage describePageZero": "Cannon Tools Introduction"
+  "DescribePage describePageZero": "Cannon Tools Introduction",
+  "Header HeaderMenuErrorMessage": "Not the right website.",
+  "Header HeaderMenuInputMessage": "Please input",
+  "Header HeaderInputTestNet": "Please input test network address.",
+  "Header ScanCodeSendGetIt": "Got it"
+
 }

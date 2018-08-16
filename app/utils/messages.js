@@ -160,6 +160,10 @@ export default defineMessages({
     id: 'Public HeaderMenuTestNet',
     defaultMessage: '测试网',
   },
+  HeaderMenuOtherTestNet: {
+    id: 'Public HeaderMenuOtherTestNet',
+    defaultMessage: '其他测试网',
+  },
   HeaderMenuStake: {
     id: 'Public HeaderMenuStake',
     defaultMessage: '质押',
@@ -235,5 +239,21 @@ export default defineMessages({
   JsonAlertAttentionArt: {
     id: 'Public JsonAlertAttentionArt',
     defaultMessage: '请输入正确的报文!',
+  },
+  HeaderMenuErrorMessage: {
+    id: 'Header HeaderMenuErrorMessage',
+    defaultMessage: '不是正确的网址',
+  },
+  HeaderMenuInputMessage: {
+    id: 'Header HeaderMenuInputMessage',
+    defaultMessage: '请输入',
+  },
+  HeaderInputTestNet: {
+    id: 'Header HeaderInputTestNet',
+    defaultMessage: '请输入测试网地址',
+  },
+  ScanCodeSendGetIt: {
+    id: 'Header ScanCodeSendGetIt',
+    defaultMessage: '知道了',
   },
 });
