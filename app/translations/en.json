@@ -226,8 +226,8 @@
   "DescribePage describePageFourth":
     "All transactions can divide into three steps:",
   "DescribePage describePagefivth":
-    "All transactions can divide into three steps:",
-  "DescribePage describePagefivthBold": "Generate unsigned ",
+    "Generate ",
+  "DescribePage describePagefivthBold": "unsigned ",
   "DescribePage describePagefivthBoldLast": "transaction",
   "DescribePage describePageSix": "Offline APP ",
   "DescribePage describePageSixLast": "sign transaction",

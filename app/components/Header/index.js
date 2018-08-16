@@ -251,13 +251,14 @@ class HeaderComp extends React.Component {
               margin: '1.5rem',
               fontSize: '18px',
               fontWeight: 'bold',
+              marginBottom: '2.5rem'
             }}
           >
-              {this.state.LogoName ? (
-                <img src={eosCannonLogoBig} alt="" width="75%" />
-              ): (
-                <img src={eosCannonLogo} alt="" width="32" />
-              )}
+            {this.state.LogoName ? (
+              <img src={eosCannonLogoBig} alt="" width="75%" />
+            ): (
+              <img src={eosCannonLogo} alt="" width="32" />
+            )}
           </div>
           <Menu
             theme="dark"

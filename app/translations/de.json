@@ -204,9 +204,9 @@
   "DescribePage describePageSenvenBold": "已签名",
   "DescribePage describePageSenvenlast": "的交易",
   "DescribePage describePageEight":
-    "注意：绝大部分操作，使用active私钥签名即可；",
+    "注意 : 绝大部分操作，使用active私钥签名即可；",
   "DescribePage describePageNinth":
-    "修改权限的公私钥操作，请使用owner私钥签名。",
+    "  修改权限的公私钥操作，请使用owner私钥签名。",
   "DescribePage describePageZero": "佳能工具介绍",
   "Header HeaderMenuErrorMessage": "不是正确的网址",
   "Header HeaderMenuInputMessage": "请输入",
