@@ -43,7 +43,6 @@ const getEosOtherTest = () =>
   });
 
 const getEos = type => {
-  //console.log('type====', type)
   switch (type) {
     case 'main':
       return getEosMain()

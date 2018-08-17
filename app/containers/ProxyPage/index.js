@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import { Form, Icon, Input, Card, Col, Row  } from 'antd';
+import { Form, Icon, Input, Card, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -15,11 +15,7 @@ import {
   getEos,
   openTransactionFailNotification,
 } from '../../utils/utils';
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContent } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
@@ -98,8 +94,12 @@ export class ProxyPage extends React.Component {
     );
     const VoterLabel = this.state.formatMessage(messages.VoterLabel);
     const ProxyLabel = this.state.formatMessage(messages.ProxyLabel);
-    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
-    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
+    const ProducersDealTranscation = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscation,
+    );
+    const ProducersSendTranscation = this.state.formatMessage(
+      utilsMsg.ProducersSendTranscation,
+    );
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -111,8 +111,8 @@ export class ProxyPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={VoterPlaceholder}
                   />,
                 )}

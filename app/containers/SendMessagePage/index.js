@@ -13,11 +13,7 @@ import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 import styleComps from './styles';
 
 import { getEos } from '../../utils/utils';
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 
 import utilsMsg from '../../utils/messages';
 import { BrowserQRCodeReader } from '../../utils/zxing.qrcodereader.min';
@@ -29,7 +25,6 @@ export class SendMessagePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      SendButtonDisable: true,
       transaction_id: '',
       formatMessage: this.props.intl.formatMessage,
     };
@@ -57,9 +52,6 @@ export class SendMessagePage extends React.Component {
           this.props.form.setFieldsValue({
             jsonInfo: result.text,
           });
-          this.setState({
-            SendButtonDisable: false,
-          });
         });
     });
   };
@@ -68,13 +60,13 @@ export class SendMessagePage extends React.Component {
    * */
   sendMessage = () => {
     const eos = getEos(this.props.SelectedNetWork);
-    let data = this.props.form.getFieldsValue().jsonInfo
-    if( !data || data.indexOf("{") === -1 ){
+    const data = this.props.form.getFieldsValue().jsonInfo;
+    if (!data || data.indexOf('{') === -1) {
       Modal.warning({
         title: this.props.intl.formatMessage(utilsMsg.JsonAlertAttention),
         content: this.props.intl.formatMessage(utilsMsg.JsonAlertAttentionArt),
       });
-      return false;
+      return;
     }
     eos
       .pushTransaction(JSON.parse(data))
@@ -97,11 +89,13 @@ export class SendMessagePage extends React.Component {
     const description = formatMessage(utilsMsg.JsonAlertDescription);
     const OpenCameraButtonName = formatMessage(utilsMsg.OpenCameraButtonName);
     const JsonInfoPlaceholder = formatMessage(utilsMsg.JsonInfoPlaceholder);
-    const FieldAlertSendMessageNew = formatMessage(utilsMsg.FieldAlertSendMessageNew);
+    const FieldAlertSendMessageNew = formatMessage(
+      utilsMsg.FieldAlertSendMessageNew,
+    );
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
-          <FormComp style={{maxWidth: '500px'}}>
+          <FormComp style={{ maxWidth: '500px' }}>
             <FormItem>
               <Alert
                 message={FieldAlertSendMessageNew}

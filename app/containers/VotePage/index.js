@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Select, Card, Col, Row  } from 'antd';
+import { Form, Icon, Input, Select, Card, Col, Row } from 'antd';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
@@ -16,11 +16,7 @@ import {
   getEos,
   openTransactionFailNotification,
 } from '../../utils/utils';
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContent } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
@@ -103,8 +99,12 @@ export class VotePage extends React.Component {
     );
     const VoterLabel = this.state.formatMessage(messages.VoterLabel);
     const ProducersLabel = this.state.formatMessage(messages.ProducersLabel);
-    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
-    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
+    const ProducersDealTranscation = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscation,
+    );
+    const ProducersSendTranscation = this.state.formatMessage(
+      utilsMsg.ProducersSendTranscation,
+    );
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -112,12 +112,14 @@ export class VotePage extends React.Component {
             <Card title={ProducersDealTranscation} bordered={false}>
               <FormItem {...formItemLayout} label={VoterLabel} colon>
                 {getFieldDecorator('voter', {
-                  rules: [{ required: true, message: VotePageVoterPlaceholder }],
+                  rules: [
+                    { required: true, message: VotePageVoterPlaceholder },
+                  ],
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={VotePageVoterPlaceholder}
                   />,
                 )}

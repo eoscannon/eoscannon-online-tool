@@ -18,5 +18,4 @@ export default defineMessages({
     id: 'InfoInitPage infoAlertDescription',
     defaultMessage: '将下方信息粘贴至EOSCannon离线签名工具中。',
   },
-
 });

@@ -34,7 +34,7 @@ export default injectIntl(FooterComp);
 
 const FooterWrapper = styled(Footer)`
   text-align: center;
-  background: #fff!important;
+  background: #fff !important;
   a {
     img {
       margin: 0 0 0.2rem 0.2rem;

@@ -16,11 +16,7 @@ import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import { getEosInfoDetail, openNotification } from '../../utils/utils';
 import messages from './messages';
 
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -79,7 +75,7 @@ export class InfoInitPage extends React.Component {
 
     return (
       <LayoutContentBox>
-        <FormComp style={{maxWidth: '500px'}}>
+        <FormComp style={{ maxWidth: '500px' }}>
           {/* {this.props.SelectedNetWork === 'test' ? ( */}
           {/* <FormItem style={{ textAlign: 'center', margin: '0 5% 5%' }}> */}
           {/* <Search */}
@@ -104,11 +100,7 @@ export class InfoInitPage extends React.Component {
             </div>
           </FormItem>
           <FormItem>
-              <TextArea
-                value={this.state.QrCodeValue}
-                rows="4"
-                disabled="true"
-              />
+            <TextArea value={this.state.QrCodeValue} rows="4" disabled="true" />
           </FormItem>
           <FormItem>
             <Button

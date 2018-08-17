@@ -42,7 +42,7 @@ export default class ScanQrcode extends Component {
     this.setState({
       VideoElement: (
         <FormItem>
-          <video id="video" width="100%" height="200" style={{ width: "100%" }}>
+          <video id="video" width="100%" height="200" style={{ width: '100%' }}>
             <track kind="captions" />
           </video>
         </FormItem>
@@ -55,7 +55,6 @@ export default class ScanQrcode extends Component {
     this.setState({
       VideoElement: null,
     });
-    const codeReader = new BrowserQRCodeReader();
   };
 
   handleScanQrcode = () => {
@@ -96,20 +95,16 @@ export default class ScanQrcode extends Component {
           content: `${this.props.formatMessage(
             utilsMsg.ScanCodeSendSuccessMessage,
           )} ${res.transaction_id}`,
-          //maskClosable: true,
-          okText: this.props.formatMessage(
-            utilsMsg.ScanCodeSendGetIt,
-          )
-        })
+          // maskClosable: true,
+          okText: this.props.formatMessage(utilsMsg.ScanCodeSendGetIt),
+        });
       })
       .catch(err => {
         Modal.error({
           title: this.props.formatMessage(utilsMsg.ScanCodeSendFailed),
           content: `${err}`,
-          //maskClosable: true,
-          okText: this.props.formatMessage(
-            utilsMsg.ScanCodeSendGetIt,
-          )
+          // maskClosable: true,
+          okText: this.props.formatMessage(utilsMsg.ScanCodeSendGetIt),
         });
       });
   };
@@ -142,7 +137,6 @@ export default class ScanQrcode extends Component {
           >
             {OpenCameraButtonName}
           </Button>
-
         </FormItem>
         <FormItem>
           {getFieldDecorator('SendTransaction', {

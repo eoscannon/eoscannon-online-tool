@@ -8,20 +8,19 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Input, Button, Alert, Card } from 'antd';
-import QRCode from 'qrcode.react';
+import { Form, Card } from 'antd';
 import copy from 'copy-to-clipboard';
 
-import { makeSelectNetwork } from '../LanguageProvider/selectors';
+import {
+  makeSelectNetwork,
+  makeSelectLocale,
+} from '../LanguageProvider/selectors';
 import { getEosInfoDetail, openNotification } from '../../utils/utils';
 import messages from './messages';
 import teacherPic from './../../images/cannonTeach.jpg';
+import teacherEnglishPic from './../../images/cannonTeachEnglish.jpg';
 
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 
 const FormItem = Form.Item;
 
@@ -135,15 +134,23 @@ export class DescribePage extends React.Component {
                 {describePageSenvenlast} <br />
               </p>
               <div>
-                <img src={teacherPic} alt="" style={{ width: '100%' }} />
+                {this.props.locale === 'en' ? (
+                  <img
+                    src={teacherEnglishPic}
+                    alt=""
+                    style={{ width: '100%' }}
+                  />
+                ) : (
+                  <img src={teacherPic} alt="" style={{ width: '100%' }} />
+                )}
               </div>
               <br />
               <br />
               <br />
               <p>
-                {describePageEight} <br />
-                &nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                {describePageEight}
+                <br />
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{
                   describePageNinth
                 }
               </p>
@@ -159,9 +166,11 @@ DescribePage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
   SelectedNetWork: PropTypes.string,
+  locale: PropTypes.string,
 };
 const mapStateToProps = createStructuredSelector({
   SelectedNetWork: makeSelectNetwork(),
+  locale: makeSelectLocale(),
 });
 
 const DescribePageIntl = injectIntl(DescribePage);
