@@ -148,11 +148,13 @@ export class DescribePage extends React.Component {
               <br />
               <br />
               <p>
-                {describePageEight}
-                <br />
-                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{
-                  describePageNinth
-                }
+                <b style={{ color: '#000' }}>
+                  {describePageEight}
+                  <br />
+                  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{
+                    describePageNinth
+                  }
+                </b>
               </p>
             </Card>
           </FormItem>

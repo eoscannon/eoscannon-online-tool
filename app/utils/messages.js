@@ -256,4 +256,24 @@ export default defineMessages({
     id: 'Header ScanCodeSendGetIt',
     defaultMessage: '知道了',
   },
+  JsonAlertcloseCamera: {
+    id: 'Header JsonAlertcloseCamera',
+    defaultMessage: '关闭',
+  },
+  JsonAlertNoCamera: {
+    id: 'Header JsonAlertNoCamera',
+    defaultMessage: '已切换至无摄像头模式，将手动粘贴签名',
+  },
+  JsonAlertHaveCamera: {
+    id: 'Header JsonAlertHaveCamera',
+    defaultMessage: '已切换至摄像头扫描模式',
+  },
+  JsonAlerthaveCamera: {
+    id: 'Header JsonAlerthaveCamera',
+    defaultMessage: '有摄像头',
+  },
+  JsonAlertnoneCamera: {
+    id: 'Header JsonAlertnoneCamera',
+    defaultMessage: '无摄像头',
+  },
 });
