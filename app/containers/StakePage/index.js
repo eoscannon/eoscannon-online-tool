@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Switch, Card, Col, Row  } from 'antd';
+import { Form, Icon, Input, Switch, Card, Col, Row } from 'antd';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
@@ -15,11 +15,7 @@ import {
   getEos,
   openTransactionFailNotification,
 } from '../../utils/utils';
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContent } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
@@ -39,7 +35,6 @@ export class StakePage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
-      SelectedNetWork: 'main',
     };
   }
   /**
@@ -47,12 +42,6 @@ export class StakePage extends React.Component {
    * */
   componentWillReceiveProps(nextProps) {
     this.onValuesChange(nextProps);
-    if (
-      nextProps.SelectedNetWork &&
-      nextProps.SelectedNetWork !== this.props.SelectedNetWork
-    ) {
-      this.setState({ SelectedNetWork: nextProps.SelectedNetWork });
-    }
   }
   /**
    * 用户选择质押/解质押
@@ -177,8 +166,12 @@ export class StakePage extends React.Component {
     const CpuQuantityLabel = this.state.formatMessage(
       messages.CpuQuantityLabel,
     );
-    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
-    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
+    const ProducersDealTranscation = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscation,
+    );
+    const ProducersSendTranscation = this.state.formatMessage(
+      utilsMsg.ProducersSendTranscation,
+    );
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -200,8 +193,8 @@ export class StakePage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={FromAccountNamePlaceholder}
                   />,
                 )}
@@ -222,8 +215,8 @@ export class StakePage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={ReceiverAccountNamePlaceholder}
                   />,
                 )}
@@ -239,11 +232,11 @@ export class StakePage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
+                      <Icon
+                        type="pay-circle-o"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={StakeNetQuantityPlaceholder}
                   />,
                 )}
@@ -259,11 +252,11 @@ export class StakePage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
+                      <Icon
+                        type="pay-circle-o"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={StakeCpuQuantityPlaceholder}
                   />,
                 )}

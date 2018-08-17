@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Card, Col, Row  } from 'antd';
+import { Form, Icon, Input, Card, Col, Row } from 'antd';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
@@ -16,11 +16,7 @@ import {
   getEos,
   openTransactionFailNotification,
 } from '../../utils/utils';
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContent } from '../../components/NodeComp';
 
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
@@ -196,8 +192,12 @@ export class CreateAccountPage extends React.Component {
     const CreatorLabel = this.state.formatMessage(messages.CreatorLabel);
     const NameLabel = this.state.formatMessage(messages.NameLabel);
     const BytesLabel = this.state.formatMessage(messages.BytesLabel);
-    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
-    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
+    const ProducersDealTranscation = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscation,
+    );
+    const ProducersSendTranscation = this.state.formatMessage(
+      utilsMsg.ProducersSendTranscation,
+    );
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -211,8 +211,8 @@ export class CreateAccountPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={CreatorAccountNamePlaceholder}
                   />,
                 )}
@@ -234,8 +234,8 @@ export class CreateAccountPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={NewAccountNamePlaceholder}
                   />,
                 )}
@@ -251,8 +251,11 @@ export class CreateAccountPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon
+                        type="unlock"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={OwnerKeyPlaceholder}
                   />,
                 )}
@@ -268,8 +271,11 @@ export class CreateAccountPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon
+                        type="unlock"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={ActiveKeyPlaceholder}
                   />,
                 )}
@@ -290,11 +296,11 @@ export class CreateAccountPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
+                      <Icon
+                        type="pay-circle-o"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={BytesPlaceholder}
                   />,
                 )}
@@ -310,11 +316,11 @@ export class CreateAccountPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
+                      <Icon
+                        type="pay-circle-o"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={StakeNetQuantityPlaceholder}
                   />,
                 )}
@@ -330,11 +336,11 @@ export class CreateAccountPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
+                      <Icon
+                        type="pay-circle-o"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={StakeCpuQuantityPlaceholder}
                   />,
                 )}
@@ -364,7 +370,7 @@ export class CreateAccountPage extends React.Component {
           </Col>
         </Row>
       </LayoutContent>
-    )
+    );
   }
 }
 

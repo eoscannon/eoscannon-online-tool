@@ -8,21 +8,19 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Input, Button, Alert, Card } from 'antd';
-import QRCode from 'qrcode.react';
+import { Form, Card } from 'antd';
 import copy from 'copy-to-clipboard';
 
-import {makeSelectNetwork , makeSelectLocale} from '../LanguageProvider/selectors';
+import {
+  makeSelectNetwork,
+  makeSelectLocale,
+} from '../LanguageProvider/selectors';
 import { getEosInfoDetail, openNotification } from '../../utils/utils';
 import messages from './messages';
 import teacherPic from './../../images/cannonTeach.jpg';
 import teacherEnglishPic from './../../images/cannonTeachEnglish.jpg';
 
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 
 const FormItem = Form.Item;
 
@@ -126,30 +124,35 @@ export class DescribePage extends React.Component {
                 {describePageFourth}
                 <br />
                 1.{describePagefivth}
-                <b style={{ color: '#000'}}>{describePagefivthBold}</b>
+                <b style={{ color: '#000' }}>{describePagefivthBold}</b>
                 {describePagefivthBoldLast}
                 <br />
-                2.<b style={{ color: '#000'}}>{describePageSix}</b>
+                2.<b style={{ color: '#000' }}>{describePageSix}</b>
                 {describePageSixLast} <br />
                 3.{describePageSenven}
-                <b style={{ color: '#000'}}>{describePageSenvenBold}</b>
+                <b style={{ color: '#000' }}>{describePageSenvenBold}</b>
                 {describePageSenvenlast} <br />
               </p>
               <div>
-                {this.props.locale === 'en'? (
-                  <img src={teacherEnglishPic} alt="" style={{ width: '100%'}} />
-                ):(
-                  <img src={teacherPic} alt="" style={{ width: '100%'}} />
+                {this.props.locale === 'en' ? (
+                  <img
+                    src={teacherEnglishPic}
+                    alt=""
+                    style={{ width: '100%' }}
+                  />
+                ) : (
+                  <img src={teacherPic} alt="" style={{ width: '100%' }} />
                 )}
               </div>
               <br />
               <br />
               <br />
               <p>
-                {describePageEight}<br />
-                &nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;{describePageNinth}
+                {describePageEight}
+                <br />
+                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{
+                  describePageNinth
+                }
               </p>
             </Card>
           </FormItem>
@@ -163,6 +166,7 @@ DescribePage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
   SelectedNetWork: PropTypes.string,
+  locale: PropTypes.string,
 };
 const mapStateToProps = createStructuredSelector({
   SelectedNetWork: makeSelectNetwork(),

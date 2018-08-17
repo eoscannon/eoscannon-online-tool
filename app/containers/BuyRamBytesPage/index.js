@@ -16,11 +16,7 @@ import {
   getEos,
   openTransactionFailNotification,
 } from '../../utils/utils';
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContent } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
@@ -142,8 +138,12 @@ export class BuyRamBytesPage extends React.Component {
       messages.ReceiverAccountNameLabel,
     );
     const BytesLabel = this.state.formatMessage(messages.BytesLabel);
-    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
-    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
+    const ProducersDealTranscation = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscation,
+    );
+    const ProducersSendTranscation = this.state.formatMessage(
+      utilsMsg.ProducersSendTranscation,
+    );
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -168,8 +168,8 @@ export class BuyRamBytesPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={PayerAccountNamePlaceholder}
                   />,
                 )}
@@ -190,8 +190,11 @@ export class BuyRamBytesPage extends React.Component {
                   })(
                     <Input
                       prefix={
-                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                    }
+                        <Icon
+                          type="user"
+                          style={{ color: 'rgba(0,0,0,.25)' }}
+                        />
+                      }
                       placeholder={ReceiverAccountNamePlaceholder}
                     />,
                   )}
@@ -208,11 +211,11 @@ export class BuyRamBytesPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
+                      <Icon
+                        type="pay-circle-o"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={BytesQuantityPlaceholder}
                   />,
                 )}
@@ -241,7 +244,6 @@ export class BuyRamBytesPage extends React.Component {
             </Card>
           </Col>
         </Row>
-
       </LayoutContent>
     );
   }

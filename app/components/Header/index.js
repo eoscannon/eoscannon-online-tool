@@ -41,13 +41,13 @@ class HeaderComp extends React.Component {
       openKeys: [],
       rootSubmenuKeys: ['1', '2', '3', '4', '5'],
       testNetUrl: '',
-      visible: false
+      visible: false,
     };
   }
   /**
    * 根据URL地址，重新设置默认菜单选项
    * */
-  componentDidMount() {
+  componentWillMount() {
     let defaultSelectedKeys = '12';
     switch (window.location.hash.substring(1)) {
       case '/dscribe':
@@ -113,7 +113,7 @@ class HeaderComp extends React.Component {
   };
 
   handleChange = value => {
-    if( value ==='other' ){
+    if (value === 'other') {
       this.setState({
         visible: true,
       });
@@ -121,42 +121,46 @@ class HeaderComp extends React.Component {
     this.props.onDispatchChangeNetworkReducer(value);
   };
 
-  changeNet = (e) => {
+  changeNet = e => {
     const { value } = e.target;
-    console.log('value===',value)
-    this.setState({testNetUrl: value})
-  }
+    this.setState({ testNetUrl: value });
+  };
 
-  setNetWork = () =>{
-    let value = this.state.testNetUrl
-    if( value != ""){
-      var reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
-      if(!reg.test(value)){
-        message.error(this.props.intl.formatMessage(utilsMsg.HeaderMenuErrorMessage));
+  setNetWork = () => {
+    const value = this.state.testNetUrl;
+    if (value !== '') {
+      const reg =
+        '/(http|ftp|https)://[w-_]+(.[w-_]+)+([w-.,@?^=%&:/~+#]*[w-@?^=%&/~+#])?/';
+      if (!reg.test(value)) {
+        message.error(
+          this.props.intl.formatMessage(utilsMsg.HeaderMenuErrorMessage),
+        );
         return;
       }
     } else {
-      message.error(this.props.intl.formatMessage(utilsMsg.HeaderMenuInputMessage));
+      message.error(
+        this.props.intl.formatMessage(utilsMsg.HeaderMenuInputMessage),
+      );
       return;
     }
     const eos = EOS({
       httpEndpoint: value,
       chainId: null,
     });
-    eos.getInfo({}).then( info => {
-      storage.setChainId( info.chain_id );
+    eos.getInfo({}).then(info => {
+      storage.setChainId(info.chain_id);
     });
     storage.setNetwork(value);
     this.setState({
       visible: false,
     });
-  }
+  };
 
   hideModal = () => {
     this.setState({
       visible: false,
     });
-  }
+  };
 
   toggle = () => {
     this.setState(
@@ -173,9 +177,9 @@ class HeaderComp extends React.Component {
             this.setState({
               LogoName: true,
             });
-          }, 150)
+          }, 150);
         }
-      }
+      },
     );
   };
 
@@ -202,7 +206,6 @@ class HeaderComp extends React.Component {
     const OnlineAppDownLoad = formatMessage(utilsMsg.HeaderOnlineAppDownLoad);
     const sendTrade = formatMessage(utilsMsg.HeaderSendTrade);
     const inputTestNet = formatMessage(utilsMsg.HeaderInputTestNet);
-    //const testNet = formatMessage(utilsMsg.HeaderTestNet);
     const sure = formatMessage(utilsMsg.ScanCodeSendSure);
     const cancel = formatMessage(utilsMsg.ScanCodeSendCancel);
     const contentAndriod = (
@@ -221,10 +224,6 @@ class HeaderComp extends React.Component {
         </div>
       </div>
     );
-
-    const refCallback = node => {
-      // `node` refers to the mounted DOM element or null when unmounted
-    }
 
     return (
       <Layout>
@@ -251,12 +250,12 @@ class HeaderComp extends React.Component {
               margin: '1.5rem',
               fontSize: '18px',
               fontWeight: 'bold',
-              marginBottom: '2.5rem'
+              marginBottom: '2.5rem',
             }}
           >
             {this.state.LogoName ? (
               <img src={eosCannonLogoBig} alt="" width="75%" />
-            ): (
+            ) : (
               <img src={eosCannonLogo} alt="" width="32" />
             )}
           </div>
@@ -268,7 +267,11 @@ class HeaderComp extends React.Component {
             onOpenChange={this.onOpenChange}
           >
             <Menu.Item key="9">
-              <Link href="/accountSearch" to="/accountSearch" innerRef={refCallback}>
+              <Link
+                href="/accountSearch"
+                to="/accountSearch"
+                innerRef={() => {}}
+              >
                 <Icon type="user" />
                 <span>{accountSearch}</span>
               </Link>

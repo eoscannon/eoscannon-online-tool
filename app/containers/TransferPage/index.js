@@ -17,11 +17,7 @@ import {
   symbolList,
   openTransactionFailNotification,
 } from '../../utils/utils';
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContent } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
@@ -42,8 +38,6 @@ export class TransferPage extends React.Component {
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
       contract: 'eosio.token',
-      symbol: '',
-      digit: 4
     };
   }
   /**
@@ -72,14 +66,11 @@ export class TransferPage extends React.Component {
     });
   };
 
-  handleChange = (val) => {
-    console.log('val ===',val)
+  handleChange = val => {
     this.setState({
       contract: val.key,
-      symbol: val.label,
-    })
-
-  }
+    });
+  };
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -96,11 +87,13 @@ export class TransferPage extends React.Component {
       transferMemo,
       transferSymbol,
     } = values;
-    console.log('transferSymbol====',transferSymbol)
-    let transferDigit = 4
-    if (this.state.contract !== 'eosio' && this.state.contract !== 'eosio.token') {
+    let transferDigit = 4;
+    if (
+      this.state.contract !== 'eosio' &&
+      this.state.contract !== 'eosio.token'
+    ) {
       if (this.state.contract.toUpperCase() === 'EVERIPEDIAIQ') {
-         transferDigit = 3
+        transferDigit = 3;
         eos.fc.abiCache.abi(this.state.contract, eosIqAbi);
       } else if (this.state.contract.toUpperCase() === 'CHALLENGEDAC') {
         eos.fc.abiCache.abi(this.state.contract, adcAbi);
@@ -108,7 +101,7 @@ export class TransferPage extends React.Component {
         eos.fc.abiCache.abi(this.state.contract, eosioAbi);
       }
     }
-    let transferContract = this.state.contract
+    const transferContract = this.state.contract;
     eos
       .transaction(
         {
@@ -157,9 +150,6 @@ export class TransferPage extends React.Component {
     const TransferToAccountNamePlaceholder = this.state.formatMessage(
       messages.TransferToAccountNamePlaceholder,
     );
-    const TransferContractPlaceholder = this.state.formatMessage(
-      messages.TransferContractPlaceholder,
-    );
     const TransferQuantityPlaceholder = this.state.formatMessage(
       messages.TransferQuantityPlaceholder,
     );
@@ -177,12 +167,14 @@ export class TransferPage extends React.Component {
     );
     const FromLabel = this.state.formatMessage(messages.FromLabel);
     const ToLabel = this.state.formatMessage(messages.ToLabel);
-    const ContractLabel = this.state.formatMessage(messages.ContractLabel);
     const QuantityLabel = this.state.formatMessage(messages.QuantityLabel);
-    const DigitLabel = this.state.formatMessage(messages.DigitLabel);
     const SymbolLabel = this.state.formatMessage(messages.SymbolLabel);
-    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
-    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
+    const ProducersDealTranscation = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscation,
+    );
+    const ProducersSendTranscation = this.state.formatMessage(
+      utilsMsg.ProducersSendTranscation,
+    );
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -199,8 +191,8 @@ export class TransferPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={TransferFromAccountNamePlaceholder}
                   />,
                 )}
@@ -208,13 +200,16 @@ export class TransferPage extends React.Component {
               <FormItem {...formItemLayout} label={ToLabel} colon>
                 {getFieldDecorator('ToAccountName', {
                   rules: [
-                    { required: true, message: TransferToAccountNamePlaceholder },
+                    {
+                      required: true,
+                      message: TransferToAccountNamePlaceholder,
+                    },
                   ],
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={TransferToAccountNamePlaceholder}
                   />,
                 )}
@@ -228,11 +223,11 @@ export class TransferPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
+                      <Icon
+                        type="pay-circle-o"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={TransferQuantityPlaceholder}
                   />,
                 )}
@@ -240,9 +235,10 @@ export class TransferPage extends React.Component {
 
               <FormItem {...formItemLayout} label={SymbolLabel} colon>
                 {getFieldDecorator('transferSymbol', {
-                  initialValue: { key: 'EOS',label: 'EOS' },
-                  rules: [{ required: true, message: TransferSymbolPlaceholder }],
-
+                  initialValue: { key: 'EOS', label: 'EOS' },
+                  rules: [
+                    { required: true, message: TransferSymbolPlaceholder },
+                  ],
                 })(
                   <Select
                     labelInValue
@@ -250,8 +246,8 @@ export class TransferPage extends React.Component {
                     onChange={this.handleChange}
                     placeholder={TransferDigitPlaceholder}
                   >
-                    {symbolList.map((item, i) => (
-                      <Option key={ i } value={item.contract}>
+                    {symbolList.map(item => (
+                      <Option key={item.contract} value={item.contract}>
                         {item.symbol}
                       </Option>
                     ))}
@@ -265,15 +261,17 @@ export class TransferPage extends React.Component {
                 colon
               >
                 {getFieldDecorator('transferMemo', {
-                  rules: [{ required: false, message: TransferMemoPlaceholder }],
+                  rules: [
+                    { required: false, message: TransferMemoPlaceholder },
+                  ],
                 })(
                   <Input
                     prefix={
-                    <Icon
-                      type="pay-circle-o"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
+                      <Icon
+                        type="pay-circle-o"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={TransferMemoPlaceholder}
                   />,
                 )}

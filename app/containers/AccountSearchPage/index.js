@@ -13,11 +13,7 @@ import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 import styleComps from './styles';
 
 import { getEos } from '../../utils/utils';
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 import messages from './messages';
 
 const { Search } = Input;
@@ -100,14 +96,14 @@ export class AccountSearchPage extends React.Component {
               voteProxyStatus: false,
               voteNode: info.voter_info.producers,
             });
-          }else{
+          } else {
             this.setState({
               voteNodeStatus: false,
               voteProxyStatus: true,
               voteNode: [],
             });
           }
-        }else{
+        } else {
           this.setState({
             voteNodeStatus: false,
             voteProxyStatus: false,
@@ -186,17 +182,15 @@ export class AccountSearchPage extends React.Component {
               symbolCode: 'eosio.token',
             });
           })
-          .catch(err => {
+          .catch(() => {
             message.error(
               this.state.formatMessage(messages.FunctionSearchNoData),
             );
-            console.log('err:', err);
           });
       })
-      .catch(err => {
+      .catch(() => {
         message.error(this.state.formatMessage(messages.FunctionSearchNoData));
         this.setState({ info: '' });
-        console.log('err:', err);
       });
   };
 
@@ -338,14 +332,14 @@ export class AccountSearchPage extends React.Component {
                   </span>
                   {this.state.voteProxyStatus ? (
                     <span>
-                    {FunctionSearchEOSVoteProxy}：{this.state.voteProxy}
-                  </span>
+                      {FunctionSearchEOSVoteProxy}：{this.state.voteProxy}
+                    </span>
                   ) : null}
                   {this.state.voteNodeStatus ? (
                     <span>
                       {FunctionSearchEOSVoteNode}：<br />
-                      {this.state.voteNode.map((item, index) => (
-                        <Tag key={index}>{item}</Tag>
+                      {this.state.voteNode.map(item => (
+                        <Tag key={item}>{item}</Tag>
                       ))}
                     </span>
                   ) : (
@@ -366,10 +360,7 @@ export class AccountSearchPage extends React.Component {
                     </div>
                   </div>
                   <div className="contentDetail">
-                    <Progress
-                      type="dashboard"
-                      percent={this.state.cpuScale}
-                    />
+                    <Progress type="dashboard" percent={this.state.cpuScale} />
                     <div className="contentDetailDesc">
                       <span>{this.state.cpuContent}</span>
                       <span className="contentDetailDescTitle">CPU</span>
@@ -395,9 +386,7 @@ export class AccountSearchPage extends React.Component {
                         {FunctionSearchNetStake}：{this.state.networkStake}
                       </span>
                       <span>
-                        {FunctionSearchNetRefund}：{
-                          this.state.networkMortgage
-                        }
+                        {FunctionSearchNetRefund}：{this.state.networkMortgage}
                       </span>
                     </div>
                   </div>

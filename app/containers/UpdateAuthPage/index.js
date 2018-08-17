@@ -15,11 +15,7 @@ import {
   getEos,
   openTransactionFailNotification,
 } from '../../utils/utils';
-import {
-  LayoutContentBox,
-  LayoutContent,
-  FormComp,
-} from '../../components/NodeComp';
+import { LayoutContent } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
@@ -140,8 +136,12 @@ export class UpdateAuthPage extends React.Component {
       messages.UpdateAuthOwnerKeyPlaceholder,
     );
     const AccountLabel = this.state.formatMessage(messages.AccountLabel);
-    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
-    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
+    const ProducersDealTranscation = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscation,
+    );
+    const ProducersSendTranscation = this.state.formatMessage(
+      utilsMsg.ProducersSendTranscation,
+    );
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -158,8 +158,8 @@ export class UpdateAuthPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
                     placeholder={UpdateAuthAccountNamePlaceholder}
                   />,
                 )}
@@ -175,8 +175,11 @@ export class UpdateAuthPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon
+                        type="unlock"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={UpdateAuthActiveKeyPlaceholder}
                   />,
                 )}
@@ -192,8 +195,11 @@ export class UpdateAuthPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                    <Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                  }
+                      <Icon
+                        type="unlock"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
                     placeholder={UpdateAuthOwnerKeyPlaceholder}
                   />,
                 )}
