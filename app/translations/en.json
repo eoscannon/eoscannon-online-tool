@@ -236,5 +236,9 @@
   "Header HeaderMenuInputMessage": "Input",
   "Header HeaderInputTestNet": "Input test network address.",
   "Header ScanCodeSendGetIt": "Got it",
-  "Header JsonAlertcloseCamera": "Close Camera"
+  "Header JsonAlertcloseCamera": "Close Camera",
+  "Header JsonAlertNoCamera": "Switch to no camera mode, manually paste the signature.",
+  "Header JsonAlertHaveCamera": "Switch to camera scanning mode.",
+  "Header JsonAlerthaveCamera": "With camera",
+  "Header JsonAlertnoneCamera": "No camera"
 }
