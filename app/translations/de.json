@@ -211,5 +211,6 @@
   "Header HeaderMenuErrorMessage": "不是正确的网址",
   "Header HeaderMenuInputMessage": "请输入",
   "Header HeaderInputTestNet": "请输入测试网地址",
-  "Header ScanCodeSendGetIt": "知道了"
+  "Header ScanCodeSendGetIt": "知道了",
+  "Header JsonAlertcloseCamera": "关闭摄像头"
 }

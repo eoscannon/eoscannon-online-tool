@@ -256,4 +256,8 @@ export default defineMessages({
     id: 'Header ScanCodeSendGetIt',
     defaultMessage: '知道了',
   },
+  JsonAlertcloseCamera: {
+    id: 'Header JsonAlertcloseCamera',
+    defaultMessage: '关闭',
+  },
 });

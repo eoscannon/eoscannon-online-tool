@@ -32,8 +32,7 @@
     "The page is offline, and the fields entered will not leak out. Please feel free to enter.",
   "Public CopyAlertDescription":
     "Please copy the unsigned transaction and sign it in the offline tool.",
-  "Public KeyProviderFormItemLabel":
-    "Input the relevant transaction message",
+  "Public KeyProviderFormItemLabel": "Input the relevant transaction message",
   "Public KeyProviderFormItemPlaceholder":
     "Please go to the offline version of the tool to get the transaction message, open the tool, scan the QR code to get it.",
   "Public GetTransactionFormItemButtonName": "Generating transaction",
@@ -115,8 +114,7 @@
   "StakePage ReceiverLabel": "Receiver",
   "StakePage NetQuantityLabel": "Net",
   "StakePage CpuQuantityLabel": "Cpu",
-  "TransferPage TransferFromAccountNamePlaceholder":
-    "Input the form amount",
+  "TransferPage TransferFromAccountNamePlaceholder": "Input the form amount",
   "TransferPage TransferToAccountNamePlaceholder": "Input the to amount",
   "TransferPage TransferContractPlaceholder": "Input the contract",
   "TransferPage TransferQuantityPlaceholder": "Input the quantity",
@@ -133,16 +131,13 @@
   "TransferPage DigitLabel": "Digit",
   "TransferPage SymbolLabel": "Symbol",
   "UpdateAuthPage CheckPrivateKeyMessage": "Check PrivateKey",
-  "UpdateAuthPage CheckPrivateKeyPlaceholder":
-    "Input the PrivateKey for Check",
+  "UpdateAuthPage CheckPrivateKeyPlaceholder": "Input the PrivateKey for Check",
   "UpdateAuthPage GetPrivateKeyButtonMessage": "Get PrivateKey",
   "UpdateAuthPage ModifyPrivateKeyTitle": "Modify PrivateKey",
-  "UpdateAuthPage UpdateAuthAccountNamePlaceholder":
-    "Input the AccountName",
+  "UpdateAuthPage UpdateAuthAccountNamePlaceholder": "Input the AccountName",
   "UpdateAuthPage UpdateAuthActiveKeyPlaceholder":
     "Input the activeKey you want",
-  "UpdateAuthPage UpdateAuthOwnerKeyPlaceholder":
-    "Input the ownerKey you want",
+  "UpdateAuthPage UpdateAuthOwnerKeyPlaceholder": "Input the ownerKey you want",
   "UpdateAuthPage PrivateKeyLabel": "PrivateKey",
   "UpdateAuthPage AccountLabel": "Account",
   "VotePage VoterPlaceholder": "Input the account name",
@@ -173,7 +168,7 @@
   "TransferPage FunctionSearchEOSBalance": "EOS Balance",
   "TransferPage FunctionSearchEOSStake": "EOS Stake",
   "TransferPage FunctionSearchEOSVoteProxy": "Voter Proxy",
-  "TransferPage FunctionSearchEOSVoteNode": "Voter Node",
+  "TransferPage FunctionSearchEOSVoteNode": "Vote",
   "TransferPage FunctionSearchMemory": "Memory",
   "TransferPage FunctionSearchCPU": "CPU",
   "TransferPage FunctionSearchCPUStake": "Stake",
@@ -189,8 +184,7 @@
   "TransferPage FunctionSearchAccountTableGroup": "Group",
   "TransferPage FunctionSearchAccountTableAddress": "Address",
   "TransferPage FunctionSearchNoData": "no data",
-  "TransferPage FunctionSearchAccountPlaceHolder":
-    "Input the account name",
+  "TransferPage FunctionSearchAccountPlaceHolder": "Input the account name",
   "InfoInitPage infoAlertMessage": "This page is used online",
   "InfoInitPage infoAlertDescription":
     "Paste the information below into the EOSCannon offline signature tool",
@@ -225,8 +219,7 @@
     "Offline APP can be downloaded by clicking the left menu.",
   "DescribePage describePageFourth":
     "All transactions can divide into three steps:",
-  "DescribePage describePagefivth":
-    "Generate ",
+  "DescribePage describePagefivth": "Generate ",
   "DescribePage describePagefivthBold": "unsigned ",
   "DescribePage describePagefivthBoldLast": "transaction",
   "DescribePage describePageSix": "Offline APP ",
@@ -237,11 +230,11 @@
   "DescribePage describePageEight":
     "Tips: For most actions, active private key is needed to sign transaction;",
   "DescribePage describePageNinth":
-    "For changing keys, please use owner private key to sign transaction.",
+    " For changing keys, please use owner private key to sign transaction.",
   "DescribePage describePageZero": "Cannon Tools Introduction",
   "Header HeaderMenuErrorMessage": "Not the right website.",
   "Header HeaderMenuInputMessage": "Input",
   "Header HeaderInputTestNet": "Input test network address.",
-  "Header ScanCodeSendGetIt": "Got it"
-
+  "Header ScanCodeSendGetIt": "Got it",
+  "Header JsonAlertcloseCamera": "Close Camera"
 }

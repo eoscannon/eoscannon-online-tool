@@ -21,6 +21,8 @@ export default class ScanQrcode extends Component {
       OpenCameraButtonState: false,
       SendTransaction: '',
       SendTransactionButtonState: false,
+      codeReader: {},
+      buttonStatus: true,
     };
   }
   /**
@@ -47,13 +49,15 @@ export default class ScanQrcode extends Component {
           </video>
         </FormItem>
       ),
+      buttonStatus: false,
     });
     this.handleScanQrcode();
   };
 
   handleCloseCamera = () => {
     this.setState({
-      VideoElement: null,
+      codeReader: this.state.codeReader.reset(),
+      buttonStatus: true,
     });
   };
 
@@ -65,6 +69,9 @@ export default class ScanQrcode extends Component {
         .then(result => {
           this.getSendSignTransaction(result.text);
         });
+    });
+    this.setState({
+      codeReader,
     });
   };
 
@@ -113,6 +120,7 @@ export default class ScanQrcode extends Component {
     const { getFieldDecorator } = this.props.form;
     const message = this.props.formatMessage(utilsMsg.JsonAlertMessage);
     const description = this.props.formatMessage(utilsMsg.JsonAlertDescription);
+    const closeCamera = this.props.formatMessage(utilsMsg.JsonAlertcloseCamera);
     const OpenCameraButtonName = this.props.formatMessage(
       utilsMsg.OpenCameraButtonName,
     );
@@ -122,6 +130,8 @@ export default class ScanQrcode extends Component {
     const FieldAlertSendMessageNew = this.props.formatMessage(
       utilsMsg.FieldAlertSendMessageNew,
     );
+    const codeReader = new BrowserQRCodeReader();
+
     return (
       <div>
         <FormItem>
@@ -129,14 +139,26 @@ export default class ScanQrcode extends Component {
         </FormItem>
         {this.state.VideoElement}
         <FormItem style={{ textAlign: 'center' }}>
-          <Button
-            type="primary"
-            className="form-button"
-            onClick={this.handleOpenCamera}
-            disabled={!this.state.OpenCameraButtonState}
-          >
-            {OpenCameraButtonName}
-          </Button>
+          {this.state.buttonStatus ? (
+            <Button
+              type="primary"
+              className="form-button"
+              onClick={this.handleOpenCamera}
+              disabled={!this.state.OpenCameraButtonState}
+            >
+              {OpenCameraButtonName}
+            </Button>
+          ) : (
+            <Button
+              type="primary"
+              className="form-button"
+              onClick={this.handleCloseCamera}
+              disabled={!this.state.OpenCameraButtonState}
+              style={{ marginLeft: '.5rem' }}
+            >
+              {closeCamera}
+            </Button>
+          )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('SendTransaction', {
