@@ -24,8 +24,6 @@ export default class ScanQrcode extends Component {
       SendTransactionButtonState: false,
       codeReader: {},
       buttonStatus: true,
-      noneCamera: false,
-      inputSignatures: ''
     };
   }
   /**
@@ -58,7 +56,6 @@ export default class ScanQrcode extends Component {
     this.props.form.setFieldsValue({
       SendTransaction: '',
     });
-    this.setState({ noneCamera: false})
     this.handleScanQrcode();
   };
 
@@ -102,16 +99,25 @@ export default class ScanQrcode extends Component {
   handleSendSignTransaction = () => {
     let values
     this.props.form.validateFields((err, val) => {
-      if(this.state.noneCamera){
-        values ={
+      if (val.SendTransaction.indexOf('SIG_')!== -1 && val.SendTransaction.indexOf('{') === -1  ){
+        values = {
           compression: 'none',
           transaction: this.state.newSendTransaction.transaction,
-          signatures: [val.SendTransaction]
+          signatures: [val.SendTransaction],
         };
-      } else {
+      } else if (val.SendTransaction.indexOf('{') !== -1 ) {
         values = this.state.SendTransaction;
+      } else {
+        Modal.warning({
+          title: '',
+          content: this.props.formatMessage(utilsMsg.JsonAlertAttentionArt) ,
+        });
+        values = false
       }
     });
+    if(values === false){
+      return
+    }
     const eos = getEos(this.props.SelectedNetWork);
     eos
       .pushTransaction(values)
@@ -133,30 +139,6 @@ export default class ScanQrcode extends Component {
       });
   };
 
-  handleNoneCamera = () => {
-    Modal.info({
-      title: this.props.formatMessage(utilsMsg.JsonAlertAttention),
-      content: (
-        <div>
-          <p>{this.props.formatMessage(utilsMsg.JsonAlertNoCamera)}</p>
-        </div>
-      ),
-      onOk() {},
-    });
-    this.setState({ noneCamera: true, buttonStatus: true })
-  };
-  handleHaveCamera = () => {
-    Modal.info({
-      title: this.props.formatMessage(utilsMsg.JsonAlertAttention),
-      content: (
-        <div>
-          <p>{this.props.formatMessage(utilsMsg.JsonAlertHaveCamera)}</p>
-        </div>
-      ),
-      onOk() {},
-    });
-    this.setState({ noneCamera: false})
-  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -199,27 +181,6 @@ export default class ScanQrcode extends Component {
               disabled={!this.state.OpenCameraButtonState}
             >
               {closeCamera}
-            </Button>
-          )}
-          {this.state.noneCamera ? (
-            <Button
-              type="primary"
-              className="form-button"
-              onClick={this.handleHaveCamera}
-              disabled={!this.state.OpenCameraButtonState}
-              style={{ marginLeft: '.5rem' }}
-            >
-              {haveCamera}
-            </Button>
-          ):(
-            <Button
-              type="primary"
-              className="form-button"
-              onClick={this.handleNoneCamera}
-              disabled={!this.state.OpenCameraButtonState}
-              style={{ marginLeft: '.5rem' }}
-            >
-              {noneCamera}
             </Button>
           )}
 
