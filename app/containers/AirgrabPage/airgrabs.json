@@ -1,5 +1,12 @@
 [
   {
+    "key": "5",
+    "symbol": "ATD",
+    "account": "eosatidiumio",
+    "method": "signup",
+    "url": "https://www.atidium.io"
+  },
+  {
     "key": "1",
     "symbol": "POOR",
     "account": "poormantoken",
