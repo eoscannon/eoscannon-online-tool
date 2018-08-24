@@ -46,7 +46,7 @@ export class AirgrabPage extends React.Component {
   }
   componentDidMount() {
     fetch(
-      'https://raw.githubusercontent.com/eoscannon/eoscannon-online-tool/revision/app/containers/AirgrabPage/airgrabs.json',
+      'https://raw.githubusercontent.com/eoscannon/eoscannon-online-tool/master/app/containers/AirgrabPage/airgrabs.json',
     )
       .then(res => res.text())
       .then(res => {
