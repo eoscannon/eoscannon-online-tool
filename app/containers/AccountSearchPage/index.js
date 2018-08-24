@@ -46,7 +46,7 @@ export class AccountSearchPage extends React.Component {
       symbolBlance: 0,
       activeAdd: '',
       ownerAdd: '',
-      symbolCode: '',
+      symbolCode: 'EOS',
       voteProxy: '',
     };
   }
@@ -399,12 +399,13 @@ export class AccountSearchPage extends React.Component {
                       <span>{FunctionSearchAccountSyblom}：</span>
                       <Select
                         labelInValue
-                        defaultValue={{ key: 'EOS' }}
+                        defaultValue={{ key: this.state.symbolCode }}
                         style={{ width: 120 }}
                         onChange={this.handleChange}
                       >
                         <Option value="eosio.token">EOS</Option>
                         <Option value="eoscancancan">CAN</Option>
+                        <Option value="eosatidiumio">ATD</Option>
                         <Option value="everipediaiq">IQ</Option>
                         <Option value="eosiomeetone">MEETONE</Option>
                         <Option value="eosiochaince">CET</Option>
