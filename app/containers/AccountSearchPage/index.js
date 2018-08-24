@@ -417,6 +417,9 @@ export class AccountSearchPage extends React.Component {
                         <Option value="eosblackteam">BLACK</Option>
                         <Option value="eosadddddddd">ADD</Option>
                         <Option value="wizznetwork1">WIZZ</Option>
+                        <Option value="poormantoken">POOR</Option>
+                        <Option value="ridlridlcoin">RIDL</Option>
+                        <Option value="trybenetwork">TRYBE</Option>
                       </Select>
                     </div>
                     <div>
