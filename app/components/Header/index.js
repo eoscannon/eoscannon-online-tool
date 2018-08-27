@@ -240,7 +240,7 @@ class HeaderComp extends React.Component {
           trigger={null}
           collapsible
           collapsed={this.state.collapsed}
-          width="240"
+          width="250"
         >
           <div
             className="logo"
@@ -276,7 +276,6 @@ class HeaderComp extends React.Component {
                 <span>{accountSearch}</span>
               </Link>
             </Menu.Item>
-
             <Menu.SubMenu
               key="1"
               title={
@@ -332,7 +331,6 @@ class HeaderComp extends React.Component {
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
-
             <Menu.SubMenu
               key="2"
               title={
@@ -353,16 +351,6 @@ class HeaderComp extends React.Component {
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
-
-            {/*
-             <Menu.Item key="16">
-             <Icon type="appstore-o" />
-             <Popover placement="right" content={content}>
-             {AppDownLoad}
-             </Popover>
-             </Menu.Item>
-            */}
-
             <Menu.SubMenu
               key="15"
               title={

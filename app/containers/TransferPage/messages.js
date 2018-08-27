@@ -62,4 +62,36 @@ export default defineMessages({
     id: 'TransferPage SymbolLabel',
     defaultMessage: '单位',
   },
+  SymbolCustom: {
+    id: 'TransferPage SymbolCustom',
+    defaultMessage: '自定义',
+  },
+  SymbolAttentionInfo: {
+    id: 'TransferPage SymbolAttentionInfo',
+    defaultMessage: '请填写完整币种信息',
+  },
+  TransferSymbol: {
+    id: 'TransferPage TransferSymbol',
+    defaultMessage: '币种',
+  },
+  TransferSymbolHolder: {
+    id: 'TransferPage TransferSymbolHolder',
+    defaultMessage: '请输入币种',
+  },
+  TransferContract: {
+    id: 'TransferPage TransferContract',
+    defaultMessage: '合约',
+  },
+  TransferContractHolder: {
+    id: 'TransferPage TransferContractHolder',
+    defaultMessage: '请输入合约',
+  },
+  TransferDigit: {
+    id: 'TransferPage TransferDigit',
+    defaultMessage: '精度',
+  },
+  TransferDigitHolder: {
+    id: 'TransferPage TransferDigitHolder',
+    defaultMessage: '请输入精度',
+  },
 });
