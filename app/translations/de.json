@@ -216,5 +216,13 @@
   "Header JsonAlertNoCamera": "已切换至无摄像头模式，将手动粘贴签名",
   "Header JsonAlertHaveCamera": "已切换至摄像头扫描模式",
   "Header JsonAlerthaveCamera": "有摄像头",
-  "Header JsonAlertnoneCamera": "无摄像头"
+  "Header JsonAlertnoneCamera": "无摄像头",
+  "TransferPage SymbolCustom": "自定义",
+  "TransferPage SymbolAttentionInfo": "请填写完整币种信息",
+  "TransferPage TransferContract": "合约",
+  "TransferPage TransferSymbol": "币种",
+  "TransferPage TransferDigit": "精度",
+  "TransferPage TransferContractHolder": "请输入合约",
+  "TransferPage TransferSymbolHolder": "请输入币种",
+  "TransferPage TransferDigitHolder": "请输入精度"
 }

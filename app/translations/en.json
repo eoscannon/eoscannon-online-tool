@@ -237,8 +237,17 @@
   "Header HeaderInputTestNet": "Input test network address.",
   "Header ScanCodeSendGetIt": "Got it",
   "Header JsonAlertcloseCamera": "Close Camera",
-  "Header JsonAlertNoCamera": "Switch to no camera mode, manually paste the signature.",
+  "Header JsonAlertNoCamera":
+    "Switch to no camera mode, manually paste the signature.",
   "Header JsonAlertHaveCamera": "Switch to camera scanning mode.",
   "Header JsonAlerthaveCamera": "With camera",
-  "Header JsonAlertnoneCamera": "No camera"
+  "Header JsonAlertnoneCamera": "No camera",
+  "TransferPage SymbolCustom": "Customize",
+  "TransferPage SymbolAttentionInfo": "Fill in the full currency information",
+  "TransferPage TransferContract": "Contract",
+  "TransferPage TransferContractHolder": "Input a contract",
+  "TransferPage TransferDigit": "Digit",
+  "TransferPage TransferSymbol": "Symbol",
+  "TransferPage TransferDigitHolder": "Input a digit",
+  "TransferPage TransferSymbolHolder": "Input a symbol"
 }
