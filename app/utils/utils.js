@@ -2,8 +2,8 @@ import EOS from 'eosjs';
 import { notification } from 'antd';
 import producers from './producers.json';
 import utilsMsg from './messages';
-import {storage} from './storage';
-import config from "./../config";
+import { storage } from './storage';
+import config from './../config';
 
 const formItemLayout = {
   labelCol: {
@@ -45,13 +45,13 @@ const getEosOtherTest = () =>
 const getEos = type => {
   switch (type) {
     case 'main':
-      return getEosMain()
+      return getEosMain();
       break;
     case 'test':
-      return getEosTest()
+      return getEosTest();
       break;
     case 'other':
-      return getEosOtherTest()
+      return getEosOtherTest();
       break;
     default:
       return getEosMain();
@@ -126,6 +126,9 @@ const symbolList = [
   { symbol: 'ADD', contract: 'eosadddddddd', digit: 4 },
   { symbol: 'CET', contract: 'eosiochaince', digit: 4 },
   { symbol: 'WIZZ', contract: 'wizznetwork1', digit: 4 },
+  { symbol: 'RIDL', contract: 'ridlridlcoin', digit: 4 },
+  { symbol: 'TRYBE', contract: 'trybenetwork', digit: 4 },
+  { symbol: 'ATD', contract: 'eosatidiumio', digit: 4 },
 ];
 
 export {
@@ -138,5 +141,5 @@ export {
   openTransactionSuccessNotification,
   openTransactionFailNotification,
   openNotification,
-  symbolList
+  symbolList,
 };

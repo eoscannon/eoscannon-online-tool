@@ -1,17 +1,10 @@
 [
   {
-    "key": "5",
+    "key": "1",
     "symbol": "ATD",
     "account": "eosatidiumio",
     "method": "signup",
     "url": "https://www.atidium.io"
-  },
-  {
-    "key": "1",
-    "symbol": "POOR",
-    "account": "poormantoken",
-    "method": "signup",
-    "url": "https://eostoolkit.io/airgrab"
   },
   {
     "key": "2",
