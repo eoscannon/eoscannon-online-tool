@@ -128,10 +128,11 @@ class HeaderComp extends React.Component {
 
   setNetWork = () => {
     const value = this.state.testNetUrl;
-    if (value !== '') {
-      const reg =
-        '/(http|ftp|https)://[w-_]+(.[w-_]+)+([w-.,@?^=%&:/~+#]*[w-@?^=%&/~+#])?/';
-      if (!reg.test(value)) {
+    if (value != '') {
+      const status = !!value.match(
+        /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/g,
+      );
+      if (!status) {
         message.error(
           this.props.intl.formatMessage(utilsMsg.HeaderMenuErrorMessage),
         );
@@ -393,6 +394,9 @@ class HeaderComp extends React.Component {
                 transition: 'color .3s',
               }}
             />
+            {/*
+             <span>一般操作请使用active key</span>
+             */}
             <div
               className="userBox"
               style={{ float: 'right', display: 'flex', alignItems: 'center' }}
