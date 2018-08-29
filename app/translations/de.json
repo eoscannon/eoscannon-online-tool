@@ -6,7 +6,7 @@
   "Public HeaderMenuBuyRamBytes": "内存买卖",
   "Public HeaderMenuVote": "投票",
   "Public HeaderMenuProxy": "代理投票",
-  "Public HeaderMenuUpdateAuth": "私钥管理",
+  "Public HeaderMenuUpdateAuth": "修改私钥",
   "Public HeaderMenuRefund": "Refund",
   "Public HeaderMenuAirgrab": "空投",
   "Public TransactionSuccessNotificationMsg": "生成签名报文成功",

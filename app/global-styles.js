@@ -19,6 +19,9 @@ injectGlobal`
   body.fontLoaded {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
+  .ant-menu-submenu  .ant-menu-vertical{
+    display:none;
+  }
 
   #app {
     background-color: #fafafa;
