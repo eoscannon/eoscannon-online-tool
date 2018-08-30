@@ -22,7 +22,7 @@ import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
-import airgrabs from './airgrabs.json';
+import {airgrabList} from '../../utils/utils';
 
 const FormItem = Form.Item;
 
@@ -47,7 +47,7 @@ export class AirgrabPage extends React.Component {
   }
   componentDidMount() {
     this.setState({
-      tableData: airgrabs || [],
+      tableData: airgrabList || [],
       tableColumns: [
         {
           title: this.state.formatMessage(

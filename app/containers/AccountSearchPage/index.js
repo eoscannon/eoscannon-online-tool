@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 import styleComps from './styles';
 
-import { getEos } from '../../utils/utils';
+import { getEos , symbolList } from '../../utils/utils';
 import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 import messages from './messages';
 
@@ -403,22 +403,9 @@ export class AccountSearchPage extends React.Component {
                         style={{ width: 120 }}
                         onChange={this.handleChange}
                       >
-                        <Option value="eosio.token">EOS</Option>
-                        <Option value="eoscancancan">CAN</Option>
-                        <Option value="eosatidiumio">ATD</Option>
-                        <Option value="everipediaiq">IQ</Option>
-                        <Option value="eosiomeetone">MEETONE</Option>
-                        <Option value="eosiochaince">CET</Option>
-                        <Option value="eoxeoxeoxeox">EOX</Option>
-                        <Option value="ednazztokens">EDNA</Option>
-                        <Option value="horustokenio">HORUS</Option>
-                        <Option value="therealkarma">KARMA</Option>
-                        <Option value="challengedac">CHL</Option>
-                        <Option value="eosblackteam">BLACK</Option>
-                        <Option value="eosadddddddd">ADD</Option>
-                        <Option value="wizznetwork1">WIZZ</Option>
-                        <Option value="ridlridlcoin">RIDL</Option>
-                        <Option value="trybenetwork">TRYBE</Option>
+                        {symbolList.map((item,index)=>(
+                          <Option value={item.contract} key={index}>{item.symbol}</Option>
+                        ))}
                       </Select>
                     </div>
                     <div>
