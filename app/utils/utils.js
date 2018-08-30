@@ -113,23 +113,66 @@ const openNotification = formatMessage => {
  * 币种列表
  * */
 const symbolList = [
-  { symbol: 'EOS', contract: 'eosio', digit: 4 },
+  { symbol: 'EOS', contract: 'eosio.token', digit: 4 },
   { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
   { symbol: 'IQ', contract: 'everipediaiq', digit: 3 },
   { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 4 },
-  { symbol: 'CETOS', contract: 'gyztomjugage', digit: 4 },
+  //{ symbol: 'CETOS', contract: 'gyztomjugage', digit: 4 },
   { symbol: 'EOX', contract: 'eoxeoxeoxeox', digit: 4 },
   { symbol: 'EDNA', contract: 'ednazztokens', digit: 4 },
   { symbol: 'HORUS', contract: 'horustokenio', digit: 4 },
   { symbol: 'CHL', contract: 'challengedac', digit: 4 },
   { symbol: 'BLACK', contract: 'eosblackteam', digit: 4 },
   { symbol: 'ADD', contract: 'eosadddddddd', digit: 4 },
+  { symbol: 'POOR', contract: 'poormantoken', digit: 4 },
   { symbol: 'CET', contract: 'eosiochaince', digit: 4 },
   { symbol: 'WIZZ', contract: 'wizznetwork1', digit: 4 },
   { symbol: 'RIDL', contract: 'ridlridlcoin', digit: 4 },
   { symbol: 'TRYBE', contract: 'trybenetwork', digit: 4 },
   { symbol: 'ATD', contract: 'eosatidiumio', digit: 4 },
 ];
+
+/**
+ * 空投列表
+ * */
+const airgrabList = [
+  {
+    key: '1',
+    symbol: 'ATD',
+    account: 'eosatidiumio',
+    method: 'signup',
+    url: 'https://www.atidium.io',
+  },
+  {
+    key: '2',
+    symbol: 'POOR',
+    account: 'poormantoken',
+    method: 'signup',
+    url: 'https://eostoolkit.io',
+  },
+  {
+    key: '3',
+    symbol: 'RIDL',
+    account: 'ridlridlcoin',
+    method: 'claim',
+    url: 'https://ridl.get-scatter.com',
+  },
+  {
+    key: '4',
+    symbol: 'TRYBE',
+    account: 'trybenetwork',
+    method: 'claim',
+    url: 'https://trybe.one',
+  },
+  {
+    key: '5',
+    symbol: 'WIZZ',
+    account: 'wizznetwork1',
+    method: 'signup',
+    url: 'https://wizz.network',
+  },
+]
+
 
 export {
   voteNodes,
@@ -142,4 +185,5 @@ export {
   openTransactionFailNotification,
   openNotification,
   symbolList,
+  airgrabList
 };

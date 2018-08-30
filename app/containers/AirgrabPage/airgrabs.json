@@ -8,20 +8,27 @@
   },
   {
     "key": "2",
+    "symbol": "POOR",
+    "account": "poormantoken",
+    "method": "signup",
+    "url": "https://eostoolkit.io"
+  },
+  {
+    "key": "3",
     "symbol": "RIDL",
     "account": "ridlridlcoin",
     "method": "claim",
     "url": "https://ridl.get-scatter.com"
   },
   {
-    "key": "3",
+    "key": "4",
     "symbol": "TRYBE",
     "account": "trybenetwork",
     "method": "claim",
     "url": "https://trybe.one"
   },
   {
-    "key": "4",
+    "key": "5",
     "symbol": "WIZZ",
     "account": "wizznetwork1",
     "method": "signup",
