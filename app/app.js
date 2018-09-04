@@ -14,7 +14,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Switch, Route } from 'react-router-dom';
 import FontFaceObserver from 'fontfaceobserver';
-import createHashHistory from 'history/createHashHistory';
+import createHashHistory from 'history/createBrowserHistory';
 import 'sanitize.css/sanitize.css';
 import LanguageProvider from 'containers/LanguageProvider';
 
@@ -73,7 +73,8 @@ const render = messages => {
               <Route path="/transfer" component={TransferPage} />
               <Route path="/proxy" component={ProxyPage} />
               <Route path="/vote" component={VotePage} />
-              <Route path="/accountSearch" component={AccountSearchPage} />
+              <Route path="/accountSearch" exact component={AccountSearchPage} />
+              <Route path="/accountSearch/:account" component={AccountSearchPage} />
               <Route path="/refund" component={RefundPage} />
               <Route path="/stake" component={StakePage} />
               <Route path="/buyrambytes" component={BuyRamBytesPage} />
