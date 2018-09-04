@@ -11,8 +11,9 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 import styleComps from './styles';
+import { Link, hashHistory } from 'react-router-dom';
 
-import { getEos , symbolList } from '../../utils/utils';
+import { getEos, symbolList, getUrlPramas } from '../../utils/utils';
 import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 import messages from './messages';
 
@@ -32,7 +33,6 @@ export class AccountSearchPage extends React.Component {
       stake: 0,
       voteNode: [],
       voteNodeStatus: false,
-      voteProxyStatus: false,
       memoryContent: '',
       cpuContent: '',
       networkContent: '',
@@ -48,7 +48,19 @@ export class AccountSearchPage extends React.Component {
       ownerAdd: '',
       symbolCode: 'EOS',
       voteProxy: '',
+      accountSearch: ''
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.match.params.account){
+      this.handleSearch(nextProps.match.params.account);
+      this.setState({ account: nextProps.match.params.account });
+    }
+  }
+  componentDidMount() {
+    if( this.props.match.params.account ){
+      this.handleSearch(this.props.match.params.account);
+    }
   }
 
   handleChange = key => {
@@ -75,8 +87,13 @@ export class AccountSearchPage extends React.Component {
       });
   };
 
+  onChangeAccount = e =>{
+    this.setState({accountSearch: e.target.value})
+  }
+
   handleSearch = value => {
     this.setState({
+      accountSearch: value,
       account: value,
     });
     const eos = getEos(this.props.SelectedNetWork);
@@ -93,20 +110,17 @@ export class AccountSearchPage extends React.Component {
           if (info.voter_info.producers.length > 0) {
             this.setState({
               voteNodeStatus: true,
-              voteProxyStatus: false,
               voteNode: info.voter_info.producers,
             });
           } else {
             this.setState({
               voteNodeStatus: false,
-              voteProxyStatus: true,
               voteNode: [],
             });
           }
         } else {
           this.setState({
             voteNodeStatus: false,
-            voteProxyStatus: false,
             voteNode: [],
           });
         }
@@ -311,6 +325,8 @@ export class AccountSearchPage extends React.Component {
               placeholder={FunctionSearchAccountPlaceHolder}
               enterButton={FunctionSearchButton}
               size="large"
+              onChange={this.onChangeAccount}
+              value={this.state.accountSearch}
               onSearch={this.handleSearch}
             />
           </FormComp>
@@ -330,21 +346,21 @@ export class AccountSearchPage extends React.Component {
                   <span>
                     {FunctionSearchEOSStake}：{this.state.stake}
                   </span>
-                  {this.state.voteProxyStatus ? (
+                  {this.state.voteProxy ? (
                     <span>
-                      {FunctionSearchEOSVoteProxy}：{this.state.voteProxy}
+                      {FunctionSearchEOSVoteProxy}：<Link to={`/accountSearch/${this.state.voteProxy}`} >{this.state.voteProxy}</Link>
                     </span>
                   ) : null}
                   {this.state.voteNodeStatus ? (
                     <span>
                       {FunctionSearchEOSVoteNode}：<br />
                       {this.state.voteNode.map(item => (
-                        <Tag key={item}>{item}</Tag>
+                        <Link to={`/accountSearch/${item}`} key={item}>
+                          <Tag>{item}</Tag>
+                        </Link>
                       ))}
                     </span>
-                  ) : (
-                    <span />
-                  )}
+                  ) : null}
                 </div>
                 <div className="secondContent">
                   <div className="contentDetail">
