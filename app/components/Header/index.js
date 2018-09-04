@@ -19,7 +19,7 @@ import { storage } from '../../utils/storage';
 import FooterComp from '../../components/Footer';
 import eosCannonLogo from '../../images/eosLogo.png';
 import eosCannonLogoBig from '../../images/eos_cannon_logo_opacity4.png';
-import downloadAndroid from './android1.1.2.png';
+import downloadAndroid from './1.1.3.png';
 import downloadIos from './ios.png';
 
 import {
@@ -371,7 +371,7 @@ class HeaderComp extends React.Component {
               <Menu.Item key="setting:2">
                 <Popover placement="right" content={contentAndriod}>
                   <a
-                    href="https://tool.eoscannon.io:444/offline.1.1.2.apk"
+                    href="https://tool.eoscannon.io:444/offline.1.1.3.apk"
                     target="_blank"
                   >
                     {OfflineAppDownLoad}
