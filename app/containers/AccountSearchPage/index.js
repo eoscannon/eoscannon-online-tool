@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 import styleComps from './styles';
-import { Link, hashHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { getEos, symbolList, getUrlPramas } from '../../utils/utils';
 import { LayoutContentBox, FormComp } from '../../components/NodeComp';
@@ -48,17 +48,17 @@ export class AccountSearchPage extends React.Component {
       ownerAdd: '',
       symbolCode: 'EOS',
       voteProxy: '',
-      accountSearch: ''
+      accountSearch: '',
     };
   }
   componentWillReceiveProps(nextProps) {
-    if(nextProps.match.params.account){
+    if (nextProps.match.params.account) {
       this.handleSearch(nextProps.match.params.account);
       this.setState({ account: nextProps.match.params.account });
     }
   }
   componentDidMount() {
-    if( this.props.match.params.account ){
+    if (this.props.match.params.account) {
       this.handleSearch(this.props.match.params.account);
     }
   }
@@ -87,9 +87,9 @@ export class AccountSearchPage extends React.Component {
       });
   };
 
-  onChangeAccount = e =>{
-    this.setState({accountSearch: e.target.value})
-  }
+  onChangeAccount = e => {
+    this.setState({ accountSearch: e.target.value });
+  };
 
   handleSearch = value => {
     this.setState({
@@ -348,7 +348,11 @@ export class AccountSearchPage extends React.Component {
                   </span>
                   {this.state.voteProxy ? (
                     <span>
-                      {FunctionSearchEOSVoteProxy}：<Link to={`/accountSearch/${this.state.voteProxy}`} >{this.state.voteProxy}</Link>
+                      {FunctionSearchEOSVoteProxy}：<Link
+                        to={`/accountSearch/${this.state.voteProxy}`}
+                      >
+                        {this.state.voteProxy}
+                      </Link>
                     </span>
                   ) : null}
                   {this.state.voteNodeStatus ? (
@@ -419,8 +423,10 @@ export class AccountSearchPage extends React.Component {
                         style={{ width: 120 }}
                         onChange={this.handleChange}
                       >
-                        {symbolList.map((item,index)=>(
-                          <Option value={item.contract} key={index}>{item.symbol}</Option>
+                        {symbolList.map((item, index) => (
+                          <Option value={item.contract} key={index}>
+                            {item.symbol}
+                          </Option>
                         ))}
                       </Select>
                     </div>
