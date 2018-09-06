@@ -116,7 +116,7 @@ export class UpdateAuthPage extends React.Component {
         });
         Modal.warning({
           title: '',
-          content: '修改权限请在离线工具上使用owner私钥进行签名！',
+          content: '修改权限请在离线工具上使用Owner私钥进行签名！',
         });
       })
       .catch(err => {
