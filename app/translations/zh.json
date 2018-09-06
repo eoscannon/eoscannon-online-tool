@@ -27,13 +27,16 @@
   "Public FieldAlertMessage": "请输入为生成签名报文所需的字段",
   "Public FieldAlertDescription":
     "该页面为在线页面，输入的字段不会向外界泄露，请放心输入。",
-  "Public CopyAlertDescription": "打开离线工具APP，扫描以下二维码",
+  "Public CopyAlertDescription":
+    "打开离线工具APP，扫描以下二维码，并用Active权限的私钥签名",
+  "Public CopyOwnerAlertDescription":
+    "打开离线工具APP，扫描以下二维码，并用Owner权限的私钥签名",
   "Public KeyProviderFormItemLabel":
     "扫描离线工具上生成的二维码或者输入已签名的报文",
   "Public KeyProviderFormItemPlaceholder":
     "如果没有摄像头，可借助其它工具（如微信）获取离线工具上的已签名报文，拷贝到下面的输入框",
   "Public GetTransactionFormItemButtonName": "生成报文",
-  "Public CopyAlertMessage": "步骤 2/3:",
+  "Public CopyAlertMessage": "步骤 2/3: 签名交易",
   "Public CopyTransactionButtonName": "复制报文",
   "Public TransactionTextAreaPlaceholder": "请复制生成的报文",
   "Public QrCodeInitValue": "欢迎使用EOS佳能工具",
@@ -57,8 +60,8 @@
   "CreateAccountPage NewAccountNamePlaceholder": "新账号",
   "CreateAccountPage NewAccountNameHelp":
     "注：新账号应为12位字符和数字，而且仅限小写字母a-z和数字1-5",
-  "CreateAccountPage OwnerKeyPlaceholder": "Active权限的公钥",
-  "CreateAccountPage ActiveKeyPlaceholder": "Owner权限的公钥",
+  "CreateAccountPage OwnerKeyPlaceholder": "新账号Active权限的公钥",
+  "CreateAccountPage ActiveKeyPlaceholder": "新账号Owner权限的公钥",
   "CreateAccountPage BytesHelp": "注：内存数量至少为4kb，推荐数值为：8192",
   "CreateAccountPage BytesPlaceholder":
     "购买的内存数量，单位为byte，1kb=1024bytes",
@@ -75,21 +78,19 @@
   "RefundPage OwnerLabel": "账户名",
   "RefundPage OwnerPlaceholder": "账号",
   "StakePage DelegateSwitchCheckedName": "质押",
-  "StakePage DelegateSwitchUnCheckedName": "解质押",
+  "StakePage DelegateSwitchUnCheckedName": "赎回",
   "StakePage DelegateFromAccountNamePlaceholder": "质押账号",
-  "StakePage UnDelegateFromAccountNamePlaceholder": "解质押账号",
+  "StakePage UnDelegateFromAccountNamePlaceholder": "赎回账号",
   "StakePage DelegateReceiverAccountNamePlaceholder": "接收质押的账号",
-  "StakePage UnDelegateReceiverAccountNamePlaceholder": "接受解质押的账号",
+  "StakePage UnDelegateReceiverAccountNamePlaceholder": "接受赎回的账号",
   "StakePage DelegateReceiverAccountNameHelp":
     "注：账号A帮B质押CPU/NET，则A为质押账号，B为接收质押的账号",
   "StakePage UnDelegateReceiverAccountNameHelp":
-    "注：账号A解除帮B质押CPU/NET，则A为解质押账号，B为接受解质押的账号",
+    "注：账号A解除帮B质押CPU/NET，则A为赎回账号，B为接受赎回的账号",
   "StakePage DelegateStakeNetQuantityPlaceholder": "质押的NET数量，单位为EOS",
-  "StakePage UnDelegateStakeNetQuantityPlaceholder":
-    "解质押的NET数量，单位为EOS",
+  "StakePage UnDelegateStakeNetQuantityPlaceholder": "赎回的NET数量，单位为EOS",
   "StakePage DelegateStakeCpuQuantityPlaceholder": "质押的CPU数量，单位为EOS",
-  "StakePage UnDelegateStakeCpuQuantityPlaceholder":
-    "解质押的CPU数量，单位为EOS",
+  "StakePage UnDelegateStakeCpuQuantityPlaceholder": "赎回的CPU数量，单位为EOS",
   "StakePage FromLabel": "质押账户",
   "StakePage ReceiverLabel": "接收账户",
   "StakePage NetQuantityLabel": "NET数量",
