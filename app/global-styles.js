@@ -40,4 +40,7 @@ injectGlobal`
   .ant-layout{
     height: 100%;
   }
+  .ant-form-item-control-wrapper{
+    width:100%!important;
+  }
 `;

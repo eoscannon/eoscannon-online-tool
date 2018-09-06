@@ -42,4 +42,8 @@ export default defineMessages({
     id: 'BuyRamBytesPage BytesQuantityPlaceholder',
     defaultMessage: '内存数量，单位为byte，1KB=1024bytes',
   },
+  EosQuantityPlaceholder: {
+    id: 'BuyRamBytesPage EosQuantityPlaceholder',
+    defaultMessage: '内存数量，单位为EOS',
+  },
 });

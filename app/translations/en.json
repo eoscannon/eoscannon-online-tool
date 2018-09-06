@@ -51,6 +51,7 @@
   "BuyRamBytesPage SellPayerAccountNamePlaceholder": "Seller",
   "BuyRamBytesPage ReceiverAccountNamePlaceholder": "Receiver",
   "BuyRamBytesPage BytesQuantityPlaceholder": "RAM purchase(in bytes)",
+  "BuyRamBytesPage EosQuantityPlaceholder": "RAM purchase(in EOS)",
   "CreateAccountPage CreatorLabel": "Creator",
   "CreateAccountPage NameLabel": "Account",
   "CreateAccountPage BytesLabel": "Bytes",

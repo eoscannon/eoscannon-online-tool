@@ -92,14 +92,14 @@ export default class ScanQrcode extends Component {
     });
     this.setState({
       SendTransaction: this.state.SendTransaction,
-      SendTransactionButtonState: true,
+      //SendTransactionButtonState: true,
     });
   };
 
   handleSendSignTransaction = () => {
-    let values
+    let values;
     this.props.form.validateFields((err, val) => {
-      if (val.SendTransaction.indexOf('SIG_')!== -1 && val.SendTransaction.indexOf('{') === -1  ){
+      if ( val.SendTransaction.indexOf('SIG_')!== -1 && val.SendTransaction.indexOf('{') === -1  ){
         values = {
           compression: 'none',
           transaction: this.state.newSendTransaction.transaction,
@@ -112,7 +112,7 @@ export default class ScanQrcode extends Component {
           title: '',
           content: this.props.formatMessage(utilsMsg.JsonAlertAttentionArt) ,
         });
-        values = false
+        values = false;
       }
     });
     if(values === false){
@@ -125,9 +125,14 @@ export default class ScanQrcode extends Component {
         Modal.success({
           title: this.props.formatMessage(utilsMsg.ScanCodeSendSuccess),
           content: `${this.props.formatMessage(
-            utilsMsg.ScanCodeSendSuccessMessage,
+            utilsMsg.ScanCodeSendSuccessMessage
           )} ${res.transaction_id}`,
           okText: this.props.formatMessage(utilsMsg.ScanCodeSendGetIt),
+        });
+        //发送成功后关闭摄像头
+        this.setState({
+          codeReader: this.state.codeReader.reset(),
+          buttonStatus: true,
         });
       })
       .catch(err => {
@@ -136,10 +141,13 @@ export default class ScanQrcode extends Component {
           content: `${err}`,
           okText: this.props.formatMessage(utilsMsg.ScanCodeSendGetIt),
         });
+        //发送成功后关闭摄像头
+        this.setState({
+          codeReader: this.state.codeReader.reset(),
+          buttonStatus: true,
+        });
       });
   };
-
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const message = this.props.formatMessage(utilsMsg.JsonAlertMessage);
@@ -148,13 +156,13 @@ export default class ScanQrcode extends Component {
     const haveCamera = this.props.formatMessage(utilsMsg.JsonAlerthaveCamera);
     const noneCamera = this.props.formatMessage(utilsMsg.JsonAlertnoneCamera);
     const OpenCameraButtonName = this.props.formatMessage(
-      utilsMsg.OpenCameraButtonName,
+      utilsMsg.OpenCameraButtonName
     );
     const JsonInfoPlaceholder = this.props.formatMessage(
-      utilsMsg.JsonInfoPlaceholder,
+      utilsMsg.JsonInfoPlaceholder
     );
     const FieldAlertSendMessageNew = this.props.formatMessage(
-      utilsMsg.FieldAlertSendMessageNew,
+      utilsMsg.FieldAlertSendMessageNew
     );
 
     return (
@@ -183,12 +191,16 @@ export default class ScanQrcode extends Component {
               {closeCamera}
             </Button>
           )}
-
         </FormItem>
         <FormItem>
           {getFieldDecorator('SendTransaction', {
             rules: [{ required: true, message: JsonInfoPlaceholder }],
-          })(<TextArea placeholder={JsonInfoPlaceholder} rows="6" />)}
+          })(
+            <TextArea
+              placeholder={JsonInfoPlaceholder}
+              autosize={{ minRows: 4, maxRows: 12 }}
+            />,
+          )}
         </FormItem>
         <FormItem style={{ textAlign: 'center' }}>
           <Button

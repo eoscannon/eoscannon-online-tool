@@ -51,6 +51,8 @@
   "BuyRamBytesPage ReceiverAccountNamePlaceholder": "接收内存的账号",
   "BuyRamBytesPage BytesQuantityPlaceholder":
     "内存数量，单位为byte，1KB=1024bytes",
+  "BuyRamBytesPage EosQuantityPlaceholder":
+    "内存数量，单位为EOS",
   "CreateAccountPage CreatorLabel": "创建者",
   "CreateAccountPage NameLabel": "账户名",
   "CreateAccountPage BytesLabel": "字节数",
