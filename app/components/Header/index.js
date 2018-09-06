@@ -108,7 +108,7 @@ class HeaderComp extends React.Component {
   };
 
   changeLanguage = () => {
-    const localeLanguage = this.props.locale === 'en' ? 'de' : 'en';
+    const localeLanguage = this.props.locale.startsWith('en') ? 'zh' : 'en';
     this.props.onDispatchChangeLanguageReducer(localeLanguage);
   };
 
@@ -128,10 +128,8 @@ class HeaderComp extends React.Component {
 
   setNetWork = () => {
     const value = this.state.testNetUrl;
-    if (value != '') {
-      const status = !!value.match(
-        /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/g,
-      );
+    if (value !== '') {
+      const status = !!value.match(/https:\/\/.*/gi);
       if (!status) {
         message.error(
           this.props.intl.formatMessage(utilsMsg.HeaderMenuErrorMessage),

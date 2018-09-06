@@ -92,8 +92,8 @@ export class ProxyPage extends React.Component {
     const ProxyPlaceholder = this.state.formatMessage(
       messages.ProxyPlaceholder,
     );
-    const VoterLabel = this.state.formatMessage(messages.VoterLabel);
-    const ProxyLabel = this.state.formatMessage(messages.ProxyLabel);
+    // const VoterLabel = this.state.formatMessage(messages.VoterLabel);
+    // const ProxyLabel = this.state.formatMessage(messages.ProxyLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -105,7 +105,7 @@ export class ProxyPage extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem {...formItemLayout} label={VoterLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('voter', {
                   rules: [{ required: true, message: VoterPlaceholder }],
                 })(
@@ -117,12 +117,7 @@ export class ProxyPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem
-                help={ProxyHelp}
-                {...formItemLayout}
-                label={ProxyLabel}
-                colon
-              >
+              <FormItem help={ProxyHelp} {...formItemLayout}>
                 {getFieldDecorator('proxy', {
                   rules: [
                     {

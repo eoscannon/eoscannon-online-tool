@@ -35,7 +35,7 @@ export class BuyRamBytesPage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
-      radioStatus: 1
+      radioStatus: 2
     };
   }
   /**
@@ -50,6 +50,7 @@ export class BuyRamBytesPage extends React.Component {
   onSwitchChange = checked => {
     this.setState({
       isBuyRam: checked,
+      radioStatus: 2
     });
   };
   /**
@@ -57,9 +58,9 @@ export class BuyRamBytesPage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
-    const { PayerAccountName, BytesQuantity } = values;
+    const { PayerAccountName, BytesQuantity, EosQuantity } = values;
     this.setState({
-      GetTransactionButtonState: !!PayerAccountName && !!BytesQuantity,
+      GetTransactionButtonState: !!PayerAccountName && (!!BytesQuantity|| !!EosQuantity),
     });
   };
 
@@ -76,16 +77,24 @@ export class BuyRamBytesPage extends React.Component {
     }
     const eos = getEos(this.props.SelectedNetWork);
     const values = this.props.form.getFieldsValue();
-    const { PayerAccountName, ReceiverAccountName, BytesQuantity, EosQuantity } = values;
-    const actionsName = this.state.isBuyRam ? 'buyrambytes' : 'sellram';
-    const type = this.state.radioStatus === 1
-      ? {
-          quant: `${Number(EosQuantity)
-            .toFixed(4)
-            .toString()} EOS`,
-        }
-
-      : { bytes: Number(BytesQuantity) };
+    const {
+      PayerAccountName,
+      ReceiverAccountName,
+      BytesQuantity,
+      EosQuantity,
+    } = values;
+    var actionsName = this.state.isBuyRam ? 'buyrambytes' : 'sellram';
+    if (this.state.isBuyRam) {
+      actionsName = this.state.radioStatus === 1 ? 'buyram' : 'buyrambytes';
+    }
+    const type =
+      this.state.radioStatus === 1
+        ? {
+            quant: `${Number(EosQuantity)
+              .toFixed(4)
+              .toString()} EOS`,
+          }
+        : { bytes: Number(BytesQuantity) };
     const data = this.state.isBuyRam
       ? {
           payer: PayerAccountName,
@@ -96,6 +105,7 @@ export class BuyRamBytesPage extends React.Component {
           account: PayerAccountName,
           ...type,
         };
+    console.log('data===',data);
     eos
       .transaction(
         {
@@ -146,13 +156,13 @@ export class BuyRamBytesPage extends React.Component {
     const BytesQuantityPlaceholder = this.state.formatMessage(
       messages.BytesQuantityPlaceholder,
     );
-    const PayerAccountNameLabel = this.state.formatMessage(
-      messages.PayerAccountNameLabel,
-    );
-    const ReceiverAccountNameLabel = this.state.formatMessage(
-      messages.ReceiverAccountNameLabel,
-    );
-    const BytesLabel = this.state.formatMessage(messages.BytesLabel);
+     const EosQuantityPlaceholder = this.state.formatMessage(
+       messages.EosQuantityPlaceholder,
+     );
+    // const ReceiverAccountNameLabel = this.state.formatMessage(
+    //   messages.ReceiverAccountNameLabel,
+    // );
+     const BytesLabel = this.state.formatMessage(messages.BytesLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -172,7 +182,7 @@ export class BuyRamBytesPage extends React.Component {
                   onChange={this.onSwitchChange}
                 />
               </FormItem>
-              <FormItem {...formItemLayout} label={PayerAccountNameLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('PayerAccountName', {
                   rules: [
                     {
@@ -190,42 +200,47 @@ export class BuyRamBytesPage extends React.Component {
                 )}
               </FormItem>
               {this.state.isBuyRam ? (
-                <FormItem
-                  {...formItemLayout}
-                  label={ReceiverAccountNameLabel}
-                  colon
-                >
-                  {getFieldDecorator('ReceiverAccountName', {
-                    rules: [
-                      {
-                        required: false,
-                        message: ReceiverAccountNamePlaceholder,
-                      },
-                    ],
-                  })(
-                    <Input
-                      prefix={
-                        <Icon
-                          type="user"
-                          style={{ color: 'rgba(0,0,0,.25)' }}
-                        />
-                      }
-                      placeholder={ReceiverAccountNamePlaceholder}
-                    />,
-                  )}
-                </FormItem>
+                <div>
+                  <FormItem {...formItemLayout}>
+                    {getFieldDecorator('ReceiverAccountName', {
+                      rules: [
+                        {
+                          required: false,
+                          message: ReceiverAccountNamePlaceholder,
+                        },
+                      ],
+                    })(
+                      <Input
+                        prefix={
+                          <Icon
+                            type="user"
+                            style={{ color: 'rgba(0,0,0,.25)' }}
+                          />
+                        }
+                        placeholder={ReceiverAccountNamePlaceholder}
+                      />,
+                    )}
+                  </FormItem>
+                  <RadioGroup
+                    name="radiogroup"
+                    defaultValue={1}
+                    value={this.state.radioStatus}
+                    onChange={this.changeRadio}
+                    style={{ textAlign: "center", width: "100%",paddingBottom: ".3rem" }}
+                  >
+                    <Radio value={1}>EOS</Radio>
+                    <Radio value={2}>bytes</Radio>
+                  </RadioGroup>
+                </div>
               ) : null}
-              <RadioGroup name="radiogroup" defaultValue={1} value={this.state.radioStatus} onChange={this.changeRadio}>
-                <Radio value={1}>EOS</Radio>
-                <Radio value={2}>bytes</Radio>
-              </RadioGroup>
-              {this.state.radioStatus == 1 ? (
-                <FormItem {...formItemLayout} label="EOS数" colon>
+
+              {this.state.radioStatus === 1 ? (
+                <FormItem {...formItemLayout} colon>
                   {getFieldDecorator('EosQuantity', {
                     rules: [
                       {
                         required: true,
-                        message: BytesQuantityPlaceholder,
+                        message: EosQuantityPlaceholder,
                       },
                     ],
                   })(
@@ -236,12 +251,12 @@ export class BuyRamBytesPage extends React.Component {
                           style={{ color: 'rgba(0,0,0,.25)' }}
                         />
                       }
-                      placeholder={BytesQuantityPlaceholder}
+                      placeholder={EosQuantityPlaceholder}
                     />,
                   )}
                 </FormItem>
               ) : (
-                <FormItem {...formItemLayout} label={BytesLabel} colon>
+                <FormItem {...formItemLayout}  colon>
                   {getFieldDecorator('BytesQuantity', {
                     rules: [
                       {
@@ -262,7 +277,6 @@ export class BuyRamBytesPage extends React.Component {
                   )}
                 </FormItem>
               )}
-
               <DealGetQrcode
                 eos={this.state.eos}
                 form={this.props.form}

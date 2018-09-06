@@ -132,6 +132,7 @@ export default class DealGetQrcode extends Component {
           })(
             <TextArea
               disabled="true"
+              autosize={{ minRows: 4, maxRows: 12 }}
               placeholder={TransactionTextAreaPlaceholder}
             />,
           )}

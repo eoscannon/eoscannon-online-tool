@@ -4,7 +4,7 @@
  *
  */
 
-import { CHANGE_LOCALE, CHANGE_Network } from './constants';
+import { CHANGE_LOCALE, CHANGE_NETWORK } from './constants';
 
 export function changeLocale(languageLocale) {
   return {
@@ -15,7 +15,7 @@ export function changeLocale(languageLocale) {
 
 export function changeNetwork(netWork) {
   return {
-    type: CHANGE_Network,
+    type: CHANGE_NETWORK,
     locale: netWork,
   };
 }

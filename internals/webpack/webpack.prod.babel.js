@@ -2,7 +2,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const OfflinePlugin = require('offline-plugin');
+// const OfflinePlugin = require('offline-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 
 module.exports = require('./webpack.base.babel')({
@@ -48,8 +48,7 @@ module.exports = require('./webpack.base.babel')({
     // Put it in the end to capture all the HtmlWebpackPlugin's
     // assets manipulations and do leak its manipulations to HtmlWebpackPlugin
 
-
-    //new OfflinePlugin({
+    // new OfflinePlugin({
     //  relativePaths: false,
     //  publicPath: '/',
     //  appShell: '/',
@@ -69,7 +68,7 @@ module.exports = require('./webpack.base.babel')({
     //
     //  // Removes warning for about `additional` section usage
     //  safeToUseOptionalCaches: true,
-    //}),
+    // }),
 
     new WebpackPwaManifest({
       name: 'React Boilerplate',

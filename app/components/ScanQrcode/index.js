@@ -92,14 +92,14 @@ export default class ScanQrcode extends Component {
     });
     this.setState({
       SendTransaction: this.state.SendTransaction,
-      SendTransactionButtonState: true,
+      //SendTransactionButtonState: true,
     });
   };
 
   handleSendSignTransaction = () => {
-    let values
+    let values;
     this.props.form.validateFields((err, val) => {
-      if (val.SendTransaction.indexOf('SIG_')!== -1 && val.SendTransaction.indexOf('{') === -1  ){
+      if ( val.SendTransaction.indexOf('SIG_')!== -1 && val.SendTransaction.indexOf('{') === -1  ){
         values = {
           compression: 'none',
           transaction: this.state.newSendTransaction.transaction,
@@ -112,7 +112,7 @@ export default class ScanQrcode extends Component {
           title: '',
           content: this.props.formatMessage(utilsMsg.JsonAlertAttentionArt) ,
         });
-        values = false
+        values = false;
       }
     });
     if(values === false){
@@ -140,6 +140,11 @@ export default class ScanQrcode extends Component {
           title: this.props.formatMessage(utilsMsg.ScanCodeSendFailed),
           content: `${err}`,
           okText: this.props.formatMessage(utilsMsg.ScanCodeSendGetIt),
+        });
+        //发送成功后关闭摄像头
+        this.setState({
+          codeReader: this.state.codeReader.reset(),
+          buttonStatus: true,
         });
       });
   };
@@ -186,18 +191,22 @@ export default class ScanQrcode extends Component {
               {closeCamera}
             </Button>
           )}
-
         </FormItem>
         <FormItem>
           {getFieldDecorator('SendTransaction', {
             rules: [{ required: true, message: JsonInfoPlaceholder }],
-          })(<TextArea placeholder={JsonInfoPlaceholder} rows="6" />)}
+          })(
+            <TextArea
+              placeholder={JsonInfoPlaceholder}
+              autosize={{ minRows: 4, maxRows: 12 }}
+            />,
+          )}
         </FormItem>
         <FormItem style={{ textAlign: 'center' }}>
           <Button
             type="primary"
             className="form-button"
-            onClick={this._handleSendSignTransaction}
+            onClick={this.handleSendSignTransaction}
             disabled={!this.state.OpenCameraButtonState}
           >
             {FieldAlertSendMessageNew}

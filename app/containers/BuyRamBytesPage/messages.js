@@ -16,11 +16,11 @@ export default defineMessages({
   },
   PayerAccountNameLabel: {
     id: 'BuyRamBytesPage PayerAccountNameLabel',
-    defaultMessage: '支付账户',
+    defaultMessage: '支付账号',
   },
   ReceiverAccountNameLabel: {
     id: 'BuyRamBytesPage ReceiverAccountNameLabel',
-    defaultMessage: '接收账户',
+    defaultMessage: '接收账号',
   },
   BytesLabel: {
     id: 'BuyRamBytesPage BytesLabel',
@@ -28,11 +28,11 @@ export default defineMessages({
   },
   BuyPayerAccountNamePlaceholder: {
     id: 'BuyRamBytesPage BuyPayerAccountNamePlaceholder',
-    defaultMessage: '请输入用于支付购买内存的账户名',
+    defaultMessage: '支付账号',
   },
   SellPayerAccountNamePlaceholder: {
     id: 'BuyRamBytesPage SellPayerAccountNamePlaceholder',
-    defaultMessage: '请输入用于出售内存的账户名',
+    defaultMessage: '卖出账号',
   },
   ReceiverAccountNamePlaceholder: {
     id: 'BuyRamBytesPage ReceiverAccountNamePlaceholder',
@@ -40,6 +40,10 @@ export default defineMessages({
   },
   BytesQuantityPlaceholder: {
     id: 'BuyRamBytesPage BytesQuantityPlaceholder',
-    defaultMessage: '请输入购买内存的数量bytes',
+    defaultMessage: '内存数量，单位为byte，1KB=1024bytes',
+  },
+  EosQuantityPlaceholder: {
+    id: 'BuyRamBytesPage EosQuantityPlaceholder',
+    defaultMessage: '内存数量，单位为EOS',
   },
 });

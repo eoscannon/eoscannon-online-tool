@@ -1,18 +1,18 @@
 {
-  "Public AppHelmetTitle": "EOSCannon Tools (Online)",
-  "Public HeaderMenuCreateAccount": "CreateAccount",
+  "Public AppHelmetTitle": "EOSCannon Tool(Online)",
+  "Public HeaderMenuCreateAccount": "Create account",
   "Public HeaderMenuDelegate": "Delegate",
   "Public HeaderMenuTransfer": "Transfer",
   "Public HeaderMenuBuyRamBytes": "Buy/Sell RAM",
   "Public HeaderMenuVote": "Vote",
-  "Public HeaderMenuProxy": "Proxy",
-  "Public HeaderMenuUpdateAuth": "PK management",
+  "Public HeaderMenuProxy": "Proxy vote",
+  "Public HeaderMenuUpdateAuth": "Change permissions",
   "Public HeaderMenuRefund": "Refund",
-  "Public HeaderMenuAirgrab": "AirGrab",
+  "Public HeaderMenuAirgrab": "Airgrab",
   "Public TransactionSuccessNotificationMsg":
-    "The success of generating a signature transaction",
+    "Succeed to generate signed transaction",
   "Public TransactionSuccessNotificationDescription":
-    "Please click the copy signature transaction button or scan the two-dimensional code to get the signature transaction.",
+    "Please click the copy signature transaction button or scan the QRCode to get the signature transaction.",
   "Public TransactionFailNotificationMsg":
     "Failure to generate a signature transaction",
   "Public TransactionFailNotificationDescription":
@@ -20,26 +20,26 @@
   "Public CopyTransactionSuccessNotificationMsg": "Copy success",
   "Public CopyTransactionSuccessNotificationDescription":
     "The signature transaction has been copied to the clipboard. Please go to offline tool signature.",
-  "Public JsonAlertMessage": "Input related transaction message.",
-  "Public JsonAlertDescription":
-    "Please go to offline tool to get the signature transaction, open the tools, and scan the two-dimensional code.",
-  "Public JsonInfoPlaceholder": "Import the message after signature.",
+  "Public JsonAlertMessage": "Scan the QR Code on offline mobile device",
+  "Public JsonAlertDescription": "Or input the signed transaction if no camera",
+  "Public JsonInfoPlaceholder":
+    "Wait for scanning the QR Code to get the signed transaction",
   "Public OpenCameraButtonName": "Open Camera",
-  "Public ScanQrcodeButtonName": "Scan Qrcode",
+  "Public ScanQrcodeButtonName": "Scan QR Code",
   "Public FieldAlertMessage":
     "Input the fields required to generate a signature transaction",
   "Public FieldAlertDescription":
     "The page is offline, and the fields entered will not leak out. Please feel free to enter.",
   "Public CopyAlertDescription":
-    "Please copy the unsigned transaction and sign it in the offline tool.",
+    "Scan QR Code with APP in offline mobile device",
   "Public KeyProviderFormItemLabel": "Input the relevant transaction message",
   "Public KeyProviderFormItemPlaceholder":
     "Please go to the offline version of the tool to get the transaction message, open the tool, scan the QR code to get it.",
   "Public GetTransactionFormItemButtonName": "Generating transaction",
-  "Public CopyAlertMessage": "Copy transaction / Scan Qrcode",
+  "Public CopyAlertMessage": "Step 2/3:",
   "Public CopyTransactionButtonName": "Copy Transaction",
   "Public TransactionTextAreaPlaceholder":
-    "Please copy the generated signature Transaction",
+    "Wait for generating unsigned transaction",
   "Public QrCodeInitValue": "Welcome to use the EOS Cannon offline tool",
   "Public FooterCompText": "Provided by EOSCannon ©2018",
   "BuyRamBytesPage SwitchCheckedName": "Buy",
@@ -47,81 +47,62 @@
   "BuyRamBytesPage PayerAccountNameLabel": "Payer",
   "BuyRamBytesPage ReceiverAccountNameLabel": "Receiver",
   "BuyRamBytesPage BytesLabel": "Bytes",
-  "BuyRamBytesPage BuyPayerAccountNamePlaceholder":
-    "Input the name of the account to pay for the memory.",
-  "BuyRamBytesPage SellPayerAccountNamePlaceholder":
-    "Input the account name for the sale of memory",
-  "BuyRamBytesPage ReceiverAccountNamePlaceholder":
-    "Input the account name used to accept the purchased memory. Not to be filled, the default is the payment account",
-  "BuyRamBytesPage BytesQuantityPlaceholder":
-    "Input the amount of purchased memory bytes",
+  "BuyRamBytesPage BuyPayerAccountNamePlaceholder": "Payer",
+  "BuyRamBytesPage SellPayerAccountNamePlaceholder": "Seller",
+  "BuyRamBytesPage ReceiverAccountNamePlaceholder": "Receiver",
+  "BuyRamBytesPage BytesQuantityPlaceholder": "RAM purchase(in bytes)",
+  "BuyRamBytesPage EosQuantityPlaceholder": "RAM purchase(in EOS)",
   "CreateAccountPage CreatorLabel": "Creator",
   "CreateAccountPage NameLabel": "Account",
   "CreateAccountPage BytesLabel": "Bytes",
-  "CreateAccountPage CreatorAccountNamePlaceholder":
-    "Input the creator's account name",
-  "CreateAccountPage NewAccountNamePlaceholder":
-    "Input the account name you want to create，The account name should be 12 characters, only the lowercase letter A-Z and the number 1-5.",
+  "CreateAccountPage CreatorAccountNamePlaceholder": "Creator",
+  "CreateAccountPage NewAccountNamePlaceholder": "New Account Name",
   "CreateAccountPage NewAccountNameHelp":
     "notes：Account name must be 12 characters and lowercase letter a-z and number 1-5 only.",
-  "CreateAccountPage OwnerKeyPlaceholder":
-    "Input the ownerKey of the new account",
-  "CreateAccountPage ActiveKeyPlaceholder":
-    "Input the activeKey of the new account",
+  "CreateAccountPage OwnerKeyPlaceholder": "Owner Public Key",
+  "CreateAccountPage ActiveKeyPlaceholder": "Active Public Key",
   "CreateAccountPage BytesHelp":
-    "At least 4kb RAM required, the minimum value is: 4096",
-  "CreateAccountPage BytesPlaceholder":
-    "Input the amount of Bytes for the new account",
-  "CreateAccountPage StakeNetQuantityPlaceholder":
-    "Input the amount of Net delegate to the new account",
-  "CreateAccountPage StakeCpuQuantityPlaceholder":
-    "Input the amount of Cpu delegate to the new account",
-  "ProxyPage VoterPlaceholder": "Input your account name",
-  "ProxyPage ProxyHelp":
-    "notes：Input the account name of the proxy vote. Cancel the agent for the empty!",
-  "ProxyPage ProxyPlaceholder":
-    "Input the account name of the proxy vote. Cancel the agent for the empty",
+    "At least 4KB RAM required, the minimum value is: 8192",
+  "CreateAccountPage BytesPlaceholder": "RAM Purchase(in bytes)",
+  "CreateAccountPage CPUStakeHelper": "CPU Stake(in EOS)",
+  "CreateAccountPage NETStakeHelper": "NET Stake(in EOS)",
+  "CreateAccountPage StakeNetQuantityPlaceholder": "Net Stake(in EOS)",
+  "CreateAccountPage StakeCpuQuantityPlaceholder": "CPU Stake(in EOS)",
+  "ProxyPage VoterPlaceholder": "Voter",
+  "ProxyPage ProxyHelp": "Input a Proxy Account",
+  "ProxyPage ProxyPlaceholder": "Proxy Account",
   "ProxyPage VoterLabel": "Voter",
   "ProxyPage ProxyLabel": "Proxy",
-  "RefundPage RefundAlertMessage": "Manual Refund",
+  "RefundPage RefundAlertMessage": "Refund your EOS",
   "RefundPage RefundAlertDescription":
-    "3 days after the unDelegate is released, assets can be retrieved manually by refund.",
-  "RefundPage OwnerPlaceholder": "Input your account name",
+    "if your EOS is under refund and the latest undelegate action is 3 days ago",
+  "RefundPage OwnerPlaceholder": "Account",
   "RefundPage OwnerLabel": "Account",
   "StakePage DelegateSwitchCheckedName": "Delegate",
-  "StakePage DelegateSwitchUnCheckedName": "UnDelegate",
-  "StakePage DelegateFromAccountNamePlaceholder":
-    "Input the name of the account for the delegate",
-  "StakePage UnDelegateFromAccountNamePlaceholder":
-    "Input the name of the account for the undelegate",
-  "StakePage DelegateReceiverAccountNamePlaceholder":
-    "Input the receiver name of the delegate account，the account name for the delegate account is used by default.",
-  "StakePage UnDelegateReceiverAccountNamePlaceholder":
-    "Input the receiver name of the undelegate account，the account name for the unDelegate account is used by default.",
+  "StakePage DelegateSwitchUnCheckedName": "Undelegate",
+  "StakePage DelegateFromAccountNamePlaceholder": "Stake Owner",
+  "StakePage UnDelegateFromAccountNamePlaceholder": "Unstake Owner",
+  "StakePage DelegateReceiverAccountNamePlaceholder": "Recipient",
+  "StakePage UnDelegateReceiverAccountNamePlaceholder": "Stake Holder",
   "StakePage DelegateReceiverAccountNameHelp":
-    "notes：If the account name is inconsistent with the account name used for delegate, it is a Delegate to others.",
+    "Tip：if 'Stake Owner==Recipient', then stake CPU/NET for yourself, otherwise for others.",
   "StakePage UnDelegateReceiverAccountNameHelp":
-    "notes：If the account name is inconsistent with the account name used for undelegate, it is a UnDelegate to others.",
-  "StakePage DelegateStakeNetQuantityPlaceholder":
-    "Input the amount of Net for the delegate",
-  "StakePage UnDelegateStakeNetQuantityPlaceholder":
-    "Input the amount of Net for the undelegate",
-  "StakePage DelegateStakeCpuQuantityPlaceholder":
-    "Input the amount of cpu for the delegate",
-  "StakePage UnDelegateStakeCpuQuantityPlaceholder":
-    "Input the amount of cpu for the undelegate",
+    "Tip：if 'Stake Owner==Recipient', then unstake CPU/NET from yourself, otherwise from others.",
+  "StakePage DelegateStakeNetQuantityPlaceholder": "Stake Net(in EOS)",
+  "StakePage UnDelegateStakeNetQuantityPlaceholder": "Unstake Net(in EOS)",
+  "StakePage DelegateStakeCpuQuantityPlaceholder": "Stake CPU(in EOS)",
+  "StakePage UnDelegateStakeCpuQuantityPlaceholder": "Unstake CPU(in EOS)",
   "StakePage FromLabel": "From",
   "StakePage ReceiverLabel": "Receiver",
   "StakePage NetQuantityLabel": "Net",
   "StakePage CpuQuantityLabel": "Cpu",
-  "TransferPage TransferFromAccountNamePlaceholder": "Input the form amount",
-  "TransferPage TransferToAccountNamePlaceholder": "Input the to amount",
-  "TransferPage TransferContractPlaceholder": "Input the contract",
-  "TransferPage TransferQuantityPlaceholder": "Input the quantity",
-  "TransferPage TransferDigitPlaceholder": "Input the digit",
-  "TransferPage TransferSymbolPlaceholder": "Input the symbol",
-  "TransferPage TransferMemoPlaceholder":
-    "Input the Memo，required while depositing to exchange",
+  "TransferPage TransferFromAccountNamePlaceholder": "Sender",
+  "TransferPage TransferToAccountNamePlaceholder": "Recipient",
+  "TransferPage TransferContractPlaceholder": "Contract",
+  "TransferPage TransferQuantityPlaceholder": "Quantity(in Tokens)",
+  "TransferPage TransferDigitPlaceholder": "Decimals",
+  "TransferPage TransferSymbolPlaceholder": "Symbol",
+  "TransferPage TransferMemoPlaceholder": "Memo",
   "TransferPage TransferMemoHelp":
     "notes：Required while depositing to exchange",
   "TransferPage FromLabel": "From",
@@ -134,24 +115,22 @@
   "UpdateAuthPage CheckPrivateKeyPlaceholder": "Input the PrivateKey for Check",
   "UpdateAuthPage GetPrivateKeyButtonMessage": "Get PrivateKey",
   "UpdateAuthPage ModifyPrivateKeyTitle": "Modify PrivateKey",
-  "UpdateAuthPage UpdateAuthAccountNamePlaceholder": "Input the AccountName",
-  "UpdateAuthPage UpdateAuthActiveKeyPlaceholder":
-    "Input the activeKey you want",
-  "UpdateAuthPage UpdateAuthOwnerKeyPlaceholder": "Input the ownerKey you want",
+  "UpdateAuthPage UpdateAuthAccountNamePlaceholder": "Account",
+  "UpdateAuthPage UpdateAuthActiveKeyPlaceholder": "New Active Public Key",
+  "UpdateAuthPage UpdateAuthOwnerKeyPlaceholder": "New Owner Public Key",
   "UpdateAuthPage PrivateKeyLabel": "PrivateKey",
   "UpdateAuthPage AccountLabel": "Account",
-  "VotePage VoterPlaceholder": "Input the account name",
+  "VotePage VoterPlaceholder": "Voter",
   "VotePage ProducersHelp":
     "notes：Please select the voting node! It can be multiple selected, searchable, and import. input confirm!",
-  "VotePage ProducersPlaceholder":
-    "Please select the voting node! It can be multiple selected, searchable, and import. input confirm!",
+  "VotePage ProducersPlaceholder": "Choose Block Producer(s)",
   "VotePage VoterLabel": "Voter",
   "VotePage ProducersLabel": "Producers",
-  "boilerplate.containers.LocaleToggle.de": "de",
+  "boilerplate.containers.LocaleToggle.zh": "zh",
   "boilerplate.containers.LocaleToggle.en": "en",
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
 
-  "Public HeaderMenuInfoInit": "Intial Block Info",
+  "Public HeaderMenuInfoInit": "Initial Block Info",
   "Public HeaderMenuSendMessage": "Send Transaction",
   "Public HeaderMenuAccountSearch": "Query",
   "Public HeaderMenuStake": "Stake",
@@ -162,9 +141,9 @@
   "Public HeaderAppDownLoad": "APP Download",
   "Public HeaderOnlineAppDownLoad": "Offline IOS",
   "Public HeaderOfflineAppDownLoad": "Offline Android",
-  "TransferPage FunctionSearchButton": "query",
+  "TransferPage FunctionSearchButton": "Query",
   "TransferPage FunctionSearchAccount": "Account",
-  "TransferPage FunctionSearchCreateTime": "Create time",
+  "TransferPage FunctionSearchCreateTime": "Create Time",
   "TransferPage FunctionSearchEOSBalance": "EOS Balance",
   "TransferPage FunctionSearchEOSStake": "EOS Stake",
   "TransferPage FunctionSearchEOSVoteProxy": "Voter Proxy",
@@ -176,37 +155,37 @@
   "TransferPage FunctionSearchNet": "Network",
   "TransferPage FunctionSearchCPURefund": "Refund",
   "TransferPage FunctionSearchNetRefund": "Refund",
-  "TransferPage FunctionSearchAccountPublic": "Account Address",
-  "TransferPage FunctionSearchAccountBalance": "Account Balance",
-  "TransferPage FunctionSearchAccountSyblom": "symbol",
+  "TransferPage FunctionSearchAccountPublic": "Account Permissions",
+  "TransferPage FunctionSearchAccountBalance": "Token Balance",
+  "TransferPage FunctionSearchAccountSyblom": "Symbol",
   "TransferPage FunctionSearchAccountTableBalance": "Balance",
-  "TransferPage FunctionSearchAccountTableContact": "contract",
-  "TransferPage FunctionSearchAccountTableGroup": "Group",
-  "TransferPage FunctionSearchAccountTableAddress": "Address",
+  "TransferPage FunctionSearchAccountTableContact": "Contract",
+  "TransferPage FunctionSearchAccountTableGroup": "Permission",
+  "TransferPage FunctionSearchAccountTableAddress": "Public Key",
   "TransferPage FunctionSearchNoData": "no data",
-  "TransferPage FunctionSearchAccountPlaceHolder": "Input the account name",
-  "InfoInitPage infoAlertMessage": "This page is used online",
+  "TransferPage FunctionSearchAccountPlaceHolder": "Account",
+  "InfoInitPage infoAlertMessage": "Wait for the block info, such as chainId",
   "InfoInitPage infoAlertDescription":
-    "Paste the information below into the EOSCannon offline signature tool",
+    "Next step: Scan the below QRCode with APP in offline mobile device",
   "InfoInitPage infoAlertCopy": "Copy",
-  "Public FieldAlertSendMessage": "Send Transaction(legacy)",
+  "Public FieldAlertSendMessage": "(Legacy) Send Transaction",
   "Public FieldAlertSendMessageNew": "Send Transaction",
   "Public SendSuccessMessage":
-    "Send the Transaction successfully, please check at the end of the page.",
+    "Send the transaction successfully, please check at the end of the page.",
   "Public SendSuccess": "Send success",
   "Public ScanCodeSendSuccessMessage":
     "Successful transmission, related operation broadcast, transaction ID:",
   "Public ScanCodeSendFailed": "Send failed",
   "Public ScanCodeSendSure": "OK",
   "Public ScanCodeSendCancel": "Cancel",
-  "Public ProducersDealTranscation": "Generate transaction",
-  "Public ProducersSendTranscation": "Send transaction",
-  "AirGrabPage AirGrabAlertMessage": "AirGrab",
+  "Public ProducersDealTranscation": "Step 1/3: Generate transaction",
+  "Public ProducersSendTranscation": "Step 3/3: Send transaction",
+  "AirGrabPage AirGrabAlertMessage": "Airgrab",
   "AirGrabPage AirGrabAlertDescription":
     "AirGrab, input account, click airdrop button to generate unsigned transaction. Using OfflineTools signature, broadcast can be obtained.",
   "AirGrabPage AirGrabTableColumnsSymbolTitle": "Symbol",
   "AirGrabPage AirGrabTableColumnsActionTitle": "Grab",
-  "AirGrabPage AirGrabTableActionButtonName": "AirGrab",
+  "AirGrabPage AirGrabTableActionButtonName": "Airgrab",
   "Public ProducersDealTransaction": "Generate transaction",
   "Public ProducersSendTransaction": "Send transaction",
   "Public JsonAlertAttention": "Attention",
@@ -234,7 +213,7 @@
   "DescribePage describePageZero": "Cannon Tools Introduction",
   "Header HeaderMenuErrorMessage": "Not the right website.",
   "Header HeaderMenuInputMessage": "Input",
-  "Header HeaderInputTestNet": "Input test network address.",
+  "Header HeaderInputTestNet": "Specify the network",
   "Header ScanCodeSendGetIt": "Got it",
   "Header JsonAlertcloseCamera": "Close Camera",
   "Header JsonAlertNoCamera":
@@ -242,12 +221,12 @@
   "Header JsonAlertHaveCamera": "Switch to camera scanning mode.",
   "Header JsonAlerthaveCamera": "With camera",
   "Header JsonAlertnoneCamera": "No camera",
-  "TransferPage SymbolCustom": "Customize",
+  "TransferPage SymbolCustom": "Advanced",
   "TransferPage SymbolAttentionInfo": "Fill in the full currency information",
   "TransferPage TransferContract": "Contract",
-  "TransferPage TransferContractHolder": "Input a contract",
+  "TransferPage TransferContractHolder": "Contract",
   "TransferPage TransferDigit": "Digit",
   "TransferPage TransferSymbol": "Symbol",
-  "TransferPage TransferDigitHolder": "Input a digit",
-  "TransferPage TransferSymbolHolder": "Input a symbol"
+  "TransferPage TransferDigitHolder": "Decimals",
+  "TransferPage TransferSymbolHolder": "Symbol"
 }

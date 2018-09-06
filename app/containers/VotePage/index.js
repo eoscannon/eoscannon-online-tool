@@ -91,14 +91,14 @@ export class VotePage extends React.Component {
     const VotePageVoterPlaceholder = this.state.formatMessage(
       messages.VotePageVoterPlaceholder,
     );
-    const VotePageProducersHelp = this.state.formatMessage(
-      messages.VotePageProducersHelp,
-    );
+    // const VotePageProducersHelp = this.state.formatMessage(
+    //   messages.VotePageProducersHelp,
+    // );
     const VotePageProducersPlaceholder = this.state.formatMessage(
       messages.VotePageProducersPlaceholder,
     );
-    const VoterLabel = this.state.formatMessage(messages.VoterLabel);
-    const ProducersLabel = this.state.formatMessage(messages.ProducersLabel);
+    // const VoterLabel = this.state.formatMessage(messages.VoterLabel);
+    // const ProducersLabel = this.state.formatMessage(messages.ProducersLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -110,7 +110,7 @@ export class VotePage extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem {...formItemLayout} label={VoterLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('voter', {
                   rules: [
                     { required: true, message: VotePageVoterPlaceholder },
@@ -124,12 +124,7 @@ export class VotePage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem
-                help={VotePageProducersHelp}
-                {...formItemLayout}
-                label={ProducersLabel}
-                colon
-              >
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('producers', {
                   rules: [
                     {

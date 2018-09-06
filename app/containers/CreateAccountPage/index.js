@@ -186,12 +186,14 @@ export class CreateAccountPage extends React.Component {
     const StakeNetQuantityPlaceholder = this.state.formatMessage(
       messages.StakeNetQuantityPlaceholder,
     );
+    const StakeCPUHelper = this.state.formatMessage(messages.CPUStakeHelp);
+    const StakeNETHelper = this.state.formatMessage(messages.NetStakeHelp);
     const StakeCpuQuantityPlaceholder = this.state.formatMessage(
       messages.StakeCpuQuantityPlaceholder,
     );
-    const CreatorLabel = this.state.formatMessage(messages.CreatorLabel);
-    const NameLabel = this.state.formatMessage(messages.NameLabel);
-    const BytesLabel = this.state.formatMessage(messages.BytesLabel);
+    // const CreatorLabel = this.state.formatMessage(messages.CreatorLabel);
+    // const NameLabel = this.state.formatMessage(messages.NameLabel);
+    // const BytesLabel = this.state.formatMessage(messages.BytesLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -203,7 +205,7 @@ export class CreateAccountPage extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem {...formItemLayout} label={CreatorLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('AccountName', {
                   rules: [
                     { required: true, message: CreatorAccountNamePlaceholder },
@@ -217,12 +219,7 @@ export class CreateAccountPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem
-                help={NewAccountNameHelp}
-                {...formItemLayout}
-                label={NameLabel}
-                colon
-              >
+              <FormItem help={NewAccountNameHelp} {...formItemLayout}>
                 {getFieldDecorator('NewAccountName', {
                   rules: [
                     {
@@ -240,7 +237,7 @@ export class CreateAccountPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label="OwnerKey" colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('OwnerKey', {
                   rules: [
                     {
@@ -260,7 +257,7 @@ export class CreateAccountPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label="ActiveKey" colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('ActiveKey', {
                   rules: [
                     {
@@ -280,13 +277,9 @@ export class CreateAccountPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem
-                help={BytesHelp}
-                {...formItemLayout}
-                label={BytesLabel}
-                colon
-              >
+              <FormItem help={BytesHelp} {...formItemLayout}>
                 {getFieldDecorator('Bytes', {
+                  initialValue: 8192,
                   rules: [
                     {
                       required: true,
@@ -305,8 +298,9 @@ export class CreateAccountPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label="StakeNet" colon>
+              <FormItem help={StakeNETHelper} {...formItemLayout}>
                 {getFieldDecorator('StakeNetQuantity', {
+                  initialValue: 0.1,
                   rules: [
                     {
                       required: true,
@@ -325,8 +319,9 @@ export class CreateAccountPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label="StakeCpu" colon>
+              <FormItem help={StakeCPUHelper} {...formItemLayout}>
                 {getFieldDecorator('StakeCpuQuantity', {
+                  initialValue: 0.1,
                   rules: [
                     {
                       required: true,
