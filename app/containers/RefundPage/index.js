@@ -94,7 +94,7 @@ export class RefundPage extends React.Component {
     const OwnerPlaceholder = this.state.formatMessage(
       messages.OwnerPlaceholder,
     );
-    const OwnerLabel = this.state.formatMessage(messages.OwnerLabel);
+    // const OwnerLabel = this.state.formatMessage(messages.OwnerLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -113,7 +113,7 @@ export class RefundPage extends React.Component {
                   type="error"
                 />
               </FormItem>
-              <FormItem {...formItemLayout} label={OwnerLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('AccountName', {
                   rules: [{ required: true, message: OwnerPlaceholder }],
                 })(

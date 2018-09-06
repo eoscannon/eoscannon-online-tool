@@ -16,13 +16,13 @@ import {
   formItemLayout,
   getEos,
   openTransactionFailNotification,
+  airgrabList,
 } from '../../utils/utils';
 import { LayoutContent } from '../../components/NodeComp';
 import ScanQrcode from '../../components/ScanQrcode';
 import DealGetQrcode from '../../components/DealGetQrcode';
 import messages from './messages';
 import utilsMsg from '../../utils/messages';
-import {airgrabList} from '../../utils/utils';
 
 const FormItem = Form.Item;
 
@@ -45,7 +45,7 @@ export class AirgrabPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.onValuesChange(nextProps);
   }
-  componentDidMount() {
+  componentWillMount() {
     this.setState({
       tableData: airgrabList || [],
       tableColumns: [
@@ -163,7 +163,7 @@ export class AirgrabPage extends React.Component {
     const OwnerPlaceholder = this.state.formatMessage(
       messages.OwnerPlaceholder,
     );
-    const OwnerLabel = this.state.formatMessage(messages.OwnerLabel);
+    // const OwnerLabel = this.state.formatMessage(messages.OwnerLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -182,7 +182,7 @@ export class AirgrabPage extends React.Component {
                   type="info"
                 />
               </FormItem>
-              <FormItem {...formItemLayout} label={OwnerLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('AccountName', {
                   rules: [{ required: true, message: OwnerPlaceholder }],
                 })(

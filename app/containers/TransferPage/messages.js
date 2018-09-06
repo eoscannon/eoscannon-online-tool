@@ -24,19 +24,19 @@ export default defineMessages({
   },
   TransferDigitPlaceholder: {
     id: 'TransferPage TransferDigitPlaceholder',
-    defaultMessage: '请输入代币精度',
+    defaultMessage: '代币精度',
   },
   TransferSymbolPlaceholder: {
     id: 'TransferPage TransferSymbolPlaceholder',
-    defaultMessage: '请输入Symbol',
+    defaultMessage: '币种',
   },
   TransferMemoPlaceholder: {
     id: 'TransferPage TransferMemoPlaceholder',
-    defaultMessage: '请输入Memo，交易所转账必填',
+    defaultMessage: 'Memo，转入交易所必填',
   },
   TransferMemoHelp: {
     id: 'TransferPage TransferMemoHelp',
-    defaultMessage: '注：交易所转账必填',
+    defaultMessage: '注：Memo，转入交易所必填',
   },
   FromLabel: {
     id: 'TransferPage FromLabel',
@@ -76,22 +76,22 @@ export default defineMessages({
   },
   TransferSymbolHolder: {
     id: 'TransferPage TransferSymbolHolder',
-    defaultMessage: '请输入币种',
+    defaultMessage: '币种',
   },
   TransferContract: {
     id: 'TransferPage TransferContract',
-    defaultMessage: '合约',
+    defaultMessage: '合约名',
   },
   TransferContractHolder: {
     id: 'TransferPage TransferContractHolder',
-    defaultMessage: '请输入合约',
+    defaultMessage: '合约名',
   },
   TransferDigit: {
     id: 'TransferPage TransferDigit',
-    defaultMessage: '精度',
+    defaultMessage: '代币精度',
   },
   TransferDigitHolder: {
     id: 'TransferPage TransferDigitHolder',
-    defaultMessage: '请输入精度',
+    defaultMessage: '代币精度（小数位数）',
   },
 });

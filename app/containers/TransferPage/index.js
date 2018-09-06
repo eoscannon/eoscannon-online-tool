@@ -97,7 +97,7 @@ export class TransferPage extends React.Component {
       ToAccountName,
       transferQuantity,
       transferMemo,
-      transferSymbol,
+      // transferSymbol,
       transferSymbolCustom,
       transferContractCustom,
       transferDigitCustom,
@@ -181,7 +181,7 @@ export class TransferPage extends React.Component {
       transferSymbol,
     } = values;
     let transferDigit = 4;
-    let transferContract;
+    // let transferContract;
     if (this.state.addSymbol) {
       this.handleCustomTransaction(eos);
       return;
@@ -200,7 +200,7 @@ export class TransferPage extends React.Component {
         eos.fc.abiCache.abi(this.state.contract, eosioAbi);
       }
     }
-    transferContract = this.state.contract;
+    const transferContract = this.state.contract;
 
     eos
       .transaction(
@@ -263,19 +263,19 @@ export class TransferPage extends React.Component {
     const TransferMemoPlaceholder = this.state.formatMessage(
       messages.TransferMemoPlaceholder,
     );
-    const TransferMemoHelp = this.state.formatMessage(
-      messages.TransferMemoHelp,
-    );
-    const FromLabel = this.state.formatMessage(messages.FromLabel);
-    const ToLabel = this.state.formatMessage(messages.ToLabel);
-    const QuantityLabel = this.state.formatMessage(messages.QuantityLabel);
-    const SymbolLabel = this.state.formatMessage(messages.SymbolLabel);
+    // const TransferMemoHelp = this.state.formatMessage(
+    //   messages.TransferMemoHelp,
+    // );
+    // const FromLabel = this.state.formatMessage(messages.FromLabel);
+    // const ToLabel = this.state.formatMessage(messages.ToLabel);
+    // const QuantityLabel = this.state.formatMessage(messages.QuantityLabel);
+    // const SymbolLabel = this.state.formatMessage(messages.SymbolLabel);
     const SymbolCustom = this.state.formatMessage(messages.SymbolCustom);
-    const TransferSymbol = this.state.formatMessage(messages.TransferSymbol);
-    const TransferContract = this.state.formatMessage(
-      messages.TransferContract,
-    );
-    const TransferDigit = this.state.formatMessage(messages.TransferDigit);
+    // const TransferSymbol = this.state.formatMessage(messages.TransferSymbol);
+    // const TransferContract = this.state.formatMessage(
+    //   messages.TransferContract,
+    // );
+    // const TransferDigit = this.state.formatMessage(messages.TransferDigit);
     const TransferSymbolHolder = this.state.formatMessage(
       messages.TransferSymbolHolder,
     );
@@ -296,7 +296,7 @@ export class TransferPage extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem {...formItemLayout} label={FromLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('FromAccountName', {
                   rules: [
                     {
@@ -313,7 +313,7 @@ export class TransferPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label={ToLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('ToAccountName', {
                   rules: [
                     {
@@ -330,7 +330,7 @@ export class TransferPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label={QuantityLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('transferQuantity', {
                   rules: [
                     { required: true, message: TransferQuantityPlaceholder },
@@ -347,12 +347,7 @@ export class TransferPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem
-                {...formItemLayout}
-                label={SymbolLabel}
-                colon
-                style={{ margin: 0 }}
-              >
+              <FormItem {...formItemLayout} style={{ margin: 0 }}>
                 <div
                   style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}
                 >
@@ -377,17 +372,19 @@ export class TransferPage extends React.Component {
                   )}
                 </div>
 
-                <a
+                <span
+                  role="article"
                   style={{ marginLeft: 8, fontSize: 12 }}
                   onClick={this.toggle}
+                  aria-hidden="true"
                 >
                   {SymbolCustom}{' '}
                   <Icon type={this.state.addSymbol ? 'up' : 'down'} />
-                </a>
+                </span>
               </FormItem>
               {this.state.addSymbol ? (
                 <div>
-                  <FormItem {...formItemLayout} label={TransferSymbol} colon>
+                  <FormItem {...formItemLayout}>
                     {getFieldDecorator('transferSymbolCustom', {
                       rules: [
                         { required: true, message: TransferSymbolHolder },
@@ -404,7 +401,7 @@ export class TransferPage extends React.Component {
                       />,
                     )}
                   </FormItem>
-                  <FormItem {...formItemLayout} label={TransferContract} colon>
+                  <FormItem {...formItemLayout}>
                     {getFieldDecorator('transferContractCustom', {
                       rules: [
                         { required: true, message: TransferContractHolder },
@@ -421,7 +418,7 @@ export class TransferPage extends React.Component {
                       />,
                     )}
                   </FormItem>
-                  <FormItem {...formItemLayout} label={TransferDigit} colon>
+                  <FormItem {...formItemLayout}>
                     {getFieldDecorator('transferDigitCustom', {
                       rules: [{ required: true, message: TransferDigitHolder }],
                     })(
@@ -438,12 +435,7 @@ export class TransferPage extends React.Component {
                   </FormItem>
                 </div>
               ) : null}
-              <FormItem
-                help={TransferMemoHelp}
-                {...formItemLayout}
-                label="Memo"
-                colon
-              >
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('transferMemo', {
                   rules: [
                     { required: false, message: TransferMemoPlaceholder },

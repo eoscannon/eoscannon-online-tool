@@ -158,14 +158,14 @@ export class StakePage extends React.Component {
       : this.state.formatMessage(
           messages.UnDelegateStakeCpuQuantityPlaceholder,
         );
-    const FromLabel = this.state.formatMessage(messages.FromLabel);
-    const ReceiverLabel = this.state.formatMessage(messages.ReceiverLabel);
-    const NetQuantityLabel = this.state.formatMessage(
-      messages.NetQuantityLabel,
-    );
-    const CpuQuantityLabel = this.state.formatMessage(
-      messages.CpuQuantityLabel,
-    );
+    // const FromLabel = this.state.formatMessage(messages.FromLabel);
+    // const ReceiverLabel = this.state.formatMessage(messages.ReceiverLabel);
+    // const NetQuantityLabel = this.state.formatMessage(
+    //   messages.NetQuantityLabel,
+    // );
+    // const CpuQuantityLabel = this.state.formatMessage(
+    //   messages.CpuQuantityLabel,
+    // );
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -185,7 +185,7 @@ export class StakePage extends React.Component {
                   onChange={this.onSwitchChange}
                 />
               </FormItem>
-              <FormItem {...formItemLayout} label={FromLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('FromAccountName', {
                   rules: [
                     { required: true, message: FromAccountNamePlaceholder },
@@ -199,12 +199,7 @@ export class StakePage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem
-                help={ReceiverAccountNameHelp}
-                {...formItemLayout}
-                label={ReceiverLabel}
-                colon
-              >
+              <FormItem help={ReceiverAccountNameHelp} {...formItemLayout}>
                 {getFieldDecorator('ReceiverAccountName', {
                   rules: [
                     {
@@ -221,7 +216,7 @@ export class StakePage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label={NetQuantityLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('stakeNetQuantity', {
                   rules: [
                     {
@@ -241,7 +236,7 @@ export class StakePage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label={CpuQuantityLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('stakeCpuQuantity', {
                   rules: [
                     {

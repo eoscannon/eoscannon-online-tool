@@ -131,13 +131,13 @@ export class BuyRamBytesPage extends React.Component {
     const BytesQuantityPlaceholder = this.state.formatMessage(
       messages.BytesQuantityPlaceholder,
     );
-    const PayerAccountNameLabel = this.state.formatMessage(
-      messages.PayerAccountNameLabel,
-    );
-    const ReceiverAccountNameLabel = this.state.formatMessage(
-      messages.ReceiverAccountNameLabel,
-    );
-    const BytesLabel = this.state.formatMessage(messages.BytesLabel);
+    // const PayerAccountNameLabel = this.state.formatMessage(
+    //   messages.PayerAccountNameLabel,
+    // );
+    // const ReceiverAccountNameLabel = this.state.formatMessage(
+    //   messages.ReceiverAccountNameLabel,
+    // );
+    // const BytesLabel = this.state.formatMessage(messages.BytesLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -157,7 +157,7 @@ export class BuyRamBytesPage extends React.Component {
                   onChange={this.onSwitchChange}
                 />
               </FormItem>
-              <FormItem {...formItemLayout} label={PayerAccountNameLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('PayerAccountName', {
                   rules: [
                     {
@@ -175,11 +175,7 @@ export class BuyRamBytesPage extends React.Component {
                 )}
               </FormItem>
               {this.state.isBuyRam ? (
-                <FormItem
-                  {...formItemLayout}
-                  label={ReceiverAccountNameLabel}
-                  colon
-                >
+                <FormItem {...formItemLayout}>
                   {getFieldDecorator('ReceiverAccountName', {
                     rules: [
                       {
@@ -200,7 +196,7 @@ export class BuyRamBytesPage extends React.Component {
                   )}
                 </FormItem>
               ) : null}
-              <FormItem {...formItemLayout} label={BytesLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('BytesQuantity', {
                   rules: [
                     {

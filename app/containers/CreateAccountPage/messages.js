@@ -20,7 +20,7 @@ export default defineMessages({
   },
   CreatorAccountNamePlaceholder: {
     id: 'CreateAccountPage CreatorAccountNamePlaceholder',
-    defaultMessage: '请输入创建者的账户名',
+    defaultMessage: '创建者的账户名',
   },
   NewAccountNamePlaceholder: {
     id: 'CreateAccountPage NewAccountNamePlaceholder',
@@ -41,7 +41,7 @@ export default defineMessages({
   },
   BytesHelp: {
     id: 'CreateAccountPage BytesHelp',
-    defaultMessage: '注：内存Bytes数量至少为4kb，即所填最小数值为：4096',
+    defaultMessage: '注：内存Bytes数量至少为4kb，推荐数值为：8192',
   },
   BytesPlaceholder: {
     id: 'CreateAccountPage BytesPlaceholder',
@@ -50,6 +50,14 @@ export default defineMessages({
   StakeNetQuantityPlaceholder: {
     id: 'CreateAccountPage StakeNetQuantityPlaceholder',
     defaultMessage: '请输入为新账号所质押的Net数量',
+  },
+  CPUStakeHelp: {
+    id: 'CreateAccountPage CPUStakeHelper',
+    defaultMessage: '质押CPU，单位为EOS',
+  },
+  NetStakeHelp: {
+    id: 'CreateAccountPage NETStakeHelper',
+    defaultMessage: '质押NET，单位为EOS',
   },
   StakeCpuQuantityPlaceholder: {
     id: 'CreateAccountPage StakeCpuQuantityPlaceholder',

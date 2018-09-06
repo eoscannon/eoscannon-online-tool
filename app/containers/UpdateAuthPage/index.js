@@ -135,7 +135,7 @@ export class UpdateAuthPage extends React.Component {
     const UpdateAuthOwnerKeyPlaceholder = this.state.formatMessage(
       messages.UpdateAuthOwnerKeyPlaceholder,
     );
-    const AccountLabel = this.state.formatMessage(messages.AccountLabel);
+    // const AccountLabel = this.state.formatMessage(messages.AccountLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -147,7 +147,7 @@ export class UpdateAuthPage extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem {...formItemLayout} label={AccountLabel} colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('AccountName', {
                   rules: [
                     {
@@ -164,7 +164,7 @@ export class UpdateAuthPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label="ActiveKey" colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('ActiveKey', {
                   rules: [
                     {
@@ -184,7 +184,7 @@ export class UpdateAuthPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} label="OwnerKey" colon>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('OwnerKey', {
                   rules: [
                     {
