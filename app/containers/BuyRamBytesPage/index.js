@@ -8,7 +8,7 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Form, Icon, Input, Switch, Card, Col, Row } from 'antd';
+import { Form, Icon, Input, Switch, Card, Col, Row , Radio } from 'antd';
 
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import {
@@ -23,6 +23,7 @@ import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
 const FormItem = Form.Item;
+const RadioGroup = Radio.Group;
 
 export class BuyRamBytesPage extends React.Component {
   constructor(props) {
@@ -34,6 +35,7 @@ export class BuyRamBytesPage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
+      radioStatus: 1
     };
   }
   /**
@@ -60,6 +62,11 @@ export class BuyRamBytesPage extends React.Component {
       GetTransactionButtonState: !!PayerAccountName && !!BytesQuantity,
     });
   };
+
+  changeRadio = e => {
+    console.log('value===', e.target.value)
+    this.setState({ radioStatus: e.target.value })
+  }
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -69,17 +76,25 @@ export class BuyRamBytesPage extends React.Component {
     }
     const eos = getEos(this.props.SelectedNetWork);
     const values = this.props.form.getFieldsValue();
-    const { PayerAccountName, ReceiverAccountName, BytesQuantity } = values;
+    const { PayerAccountName, ReceiverAccountName, BytesQuantity, EosQuantity } = values;
     const actionsName = this.state.isBuyRam ? 'buyrambytes' : 'sellram';
+    const type = this.state.radioStatus === 1
+      ? {
+          quant: `${Number(EosQuantity)
+            .toFixed(4)
+            .toString()} EOS`,
+        }
+
+      : { bytes: Number(BytesQuantity) };
     const data = this.state.isBuyRam
       ? {
           payer: PayerAccountName,
           receiver: ReceiverAccountName || PayerAccountName,
-          bytes: Number(BytesQuantity),
+          ...type,
         }
       : {
           account: PayerAccountName,
-          bytes: Number(BytesQuantity),
+          ...type,
         };
     eos
       .transaction(
@@ -200,26 +215,54 @@ export class BuyRamBytesPage extends React.Component {
                   )}
                 </FormItem>
               ) : null}
-              <FormItem {...formItemLayout} label={BytesLabel} colon>
-                {getFieldDecorator('BytesQuantity', {
-                  rules: [
-                    {
-                      required: true,
-                      message: BytesQuantityPlaceholder,
-                    },
-                  ],
-                })(
-                  <Input
-                    prefix={
-                      <Icon
-                        type="pay-circle-o"
-                        style={{ color: 'rgba(0,0,0,.25)' }}
-                      />
-                    }
-                    placeholder={BytesQuantityPlaceholder}
-                  />,
-                )}
-              </FormItem>
+              <RadioGroup name="radiogroup" defaultValue={1} value={this.state.radioStatus} onChange={this.changeRadio}>
+                <Radio value={1}>EOS</Radio>
+                <Radio value={2}>bytes</Radio>
+              </RadioGroup>
+              {this.state.radioStatus == 1 ? (
+                <FormItem {...formItemLayout} label="EOS数" colon>
+                  {getFieldDecorator('EosQuantity', {
+                    rules: [
+                      {
+                        required: true,
+                        message: BytesQuantityPlaceholder,
+                      },
+                    ],
+                  })(
+                    <Input
+                      prefix={
+                        <Icon
+                          type="pay-circle-o"
+                          style={{ color: 'rgba(0,0,0,.25)' }}
+                        />
+                      }
+                      placeholder={BytesQuantityPlaceholder}
+                    />,
+                  )}
+                </FormItem>
+              ) : (
+                <FormItem {...formItemLayout} label={BytesLabel} colon>
+                  {getFieldDecorator('BytesQuantity', {
+                    rules: [
+                      {
+                        required: true,
+                        message: BytesQuantityPlaceholder,
+                      },
+                    ],
+                  })(
+                    <Input
+                      prefix={
+                        <Icon
+                          type="pay-circle-o"
+                          style={{ color: 'rgba(0,0,0,.25)' }}
+                        />
+                      }
+                      placeholder={BytesQuantityPlaceholder}
+                    />,
+                  )}
+                </FormItem>
+              )}
+
               <DealGetQrcode
                 eos={this.state.eos}
                 form={this.props.form}

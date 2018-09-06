@@ -125,9 +125,14 @@ export default class ScanQrcode extends Component {
         Modal.success({
           title: this.props.formatMessage(utilsMsg.ScanCodeSendSuccess),
           content: `${this.props.formatMessage(
-            utilsMsg.ScanCodeSendSuccessMessage,
+            utilsMsg.ScanCodeSendSuccessMessage
           )} ${res.transaction_id}`,
           okText: this.props.formatMessage(utilsMsg.ScanCodeSendGetIt),
+        });
+        //发送成功后关闭摄像头
+        this.setState({
+          codeReader: this.state.codeReader.reset(),
+          buttonStatus: true,
         });
       })
       .catch(err => {
@@ -138,8 +143,6 @@ export default class ScanQrcode extends Component {
         });
       });
   };
-
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const message = this.props.formatMessage(utilsMsg.JsonAlertMessage);
@@ -148,13 +151,13 @@ export default class ScanQrcode extends Component {
     const haveCamera = this.props.formatMessage(utilsMsg.JsonAlerthaveCamera);
     const noneCamera = this.props.formatMessage(utilsMsg.JsonAlertnoneCamera);
     const OpenCameraButtonName = this.props.formatMessage(
-      utilsMsg.OpenCameraButtonName,
+      utilsMsg.OpenCameraButtonName
     );
     const JsonInfoPlaceholder = this.props.formatMessage(
-      utilsMsg.JsonInfoPlaceholder,
+      utilsMsg.JsonInfoPlaceholder
     );
     const FieldAlertSendMessageNew = this.props.formatMessage(
-      utilsMsg.FieldAlertSendMessageNew,
+      utilsMsg.FieldAlertSendMessageNew
     );
 
     return (
@@ -194,7 +197,7 @@ export default class ScanQrcode extends Component {
           <Button
             type="primary"
             className="form-button"
-            onClick={this.handleSendSignTransaction}
+            onClick={this._handleSendSignTransaction}
             disabled={!this.state.OpenCameraButtonState}
           >
             {FieldAlertSendMessageNew}
