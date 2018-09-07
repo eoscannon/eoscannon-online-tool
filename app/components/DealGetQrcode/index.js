@@ -103,6 +103,15 @@ export default class DealGetQrcode extends Component {
     const CopyTransactionButtonName = this.props.formatMessage(
       utilsMsg.CopyTransactionButtonName,
     );
+    const CopyOwnerAlertDescription = this.props.formatMessage(
+      utilsMsg.CopyOwnerAlertDescription,
+    );
+    let specialStatusCompontent = false;
+    try {
+      specialStatusCompontent = this.props.specialStatus === "updateAuth" ? true : false;
+    } catch (err) {
+      specialStatusCompontent = false;
+    }
     return (
       <div>
         {!this.props.isHiddenGetTransactionButton && (
@@ -118,11 +127,19 @@ export default class DealGetQrcode extends Component {
           </FormItem>
         )}
         <FormItem>
-          <Alert
-            message={CopyAlertMessage}
-            description={CopyAlertDescription}
-            type="info"
-          />
+          {specialStatusCompontent ? (
+            <Alert
+              message={CopyAlertMessage}
+              description={CopyOwnerAlertDescription}
+              type="info"
+            />
+          ) : (
+            <Alert
+              message={CopyAlertMessage}
+              description={CopyAlertDescription}
+              type="info"
+            />
+          )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('transactionTextArea', {

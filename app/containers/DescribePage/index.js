@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Card } from 'antd';
+import { Form, Card, Collapse } from 'antd';
 import copy from 'copy-to-clipboard';
 
 import {
@@ -23,6 +23,7 @@ import teacherEnglishPic from './../../images/cannonTeachEnglish.jpg';
 import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 
 const FormItem = Form.Item;
+const Panel = Collapse.Panel;
 
 export class DescribePage extends React.Component {
   constructor(props) {
@@ -111,53 +112,77 @@ export class DescribePage extends React.Component {
     const describePageNinth = this.state.formatMessage(
       messages.describePageNinth,
     );
-
+    const text = (
+      <div>
+        <p>{describePageFirst}</p>
+        <p>{describePageSecond}</p>
+        <p>{describePageThird}</p>
+        <p>
+          {describePageFourth}
+          <br />
+          1.{describePagefivth}
+          <b style={{ color: '#000' }}>{describePagefivthBold}</b>
+          {describePagefivthBoldLast}
+          <br />
+          2.<b style={{ color: '#000' }}>{describePageSix}</b>
+          {describePageSixLast} <br />
+          3.{describePageSenven}
+          <b style={{ color: '#000' }}>{describePageSenvenBold}</b>
+          {describePageSenvenlast} <br />
+        </p>
+        <div>
+          {this.props.locale === 'en' ? (
+            <img
+              src={teacherEnglishPic}
+              alt=""
+              style={{ width: '100%' }}
+            />
+          ) : (
+            <img src={teacherPic} alt="" style={{ width: '100%' }} />
+          )}
+        </div>
+        <br />
+        <br />
+        <br />
+        <p>
+          <b style={{ color: '#000' }}>
+            {describePageEight}
+            <br />
+            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{
+            describePageNinth
+          }
+          </b>
+        </p>
+      </div>
+    );
+    const textTwo = (
+      <div>
+        <p>xxxxxxx</p>
+        <p>xxxxxx</p>
+        <p>xxxxxx</p>
+      </div>
+    );
+    const textThird = (
+      <div>
+        <p>xxxxxx</p>
+        <p>xxxxxx</p>
+        <p>xxxxx</p>
+      </div>
+    );
     return (
       <LayoutContentBox>
         <FormComp>
-          <FormItem>
-            <Card title={describePageZero} bordered={false}>
-              <p>{describePageFirst}</p>
-              <p>{describePageSecond}</p>
-              <p>{describePageThird}</p>
-              <p>
-                {describePageFourth}
-                <br />
-                1.{describePagefivth}
-                <b style={{ color: '#000' }}>{describePagefivthBold}</b>
-                {describePagefivthBoldLast}
-                <br />
-                2.<b style={{ color: '#000' }}>{describePageSix}</b>
-                {describePageSixLast} <br />
-                3.{describePageSenven}
-                <b style={{ color: '#000' }}>{describePageSenvenBold}</b>
-                {describePageSenvenlast} <br />
-              </p>
-              <div>
-                {this.props.locale === 'en' ? (
-                  <img
-                    src={teacherEnglishPic}
-                    alt=""
-                    style={{ width: '100%' }}
-                  />
-                ) : (
-                  <img src={teacherPic} alt="" style={{ width: '100%' }} />
-                )}
-              </div>
-              <br />
-              <br />
-              <br />
-              <p>
-                <b style={{ color: '#000' }}>
-                  {describePageEight}
-                  <br />
-                  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{
-                    describePageNinth
-                  }
-                </b>
-              </p>
-            </Card>
-          </FormItem>
+          <Collapse bordered={false} defaultActiveKey={['1']}>
+            <Panel header={describePageZero} key="1">
+              {text}
+            </Panel>
+            <Panel header="第二个介绍" key="2">
+              {textTwo}
+            </Panel>
+            <Panel header="第三个介绍" key="3">
+              {textThird}
+            </Panel>
+          </Collapse>
         </FormComp>
       </LayoutContentBox>
     );
