@@ -213,6 +213,7 @@ export class UpdateAuthPage extends React.Component {
                 QrCodeValue={this.state.QrCodeValue}
                 SelectedNetWork={this.props.SelectedNetWork}
                 transaction={this.state.transaction}
+                specialStatus="updateAuth"
               />
             </Card>
           </Col>

@@ -94,6 +94,10 @@ export default defineMessages({
     id: 'Public CopyAlertDescription',
     defaultMessage: `请将下面的签名报文复制后，前往https://tool.eoscannon.io/联网后进行播报发送。`,
   },
+  CopyOwnerAlertDescription: {
+    id: 'Public CopyOwnerAlertDescription',
+    defaultMessage: `打开离线工具APP，扫描以下二维码，并用Owner权限的私钥签名`,
+  },
   KeyProviderFormItemLabel: {
     id: 'Public KeyProviderFormItemLabel',
     defaultMessage: '请输入相关交易报文',
