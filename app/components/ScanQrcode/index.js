@@ -81,7 +81,7 @@ export default class ScanQrcode extends Component {
   };
 
   getSendSignTransaction = sig => {
-    let output = {
+    const output = {
       compression: 'none',
       transaction: this.state.SendTransaction.transaction,
       signatures: [sig],
@@ -92,31 +92,34 @@ export default class ScanQrcode extends Component {
     });
     this.setState({
       SendTransaction: this.state.SendTransaction,
-      //SendTransactionButtonState: true,
+      // SendTransactionButtonState: true,
     });
   };
 
   handleSendSignTransaction = () => {
     let values;
     this.props.form.validateFields((err, val) => {
-      if ( val.SendTransaction.indexOf('SIG_')!== -1 && val.SendTransaction.indexOf('{') === -1  ){
+      if (
+        val.SendTransaction.indexOf('SIG_') !== -1 &&
+        val.SendTransaction.indexOf('{') === -1
+      ) {
         values = {
           compression: 'none',
           transaction: this.state.newSendTransaction.transaction,
           signatures: [val.SendTransaction],
         };
-      } else if (val.SendTransaction.indexOf('{') !== -1 ) {
+      } else if (val.SendTransaction.indexOf('{') !== -1) {
         values = this.state.SendTransaction;
       } else {
         Modal.warning({
           title: '',
-          content: this.props.formatMessage(utilsMsg.JsonAlertAttentionArt) ,
+          content: this.props.formatMessage(utilsMsg.JsonAlertAttentionArt),
         });
         values = false;
       }
     });
-    if(values === false){
-      return
+    if (values === false) {
+      return;
     }
     const eos = getEos(this.props.SelectedNetWork);
     eos
@@ -125,15 +128,19 @@ export default class ScanQrcode extends Component {
         Modal.success({
           title: this.props.formatMessage(utilsMsg.ScanCodeSendSuccess),
           content: `${this.props.formatMessage(
-            utilsMsg.ScanCodeSendSuccessMessage
+            utilsMsg.ScanCodeSendSuccessMessage,
           )} ${res.transaction_id}`,
           okText: this.props.formatMessage(utilsMsg.ScanCodeSendGetIt),
         });
-        //发送成功后关闭摄像头
-        this.setState({
-          codeReader: this.state.codeReader.reset(),
-          buttonStatus: true,
-        });
+        // 发送成功后关闭摄像头
+        try {
+          this.setState({
+            codeReader: this.state.codeReader.reset(),
+            buttonStatus: true,
+          });
+        } catch (error) {
+          console.log('error====', error);
+        }
       })
       .catch(err => {
         Modal.error({
@@ -141,11 +148,15 @@ export default class ScanQrcode extends Component {
           content: `${err}`,
           okText: this.props.formatMessage(utilsMsg.ScanCodeSendGetIt),
         });
-        //发送成功后关闭摄像头
-        this.setState({
-          codeReader: this.state.codeReader.reset(),
-          buttonStatus: true,
-        });
+        // 发送成功后关闭摄像头
+        try {
+          this.setState({
+            codeReader: this.state.codeReader.reset(),
+            buttonStatus: true,
+          });
+        } catch (error) {
+          console.log('error====', error);
+        }
       });
   };
   render() {
@@ -156,13 +167,13 @@ export default class ScanQrcode extends Component {
     const haveCamera = this.props.formatMessage(utilsMsg.JsonAlerthaveCamera);
     const noneCamera = this.props.formatMessage(utilsMsg.JsonAlertnoneCamera);
     const OpenCameraButtonName = this.props.formatMessage(
-      utilsMsg.OpenCameraButtonName
+      utilsMsg.OpenCameraButtonName,
     );
     const JsonInfoPlaceholder = this.props.formatMessage(
-      utilsMsg.JsonInfoPlaceholder
+      utilsMsg.JsonInfoPlaceholder,
     );
     const FieldAlertSendMessageNew = this.props.formatMessage(
-      utilsMsg.FieldAlertSendMessageNew
+      utilsMsg.FieldAlertSendMessageNew,
     );
 
     return (
