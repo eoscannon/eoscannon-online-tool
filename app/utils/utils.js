@@ -1,3 +1,4 @@
+import ScatterJS from 'scatter-js/dist/scatter.esm';
 import EOS from 'eosjs';
 import { notification } from 'antd';
 import producers from './producers.json';
@@ -46,16 +47,33 @@ const getEos = type => {
   switch (type) {
     case 'main':
       return getEosMain();
-      break;
     case 'test':
       return getEosTest();
-      break;
     case 'other':
       return getEosOtherTest();
-      break;
     default:
       return getEosMain();
   }
+};
+
+const getEosByScatter = (network, appName) => {
+  ScatterJS.scatter.connect(appName).then(connected => {
+    if (!connected) return;
+
+    const { scatter } = ScatterJS;
+    window.scatter = null;
+
+    const requiredFields = { accounts: [network] };
+    scatter.getIdentity(requiredFields).then(() => {
+      const account = scatter.identity.accounts.find(
+        x => x.blockchain === 'eos',
+      );
+      global.AccountByScatter = account;
+      const eosOptions = { expireInSeconds: 60 };
+      const eos = scatter.eos(network, EOS, eosOptions);
+      global.EosByScatter = eos;
+    });
+  });
 };
 
 // InfoInitPage 获取初始化信息
@@ -117,7 +135,7 @@ const symbolList = [
   { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
   { symbol: 'IQ', contract: 'everipediaiq', digit: 3 },
   { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 4 },
-  //{ symbol: 'CETOS', contract: 'gyztomjugage', digit: 4 },
+  // { symbol: 'CETOS', contract: 'gyztomjugage', digit: 4 },
   { symbol: 'EOX', contract: 'eoxeoxeoxeox', digit: 4 },
   { symbol: 'EDNA', contract: 'ednazztokens', digit: 4 },
   { symbol: 'HORUS', contract: 'horustokenio', digit: 4 },
@@ -171,8 +189,7 @@ const airgrabList = [
     method: 'signup',
     url: 'https://wizz.network',
   },
-]
-
+];
 
 export {
   voteNodes,
@@ -180,10 +197,11 @@ export {
   getEos,
   getEosTest,
   getEosMain,
+  getEosByScatter,
   getEosInfoDetail,
   openTransactionSuccessNotification,
   openTransactionFailNotification,
   openNotification,
   symbolList,
-  airgrabList
+  airgrabList,
 };

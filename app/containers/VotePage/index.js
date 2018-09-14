@@ -13,7 +13,8 @@ import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import {
   formItemLayout,
   voteNodes,
-  getEos,
+  // getEos,
+  getEosByScatter,
   openTransactionFailNotification,
 } from '../../utils/utils';
 import { LayoutContent } from '../../components/NodeComp';
@@ -43,6 +44,21 @@ export class VotePage extends React.Component {
     this.onValuesChange(nextProps);
   }
   /**
+   * 测试scatter
+   * */
+  componentDidMount() {
+    const network = {
+      blockchain: 'eos',
+      protocol: 'https',
+      host: 'mainnet.eoscannon.io',
+      port: 443,
+      chainId:
+        'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    };
+    const appName = 'RandomRat2938034';
+    getEosByScatter(network, appName);
+  }
+  /**
    * 输入框内容变化时，改变按钮状态
    * */
   onValuesChange = nextProps => {
@@ -53,37 +69,63 @@ export class VotePage extends React.Component {
     });
   };
   /**
-   * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
+   * 使用scatter投票
    * */
-  handleGetTransaction = () => {
-    if (!this.state.GetTransactionButtonState) {
-      return;
-    }
+  voteByScatter = () => {
+    const eos = global.EosByScatter;
+    const account = global.AccountByScatter;
     const values = this.props.form.getFieldsValue();
-    const eos = getEos(this.props.SelectedNetWork);
-    const { voter, producers } = values;
+    const { producers } = values;
     producers.sort();
     eos
       .voteproducer(
         {
-          voter,
+          voter: account.name,
           proxy: '',
           producers,
         },
-        {
-          sign: false,
-          broadcast: false,
-        },
+        { authorization: [`${account.name}@${account.authority}`] },
       )
       .then(tr => {
-        this.setState({
-          eos,
-          transaction: tr.transaction,
-        });
+        console.log(tr);
       })
       .catch(err => {
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
+  };
+  /**
+   * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
+   * */
+  handleGetTransaction = () => {
+    this.voteByScatter();
+    // if (!this.state.GetTransactionButtonState) {
+    //   return;
+    // }
+    // const values = this.props.form.getFieldsValue();
+    // const eos = getEos(this.props.SelectedNetWork);
+    // const { voter, producers } = values;
+    // producers.sort();
+    // eos
+    //   .voteproducer(
+    //     {
+    //       voter,
+    //       proxy: '',
+    //       producers,
+    //     },
+    //     {
+    //       sign: false,
+    //       broadcast: false,
+    //     },
+    //   )
+    //   .then(tr => {
+    //     this.setState({
+    //       eos,
+    //       transaction: tr.transaction,
+    //     });
+    //   })
+    //   .catch(err => {
+    //     openTransactionFailNotification(this.state.formatMessage, err.name);
+    //   });
   };
 
   render() {

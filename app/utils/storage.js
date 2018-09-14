@@ -6,17 +6,17 @@ const storage = {};
  * @param {[type]} value [键值]
  * @param {[type]} hours  [保存的时间（小时）] 默认保留24小时
  */
-storage.set = function (key, value, hours) {
+storage.set = (key, value, hours) => {
   const Hours = hours || 1;
   const exp = new Date();
-  const expires = exp.getTime() + (Hours * 60 * 60 * 1000);
+  const expires = exp.getTime() + Hours * 60 * 60 * 1000;
   localStorage.setItem(key, JSON.stringify({ value, expires }));
 };
 /**
  * 获取cookie
  * @param {[type]} key   [键名]
  */
-storage.get = function (key) {
+storage.get = key => {
   try {
     let val = null;
     const o = JSON.parse(localStorage.getItem(key));
@@ -28,20 +28,14 @@ storage.get = function (key) {
     return localStorage.getItem(key);
   }
 };
-storage.setNetwork = function (name) {
+storage.setNetwork = name => {
   storage.set('Network', name);
 };
-storage.getNetwork = function () {
-  return storage.get('Network');
-};
+storage.getNetwork = () => storage.get('Network');
 
-storage.setChainId = function (name) {
+storage.setChainId = name => {
   storage.set('ChainId', name);
 };
-storage.getChainId = function () {
-  return storage.get('ChainId');
-};
+storage.getChainId = () => storage.get('ChainId');
 
-export {
-  storage,
-};
+export { storage };
