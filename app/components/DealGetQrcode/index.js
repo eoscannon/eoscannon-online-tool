@@ -174,6 +174,17 @@ export default class DealGetQrcode extends Component {
           >
             {CopyTransactionButtonName}
           </Button>
+          {/*
+           &nbsp;&nbsp;&nbsp;
+           <Button
+           type="primary"
+           className="form-button"
+           disabled={!this.state.CopyTransactionButtonState}
+           onClick={this.props.voteByScatterClick}
+           >
+           使用scatter
+           </Button>
+          */}
         </FormItem>
       </div>
     );
