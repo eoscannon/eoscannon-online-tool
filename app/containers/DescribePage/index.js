@@ -19,6 +19,9 @@ import { getEosInfoDetail, openNotification } from '../../utils/utils';
 import messages from './messages';
 import teacherPic from './../../images/cannonTeach.jpg';
 import teacherEnglishPic from './../../images/cannonTeachEnglish.jpg';
+import assert_messagePic from './img/assert_message.jpg';
+import authorizationPic from './img/authorization.jpg';
+import cpu_limitsPic from './img/cpu_limits.jpg';
 
 import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 
@@ -112,6 +115,31 @@ export class DescribePage extends React.Component {
     const describePageNinth = this.state.formatMessage(
       messages.describePageNinth,
     );
+    const describePageErrorFirst = this.state.formatMessage(
+      messages.describePageErrorFirst,
+    );
+    const describePageErrorZero = this.state.formatMessage(
+      messages.describePageErrorZero,
+    );
+    const describePageErrorSecond = this.state.formatMessage(
+      messages.describePageErrorSecond,
+    );
+    const describePageErrorThird = this.state.formatMessage(
+      messages.describePageErrorThird,
+    );
+
+    const describePageOwnerZero = this.state.formatMessage(
+      messages.describePageOwnerZero,
+    );
+    const describePageOwnerFirst = this.state.formatMessage(
+      messages.describePageOwnerFirst,
+    );
+    const describePageOwnerSecond = this.state.formatMessage(
+      messages.describePageOwnerSecond,
+    );
+    const describePageOwnerThird = this.state.formatMessage(
+      messages.describePageOwnerThird,
+    );
     const text = (
       <div>
         <p>{describePageFirst}</p>
@@ -132,11 +160,7 @@ export class DescribePage extends React.Component {
         </p>
         <div>
           {this.props.locale === 'en' ? (
-            <img
-              src={teacherEnglishPic}
-              alt=""
-              style={{ width: '100%' }}
-            />
+            <img src={teacherEnglishPic} alt="" style={{ width: '100%' }}/>
           ) : (
             <img src={teacherPic} alt="" style={{ width: '100%' }} />
           )}
@@ -149,8 +173,8 @@ export class DescribePage extends React.Component {
             {describePageEight}
             <br />
             &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{
-            describePageNinth
-          }
+              describePageNinth
+            }
           </b>
         </p>
       </div>
@@ -158,21 +182,42 @@ export class DescribePage extends React.Component {
     const textTwo = (
       <div>
         <p>
-          与ETH相比，EOS多了账号和权限的概念。
+          {describePageOwnerFirst}
         </p>
         <p>
-          为什么引入账号？为了方便易记，少出错，比如eostothemoon。EOS的账号类似于ETH地址，ETH地址为0x开头的42位长的字符串，而EOS账号仅为12位长度的字符。ETH所有的操作，都是针对地址，相应地，EOS所有的操作都是针对账号。
+          {describePageOwnerSecond}
         </p>
         <p>
-          为什么引入权限？为了安全。不同的权限，可以设定不同的操作，比如active权限不能修改别的权限，而owner权限可以。权限的表现形式是公私钥对，也就是说，一个权限，对应一个公钥和私钥。使用公私钥就是指使用对应的权限。EOS任何账号，都有2个默认的权限，owner和active。平时的操作，都用active权限，修改权限的私钥时，则用owner权限。
+          {describePageOwnerThird}
         </p>
       </div>
     );
     const textThird = (
       <div>
-        <p>xxxxxx</p>
-        <p>xxxxxx</p>
-        <p>xxxxx</p>
+        <p>
+          <span>
+            1.<span>{describePageErrorFirst}</span>
+          </span>
+          <span>
+            <img src={assert_messagePic} alt=""  style={{ width: '580px' }} />
+          </span>
+        </p>
+        <p>
+          <span>
+            2.<span>{describePageErrorSecond}</span>
+          </span>
+          <span>
+            <img src={authorizationPic} alt=""  style={{ width: '580px' }} />
+          </span>
+        </p>
+        <p>
+          <span>
+            3.<span>{describePageErrorThird}</span>
+          </span>
+          <span>
+            <img src={cpu_limitsPic} alt="" style={{ width: '580px' }} />
+          </span>
+        </p>
       </div>
     );
     return (
@@ -182,10 +227,10 @@ export class DescribePage extends React.Component {
             <Panel header={describePageZero} key="1">
               {text}
             </Panel>
-            <Panel header="什么是OwnerKey和ActiveKey？" key="2">
+            <Panel header={describePageOwnerZero} key="2">
               {textTwo}
             </Panel>
-            <Panel header="常见500错误" key="3">
+            <Panel header={describePageErrorZero} key="3">
               {textThird}
             </Panel>
           </Collapse>
