@@ -55,8 +55,7 @@ export class VotePage extends React.Component {
       chainId:
         'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
     };
-    const appName = 'RandomRat2938034';
-    getEosByScatter(network, appName);
+    getEosByScatter(network);
   }
   /**
    * 输入框内容变化时，改变按钮状态

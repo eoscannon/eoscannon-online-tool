@@ -56,8 +56,8 @@ const getEos = type => {
   }
 };
 
-const getEosByScatter = (network, appName) => {
-  ScatterJS.scatter.connect(appName).then(connected => {
+const getEosByScatter = (network) => {
+  ScatterJS.scatter.connect('EOSCannon').then(connected => {
     if (!connected) return;
 
     const { scatter } = ScatterJS;

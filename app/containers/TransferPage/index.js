@@ -57,25 +57,6 @@ export class TransferPage extends React.Component {
       GetTransactionButtonState:
         !!FromAccountName && !!ToAccountName && !!transferQuantity,
     });
-    // if(this.state.addSymbol){
-    //  const {
-    //    FromAccountName,
-    //    ToAccountName,
-    //    transferQuantity,
-    //    transferSymbolCustom,
-    //    transferContractCustom,
-    //    transferDigitCustom,
-    //  } = values;
-    //  this.setState({
-    //    GetTransactionButtonState:
-    //    !!FromAccountName &&
-    //    !!ToAccountName &&
-    //    !!transferSymbolCustom &&
-    //    !!transferContractCustom &&
-    //    !!transferDigitCustom &&
-    //    !!transferQuantity
-    //  });
-    // }
   };
 
   handleChange = val => {
