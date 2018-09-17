@@ -56,13 +56,31 @@ const getEos = type => {
   }
 };
 
-const getEosByScatter = (network, appName) => {
-  ScatterJS.scatter.connect(appName).then(connected => {
+const getEosByScatter = type => {
+  switch (type) {
+    case 'main':
+      return getEosMainScatter();
+    case 'test':
+      return getEosTestScatter();
+    case 'other':
+      return getEosOtherTestScatter();
+    default:
+      return getEosMainScatter();
+  }
+};
+// 使用scatter进行签名
+const getEosMainScatter = () => {
+  const network = {
+    blockchain: 'eos',
+    protocol: 'https',
+    host: 'mainnet.eoscannon.io',
+    port: 443,
+    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+  };
+  ScatterJS.scatter.connect('EOSCannonTool').then(connected => {
     if (!connected) return;
-
     const { scatter } = ScatterJS;
     window.scatter = null;
-
     const requiredFields = { accounts: [network] };
     scatter.getIdentity(requiredFields).then(() => {
       const account = scatter.identity.accounts.find(
@@ -76,6 +94,58 @@ const getEosByScatter = (network, appName) => {
   });
 };
 
+const getEosTestScatter = () => {
+  const network = {
+    blockchain: 'eos',
+    protocol: 'https',
+    host: config.testEndpoint,
+    port: 443,
+    chainId: config.testChainId,
+  };
+  ScatterJS.scatter.connect('EOSCannonTool').then(connected => {
+    if (!connected) return;
+    const { scatter } = ScatterJS;
+    window.scatter = null;
+    const requiredFields = { accounts: [network] };
+    scatter.getIdentity(requiredFields).then(() => {
+      const account = scatter.identity.accounts.find(
+        x => x.blockchain === 'eos'
+      );
+      global.AccountByScatter = account;
+      const eosOptions = { expireInSeconds: 60 };
+      const eos = scatter.eos(network, EOS, eosOptions);
+      global.EosByScatter = eos;
+    });
+  });
+};
+
+const getEosOtherTestScatter = () => {
+  console.log(storage.getNetwork().slice(8));
+  const network = {
+    blockchain: 'eos',
+    protocol: 'https',
+    host: storage.getNetwork().slice(8),
+    port: 443,
+    chainId: storage.getChainId(),
+  };
+  ScatterJS.scatter.connect('EOSCannonTool').then(connected => {
+    if (!connected) return;
+
+    const { scatter } = ScatterJS;
+    window.scatter = null;
+
+    const requiredFields = { accounts: [network] };
+    scatter.getIdentity(requiredFields).then(() => {
+      const account = scatter.identity.accounts.find(
+        x => x.blockchain === 'eos'
+      );
+      global.AccountByScatter = account;
+      const eosOptions = { expireInSeconds: 60 };
+      const eos = scatter.eos(network, EOS, eosOptions);
+      global.EosByScatter = eos;
+    });
+  });
+};
 // InfoInitPage 获取初始化信息
 async function getEosInfoDetail(type) {
   const eos = getEos(type);
@@ -98,7 +168,7 @@ const openTransactionSuccessNotification = formatMessage => {
   notification.success({
     message: formatMessage(utilsMsg.TransactionSuccessNotificationMsg),
     description: formatMessage(
-      utilsMsg.TransactionSuccessNotificationDescription,
+      utilsMsg.TransactionSuccessNotificationDescription
     ),
     duration: 3,
   });
@@ -110,7 +180,7 @@ const openTransactionFailNotification = (formatMessage, what) => {
   notification.error({
     message: formatMessage(utilsMsg.TransactionFailNotificationMsg),
     description: `${what}，${formatMessage(
-      utilsMsg.TransactionFailNotificationDescription,
+      utilsMsg.TransactionFailNotificationDescription
     )}`,
     duration: 3,
   });
@@ -122,7 +192,7 @@ const openNotification = formatMessage => {
   notification.success({
     message: formatMessage(utilsMsg.CopyTransactionSuccessNotificationMsg),
     description: formatMessage(
-      utilsMsg.CopyTransactionSuccessNotificationDescription,
+      utilsMsg.CopyTransactionSuccessNotificationDescription
     ),
     duration: 3,
   });

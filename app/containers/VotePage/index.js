@@ -13,7 +13,7 @@ import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import {
   formItemLayout,
   voteNodes,
-  // getEos,
+  getEos,
   getEosByScatter,
   openTransactionFailNotification,
 } from '../../utils/utils';
@@ -46,18 +46,7 @@ export class VotePage extends React.Component {
   /**
    * 测试scatter
    * */
-  componentDidMount() {
-    const network = {
-      blockchain: 'eos',
-      protocol: 'https',
-      host: 'mainnet.eoscannon.io',
-      port: 443,
-      chainId:
-        'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-    };
-    const appName = 'RandomRat2938034';
-    getEosByScatter(network, appName);
-  }
+  componentDidMount() {}
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -68,6 +57,38 @@ export class VotePage extends React.Component {
       GetTransactionButtonState: !!voter && !!producers,
     });
   };
+  // * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
+  handleGetTransaction = () => {
+    if (!this.state.GetTransactionButtonState) {
+      return;
+    }
+    const values = this.props.form.getFieldsValue();
+    const eos = getEos(this.props.SelectedNetWork);
+    const { voter, producers } = values;
+    producers.sort();
+    eos
+      .voteproducer(
+        {
+          voter,
+          proxy: '',
+          producers,
+        },
+        {
+          sign: false,
+          broadcast: false,
+        },
+      )
+      .then(tr => {
+        this.setState({
+          eos,
+          transaction: tr.transaction,
+        });
+      })
+      .catch(err => {
+        openTransactionFailNotification(this.state.formatMessage, err.name);
+      });
+  };
+
   /**
    * 使用scatter投票
    * */
@@ -96,37 +117,9 @@ export class VotePage extends React.Component {
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
-  handleGetTransaction = () => {
-    this.voteByScatter();
-    // if (!this.state.GetTransactionButtonState) {
-    //   return;
-    // }
-    // const values = this.props.form.getFieldsValue();
-    // const eos = getEos(this.props.SelectedNetWork);
-    // const { voter, producers } = values;
-    // producers.sort();
-    // eos
-    //   .voteproducer(
-    //     {
-    //       voter,
-    //       proxy: '',
-    //       producers,
-    //     },
-    //     {
-    //       sign: false,
-    //       broadcast: false,
-    //     },
-    //   )
-    //   .then(tr => {
-    //     this.setState({
-    //       eos,
-    //       transaction: tr.transaction,
-    //     });
-    //   })
-    //   .catch(err => {
-    //     openTransactionFailNotification(this.state.formatMessage, err.name);
-    //   });
-  };
+  //handleGetTransaction = () => {
+  //  this.voteByScatter();
+  //};
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -193,6 +186,7 @@ export class VotePage extends React.Component {
                 QrCodeValue={this.state.QrCodeValue}
                 SelectedNetWork={this.props.SelectedNetWork}
                 transaction={this.state.transaction}
+                voteByScatterClick={this.voteByScatter}
               />
             </Card>
           </Col>

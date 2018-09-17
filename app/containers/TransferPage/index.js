@@ -57,25 +57,6 @@ export class TransferPage extends React.Component {
       GetTransactionButtonState:
         !!FromAccountName && !!ToAccountName && !!transferQuantity,
     });
-    // if(this.state.addSymbol){
-    //  const {
-    //    FromAccountName,
-    //    ToAccountName,
-    //    transferQuantity,
-    //    transferSymbolCustom,
-    //    transferContractCustom,
-    //    transferDigitCustom,
-    //  } = values;
-    //  this.setState({
-    //    GetTransactionButtonState:
-    //    !!FromAccountName &&
-    //    !!ToAccountName &&
-    //    !!transferSymbolCustom &&
-    //    !!transferContractCustom &&
-    //    !!transferDigitCustom &&
-    //    !!transferQuantity
-    //  });
-    // }
   };
 
   handleChange = val => {
@@ -111,13 +92,9 @@ export class TransferPage extends React.Component {
       return;
     }
     // 判断是否为自定义symbol
-    // console.log("transferSymbolCustom===",transferSymbolCustom)
-    // console.log("transferContractCustom===",transferContractCustom)
-    // let transferContract
-    // console.log('transferSymbolCustom===', transferSymbolCustom)
-    // console.log('transferContractCustom===', transferContractCustom)
+    console.log('transferSymbolCustom===', transferSymbolCustom)
     eos
-      .getAbi(transferSymbolCustom.toLowerCase())
+      .getAbi(transferContractCustom.toLowerCase())
       .then(res => {
         eos.fc.abiCache.abi(transferContractCustom, res.abi);
       })
@@ -151,7 +128,7 @@ export class TransferPage extends React.Component {
         {
           sign: false,
           broadcast: false,
-        },
+        }
       )
       .then(tr => {
         this.setState({
@@ -163,7 +140,138 @@ export class TransferPage extends React.Component {
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
   };
+  /**
+   * 使用scatter投票
+   * */
+  voteByScatter = (eos) => {
+    //const eos = global.EosByScatter;
+    const account = global.AccountByScatter;
+    const values = this.props.form.getFieldsValue();
+    const {
+      FromAccountName,
+      ToAccountName,
+      transferQuantity,
+      transferMemo,
+      // transferSymbol,
+      transferSymbolCustom,
+      transferContractCustom,
+      transferDigitCustom,
+    } = values;
+    // 判断是否为自定义symbol
+    console.log('transferSymbolCustom===', transferSymbolCustom)
+    eos
+      .getAbi(transferContractCustom.toLowerCase())
+      .then(res => {
+        eos.fc.abiCache.abi(transferContractCustom, res.abi);
+      })
+      .catch(err => {
+        message.error(`${err}`);
+      });
+    eos
+      .voteproducer(
+        {
+          actions: [
+            {
+              account: transferContractCustom,
+              name: 'transfer',
+              authorization: [
+                {
+                  actor: FromAccountName,
+                  permission: 'active',
+                },
+              ],
+              data: {
+                from: FromAccountName,
+                to: ToAccountName,
+                quantity: `${Number(transferQuantity).toFixed(
+                  Number(transferDigitCustom),
+                )} ${transferSymbolCustom.toUpperCase()}`,
+                memo: transferMemo || '',
+              },
+            },
+          ],
+        },
+        { authorization: [`${account.name}@${account.authority}`] },
+      )
+      .then(tr => {
+        console.log(tr);
+      })
+      .catch(err => {
+        openTransactionFailNotification(this.state.formatMessage, err.name);
+      });
+  };
 
+  /**
+   * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
+   * */
+  handleGetTransactionByScatter = () => {
+    if (!this.state.GetTransactionButtonState) {
+      return;
+    }
+    const values = this.props.form.getFieldsValue();
+    const eos = global.EosByScatter;
+    const account = global.AccountByScatter;
+    const {
+      FromAccountName,
+      ToAccountName,
+      transferQuantity,
+      transferMemo,
+      transferSymbol,
+    } = values;
+    let transferDigit = 4;
+    // let transferContract;
+    if (this.state.addSymbol) {
+      this.voteByScatter(eos);
+      return;
+    }
+
+    if (
+      this.state.contract !== 'eosio' &&
+      this.state.contract !== 'eosio.token'
+    ) {
+      if (this.state.contract.toUpperCase() === 'EVERIPEDIAIQ') {
+        transferDigit = 3;
+        eos.fc.abiCache.abi(this.state.contract, eosIqAbi);
+      } else if (this.state.contract.toUpperCase() === 'CHALLENGEDAC') {
+        eos.fc.abiCache.abi(this.state.contract, adcAbi);
+      } else {
+        eos.fc.abiCache.abi(this.state.contract, eosioAbi);
+      }
+    }
+    const transferContract = this.state.contract;
+    eos
+      .transaction(
+        {
+          actions: [
+            {
+              account: transferContract,
+              name: 'transfer',
+              authorization: [
+                {
+                  actor: FromAccountName,
+                  permission: 'active',
+                },
+              ],
+              data: {
+                from: FromAccountName,
+                to: ToAccountName,
+                quantity: `${Number(transferQuantity).toFixed(
+                  Number(transferDigit),
+                )} ${transferSymbol.label.toUpperCase()}`,
+                memo: transferMemo || '',
+              },
+            },
+          ],
+        },
+        { authorization: [`${account.name}@${account.authority}`] },
+      )
+      .then(tr => {
+        console.log('tr.transaction==', tr.transaction);
+      })
+      .catch(err => {
+        openTransactionFailNotification(this.state.formatMessage, err.name);
+      });
+  };
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -461,6 +569,7 @@ export class TransferPage extends React.Component {
                 QrCodeValue={this.state.QrCodeValue}
                 transaction={this.state.transaction}
                 SelectedNetWork={this.props.SelectedNetWork}
+                voteByScatterClick={this.handleGetTransactionByScatter}
               />
             </Card>
           </Col>

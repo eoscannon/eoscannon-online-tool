@@ -21,7 +21,9 @@ import eosCannonLogo from '../../images/eosLogo.png';
 import eosCannonLogoBig from '../../images/eos_cannon_logo_opacity4.png';
 import downloadAndroid from './1.1.3.png';
 import downloadIos from './ios.png';
-
+import {
+  getEosByScatter,
+} from '../../utils/utils';
 import {
   makeSelectLocale,
   makeSelectNetwork,
@@ -48,6 +50,8 @@ class HeaderComp extends React.Component {
    * 根据URL地址，重新设置默认菜单选项
    * */
   componentWillMount() {
+    //getEosByScatter();
+
     let defaultSelectedKeys = '12';
     switch (window.location.hash.substring(1)) {
       case '/dscribe':
