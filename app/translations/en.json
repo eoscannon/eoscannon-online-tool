@@ -220,7 +220,7 @@
   "DescribePage describePageOwnerThird":
     "Why bring in permissions? More safety. Different permissions can be bundle with different operations. For example, active permission cannot modify other permissions, but owner permission can. Each permission has a public-private key pair. Using a public and private key means using relative permission. Each EOS account has 2 default permissions, the owner and active permission. The active permission is used with most operations. But owner permission is needed when permissions are need to be modified.",
   "DescribePage describePageErrorFirst":
-    "The permission is incorrect. Please check whether the private key is correct. Except for changing the private key of a permission which needs owner permission, active private key is needed to signed a transaction.",
+    "The permission is incorrect. Please check whether the private key is correct. Use owner permission to change private key, and use active permission to do other operations.",
   "DescribePage describePageErrorSecond":
     "Some fields are incorrectly, please check it carefully.",
   "DescribePage describePageErrorThird":
