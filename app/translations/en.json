@@ -133,7 +133,7 @@
   "Public HeaderMenuInfoInit": "Initial Block Info",
   "Public HeaderMenuSendMessage": "Send Transaction",
   "Public HeaderMenuAccountSearch": "Query",
-  "Public HeaderMenuStake": "Stake",
+  "Public HeaderMenuStake": "Stake/Unstake",
   "Public HeaderMenuTradeManage": "Transaction Processing",
   "Public HeaderMenuOffical": "MainNet",
   "Public HeaderMenuTestNet": "Cannon TestNet",

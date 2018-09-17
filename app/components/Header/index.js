@@ -252,13 +252,13 @@ class HeaderComp extends React.Component {
               marginBottom: '2.5rem',
             }}
           >
-            <a href="https://eoscannon.io/" target="_blank">
+            <Link href="/" to="/" innerRef={() => {}}>
               {this.state.LogoName ? (
                 <img src={eosCannonLogoBig} alt="" width="75%" />
               ) : (
                 <img src={eosCannonLogo} alt="" width="32" />
               )}
-            </a>
+            </Link>
           </div>
           <Menu
             theme="dark"

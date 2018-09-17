@@ -148,6 +148,7 @@ const symbolList = [
   { symbol: 'RIDL', contract: 'ridlridlcoin', digit: 4 },
   { symbol: 'TRYBE', contract: 'trybenetwork', digit: 4 },
   { symbol: 'ATD', contract: 'eosatidiumio', digit: 4 },
+  { symbol: 'PUB', contract: 'publytoken11', digit: 4 },
 ];
 
 /**
