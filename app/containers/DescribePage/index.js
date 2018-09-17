@@ -193,7 +193,7 @@ export class DescribePage extends React.Component {
             1.<span>{describePageErrorFirst}</span>
           </span>
           <p>
-            <img src={assertMessagePic} alt="" style={{ width: '580px' }} />
+            <img src={authorizationPic} alt="" style={{ width: '580px' }} />
           </p>
         </p>
         <p>
@@ -201,7 +201,7 @@ export class DescribePage extends React.Component {
             2.<span>{describePageErrorSecond}</span>
           </span>
           <p>
-            <img src={authorizationPic} alt="" style={{ width: '580px' }} />
+            <img src={assertMessagePic} alt="" style={{ width: '580px' }} />
           </p>
         </p>
         <p>
