@@ -19,13 +19,13 @@ import { getEosInfoDetail, openNotification } from '../../utils/utils';
 import messages from './messages';
 import teacherPic from './../../images/cannonTeach.jpg';
 import teacherEnglishPic from './../../images/cannonTeachEnglish.jpg';
-import assert_messagePic from './img/assert_message.jpg';
+import assertMessagePic from './img/assert_message.jpg';
 import authorizationPic from './img/authorization.jpg';
-import cpu_limitsPic from './img/cpu_limits.jpg';
+import cpuLimitsPic from './img/cpu_limits.jpg';
 
 import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 
-const FormItem = Form.Item;
+// const FormItem = Form.Item;
 const Panel = Collapse.Panel;
 
 export class DescribePage extends React.Component {
@@ -160,7 +160,7 @@ export class DescribePage extends React.Component {
         </p>
         <div>
           {this.props.locale === 'en' ? (
-            <img src={teacherEnglishPic} alt="" style={{ width: '100%' }}/>
+            <img src={teacherEnglishPic} alt="" style={{ width: '100%' }} />
           ) : (
             <img src={teacherPic} alt="" style={{ width: '100%' }} />
           )}
@@ -181,15 +181,9 @@ export class DescribePage extends React.Component {
     );
     const textTwo = (
       <div>
-        <p>
-          {describePageOwnerFirst}
-        </p>
-        <p>
-          {describePageOwnerSecond}
-        </p>
-        <p>
-          {describePageOwnerThird}
-        </p>
+        <p>{describePageOwnerFirst}</p>
+        <p>{describePageOwnerSecond}</p>
+        <p>{describePageOwnerThird}</p>
       </div>
     );
     const textThird = (
@@ -198,25 +192,25 @@ export class DescribePage extends React.Component {
           <span>
             1.<span>{describePageErrorFirst}</span>
           </span>
-          <span>
-            <img src={assert_messagePic} alt=""  style={{ width: '580px' }} />
-          </span>
+          <p>
+            <img src={assertMessagePic} alt="" style={{ width: '580px' }} />
+          </p>
         </p>
         <p>
           <span>
             2.<span>{describePageErrorSecond}</span>
           </span>
-          <span>
-            <img src={authorizationPic} alt=""  style={{ width: '580px' }} />
-          </span>
+          <p>
+            <img src={authorizationPic} alt="" style={{ width: '580px' }} />
+          </p>
         </p>
         <p>
           <span>
             3.<span>{describePageErrorThird}</span>
           </span>
-          <span>
-            <img src={cpu_limitsPic} alt="" style={{ width: '580px' }} />
-          </span>
+          <p>
+            <img src={cpuLimitsPic} alt="" style={{ width: '580px' }} />
+          </p>
         </p>
       </div>
     );
