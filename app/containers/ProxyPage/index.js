@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import { Form, Icon, Input, Card, Col, Row } from 'antd';
+import { Form, Icon, Input, Card, Col, Row, Modal } from 'antd';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import {
   formItemLayout,
   getEos,
+  getEosByScatter,
   openTransactionFailNotification,
 } from '../../utils/utils';
 import { LayoutContent } from '../../components/NodeComp';
@@ -32,7 +33,14 @@ export class ProxyPage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
+      scatterStatus: false
     };
+  }
+  /**
+   * 链接scatter
+   * */
+  componentDidMount() {
+    getEosByScatter();
   }
   /**
    * 输入框内容变化时，改变按钮状态
@@ -50,10 +58,12 @@ export class ProxyPage extends React.Component {
       GetTransactionButtonState: !!voter,
     });
   };
+
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
   handleGetTransaction = () => {
+    this.setState({ scatterStatus: false });
     if (!this.state.GetTransactionButtonState) {
       return;
     }
@@ -83,12 +93,51 @@ export class ProxyPage extends React.Component {
       });
   };
 
+  /**
+   * 使用scatter投票
+   * */
+  voteByScatter = () => {
+    this.setState({ scatterStatus: true });
+    const eos = global.EosByScatter;
+    const account = global.AccountByScatter;
+    const values = this.props.form.getFieldsValue();
+    const { proxy } = values;
+    eos
+      .voteproducer(
+        {
+          voter: account.name,
+          proxy: proxy || '',
+          producers: [],
+        },
+        { authorization: [`${account.name}@${account.authority}`] },
+      )
+      .then(tr => {
+        console.log(tr);
+        Modal.success({
+          title: this.state.formatMessage(utilsMsg.ScanCodeSendSuccess),
+          content: `${this.state.formatMessage(
+            utilsMsg.ScanCodeSendSuccessMessage,
+          )} ${tr.transaction_id}`,
+          okText: this.state.formatMessage(utilsMsg.ScanCodeSendGetIt),
+        });
+      })
+      .catch(err => {
+        Modal.error({
+          title: this.state.formatMessage(utilsMsg.ScanCodeSendFailed),
+          content: `${err}`,
+          okText: this.state.formatMessage(utilsMsg.ScanCodeSendGetIt),
+        });
+      });
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const VoterPlaceholder = this.state.formatMessage(
       messages.VoterPlaceholder,
     );
     const ProxyHelp = this.state.formatMessage(messages.ProxyHelp);
+    const ProxyScatterHelp = this.state.formatMessage(
+      messages.ProxyScatterHelp,
+    );
     const ProxyPlaceholder = this.state.formatMessage(
       messages.ProxyPlaceholder,
     );
@@ -105,7 +154,7 @@ export class ProxyPage extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem {...formItemLayout}>
+              <FormItem help={ProxyScatterHelp} {...formItemLayout}>
                 {getFieldDecorator('voter', {
                   rules: [{ required: true, message: VoterPlaceholder }],
                 })(
@@ -144,6 +193,8 @@ export class ProxyPage extends React.Component {
                 QrCodeValue={this.state.QrCodeValue}
                 SelectedNetWork={this.props.SelectedNetWork}
                 transaction={this.state.transaction}
+                voteByScatterClick={this.voteByScatter}
+                scatterStatus={this.state.scatterStatus}
               />
             </Card>
           </Col>

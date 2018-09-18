@@ -35,7 +35,11 @@ export default class DealGetQrcode extends Component {
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps(nextProps) {
-    if (nextProps.eos && nextProps.transaction !== this.props.transaction) {
+    if (
+      nextProps.eos &&
+      nextProps.transaction !== this.props.transaction &&
+      !nextProps.scatterStatus
+    ) {
       this.setState({ eos: nextProps.eos }, this.getUnSignedBuffer);
     }
   }
@@ -106,6 +110,9 @@ export default class DealGetQrcode extends Component {
     const CopyOwnerAlertDescription = this.props.formatMessage(
       utilsMsg.CopyOwnerAlertDescription,
     );
+    const scatterSignature = this.props.formatMessage(
+      utilsMsg.scatterSignature,
+    );
     let specialStatusCompontent = false;
     try {
       specialStatusCompontent = this.props.specialStatus === "updateAuth" ? true : false;
@@ -124,6 +131,17 @@ export default class DealGetQrcode extends Component {
             >
               {GetTransactionButtonName}
             </Button>
+            &nbsp;&nbsp;&nbsp;
+            {this.props.voteByScatterClick ? (
+              <Button
+                type="primary"
+                className="form-button"
+                disabled={!this.props.GetTransactionButtonState}
+                onClick={this.props.voteByScatterClick}
+              >
+                {scatterSignature}
+              </Button>
+            ) : null}
           </FormItem>
         )}
         <FormItem>
@@ -174,17 +192,7 @@ export default class DealGetQrcode extends Component {
           >
             {CopyTransactionButtonName}
           </Button>
-          {/*
-           &nbsp;&nbsp;&nbsp;
-           <Button
-           type="primary"
-           className="form-button"
-           disabled={!this.state.CopyTransactionButtonState}
-           onClick={this.props.voteByScatterClick}
-           >
-           使用scatter
-           </Button>
-          */}
+
         </FormItem>
       </div>
     );

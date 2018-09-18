@@ -73,6 +73,7 @@
   "ProxyPage ProxyPlaceholder": "Proxy Account",
   "ProxyPage VoterLabel": "Voter",
   "ProxyPage ProxyLabel": "Proxy",
+  "ProxyPage ProxyScatterHelp": "'Signing with a signed account using Scatter",
   "RefundPage RefundAlertMessage": "Refund your EOS",
   "RefundPage RefundAlertDescription":
     "if your EOS is under refund and the latest undelegate action is 3 days ago",
@@ -229,6 +230,7 @@
   "Header JsonAlertHaveCamera": "Switch to camera scanning mode.",
   "Header JsonAlerthaveCamera": "With camera",
   "Header JsonAlertnoneCamera": "No camera",
+  "Header scatterSignature": "Scatter signature",
   "TransferPage SymbolCustom": "Advanced",
   "TransferPage SymbolAttentionInfo": "Fill in the full currency information",
   "TransferPage TransferContract": "Contract",

@@ -280,4 +280,8 @@ export default defineMessages({
     id: 'Header JsonAlertnoneCamera',
     defaultMessage: '无摄像头',
   },
+  scatterSignature: {
+    id: 'Header scatterSignature',
+    defaultMessage: 'scatter签名',
+  },
 });

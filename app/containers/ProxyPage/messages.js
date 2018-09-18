@@ -26,4 +26,8 @@ export default defineMessages({
     id: 'ProxyPage ProxyLabel',
     defaultMessage: '代理账户',
   },
+  ProxyScatterHelp: {
+    id: 'ProxyPage ProxyScatterHelp',
+    defaultMessage: '注：使用Scatter将使用已登录的账号签名',
+  },
 });

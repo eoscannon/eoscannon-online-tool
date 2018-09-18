@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Switch, Card, Col, Row } from 'antd';
+import { Form, Icon, Input, Switch, Card, Col, Row, Modal } from 'antd';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
@@ -35,6 +35,7 @@ export class StakePage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
+      scatterStatus: false,
     };
   }
   /**
@@ -52,6 +53,82 @@ export class StakePage extends React.Component {
     });
   };
   /**
+   * 使用scatter投票
+   * */
+  voteByScatter = () => {
+    this.setState({ scatterStatus: true });
+    const eos = global.EosByScatter;
+    const account = global.AccountByScatter;
+    const values = this.props.form.getFieldsValue();
+    const {
+      FromAccountName,
+      ReceiverAccountName,
+      stakeNetQuantity,
+      stakeCpuQuantity,
+    } = values;
+    if (this.state.isDelegatebw) {
+      eos
+        .delegatebw(
+          {
+            from: FromAccountName,
+            receiver: ReceiverAccountName || FromAccountName,
+            stake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
+            stake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
+            transfer: 0,
+          },
+          { authorization: [`${account.name}@${account.authority}`] }
+        )
+        .then(tr => {
+          console.log(tr);
+          Modal.success({
+            title: this.state.formatMessage(utilsMsg.ScanCodeSendSuccess),
+            content: `${this.state.formatMessage(
+              utilsMsg.ScanCodeSendSuccessMessage,
+            )} ${tr.transaction_id}`,
+            okText: this.state.formatMessage(utilsMsg.ScanCodeSendGetIt),
+          });
+        })
+        .catch(err => {
+          Modal.error({
+            title: this.state.formatMessage(utilsMsg.ScanCodeSendFailed),
+            content: `${err}`,
+            okText: this.state.formatMessage(utilsMsg.ScanCodeSendGetIt),
+          });
+        });
+    } else {
+      eos
+        .undelegatebw(
+          {
+            from: FromAccountName,
+            receiver: ReceiverAccountName,
+            unstake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
+            unstake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
+          },
+          { authorization: [`${account.name}@${account.authority}`] }
+        )
+        .then(tr => {
+          this.setState({
+            eos,
+            transaction: tr.transaction,
+          });
+          Modal.success({
+            title: this.state.formatMessage(utilsMsg.ScanCodeSendSuccess),
+            content: `${this.state.formatMessage(
+              utilsMsg.ScanCodeSendSuccessMessage,
+            )} ${tr.transaction_id}`,
+            okText: this.state.formatMessage(utilsMsg.ScanCodeSendGetIt),
+          });
+        })
+        .catch(err => {
+          Modal.error({
+            title: this.state.formatMessage(utilsMsg.ScanCodeSendFailed),
+            content: `${err}`,
+            okText: this.state.formatMessage(utilsMsg.ScanCodeSendGetIt),
+          });
+        });
+    };
+  };
+  /**
    * 输入框内容变化时，改变按钮状态
    * */
   onValuesChange = nextProps => {
@@ -66,6 +143,7 @@ export class StakePage extends React.Component {
    * 用户点击生成报文，根据用户输入参数、选择的质押/解质押，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
   handleGetTransaction = () => {
+    this.setState({ scatterStatus: false });
     if (!this.state.GetTransactionButtonState) {
       return;
     }

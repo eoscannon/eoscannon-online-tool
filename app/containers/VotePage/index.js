@@ -6,7 +6,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Select, Card, Col, Row } from 'antd';
+import { Form, Icon, Input, Select, Card, Col, Row, Modal } from 'antd';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
@@ -35,6 +35,7 @@ export class VotePage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
+      scatterStatus: false,
     };
   }
   /**
@@ -44,9 +45,11 @@ export class VotePage extends React.Component {
     this.onValuesChange(nextProps);
   }
   /**
-   * 测试scatter
+   * 链接scatter
    * */
-  componentDidMount() {}
+  componentDidMount() {
+    getEosByScatter();
+  }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -59,6 +62,7 @@ export class VotePage extends React.Component {
   };
   // * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
   handleGetTransaction = () => {
+    this.setState({ scatterStatus: false });
     if (!this.state.GetTransactionButtonState) {
       return;
     }
@@ -93,6 +97,7 @@ export class VotePage extends React.Component {
    * 使用scatter投票
    * */
   voteByScatter = () => {
+    this.setState({ scatterStatus: true });
     const eos = global.EosByScatter;
     const account = global.AccountByScatter;
     const values = this.props.form.getFieldsValue();
@@ -109,9 +114,21 @@ export class VotePage extends React.Component {
       )
       .then(tr => {
         console.log(tr);
+        Modal.success({
+          title: this.state.formatMessage(utilsMsg.ScanCodeSendSuccess),
+          content: `${this.state.formatMessage(
+            utilsMsg.ScanCodeSendSuccessMessage,
+          )} ${tr.transaction_id}`,
+          okText: this.state.formatMessage(utilsMsg.ScanCodeSendGetIt),
+        });
       })
       .catch(err => {
-        openTransactionFailNotification(this.state.formatMessage, err.name);
+        Modal.error({
+          title: this.state.formatMessage(utilsMsg.ScanCodeSendFailed),
+          content: `${err}`,
+          okText: this.state.formatMessage(utilsMsg.ScanCodeSendGetIt),
+        });
+        //openTransactionFailNotification(this.state.formatMessage, err.name);
       });
   };
   /**
@@ -126,14 +143,12 @@ export class VotePage extends React.Component {
     const VotePageVoterPlaceholder = this.state.formatMessage(
       messages.VotePageVoterPlaceholder,
     );
-    // const VotePageProducersHelp = this.state.formatMessage(
-    //   messages.VotePageProducersHelp,
-    // );
     const VotePageProducersPlaceholder = this.state.formatMessage(
       messages.VotePageProducersPlaceholder,
     );
-    // const VoterLabel = this.state.formatMessage(messages.VoterLabel);
-    // const ProducersLabel = this.state.formatMessage(messages.ProducersLabel);
+    const ProxyScatterHelp = this.state.formatMessage(
+      messages.ProxyScatterHelp,
+    );
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -145,7 +160,7 @@ export class VotePage extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem {...formItemLayout}>
+              <FormItem  help={ProxyScatterHelp} {...formItemLayout}>
                 {getFieldDecorator('voter', {
                   rules: [
                     { required: true, message: VotePageVoterPlaceholder },
@@ -187,6 +202,7 @@ export class VotePage extends React.Component {
                 SelectedNetWork={this.props.SelectedNetWork}
                 transaction={this.state.transaction}
                 voteByScatterClick={this.voteByScatter}
+                scatterStatus={this.state.scatterStatus}
               />
             </Card>
           </Col>

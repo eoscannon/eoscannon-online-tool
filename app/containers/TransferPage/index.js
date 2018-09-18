@@ -168,31 +168,23 @@ export class TransferPage extends React.Component {
         message.error(`${err}`);
       });
     eos
-      .voteproducer(
-        {
-          actions: [
-            {
-              account: transferContractCustom,
-              name: 'transfer',
-              authorization: [
-                {
-                  actor: FromAccountName,
-                  permission: 'active',
-                },
-              ],
-              data: {
-                from: FromAccountName,
-                to: ToAccountName,
-                quantity: `${Number(transferQuantity).toFixed(
-                  Number(transferDigitCustom),
-                )} ${transferSymbolCustom.toUpperCase()}`,
-                memo: transferMemo || '',
-              },
+      .voteproducer({
+        actions: [
+          {
+            account: transferContractCustom,
+            name: 'transfer',
+            authorization: [`${account.name}@${account.authority}`],
+            data: {
+              from: FromAccountName,
+              to: ToAccountName,
+              quantity: `${Number(transferQuantity).toFixed(
+                Number(transferDigitCustom),
+              )} ${transferSymbolCustom.toUpperCase()}`,
+              memo: transferMemo || '',
             },
-          ],
-        },
-        { authorization: [`${account.name}@${account.authority}`] },
-      )
+          },
+        ],
+      })
       .then(tr => {
         console.log(tr);
       })
@@ -569,7 +561,6 @@ export class TransferPage extends React.Component {
                 QrCodeValue={this.state.QrCodeValue}
                 transaction={this.state.transaction}
                 SelectedNetWork={this.props.SelectedNetWork}
-                voteByScatterClick={this.handleGetTransactionByScatter}
               />
             </Card>
           </Col>

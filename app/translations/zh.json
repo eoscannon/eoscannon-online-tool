@@ -71,6 +71,7 @@
   "ProxyPage ProxyPlaceholder": "代理账户",
   "ProxyPage VoterLabel": "投票账户",
   "ProxyPage ProxyLabel": "代理账户",
+  "ProxyPage ProxyScatterHelp": "注：使用Scatter将使用已登录账号签名",
   "RefundPage RefundAlertMessage": "手动Refund",
   "RefundPage RefundAlertDescription":
     "在解质押3天后，资产未到账时，可手动Refund取回资产。",
@@ -224,6 +225,7 @@
   "Header JsonAlertHaveCamera": "已切换至摄像头扫描模式",
   "Header JsonAlerthaveCamera": "有摄像头",
   "Header JsonAlertnoneCamera": "无摄像头",
+  "Header scatterSignature": "Scatter签名",
   "TransferPage SymbolCustom": "自定义",
   "TransferPage SymbolAttentionInfo": "请填写完整币种信息",
   "TransferPage TransferContract": "合约",
