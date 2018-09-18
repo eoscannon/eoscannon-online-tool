@@ -212,14 +212,20 @@
   "DescribePage describePageNinth":
     " For changing keys, please use owner private key to sign transaction.",
   "DescribePage describePageZero": "Cannon Tools Introduction",
-  "DescribePage describePageOwnerZero": "What is OwnerKey and ActiveKey?",
-  "DescribePage describePageErrorZero": "Common 500 error parsing.",
-  "DescribePage describePageOwnerFirst": "Compared with ETH, EOS has more concepts of accounts and permissions.",
-  "DescribePage describePageOwnerSecond": "Why import an account? For the convenience of easy to remember, less mistakes, such as eostothemoon. The EOS account is similar to the ETH address, the ETH address is a 42-bit string starting with 0x, and the EOS account is only 12-bit characters. All ETH operations are for addresses, and correspondingly, all EOS operations are for accounts.",
-  "DescribePage describePageOwnerThird": "Why import permissions? for safety. Different permissions can be set for different operations. For example, active permissions cannot modify other permissions, and owner permissions can. The expression of the permission is a public-private key pair, that is, a permission corresponding to a public key and a private key. Using a public and private key means using the corresponding permission. Any EOS account has 2 default permissions, owner and active. In the usual operation, the active permission is used. When the private key of the permission is modified, the owner permission is used.",
-  "DescribePage describePageErrorFirst": "The permission is incorrect. Please check whether the private key is correct. Except for changing the private key, whether other operations use the private key signature of the active permission.",
-  "DescribePage describePageErrorSecond": "Some fields are entered incorrectly, please check.",
-  "DescribePage describePageErrorThird": "The CPU is not enough. Please stake the CPU first. You can use https://tool.eoscannon.io/#/accountSearch to check if the CPU is enough.",
+  "DescribePage describePageOwnerZero": "What is OwnerKey and ActiveKey",
+  "DescribePage describePageErrorZero": "500 errors cause",
+  "DescribePage describePageOwnerFirst":
+    "Compared with ETH, EOS has extra concepts: accounts and permissions.",
+  "DescribePage describePageOwnerSecond":
+    "Why bring in accounts? More convenient to use and remember, less mistakes, such as the account eostothemoon. The EOS account is similar to ETH address which is a 42-bit string starting with 0x, but the EOS account is only 12-bit characters or less. All ETH operations are for addresses, correspondingly all EOS operations are for accounts.",
+  "DescribePage describePageOwnerThird":
+    "Why bring in permissions? More safety. Different permissions can be bundle with different operations. For example, active permission cannot modify other permissions, but owner permission can. Each permission has a public-private key pair. Using a public and private key means using relative permission. Each EOS account has 2 default permissions, the owner and active permission. The active permission is used with most operations. But owner permission is needed when permissions are need to be modified.",
+  "DescribePage describePageErrorFirst":
+    "The permission is incorrect. Please check whether the private key is correct. Use owner permission to change private key, and use active permission to do other operations.",
+  "DescribePage describePageErrorSecond":
+    "Some fields are incorrectly, please check it carefully.",
+  "DescribePage describePageErrorThird":
+    "The staked CPU is not enough. Please stake more CPU first. You can use https://tool.eoscannon.io/#/accountSearch to check if the CPU is enough.",
   "Header HeaderMenuErrorMessage": "Not the right website.",
   "Header HeaderMenuInputMessage": "Input",
   "Header HeaderInputTestNet": "Specify the network",
