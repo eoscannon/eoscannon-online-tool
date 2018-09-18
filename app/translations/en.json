@@ -35,7 +35,7 @@
   "Public KeyProviderFormItemLabel": "Input the relevant transaction message",
   "Public KeyProviderFormItemPlaceholder":
     "Please go to the offline version of the tool to get the transaction message, open the tool, scan the QR code to get it.",
-  "Public GetTransactionFormItemButtonName": "Generating transaction",
+  "Public GetTransactionFormItemButtonName": "Generate transaction",
   "Public CopyAlertMessage": "Step 2/3:",
   "Public CopyTransactionButtonName": "Copy Transaction",
   "Public TransactionTextAreaPlaceholder":
@@ -236,7 +236,7 @@
   "Header JsonAlertHaveCamera": "Switch to camera scanning mode.",
   "Header JsonAlerthaveCamera": "With camera",
   "Header JsonAlertnoneCamera": "No camera",
-  "Header scatterSignature": "Scatter signature",
+  "Header scatterSignature": "Sign with Scatter",
   "TransferPage SymbolCustom": "Advanced",
   "TransferPage SymbolAttentionInfo": "Fill in the full currency information",
   "TransferPage TransferContract": "Contract",
