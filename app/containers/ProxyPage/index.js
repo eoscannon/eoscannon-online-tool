@@ -55,9 +55,8 @@ export class ProxyPage extends React.Component {
     const { voter, proxy } = values;
     this.setState({
       GetTransactionButtonState: !!voter,
-      GetTransactionButtonScatterState: !!proxy
-
-  });
+      GetTransactionButtonScatterState: !!proxy,
+    });
   };
 
   /**
@@ -198,7 +197,9 @@ export class ProxyPage extends React.Component {
                 transaction={this.state.transaction}
                 voteByScatterClick={this.voteByScatter}
                 scatterStatus={this.state.scatterStatus}
-                GetTransactionButtonScatterState={this.state.GetTransactionButtonScatterState}
+                GetTransactionButtonScatterState={
+                  this.state.GetTransactionButtonScatterState
+                }
               />
             </Card>
           </Col>

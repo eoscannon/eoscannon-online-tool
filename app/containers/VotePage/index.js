@@ -131,14 +131,12 @@ export class VotePage extends React.Component {
           content: `${err}`,
           okText: this.state.formatMessage(utilsMsg.ScanCodeSendGetIt),
         });
-        //openTransactionFailNotification(this.state.formatMessage, err.name);
+        // openTransactionFailNotification(this.state.formatMessage, err.name);
       });
-  }
+  };
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
-
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const VotePageVoterPlaceholder = this.state.formatMessage(
@@ -161,7 +159,7 @@ export class VotePage extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem  help={ProxyScatterHelp} {...formItemLayout}>
+              <FormItem help={ProxyScatterHelp} {...formItemLayout}>
                 {getFieldDecorator('voter', {
                   rules: [
                     { required: true, message: VotePageVoterPlaceholder },
@@ -204,7 +202,9 @@ export class VotePage extends React.Component {
                 transaction={this.state.transaction}
                 voteByScatterClick={this.voteByScatter}
                 scatterStatus={this.state.scatterStatus}
-                GetTransactionButtonScatterState={this.state.GetTransactionButtonScatterState}
+                GetTransactionButtonScatterState={
+                  this.state.GetTransactionButtonScatterState
+                }
               />
             </Card>
           </Col>

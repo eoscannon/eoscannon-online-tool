@@ -164,8 +164,8 @@ export default class ScanQrcode extends Component {
     const message = this.props.formatMessage(utilsMsg.JsonAlertMessage);
     const description = this.props.formatMessage(utilsMsg.JsonAlertDescription);
     const closeCamera = this.props.formatMessage(utilsMsg.JsonAlertcloseCamera);
-    const haveCamera = this.props.formatMessage(utilsMsg.JsonAlerthaveCamera);
-    const noneCamera = this.props.formatMessage(utilsMsg.JsonAlertnoneCamera);
+    // const haveCamera = this.props.formatMessage(utilsMsg.JsonAlerthaveCamera);
+    // const noneCamera = this.props.formatMessage(utilsMsg.JsonAlertnoneCamera);
     const OpenCameraButtonName = this.props.formatMessage(
       utilsMsg.OpenCameraButtonName,
     );
