@@ -71,7 +71,7 @@
   "ProxyPage ProxyPlaceholder": "代理账户",
   "ProxyPage VoterLabel": "投票账户",
   "ProxyPage ProxyLabel": "代理账户",
-  "ProxyPage ProxyScatterHelp": "注：使用Scatter将使用已登录账号签名",
+  "ProxyPage ProxyScatterHelp": "注：如果使用Scatter签名，此处不需要填写账号",
   "RefundPage RefundAlertMessage": "手动Refund",
   "RefundPage RefundAlertDescription":
     "在解质押3天后，资产未到账时，可手动Refund取回资产。",

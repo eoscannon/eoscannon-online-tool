@@ -56,20 +56,20 @@ const getEos = type => {
   }
 };
 
-const getEosByScatter = type => {
+const getEosByScatter = (type, callback) => {
   switch (type) {
     case 'main':
-      return getEosMainScatter();
+      return getEosMainScatter(callback);
     case 'test':
-      return getEosTestScatter();
+      return getEosTestScatter(callback);
     case 'other':
-      return getEosOtherTestScatter();
+      return getEosOtherTestScatter(callback);
     default:
-      return getEosMainScatter();
+      return getEosMainScatter(callback);
   }
 };
 // 使用scatter进行签名
-const getEosMainScatter = () => {
+const getEosMainScatter = callback => {
   const network = {
     blockchain: 'eos',
     protocol: 'https',
@@ -90,11 +90,12 @@ const getEosMainScatter = () => {
       const eosOptions = { expireInSeconds: 60 };
       const eos = scatter.eos(network, EOS, eosOptions);
       global.EosByScatter = eos;
+      callback();
     });
   });
 };
 
-const getEosTestScatter = () => {
+const getEosTestScatter = callback => {
   const network = {
     blockchain: 'eos',
     protocol: 'https',
@@ -115,11 +116,12 @@ const getEosTestScatter = () => {
       const eosOptions = { expireInSeconds: 60 };
       const eos = scatter.eos(network, EOS, eosOptions);
       global.EosByScatter = eos;
+      callback();
     });
   });
 };
 
-const getEosOtherTestScatter = () => {
+const getEosOtherTestScatter = callback => {
   console.log(storage.getNetwork().slice(8));
   const network = {
     blockchain: 'eos',
@@ -143,6 +145,7 @@ const getEosOtherTestScatter = () => {
       const eosOptions = { expireInSeconds: 60 };
       const eos = scatter.eos(network, EOS, eosOptions);
       global.EosByScatter = eos;
+      callback();
     });
   });
 };

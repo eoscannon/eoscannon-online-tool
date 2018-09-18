@@ -35,6 +35,7 @@ export class VotePage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
+      GetTransactionButtonScatterState: false,
       scatterStatus: false,
     };
   }
@@ -47,9 +48,7 @@ export class VotePage extends React.Component {
   /**
    * 链接scatter
    * */
-  componentDidMount() {
-    getEosByScatter();
-  }
+  componentDidMount() {}
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -58,6 +57,7 @@ export class VotePage extends React.Component {
     const { voter, producers } = values;
     this.setState({
       GetTransactionButtonState: !!voter && !!producers,
+      GetTransactionButtonScatterState: !!producers,
     });
   };
   // * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
@@ -97,6 +97,9 @@ export class VotePage extends React.Component {
    * 使用scatter投票
    * */
   voteByScatter = () => {
+    getEosByScatter(this.props.SelectedNetWork, this.handleTranscationScatter);
+  };
+  handleTranscationScatter = () => {
     this.setState({ scatterStatus: true });
     const eos = global.EosByScatter;
     const account = global.AccountByScatter;
@@ -130,13 +133,11 @@ export class VotePage extends React.Component {
         });
         //openTransactionFailNotification(this.state.formatMessage, err.name);
       });
-  };
+  }
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
-  //handleGetTransaction = () => {
-  //  this.voteByScatter();
-  //};
+
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -203,6 +204,7 @@ export class VotePage extends React.Component {
                 transaction={this.state.transaction}
                 voteByScatterClick={this.voteByScatter}
                 scatterStatus={this.state.scatterStatus}
+                GetTransactionButtonScatterState={this.state.GetTransactionButtonScatterState}
               />
             </Card>
           </Col>

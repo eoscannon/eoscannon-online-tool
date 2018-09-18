@@ -33,15 +33,14 @@ export class ProxyPage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
-      scatterStatus: false
+      scatterStatus: false,
+      GetTransactionButtonScatterState: true,
     };
   }
   /**
    * 链接scatter
    * */
-  componentDidMount() {
-    getEosByScatter();
-  }
+  componentDidMount() {}
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -53,10 +52,12 @@ export class ProxyPage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue();
-    const { voter } = values;
+    const { voter, proxy } = values;
     this.setState({
       GetTransactionButtonState: !!voter,
-    });
+      GetTransactionButtonScatterState: !!proxy
+
+  });
   };
 
   /**
@@ -92,11 +93,13 @@ export class ProxyPage extends React.Component {
         openTransactionFailNotification(this.state.formatMessage, err.name);
       });
   };
-
   /**
    * 使用scatter投票
    * */
   voteByScatter = () => {
+    getEosByScatter(this.props.SelectedNetWork, this.handleTranscationScatter);
+  };
+  handleTranscationScatter = () => {
     this.setState({ scatterStatus: true });
     const eos = global.EosByScatter;
     const account = global.AccountByScatter;
@@ -195,6 +198,7 @@ export class ProxyPage extends React.Component {
                 transaction={this.state.transaction}
                 voteByScatterClick={this.voteByScatter}
                 scatterStatus={this.state.scatterStatus}
+                GetTransactionButtonScatterState={this.state.GetTransactionButtonScatterState}
               />
             </Card>
           </Col>

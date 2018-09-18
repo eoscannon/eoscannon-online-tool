@@ -136,7 +136,7 @@ export default class DealGetQrcode extends Component {
               <Button
                 type="primary"
                 className="form-button"
-                disabled={!this.props.GetTransactionButtonState}
+                disabled={!this.props.GetTransactionButtonScatterState}
                 onClick={this.props.voteByScatterClick}
               >
                 {scatterSignature}
