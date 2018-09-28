@@ -5,15 +5,17 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Form, Select, message, Tabs, Table, Tag } from 'antd';
 import { Progress, Input } from 'utils/antdUtils';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors';
 import styleComps from './styles';
-import { Link } from 'react-router-dom';
 
-import { getEos, symbolList, getUrlPramas } from '../../utils/utils';
+// import { push } from 'react-router-redux';
+
+import { getEos, symbolList } from '../../utils/utils';
 import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 import messages from './messages';
 
@@ -44,11 +46,10 @@ export class AccountSearchPage extends React.Component {
       cpuScale: 0,
       networkScale: 0,
       symbolBlance: 0,
-      activeAdd: '',
-      ownerAdd: '',
       symbolCode: 'EOS',
       voteProxy: '',
       accountSearch: '',
+      powerAddress: [],
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -92,6 +93,7 @@ export class AccountSearchPage extends React.Component {
   };
 
   handleSearch = value => {
+    // this.props.dispatch(push('/login'));
     this.setState({
       accountSearch: value,
       account: value,
@@ -176,13 +178,22 @@ export class AccountSearchPage extends React.Component {
           cpuStake: info.total_resources.cpu_weight,
           networkStake: info.total_resources.net_weight,
         });
-        if (info.permissions[0].required_auth.keys.length > 0) {
-          this.setState({
-            activeAdd: info.permissions[0].required_auth.keys[0].key,
-            ownerAdd: info.permissions[1].required_auth.keys[0].key,
-          });
+        console.log('info.permissions===', info.permissions);
+        try {
+          this.state.powerAddress = [];
+          if (info.permissions.length > 0) {
+            for (let i = 0; i < info.permissions.length; i++) {
+              const object = {};
+              object.key = i;
+              object.name = info.permissions[i].perm_name;
+              object.address = info.permissions[i].required_auth.keys[0].key;
+              this.state.powerAddress.push(object);
+            }
+            // console.log('powerAddress===', this.state.powerAddress);
+          }
+        } catch (err) {
+          console.log('err==', err);
         }
-
         eos
           .getCurrencyBalance({
             code: 'eosio.token',
@@ -304,18 +315,7 @@ export class AccountSearchPage extends React.Component {
       },
     ];
 
-    const data = [
-      {
-        key: 1,
-        name: 'active',
-        address: this.state.activeAdd,
-      },
-      {
-        key: 2,
-        name: 'owner',
-        address: this.state.ownerAdd,
-      },
-    ];
+    const data = this.state.powerAddress;
 
     return (
       <LayoutContentBox>
@@ -358,8 +358,8 @@ export class AccountSearchPage extends React.Component {
                   {this.state.voteNodeStatus ? (
                     <span>
                       {FunctionSearchEOSVoteNode}：<br />
-                      {this.state.voteNode.map(item => (
-                        <Link to={`/accountSearch/${item}`} key={item}>
+                      {this.state.voteNode.map((item, i) => (
+                        <Link to={`/accountSearch/${item}`} key={i}>
                           <Tag>{item}</Tag>
                         </Link>
                       ))}
@@ -459,11 +459,17 @@ AccountSearchPage.propTypes = {
   intl: PropTypes.object,
   SelectedNetWork: PropTypes.string,
 };
-
+// 在组件上挂载状态控制
+export function mapDispatchToProps(dispatch) {
+  return { dispatch };
+}
 const mapStateToProps = createStructuredSelector({
   SelectedNetWork: makeSelectNetwork(),
 });
 const AccountSearchPageIntl = injectIntl(AccountSearchPage);
 const AccountSearchPageForm = Form.create()(AccountSearchPageIntl);
 
-export default connect(mapStateToProps)(AccountSearchPageForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AccountSearchPageForm);
