@@ -4,7 +4,7 @@ import { Layout, Form } from 'antd';
 const { Content } = Layout;
 
 const LayoutContent = styled(Content)`
-  background: #ececec;
+  background: #f2f4f6;
   padding: 16px;
   .ant-btn-sm {
     padding: 0 14px;
@@ -15,7 +15,7 @@ const LayoutContent = styled(Content)`
 `;
 
 const LayoutContentBox = styled.div`
-  background: #fff;
+  // background: #fff;
   padding: 0 16px;
 `;
 

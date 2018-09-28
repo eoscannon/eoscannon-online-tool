@@ -284,4 +284,24 @@ export default defineMessages({
     id: 'Header scatterSignature',
     defaultMessage: 'scatter签名',
   },
+  ProducersChangeBP: {
+    id: 'Header ProducersChangeBP',
+    defaultMessage: '选择节点',
+  },
+  offlineSignature: {
+    id: 'Header offlineSignature',
+    defaultMessage: '离线签名',
+  },
+  ProxyHelpScatter: {
+    id: 'Header ProxyHelpScatter',
+    defaultMessage: '选择代理账户',
+  },
+  ProducersDealTranscationSelectBP: {
+    id: 'Header ProducersDealTranscationSelectBP',
+    defaultMessage: '步骤 1/3: 选择节点',
+  },
+  ProducersDealTranscationProxy: {
+    id: 'Header ProducersDealTranscationProxy',
+    defaultMessage: '步骤 1/3: 选择代理',
+  },
 });
