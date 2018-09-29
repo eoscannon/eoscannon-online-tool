@@ -163,7 +163,7 @@
   "TransferPage FunctionSearchAccountTableContact": "合约名",
   "TransferPage FunctionSearchAccountTableGroup": "权限",
   "TransferPage FunctionSearchAccountTableAddress": "公钥",
-  "TransferPage FunctionSearchNoData": "暂无数据",
+  "TransferPage FunctionSearchNoData": "查询出错，请检查输入是否正确",
   "TransferPage FunctionSearchAccountPlaceHolder": "请输入账号",
 
   "InfoInitPage infoAlertMessage": "此页面在线使用",

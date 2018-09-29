@@ -94,7 +94,6 @@ export class AccountSearchPage extends React.Component {
 
   handleSearch = value => {
     // this.props.dispatch(push('/login'));
-    value = value.replace(/\s+/g, '');
     this.setState({
       accountSearch: value,
       account: value,
@@ -327,7 +326,7 @@ export class AccountSearchPage extends React.Component {
               enterButton={FunctionSearchButton}
               size="large"
               onChange={this.onChangeAccount}
-              value={this.state.accountSearch}
+              value={this.state.accountSearch.trim()}
               onSearch={this.handleSearch}
             />
           </FormComp>

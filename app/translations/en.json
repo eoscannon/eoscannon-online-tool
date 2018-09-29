@@ -163,7 +163,8 @@
   "TransferPage FunctionSearchAccountTableContact": "Contract",
   "TransferPage FunctionSearchAccountTableGroup": "Permission",
   "TransferPage FunctionSearchAccountTableAddress": "Public Key",
-  "TransferPage FunctionSearchNoData": "no data",
+  "TransferPage FunctionSearchNoData":
+    "Can't find anything, please check your input",
   "TransferPage FunctionSearchAccountPlaceHolder": "Account",
   "InfoInitPage infoAlertMessage": "Wait for the block info, such as chainId",
   "InfoInitPage infoAlertDescription":
