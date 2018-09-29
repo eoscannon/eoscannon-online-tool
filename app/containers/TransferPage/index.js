@@ -92,7 +92,6 @@ export class TransferPage extends React.Component {
       return;
     }
     // 判断是否为自定义symbol
-    console.log('transferSymbolCustom===', transferSymbolCustom)
     eos
       .getAbi(transferContractCustom.toLowerCase())
       .then(res => {
@@ -128,7 +127,7 @@ export class TransferPage extends React.Component {
         {
           sign: false,
           broadcast: false,
-        }
+        },
       )
       .then(tr => {
         this.setState({
@@ -143,8 +142,8 @@ export class TransferPage extends React.Component {
   /**
    * 使用scatter投票
    * */
-  voteByScatter = (eos) => {
-    //const eos = global.EosByScatter;
+  voteByScatter = eos => {
+    // const eos = global.EosByScatter;
     const account = global.AccountByScatter;
     const values = this.props.form.getFieldsValue();
     const {
@@ -158,7 +157,6 @@ export class TransferPage extends React.Component {
       transferDigitCustom,
     } = values;
     // 判断是否为自定义symbol
-    console.log('transferSymbolCustom===', transferSymbolCustom)
     eos
       .getAbi(transferContractCustom.toLowerCase())
       .then(res => {

@@ -8,7 +8,7 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Form, Icon, Input, Switch, Card, Col, Row , Radio } from 'antd';
+import { Form, Icon, Input, Switch, Card, Col, Row, Radio } from 'antd';
 
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
 import {
@@ -35,7 +35,7 @@ export class BuyRamBytesPage extends React.Component {
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
-      radioStatus: 2
+      radioStatus: 2,
     };
   }
   /**
@@ -50,7 +50,7 @@ export class BuyRamBytesPage extends React.Component {
   onSwitchChange = checked => {
     this.setState({
       isBuyRam: checked,
-      radioStatus: 2
+      radioStatus: 2,
     });
   };
   /**
@@ -60,14 +60,14 @@ export class BuyRamBytesPage extends React.Component {
     const values = nextProps.form.getFieldsValue();
     const { PayerAccountName, BytesQuantity, EosQuantity } = values;
     this.setState({
-      GetTransactionButtonState: !!PayerAccountName && (!!BytesQuantity|| !!EosQuantity),
+      GetTransactionButtonState:
+        !!PayerAccountName && (!!BytesQuantity || !!EosQuantity),
     });
   };
 
   changeRadio = e => {
-    console.log('value===', e.target.value)
-    this.setState({ radioStatus: e.target.value })
-  }
+    this.setState({ radioStatus: e.target.value });
+  };
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -83,7 +83,7 @@ export class BuyRamBytesPage extends React.Component {
       BytesQuantity,
       EosQuantity,
     } = values;
-    var actionsName = this.state.isBuyRam ? 'buyrambytes' : 'sellram';
+    let actionsName = this.state.isBuyRam ? 'buyrambytes' : 'sellram';
     if (this.state.isBuyRam) {
       actionsName = this.state.radioStatus === 1 ? 'buyram' : 'buyrambytes';
     }
@@ -105,7 +105,6 @@ export class BuyRamBytesPage extends React.Component {
           account: PayerAccountName,
           ...type,
         };
-    console.log('data===',data);
     eos
       .transaction(
         {
@@ -156,13 +155,12 @@ export class BuyRamBytesPage extends React.Component {
     const BytesQuantityPlaceholder = this.state.formatMessage(
       messages.BytesQuantityPlaceholder,
     );
-     const EosQuantityPlaceholder = this.state.formatMessage(
-       messages.EosQuantityPlaceholder,
-     );
+    const EosQuantityPlaceholder = this.state.formatMessage(
+      messages.EosQuantityPlaceholder,
+    );
     // const ReceiverAccountNameLabel = this.state.formatMessage(
     //   messages.ReceiverAccountNameLabel,
     // );
-     const BytesLabel = this.state.formatMessage(messages.BytesLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     );
@@ -226,7 +224,11 @@ export class BuyRamBytesPage extends React.Component {
                     defaultValue={1}
                     value={this.state.radioStatus}
                     onChange={this.changeRadio}
-                    style={{ textAlign: "center", width: "100%",paddingBottom: ".3rem" }}
+                    style={{
+                      textAlign: 'center',
+                      width: '100%',
+                      paddingBottom: '.3rem',
+                    }}
                   >
                     <Radio value={1}>EOS</Radio>
                     <Radio value={2}>bytes</Radio>
@@ -256,7 +258,7 @@ export class BuyRamBytesPage extends React.Component {
                   )}
                 </FormItem>
               ) : (
-                <FormItem {...formItemLayout}  colon>
+                <FormItem {...formItemLayout} colon>
                   {getFieldDecorator('BytesQuantity', {
                     rules: [
                       {

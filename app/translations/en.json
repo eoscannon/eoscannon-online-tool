@@ -163,7 +163,8 @@
   "TransferPage FunctionSearchAccountTableContact": "Contract",
   "TransferPage FunctionSearchAccountTableGroup": "Permission",
   "TransferPage FunctionSearchAccountTableAddress": "Public Key",
-  "TransferPage FunctionSearchNoData": "no data",
+  "TransferPage FunctionSearchNoData":
+    "Can't find anything, please check your input",
   "TransferPage FunctionSearchAccountPlaceHolder": "Account",
   "InfoInitPage infoAlertMessage": "Wait for the block info, such as chainId",
   "InfoInitPage infoAlertDescription":
@@ -231,12 +232,17 @@
   "Header HeaderInputTestNet": "Specify the network",
   "Header ScanCodeSendGetIt": "Got it",
   "Header JsonAlertcloseCamera": "Close Camera",
+  "Header offlineSignature": "Offline signature",
   "Header JsonAlertNoCamera":
     "Switch to no camera mode, manually paste the signature.",
+  "Header ProducersChangeBP": "Select BP",
   "Header JsonAlertHaveCamera": "Switch to camera scanning mode.",
   "Header JsonAlerthaveCamera": "With camera",
   "Header JsonAlertnoneCamera": "No camera",
   "Header scatterSignature": "Sign with Scatter",
+  "Header ProxyHelpScatter": "Select proxy BP",
+  "Header ProducersDealTranscationSelectBP": "Step 1/3: Select BP",
+  "Header ProducersDealTranscationProxy": "Step 1/3: Select Proxy BP",
   "TransferPage SymbolCustom": "Advanced",
   "TransferPage SymbolAttentionInfo": "Fill in the full currency information",
   "TransferPage TransferContract": "Contract",

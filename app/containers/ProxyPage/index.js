@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import { Form, Icon, Input, Card, Col, Row, Modal } from 'antd';
+import { Form, Icon, Input, Card, Col, Row, Modal, Tabs } from 'antd';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -23,6 +23,7 @@ import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
 const FormItem = Form.Item;
+const { TabPane } = Tabs;
 
 export class ProxyPage extends React.Component {
   constructor(props) {
@@ -55,11 +56,17 @@ export class ProxyPage extends React.Component {
     const { voter, proxy } = values;
     this.setState({
       GetTransactionButtonState: !!voter,
-      GetTransactionButtonScatterState: !!proxy
-
-  });
+      GetTransactionButtonScatterState: !!proxy,
+    });
   };
-
+  // 点击切换的回调
+  callback = key => {
+    if (key === '2') {
+      this.setState({ scatterStatus: true });
+    } else {
+      this.setState({ scatterStatus: false });
+    }
+  };
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -146,73 +153,140 @@ export class ProxyPage extends React.Component {
     );
     // const VoterLabel = this.state.formatMessage(messages.VoterLabel);
     // const ProxyLabel = this.state.formatMessage(messages.ProxyLabel);
-    const ProducersDealTranscation = this.state.formatMessage(
-      utilsMsg.ProducersDealTranscation,
+    const ProducersDealTranscationProxy = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscationProxy,
     );
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     );
+    const ProxyHelpScatter = this.state.formatMessage(
+      utilsMsg.ProxyHelpScatter,
+    );
+    const scatterSignature = this.state.formatMessage(
+      utilsMsg.scatterSignature,
+    );
+    const offlineSignature = this.state.formatMessage(
+      utilsMsg.offlineSignature,
+    );
     return (
       <LayoutContent>
         <Row gutter={16}>
-          <Col span={12}>
-            <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem help={ProxyScatterHelp} {...formItemLayout}>
-                {getFieldDecorator('voter', {
-                  rules: [{ required: true, message: VoterPlaceholder }],
-                })(
-                  <Input
-                    prefix={
-                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+          <Tabs defaultActiveKey="1" onChange={this.callback}>
+            <TabPane tab={offlineSignature} key="1">
+              <Col span={12}>
+                <Card title={ProducersDealTranscationProxy} bordered={false}>
+                  <FormItem {...formItemLayout}>
+                    {getFieldDecorator('voter', {
+                      rules: [{ required: true, message: VoterPlaceholder }],
+                    })(
+                      <Input
+                        prefix={
+                          <Icon
+                            type="user"
+                            style={{ color: 'rgba(0,0,0,.25)' }}
+                          />
+                        }
+                        placeholder={VoterPlaceholder}
+                      />,
+                    )}
+                  </FormItem>
+                  <FormItem help={ProxyHelp} {...formItemLayout}>
+                    {getFieldDecorator('proxy', {
+                      rules: [
+                        {
+                          required: true,
+                          message: ProxyPlaceholder,
+                        },
+                      ],
+                      initialValue: 'cannonproxy1',
+                    })(
+                      <Input
+                        prefix={
+                          <Icon
+                            type="user"
+                            style={{ color: 'rgba(0,0,0,.25)' }}
+                          />
+                        }
+                        placeholder={ProxyPlaceholder}
+                      />,
+                    )}
+                  </FormItem>
+                  <DealGetQrcode
+                    eos={this.state.eos}
+                    form={this.props.form}
+                    formatMessage={this.state.formatMessage}
+                    GetTransactionButtonClick={this.handleGetTransaction}
+                    GetTransactionButtonState={
+                      this.state.GetTransactionButtonState
                     }
-                    placeholder={VoterPlaceholder}
-                  />,
-                )}
-              </FormItem>
-              <FormItem help={ProxyHelp} {...formItemLayout}>
-                {getFieldDecorator('proxy', {
-                  rules: [
-                    {
-                      required: true,
-                      message: ProxyPlaceholder,
-                    },
-                  ],
-                  initialValue: 'cannonproxy1',
-                })(
-                  <Input
-                    prefix={
-                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    QrCodeValue={this.state.QrCodeValue}
+                    SelectedNetWork={this.props.SelectedNetWork}
+                    transaction={this.state.transaction}
+                    voteByScatterClick={this.voteByScatter}
+                    scatterStatus={this.state.scatterStatus}
+                    GetTransactionButtonScatterState={
+                      this.state.GetTransactionButtonScatterState
                     }
-                    placeholder={ProxyPlaceholder}
-                  />,
-                )}
-              </FormItem>
-              <DealGetQrcode
-                eos={this.state.eos}
-                form={this.props.form}
-                formatMessage={this.state.formatMessage}
-                GetTransactionButtonClick={this.handleGetTransaction}
-                GetTransactionButtonState={this.state.GetTransactionButtonState}
-                QrCodeValue={this.state.QrCodeValue}
-                SelectedNetWork={this.props.SelectedNetWork}
-                transaction={this.state.transaction}
-                voteByScatterClick={this.voteByScatter}
-                scatterStatus={this.state.scatterStatus}
-                GetTransactionButtonScatterState={this.state.GetTransactionButtonScatterState}
-              />
-            </Card>
-          </Col>
-          <Col span={12}>
-            <Card title={ProducersSendTranscation} bordered={false}>
-              <ScanQrcode
-                eos={this.state.eos}
-                form={this.props.form}
-                formatMessage={this.state.formatMessage}
-                SelectedNetWork={this.props.SelectedNetWork}
-                transaction={this.state.transaction}
-              />
-            </Card>
-          </Col>
+                  />
+                </Card>
+              </Col>
+              <Col span={12}>
+                <Card title={ProducersSendTranscation} bordered={false}>
+                  <ScanQrcode
+                    eos={this.state.eos}
+                    form={this.props.form}
+                    formatMessage={this.state.formatMessage}
+                    SelectedNetWork={this.props.SelectedNetWork}
+                    transaction={this.state.transaction}
+                  />
+                </Card>
+              </Col>
+            </TabPane>
+            <TabPane tab={scatterSignature} key="2">
+              <Col span={12}>
+                <Card title={ProxyHelpScatter} bordered={false}>
+                  <FormItem help={ProxyHelp} {...formItemLayout}>
+                    {getFieldDecorator('proxy', {
+                      rules: [
+                        {
+                          required: true,
+                          message: ProxyPlaceholder,
+                        },
+                      ],
+                      initialValue: 'cannonproxy1',
+                    })(
+                      <Input
+                        prefix={
+                          <Icon
+                            type="user"
+                            style={{ color: 'rgba(0,0,0,.25)' }}
+                          />
+                        }
+                        placeholder={ProxyPlaceholder}
+                      />,
+                    )}
+                  </FormItem>
+                  <DealGetQrcode
+                    eos={this.state.eos}
+                    form={this.props.form}
+                    formatMessage={this.state.formatMessage}
+                    GetTransactionButtonClick={this.handleGetTransaction}
+                    GetTransactionButtonState={
+                      this.state.GetTransactionButtonState
+                    }
+                    QrCodeValue={this.state.QrCodeValue}
+                    SelectedNetWork={this.props.SelectedNetWork}
+                    transaction={this.state.transaction}
+                    voteByScatterClick={this.voteByScatter}
+                    scatterStatus={this.state.scatterStatus}
+                    GetTransactionButtonScatterState={
+                      this.state.GetTransactionButtonScatterState
+                    }
+                  />
+                </Card>
+              </Col>
+            </TabPane>
+          </Tabs>
         </Row>
       </LayoutContent>
     );

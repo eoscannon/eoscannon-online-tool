@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Form, Card, Collapse } from 'antd';
+import { Form, Collapse } from 'antd';
 import copy from 'copy-to-clipboard';
 
 import {
@@ -26,7 +26,7 @@ import cpuLimitsPic from './img/cpu_limits.jpg';
 import { LayoutContentBox, FormComp } from '../../components/NodeComp';
 
 // const FormItem = Form.Item;
-const Panel = Collapse.Panel;
+const { Panel } = Collapse;
 
 export class DescribePage extends React.Component {
   constructor(props) {
@@ -188,30 +188,30 @@ export class DescribePage extends React.Component {
     );
     const textThird = (
       <div>
-        <p>
+        <div>
           <span>
             1.<span>{describePageErrorFirst}</span>
           </span>
           <p>
             <img src={authorizationPic} alt="" style={{ width: '580px' }} />
           </p>
-        </p>
-        <p>
+        </div>
+        <div>
           <span>
             2.<span>{describePageErrorSecond}</span>
           </span>
           <p>
             <img src={assertMessagePic} alt="" style={{ width: '580px' }} />
           </p>
-        </p>
-        <p>
+        </div>
+        <div>
           <span>
             3.<span>{describePageErrorThird}</span>
           </span>
           <p>
             <img src={cpuLimitsPic} alt="" style={{ width: '580px' }} />
           </p>
-        </p>
+        </div>
       </div>
     );
     return (

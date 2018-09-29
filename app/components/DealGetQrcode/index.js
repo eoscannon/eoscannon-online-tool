@@ -115,24 +115,17 @@ export default class DealGetQrcode extends Component {
     );
     let specialStatusCompontent = false;
     try {
-      specialStatusCompontent = this.props.specialStatus === "updateAuth" ? true : false;
+      specialStatusCompontent = this.props.specialStatus === 'updateAuth';
     } catch (err) {
       specialStatusCompontent = false;
     }
+    console.log('status', this.props.scatterStatus);
     return (
       <div>
         {!this.props.isHiddenGetTransactionButton && (
           <FormItem style={{ textAlign: 'center' }}>
-            <Button
-              type="primary"
-              className="form-button"
-              onClick={this.props.GetTransactionButtonClick}
-              disabled={!this.props.GetTransactionButtonState}
-            >
-              {GetTransactionButtonName}
-            </Button>
             &nbsp;&nbsp;&nbsp;
-            {this.props.voteByScatterClick ? (
+            {this.props.scatterStatus ? (
               <Button
                 type="primary"
                 className="form-button"
@@ -141,59 +134,71 @@ export default class DealGetQrcode extends Component {
               >
                 {scatterSignature}
               </Button>
-            ) : null}
+            ) : (
+              <Button
+                type="primary"
+                className="form-button"
+                onClick={this.props.GetTransactionButtonClick}
+                disabled={!this.props.GetTransactionButtonState}
+              >
+                {GetTransactionButtonName}
+              </Button>
+            )}
           </FormItem>
         )}
-        <FormItem>
-          {specialStatusCompontent ? (
-            <Alert
-              message={CopyAlertMessage}
-              description={CopyOwnerAlertDescription}
-              type="info"
-            />
-          ) : (
-            <Alert
-              message={CopyAlertMessage}
-              description={CopyAlertDescription}
-              type="info"
-            />
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('transactionTextArea', {
-            rules: [
-              { required: true, message: TransactionTextAreaPlaceholder },
-            ],
-          })(
-            <TextArea
-              disabled="true"
-              autosize={{ minRows: 4, maxRows: 12 }}
-              placeholder={TransactionTextAreaPlaceholder}
-            />,
-          )}
-        </FormItem>
-        <FormItem>
-          <div style={{ textAlign: 'center' }}>
-            {JSON.stringify(this.props.transaction) === '{}' ? null : (
-              <QRCode
-                value={this.state.QrCodeValue}
-                size={256}
-                style={{ transform: ' rotate(270deg)' }}
-              />
-            )}
+        {this.props.scatterStatus ? null : (
+          <div>
+            <FormItem>
+              {specialStatusCompontent ? (
+                <Alert
+                  message={CopyAlertMessage}
+                  description={CopyOwnerAlertDescription}
+                  type="info"
+                />
+              ) : (
+                <Alert
+                  message={CopyAlertMessage}
+                  description={CopyAlertDescription}
+                  type="info"
+                />
+              )}
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('transactionTextArea', {
+                rules: [
+                  { required: true, message: TransactionTextAreaPlaceholder },
+                ],
+              })(
+                <TextArea
+                  disabled="true"
+                  autosize={{ minRows: 4, maxRows: 12 }}
+                  placeholder={TransactionTextAreaPlaceholder}
+                />,
+              )}
+            </FormItem>
+            <FormItem>
+              <div style={{ textAlign: 'center' }}>
+                {JSON.stringify(this.props.transaction) === '{}' ? null : (
+                  <QRCode
+                    value={this.state.QrCodeValue}
+                    size={256}
+                    style={{ transform: ' rotate(270deg)' }}
+                  />
+                )}
+              </div>
+            </FormItem>
+            <FormItem style={{ textAlign: 'center' }}>
+              <Button
+                type="primary"
+                className="form-button"
+                disabled={!this.state.CopyTransactionButtonState}
+                onClick={this.handleCopyTransaction}
+              >
+                {CopyTransactionButtonName}
+              </Button>
+            </FormItem>
           </div>
-        </FormItem>
-        <FormItem style={{ textAlign: 'center' }}>
-          <Button
-            type="primary"
-            className="form-button"
-            disabled={!this.state.CopyTransactionButtonState}
-            onClick={this.handleCopyTransaction}
-          >
-            {CopyTransactionButtonName}
-          </Button>
-
-        </FormItem>
+        )}
       </div>
     );
   }
