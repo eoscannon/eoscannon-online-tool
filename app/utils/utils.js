@@ -81,38 +81,48 @@ const getEosMainScatter = callback => {
     port: 443,
     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   };
-  ScatterJS.scatter.connect('EOSCannonTool').then(connected => {
-    if (!connected) return;
-    const { scatter } = ScatterJS;
-    scatter.forgetIdentity().then(() => {
-      global.scatter = scatter;
-      window.scatter = null;
+  ScatterJS.scatter
+    .connect('EOSCannonTool')
+    .then(connected => {
+      if (!connected) return;
+      const { scatter } = ScatterJS;
+      scatter.forgetIdentity().then(() => {
+        global.scatter = scatter;
+        window.scatter = null;
+        const requiredFields = { accounts: [network] };
+        scatter
+          .getIdentity(requiredFields)
+          .then(() => {
+            const account = scatter.identity.accounts.find(
+              x => x.blockchain === 'eos',
+            );
+            global.AccountByScatter = account;
+            const eosOptions = { expireInSeconds: 60 };
+            const eos = scatter.eos(network, EOS, eosOptions);
+            global.EosByScatter = eos;
+            callback();
+          })
+          .catch(err => {
+            console.log('err:', err);
+          });
+      });
+    })
+    .catch(err => {
+      console.log('err==', err);
+      // 从测试网切换过来如果测试数据为空，此处需要重新获取identity
+      const { scatter } = ScatterJS;
       const requiredFields = { accounts: [network] };
-      scatter
-        .getIdentity(requiredFields)
-        .then(() => {
-          const account = scatter.identity.accounts.find(
-            x => x.blockchain === 'eos',
-          );
-          global.AccountByScatter = account;
-          const eosOptions = { expireInSeconds: 60 };
-          const eos = scatter.eos(network, EOS, eosOptions);
-          global.EosByScatter = eos;
-          callback();
-        })
-        .catch(err => {
-          console.log('err:', err);
-        });
-
-      // callback()
-      //   .then(() => {
-      //     scatter.forgetIdentity();
-      //   })
-      //   .catch(() => {
-      //     scatter.forgetIdentity();
-      //   });
+      scatter.getIdentity(requiredFields).then(() => {
+        const account = scatter.identity.accounts.find(
+          x => x.blockchain === 'eos',
+        );
+        global.AccountByScatter = account;
+        const eosOptions = { expireInSeconds: 60 };
+        const eos = scatter.eos(network, EOS, eosOptions);
+        global.EosByScatter = eos;
+        callback();
+      });
     });
-  });
 };
 
 const getEosTestScatter = callback => {
@@ -123,30 +133,48 @@ const getEosTestScatter = callback => {
     port: 443,
     chainId: config.testChainId,
   };
-  ScatterJS.scatter.connect('EOSCannonTool').then(connected => {
-    if (!connected) return;
-    const { scatter } = ScatterJS;
-    scatter
-      .forgetIdentity()
-      .then(() => {
-        global.scatter = scatter;
-        window.scatter = null;
-        const requiredFields = { accounts: [network] };
-        scatter.getIdentity(requiredFields).then(() => {
-          const account = scatter.identity.accounts.find(
-            x => x.blockchain === 'eos',
-          );
-          global.AccountByScatter = account;
-          const eosOptions = { expireInSeconds: 60 };
-          const eos = scatter.eos(network, EOS, eosOptions);
-          global.EosByScatter = eos;
-          callback();
+  ScatterJS.scatter
+    .connect('EOSCannonTool')
+    .then(connected => {
+      if (!connected) return;
+      const { scatter } = ScatterJS;
+      scatter
+        .forgetIdentity()
+        .then(() => {
+          global.scatter = scatter;
+          window.scatter = null;
+          const requiredFields = { accounts: [network] };
+          scatter.getIdentity(requiredFields).then(() => {
+            const account = scatter.identity.accounts.find(
+              x => x.blockchain === 'eos',
+            );
+            global.AccountByScatter = account;
+            const eosOptions = { expireInSeconds: 60 };
+            const eos = scatter.eos(network, EOS, eosOptions);
+            global.EosByScatter = eos;
+            callback();
+          });
+        })
+        .catch(err => {
+          console.log('err==', err);
         });
-      })
-      .catch(err => {
-        console.log('err==', err);
+    })
+    .catch(err => {
+      console.log('err==', err);
+      // 从测试网切换过来如果测试数据为空，此处需要重新获取identity
+      const { scatter } = ScatterJS;
+      const requiredFields = { accounts: [network] };
+      scatter.getIdentity(requiredFields).then(() => {
+        const account = scatter.identity.accounts.find(
+          x => x.blockchain === 'eos',
+        );
+        global.AccountByScatter = account;
+        const eosOptions = { expireInSeconds: 60 };
+        const eos = scatter.eos(network, EOS, eosOptions);
+        global.EosByScatter = eos;
+        callback();
       });
-  });
+    });
 };
 
 const getEosOtherTestScatter = callback => {
@@ -158,30 +186,48 @@ const getEosOtherTestScatter = callback => {
     port: 443,
     chainId: storage.getChainId(),
   };
-  ScatterJS.scatter.connect('EOSCannonTool').then(connected => {
-    if (!connected) return;
-    const { scatter } = ScatterJS;
-    scatter
-      .forgetIdentity()
-      .then(() => {
-        global.scatter = scatter;
-        window.scatter = null;
-        const requiredFields = { accounts: [network] };
-        scatter.getIdentity(requiredFields).then(() => {
-          const account = scatter.identity.accounts.find(
-            x => x.blockchain === 'eos',
-          );
-          global.AccountByScatter = account;
-          const eosOptions = { expireInSeconds: 60 };
-          const eos = scatter.eos(network, EOS, eosOptions);
-          global.EosByScatter = eos;
-          callback();
+  ScatterJS.scatter
+    .connect('EOSCannonTool')
+    .then(connected => {
+      if (!connected) return;
+      const { scatter } = ScatterJS;
+      scatter
+        .forgetIdentity()
+        .then(() => {
+          global.scatter = scatter;
+          window.scatter = null;
+          const requiredFields = { accounts: [network] };
+          scatter.getIdentity(requiredFields).then(() => {
+            const account = scatter.identity.accounts.find(
+              x => x.blockchain === 'eos',
+            );
+            global.AccountByScatter = account;
+            const eosOptions = { expireInSeconds: 60 };
+            const eos = scatter.eos(network, EOS, eosOptions);
+            global.EosByScatter = eos;
+            callback();
+          });
+        })
+        .catch(err => {
+          console.log('err==', err);
         });
-      })
-      .catch(err => {
-        console.log('err==', err);
+    })
+    .catch(err => {
+      console.log('err==', err);
+      // 从测试网切换过来如果测试数据为空，此处需要重新获取identity
+      const { scatter } = ScatterJS;
+      const requiredFields = { accounts: [network] };
+      scatter.getIdentity(requiredFields).then(() => {
+        const account = scatter.identity.accounts.find(
+          x => x.blockchain === 'eos',
+        );
+        global.AccountByScatter = account;
+        const eosOptions = { expireInSeconds: 60 };
+        const eos = scatter.eos(network, EOS, eosOptions);
+        global.EosByScatter = eos;
+        callback();
       });
-  });
+    });
 };
 // InfoInitPage 获取初始化信息
 async function getEosInfoDetail(type) {

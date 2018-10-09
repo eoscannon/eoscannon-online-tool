@@ -119,7 +119,6 @@ export default class DealGetQrcode extends Component {
     } catch (err) {
       specialStatusCompontent = false;
     }
-    console.log('status', this.props.scatterStatus);
     return (
       <div>
         {!this.props.isHiddenGetTransactionButton && (
