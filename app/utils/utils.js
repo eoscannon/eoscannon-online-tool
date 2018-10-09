@@ -1,10 +1,13 @@
-import ScatterJS from 'scatter-js/dist/scatter.esm';
+import ScatterJS from 'scatterjs-core';
+import ScatterEOS from 'scatterjs-plugin-eosjs';
 import EOS from 'eosjs';
 import { notification } from 'antd';
 import producers from './producers.json';
 import utilsMsg from './messages';
 import { storage } from './storage';
 import config from './../config';
+
+ScatterJS.plugins(new ScatterEOS());
 
 const formItemLayout = {
   labelCol: {
@@ -68,6 +71,7 @@ const getEosByScatter = (type, callback) => {
       return getEosMainScatter(callback);
   }
 };
+
 // 使用scatter进行签名
 const getEosMainScatter = callback => {
   const network = {
@@ -80,17 +84,33 @@ const getEosMainScatter = callback => {
   ScatterJS.scatter.connect('EOSCannonTool').then(connected => {
     if (!connected) return;
     const { scatter } = ScatterJS;
-    window.scatter = null;
-    const requiredFields = { accounts: [network] };
-    scatter.getIdentity(requiredFields).then(() => {
-      const account = scatter.identity.accounts.find(
-        x => x.blockchain === 'eos',
-      );
-      global.AccountByScatter = account;
-      const eosOptions = { expireInSeconds: 60 };
-      const eos = scatter.eos(network, EOS, eosOptions);
-      global.EosByScatter = eos;
-      callback();
+    scatter.forgetIdentity().then(() => {
+      global.scatter = scatter;
+      window.scatter = null;
+      const requiredFields = { accounts: [network] };
+      scatter
+        .getIdentity(requiredFields)
+        .then(() => {
+          const account = scatter.identity.accounts.find(
+            x => x.blockchain === 'eos',
+          );
+          global.AccountByScatter = account;
+          const eosOptions = { expireInSeconds: 60 };
+          const eos = scatter.eos(network, EOS, eosOptions);
+          global.EosByScatter = eos;
+          callback();
+        })
+        .catch(err => {
+          console.log('err:', err);
+        });
+
+      // callback()
+      //   .then(() => {
+      //     scatter.forgetIdentity();
+      //   })
+      //   .catch(() => {
+      //     scatter.forgetIdentity();
+      //   });
     });
   });
 };
@@ -106,18 +126,26 @@ const getEosTestScatter = callback => {
   ScatterJS.scatter.connect('EOSCannonTool').then(connected => {
     if (!connected) return;
     const { scatter } = ScatterJS;
-    window.scatter = null;
-    const requiredFields = { accounts: [network] };
-    scatter.getIdentity(requiredFields).then(() => {
-      const account = scatter.identity.accounts.find(
-        x => x.blockchain === 'eos'
-      );
-      global.AccountByScatter = account;
-      const eosOptions = { expireInSeconds: 60 };
-      const eos = scatter.eos(network, EOS, eosOptions);
-      global.EosByScatter = eos;
-      callback();
-    });
+    scatter
+      .forgetIdentity()
+      .then(() => {
+        global.scatter = scatter;
+        window.scatter = null;
+        const requiredFields = { accounts: [network] };
+        scatter.getIdentity(requiredFields).then(() => {
+          const account = scatter.identity.accounts.find(
+            x => x.blockchain === 'eos',
+          );
+          global.AccountByScatter = account;
+          const eosOptions = { expireInSeconds: 60 };
+          const eos = scatter.eos(network, EOS, eosOptions);
+          global.EosByScatter = eos;
+          callback();
+        });
+      })
+      .catch(err => {
+        console.log('err==', err);
+      });
   });
 };
 
@@ -132,21 +160,27 @@ const getEosOtherTestScatter = callback => {
   };
   ScatterJS.scatter.connect('EOSCannonTool').then(connected => {
     if (!connected) return;
-
     const { scatter } = ScatterJS;
-    window.scatter = null;
-
-    const requiredFields = { accounts: [network] };
-    scatter.getIdentity(requiredFields).then(() => {
-      const account = scatter.identity.accounts.find(
-        x => x.blockchain === 'eos'
-      );
-      global.AccountByScatter = account;
-      const eosOptions = { expireInSeconds: 60 };
-      const eos = scatter.eos(network, EOS, eosOptions);
-      global.EosByScatter = eos;
-      callback();
-    });
+    scatter
+      .forgetIdentity()
+      .then(() => {
+        global.scatter = scatter;
+        window.scatter = null;
+        const requiredFields = { accounts: [network] };
+        scatter.getIdentity(requiredFields).then(() => {
+          const account = scatter.identity.accounts.find(
+            x => x.blockchain === 'eos',
+          );
+          global.AccountByScatter = account;
+          const eosOptions = { expireInSeconds: 60 };
+          const eos = scatter.eos(network, EOS, eosOptions);
+          global.EosByScatter = eos;
+          callback();
+        });
+      })
+      .catch(err => {
+        console.log('err==', err);
+      });
   });
 };
 // InfoInitPage 获取初始化信息
@@ -171,7 +205,7 @@ const openTransactionSuccessNotification = formatMessage => {
   notification.success({
     message: formatMessage(utilsMsg.TransactionSuccessNotificationMsg),
     description: formatMessage(
-      utilsMsg.TransactionSuccessNotificationDescription
+      utilsMsg.TransactionSuccessNotificationDescription,
     ),
     duration: 3,
   });
@@ -183,7 +217,7 @@ const openTransactionFailNotification = (formatMessage, what) => {
   notification.error({
     message: formatMessage(utilsMsg.TransactionFailNotificationMsg),
     description: `${what}，${formatMessage(
-      utilsMsg.TransactionFailNotificationDescription
+      utilsMsg.TransactionFailNotificationDescription,
     )}`,
     duration: 3,
   });
@@ -195,7 +229,7 @@ const openNotification = formatMessage => {
   notification.success({
     message: formatMessage(utilsMsg.CopyTransactionSuccessNotificationMsg),
     description: formatMessage(
-      utilsMsg.CopyTransactionSuccessNotificationDescription
+      utilsMsg.CopyTransactionSuccessNotificationDescription,
     ),
     duration: 3,
   });
