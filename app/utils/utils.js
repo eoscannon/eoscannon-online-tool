@@ -97,7 +97,7 @@ const getEosMainScatter = callback => {
               x => x.blockchain === 'eos',
             );
             global.AccountByScatter = account;
-            const eosOptions = { expireInSeconds: 60 };
+            const eosOptions = { expireInSeconds: 60 * 5 };
             const eos = scatter.eos(network, EOS, eosOptions);
             global.EosByScatter = eos;
             callback();
@@ -117,7 +117,7 @@ const getEosMainScatter = callback => {
           x => x.blockchain === 'eos',
         );
         global.AccountByScatter = account;
-        const eosOptions = { expireInSeconds: 60 };
+        const eosOptions = { expireInSeconds: 60 * 5 };
         const eos = scatter.eos(network, EOS, eosOptions);
         global.EosByScatter = eos;
         callback();
@@ -149,7 +149,7 @@ const getEosTestScatter = callback => {
               x => x.blockchain === 'eos',
             );
             global.AccountByScatter = account;
-            const eosOptions = { expireInSeconds: 60 };
+            const eosOptions = { expireInSeconds: 60 * 5 };
             const eos = scatter.eos(network, EOS, eosOptions);
             global.EosByScatter = eos;
             callback();
@@ -169,7 +169,7 @@ const getEosTestScatter = callback => {
           x => x.blockchain === 'eos',
         );
         global.AccountByScatter = account;
-        const eosOptions = { expireInSeconds: 60 };
+        const eosOptions = { expireInSeconds: 60 * 5 };
         const eos = scatter.eos(network, EOS, eosOptions);
         global.EosByScatter = eos;
         callback();
@@ -202,7 +202,7 @@ const getEosOtherTestScatter = callback => {
               x => x.blockchain === 'eos',
             );
             global.AccountByScatter = account;
-            const eosOptions = { expireInSeconds: 60 };
+            const eosOptions = { expireInSeconds: 60 * 5 };
             const eos = scatter.eos(network, EOS, eosOptions);
             global.EosByScatter = eos;
             callback();
@@ -222,7 +222,7 @@ const getEosOtherTestScatter = callback => {
           x => x.blockchain === 'eos',
         );
         global.AccountByScatter = account;
-        const eosOptions = { expireInSeconds: 60 };
+        const eosOptions = { expireInSeconds: 60 * 5 };
         const eos = scatter.eos(network, EOS, eosOptions);
         global.EosByScatter = eos;
         callback();
