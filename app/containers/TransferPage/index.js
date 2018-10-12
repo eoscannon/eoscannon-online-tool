@@ -54,19 +54,21 @@ export class TransferPage extends React.Component {
       console.log('state[1]', state[1]);
       console.log('len===', len);
       console.log(
-        'this.props.location.state.address,===',
+        'this.props.location.state.address===',
         this.props.location.state.address,
       );
-      // const state = this.props.location.state.name.split(' ');
-      this.setState({
-        addSymbol: true,
-      });
-      this.props.form.setFieldsValue({
-        // transferSymbolCustom: state[1],
-        // transferQuantity: state[0],
-        // transferDigitCustom: len,
-        transferContractCustom: this.props.location.state.address,
-      });
+      // const state = this.props.location.state.name.split(' ')
+      setTimeout(() => {
+        this.setState({
+          addSymbol: true,
+        });
+        this.props.form.setFieldsValue({
+          transferSymbolCustom: state[1],
+          transferQuantity: state[0],
+          transferDigitCustom: len,
+          transferContractCustom: this.props.location.state.address,
+        });
+      }, 500);
     }
   }
   /**
@@ -390,13 +392,6 @@ export class TransferPage extends React.Component {
     const TransferMemoPlaceholder = this.state.formatMessage(
       messages.TransferMemoPlaceholder,
     );
-    // const TransferMemoHelp = this.state.formatMessage(
-    //   messages.TransferMemoHelp,
-    // );
-    // const FromLabel = this.state.formatMessage(messages.FromLabel);
-    // const ToLabel = this.state.formatMessage(messages.ToLabel);
-    // const QuantityLabel = this.state.formatMessage(messages.QuantityLabel);
-    // const SymbolLabel = this.state.formatMessage(messages.SymbolLabel);
     const SymbolCustom = this.state.formatMessage(messages.SymbolCustom);
     // const TransferSymbol = this.state.formatMessage(messages.TransferSymbol);
     // const TransferContract = this.state.formatMessage(
