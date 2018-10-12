@@ -39,12 +39,41 @@ export class TransferPage extends React.Component {
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
       contract: 'eosio.token',
+      number: '',
+      symbol: '',
+      code: '',
     };
+  }
+  // init page
+  componentDidMount() {
+    console.log('this.props.location.state===', this.props.location.state);
+    if (this.props.location.state) {
+      const state = this.props.location.state.name.split(' ');
+      const len = state[0].split('.')[1].length;
+      console.log('state[0]', state[0]);
+      console.log('state[1]', state[1]);
+      console.log('len===', len);
+      console.log(
+        'this.props.location.state.address,===',
+        this.props.location.state.address,
+      );
+      // const state = this.props.location.state.name.split(' ');
+      this.setState({
+        addSymbol: true,
+      });
+      this.props.form.setFieldsValue({
+        // transferSymbolCustom: state[1],
+        // transferQuantity: state[0],
+        // transferDigitCustom: len,
+        transferContractCustom: this.props.location.state.address,
+      });
+    }
   }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps(nextProps) {
+    console.log('nextProps.location===', nextProps.location);
     this.onValuesChange(nextProps);
   }
   /**
