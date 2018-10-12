@@ -38,10 +38,10 @@ export class AccountSearchPage extends React.Component {
       memoryContent: '',
       cpuContent: '',
       networkContent: '',
-      cpuStake: '',
-      cpuMortgage: '',
-      networkStake: '',
-      networkMortgage: '',
+      cpuStake: '0',
+      cpuMortgage: '0',
+      networkStake: '0',
+      networkMortgage: '0',
       memoryScale: 0,
       cpuScale: 0,
       networkScale: 0,
@@ -151,6 +151,7 @@ export class AccountSearchPage extends React.Component {
         } else {
           netScale = 0;
         }
+
         this.setState({
           info,
           createTime: info.created,
@@ -175,10 +176,32 @@ export class AccountSearchPage extends React.Component {
           ),
           cpuScale: Number(Number(cpuScale).toFixed(2)),
           networkScale: Number(Number(netScale).toFixed(2)),
-
-          cpuStake: info.total_resources.cpu_weight,
-          networkStake: info.total_resources.net_weight,
         });
+        // 对CPU,内存，网络为0 / -1 时的操作
+        if (info.ram_quota <= 0) {
+          this.setState({
+            memoryContent: `${(info.ram_usage / 1024).toFixed(
+              2,
+            )} Kib/unlimited`,
+          });
+        }
+        if (info.cpu_limit.max <= 0) {
+          this.setState({
+            cpuContent: `unlimited/unlimited`,
+          });
+        }
+        if (info.net_limit.max <= 0) {
+          this.setState({
+            networkContent: `unlimited/unlimited`,
+          });
+        }
+
+        if (info.total_resources) {
+          this.setState({
+            cpuStake: info.total_resources.cpu_weight,
+            networkStake: info.total_resources.net_weight,
+          });
+        }
         console.log('info.permissions===', info.permissions);
         try {
           this.state.powerAddress = [];
