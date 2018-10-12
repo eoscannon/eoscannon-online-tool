@@ -226,7 +226,11 @@ export class AccountSearchPage extends React.Component {
     // const data = value;
     this.props.history.push({
       pathname: '/transfer',
-      state: { name: value.name, address: value.address },
+      state: {
+        name: value.name,
+        address: value.address,
+        account: this.state.account,
+      },
     });
   };
   render() {

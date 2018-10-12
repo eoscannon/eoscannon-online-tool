@@ -50,19 +50,14 @@ export class TransferPage extends React.Component {
     if (this.props.location.state) {
       const state = this.props.location.state.name.split(' ');
       const len = state[0].split('.')[1].length;
-      console.log('state[0]', state[0]);
-      console.log('state[1]', state[1]);
-      console.log('len===', len);
-      console.log(
-        'this.props.location.state.address===',
-        this.props.location.state.address,
-      );
+
       // const state = this.props.location.state.name.split(' ')
       setTimeout(() => {
         this.setState({
           addSymbol: true,
         });
         this.props.form.setFieldsValue({
+          FromAccountName: this.props.location.state.account,
           transferSymbolCustom: state[1],
           transferQuantity: state[0],
           transferDigitCustom: len,
