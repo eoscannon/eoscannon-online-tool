@@ -39,12 +39,38 @@ export class TransferPage extends React.Component {
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
       contract: 'eosio.token',
+      number: '',
+      symbol: '',
+      code: '',
     };
+  }
+  // init page
+  componentDidMount() {
+    console.log('this.props.location.state===', this.props.location.state);
+    if (this.props.location.state) {
+      const state = this.props.location.state.name.split(' ');
+      const len = state[0].split('.')[1].length;
+
+      // const state = this.props.location.state.name.split(' ')
+      setTimeout(() => {
+        this.setState({
+          addSymbol: true,
+        });
+        this.props.form.setFieldsValue({
+          FromAccountName: this.props.location.state.account,
+          transferSymbolCustom: state[1],
+          transferQuantity: state[0],
+          transferDigitCustom: len,
+          transferContractCustom: this.props.location.state.address,
+        });
+      }, 500);
+    }
   }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps(nextProps) {
+    console.log('nextProps.location===', nextProps.location);
     this.onValuesChange(nextProps);
   }
   /**
@@ -361,13 +387,6 @@ export class TransferPage extends React.Component {
     const TransferMemoPlaceholder = this.state.formatMessage(
       messages.TransferMemoPlaceholder,
     );
-    // const TransferMemoHelp = this.state.formatMessage(
-    //   messages.TransferMemoHelp,
-    // );
-    // const FromLabel = this.state.formatMessage(messages.FromLabel);
-    // const ToLabel = this.state.formatMessage(messages.ToLabel);
-    // const QuantityLabel = this.state.formatMessage(messages.QuantityLabel);
-    // const SymbolLabel = this.state.formatMessage(messages.SymbolLabel);
     const SymbolCustom = this.state.formatMessage(messages.SymbolCustom);
     // const TransferSymbol = this.state.formatMessage(messages.TransferSymbol);
     // const TransferContract = this.state.formatMessage(

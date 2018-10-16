@@ -6,7 +6,7 @@ import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Form, Select, message, Tabs, Table, Tag } from 'antd';
+import { Form, Select, message, Tabs, Table, Tag, Button } from 'antd';
 import { Progress, Input } from 'utils/antdUtils';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -59,6 +59,7 @@ export class AccountSearchPage extends React.Component {
     }
   }
   componentDidMount() {
+    console.log('account===', this.props.match.params.account);
     if (this.props.match.params.account) {
       this.handleSearch(this.props.match.params.account);
     }
@@ -242,6 +243,19 @@ export class AccountSearchPage extends React.Component {
       });
   };
 
+  handleSendTransaction = value => {
+    // console.log('value==', value);
+    // const data = encodeURI(JSON.stringify(value));
+    // const data = value;
+    this.props.history.push({
+      pathname: '/transfer',
+      state: {
+        name: value.name,
+        address: value.address,
+        account: this.state.account,
+      },
+    });
+  };
   render() {
     const FunctionSearchButton = this.state.formatMessage(
       messages.FunctionSearchButton,
@@ -316,6 +330,22 @@ export class AccountSearchPage extends React.Component {
       {
         title: FunctionSearchAccountTableContact,
         dataIndex: 'address',
+      },
+      {
+        title: '操作',
+        key: 'action',
+        align: 'center',
+        render: (text, record) => (
+          <span>
+            <Button
+              type="primary"
+              size="small"
+              onClick={() => this.handleSendTransaction(record)}
+            >
+              转账
+            </Button>
+          </span>
+        ),
       },
     ];
 
