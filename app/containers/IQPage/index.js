@@ -22,11 +22,11 @@ import messages from './messages';
 import utilsMsg from '../../utils/messages';
 
 import { makeSelectNetwork } from '../LanguageProvider/selectors';
-import { message } from "antd/lib/index";
+import { message } from 'antd/lib/index';
 
 const FormItem = Form.Item;
 const FormItemButtonStyle = {
-  textAlign: "center",
+  textAlign: 'center',
 };
 
 export class IQPage extends React.Component {
@@ -34,7 +34,7 @@ export class IQPage extends React.Component {
     super(props);
     this.state = {
       SearchButtonState: false,
-      IqAction: "stake",
+      IqAction: 'stake',
       isSearchIqBalance: false,
       isSearchIqBalanceSuccess: false,
       IqBalanceFromStake: 0,
@@ -60,12 +60,15 @@ export class IQPage extends React.Component {
    * 选择功能选项
    * */
   radioActionOnChange = e => {
-    this.setState({
-          IqAction: e.target.value,
-          GetTransactionButtonState: false,
-      }, () => {
-      this.onValuesChange(this.props);
-    });
+    this.setState(
+      {
+        IqAction: e.target.value,
+        GetTransactionButtonState: false,
+      },
+      () => {
+        this.onValuesChange(this.props);
+      },
+    );
   };
 
   /**
@@ -75,13 +78,13 @@ export class IQPage extends React.Component {
     const { IqAction } = this.state;
     let FromItem = null;
     switch (IqAction) {
-      case "refund":
+      case 'refund':
         FromItem = this.getIqRefundFormItem();
         break;
-      case "vote":
+      case 'vote':
         FromItem = this.getIqVoteFormItem();
         break;
-      case "reward":
+      case 'reward':
         FromItem = this.getIqRewardFormItem();
         break;
       default:
@@ -96,16 +99,42 @@ export class IQPage extends React.Component {
    * */
   getIqStakeFormItem = () => {
     const { getFieldDecorator } = this.props.form;
-    const { SearchButtonState, IqBalanceFromStake, isSearchIqBalanceSuccess, isSearchIqBalance } = this.state;
-    const StakeIqQuantityButtonName = this.state.formatMessage(messages.StakeIqQuantityButtonName);
-    const StakeIqQuantityInputPlaceholder = this.state.formatMessage(messages.StakeIqQuantityInputPlaceholder);
-    const StakeIqSearchIqBalanceSuccess = this.state.formatMessage(messages.StakeIqSearchIqBalanceSuccess, {IqBalanceFromStake: IqBalanceFromStake});
-    const StakeIqSearchIqBalanceFail = this.state.formatMessage(messages.StakeIqSearchIqBalanceFail);
+    const {
+      SearchButtonState,
+      IqBalanceFromStake,
+      isSearchIqBalanceSuccess,
+      isSearchIqBalance,
+    } = this.state;
+    const StakeIqQuantityButtonName = this.state.formatMessage(
+      messages.StakeIqQuantityButtonName,
+    );
+    const StakeIqQuantityInputPlaceholder = this.state.formatMessage(
+      messages.StakeIqQuantityInputPlaceholder,
+    );
+    const StakeIqSearchIqBalanceSuccess = this.state.formatMessage(
+      messages.StakeIqSearchIqBalanceSuccess,
+      { IqBalanceFromStake },
+    );
+    const StakeIqSearchIqBalanceFail = this.state.formatMessage(
+      messages.StakeIqSearchIqBalanceFail,
+    );
     return (
       <div>
         <FormItem style={FormItemButtonStyle}>
-          <Button type="primary" disabled={!SearchButtonState} onClick={this.getAvailableIqForStake}>{StakeIqQuantityButtonName}</Button>
-          {isSearchIqBalance ? (isSearchIqBalanceSuccess ? <p>{StakeIqSearchIqBalanceSuccess}</p> : <p>{StakeIqSearchIqBalanceFail}</p>) : null}
+          <Button
+            type="primary"
+            disabled={!SearchButtonState}
+            onClick={this.getAvailableIqForStake}
+          >
+            {StakeIqQuantityButtonName}
+          </Button>
+          {isSearchIqBalance ? (
+            isSearchIqBalanceSuccess ? (
+              <p>{StakeIqSearchIqBalanceSuccess}</p>
+            ) : (
+              <p>{StakeIqSearchIqBalanceFail}</p>
+            )
+          ) : null}
         </FormItem>
         <FormItem {...formItemLayout}>
           {getFieldDecorator('stakeIqQuantity', {
@@ -118,7 +147,10 @@ export class IQPage extends React.Component {
           })(
             <Input
               prefix={
-                <Icon type="pay-circle-o" style={{ color: "rgba(0,0,0,.25)" }}/>
+                <Icon
+                  type="pay-circle-o"
+                  style={{ color: 'rgba(0,0,0,.25)' }}
+                />
               }
               placeholder={StakeIqQuantityInputPlaceholder}
             />,
@@ -133,17 +165,41 @@ export class IQPage extends React.Component {
    * */
   getIqRefundFormItem = () => {
     const { getFieldDecorator } = this.props.form;
-    const { SearchButtonState, StakeIdsForRefund, isSearchStakeIdsSuccess, isSearchStakeIds } = this.state;
-    const RefundIqButtonName = this.state.formatMessage(messages.RefundIqButtonName);
-    const RefundIqInputPlaceholder = this.state.formatMessage(messages.RefundIqInputPlaceholder);
-    const RefundIqSearchStakeIdSuccess = this.state.formatMessage(messages.RefundIqSearchStakeIdSuccess, {StakeIdsForRefund: StakeIdsForRefund.join(", ")});
-    const RefundIqSearchStakeIdFail = this.state.formatMessage(messages.RefundIqSearchStakeIdFail);
+    const {
+      SearchButtonState,
+      StakeIdsForRefund,
+      isSearchStakeIdsSuccess,
+      isSearchStakeIds,
+    } = this.state;
+    const RefundIqButtonName = this.state.formatMessage(
+      messages.RefundIqButtonName,
+    );
+    const RefundIqInputPlaceholder = this.state.formatMessage(
+      messages.RefundIqInputPlaceholder,
+    );
+    const RefundIqSearchStakeIdSuccess = this.state.formatMessage(
+      messages.RefundIqSearchStakeIdSuccess,
+      { StakeIdsForRefund: StakeIdsForRefund.join(', ') },
+    );
+    const RefundIqSearchStakeIdFail = this.state.formatMessage(
+      messages.RefundIqSearchStakeIdFail,
+    );
     return (
       <div>
         <FormItem style={FormItemButtonStyle}>
-          <Button type="primary" disabled={!SearchButtonState} onClick={this.getAvailableStakeIdForRefund}>{RefundIqButtonName}</Button>
+          <Button
+            type="primary"
+            disabled={!SearchButtonState}
+            onClick={this.getAvailableStakeIdForRefund}
+          >
+            {RefundIqButtonName}
+          </Button>
           {isSearchStakeIds ? (
-            isSearchStakeIdsSuccess ? (<p>{RefundIqSearchStakeIdSuccess}</p>) : (<p>{RefundIqSearchStakeIdFail}</p>)
+            isSearchStakeIdsSuccess ? (
+              <p>{RefundIqSearchStakeIdSuccess}</p>
+            ) : (
+              <p>{RefundIqSearchStakeIdFail}</p>
+            )
           ) : null}
         </FormItem>
         <FormItem {...formItemLayout}>
@@ -157,7 +213,10 @@ export class IQPage extends React.Component {
           })(
             <Input
               prefix={
-                <Icon type="pay-circle-o" style={{ color: "rgba(0,0,0,.25)" }}/>
+                <Icon
+                  type="pay-circle-o"
+                  style={{ color: 'rgba(0,0,0,.25)' }}
+                />
               }
               placeholder={RefundIqInputPlaceholder}
             />,
@@ -172,19 +231,49 @@ export class IQPage extends React.Component {
    * */
   getIqVoteFormItem = () => {
     const { getFieldDecorator } = this.props.form;
-    const { SearchButtonState, BrainPowerForVote, isSearchBrainPowerSuccess, isSearchBrainPower } = this.state;
+    const {
+      SearchButtonState,
+      BrainPowerForVote,
+      isSearchBrainPowerSuccess,
+      isSearchBrainPower,
+    } = this.state;
     const VoteButtonName = this.state.formatMessage(messages.VoteButtonName);
-    const VoteSearchBrainPowerSuccess = this.state.formatMessage(messages.VoteSearchBrainPowerSuccess, {BrainPowerForVote: BrainPowerForVote});
-    const VoteSearchBrainPowerFail = this.state.formatMessage(messages.VoteSearchBrainPowerFail);
-    const VoteProposalHashInputPlaceholder = this.state.formatMessage(messages.VoteProposalHashInputPlaceholder);
-    const VoteBrainpowerAmountInputPlaceholder = this.state.formatMessage(messages.VoteBrainpowerAmountInputPlaceholder);
-    const VoteSwitchCheckedName = this.state.formatMessage(messages.VoteSwitchCheckedName);
-    const VoteSwitchUnCheckedName = this.state.formatMessage(messages.VoteSwitchUnCheckedName);
+    const VoteSearchBrainPowerSuccess = this.state.formatMessage(
+      messages.VoteSearchBrainPowerSuccess,
+      { BrainPowerForVote },
+    );
+    const VoteSearchBrainPowerFail = this.state.formatMessage(
+      messages.VoteSearchBrainPowerFail,
+    );
+    const VoteProposalHashInputPlaceholder = this.state.formatMessage(
+      messages.VoteProposalHashInputPlaceholder,
+    );
+    const VoteBrainpowerAmountInputPlaceholder = this.state.formatMessage(
+      messages.VoteBrainpowerAmountInputPlaceholder,
+    );
+    const VoteSwitchCheckedName = this.state.formatMessage(
+      messages.VoteSwitchCheckedName,
+    );
+    const VoteSwitchUnCheckedName = this.state.formatMessage(
+      messages.VoteSwitchUnCheckedName,
+    );
     return (
       <div>
         <FormItem style={FormItemButtonStyle}>
-          <Button type="primary" disabled={!SearchButtonState} onClick={this.getAvailableBrainPowerForVote}>{VoteButtonName}</Button>
-          {isSearchBrainPower ? (<p>{isSearchBrainPowerSuccess ? VoteSearchBrainPowerSuccess : VoteSearchBrainPowerFail}</p>) : null}
+          <Button
+            type="primary"
+            disabled={!SearchButtonState}
+            onClick={this.getAvailableBrainPowerForVote}
+          >
+            {VoteButtonName}
+          </Button>
+          {isSearchBrainPower ? (
+            <p>
+              {isSearchBrainPowerSuccess
+                ? VoteSearchBrainPowerSuccess
+                : VoteSearchBrainPowerFail}
+            </p>
+          ) : null}
         </FormItem>
         <FormItem {...formItemLayout}>
           {getFieldDecorator('VoteProposalHash', {
@@ -217,7 +306,10 @@ export class IQPage extends React.Component {
           })(
             <Input
               prefix={
-                <Icon type="pay-circle-o" style={{ color: 'rgba(0,0,0,.25)' }}/>
+                <Icon
+                  type="pay-circle-o"
+                  style={{ color: 'rgba(0,0,0,.25)' }}
+                />
               }
               placeholder={VoteBrainpowerAmountInputPlaceholder}
             />,
@@ -238,9 +330,7 @@ export class IQPage extends React.Component {
   /**
    * 获取IQ领取奖励输入框
    * */
-  getIqRewardFormItem = () => {
-    return <div/>;
-  };
+  getIqRewardFormItem = () => <div />;
 
   /**
    * 文章投票，用户选择赞成/反对
@@ -260,16 +350,16 @@ export class IQPage extends React.Component {
     const { IqAction } = this.state;
     let GetTransactionButtonState = false;
     switch (IqAction) {
-      case "refund":
+      case 'refund':
         const { refundIqQuantity } = values;
         GetTransactionButtonState = !!IqAccountName && !!refundIqQuantity;
         break;
-      case "vote":
+      case 'vote':
         const { VoteProposalHash, VoteBrainpowerAmount } = values;
         GetTransactionButtonState =
           !!IqAccountName && !!VoteProposalHash && !!VoteBrainpowerAmount;
         break;
-      case "reward":
+      case 'reward':
         GetTransactionButtonState = !!IqAccountName;
         break;
       default:
@@ -295,20 +385,20 @@ export class IQPage extends React.Component {
     const { IqAction } = this.state;
     let actions = null;
 
-    if (IqAction === "stake") {
+    if (IqAction === 'stake') {
       eos
-        .getAbi("everipediaiq")
+        .getAbi('everipediaiq')
         .then(res => {
-          eos.fc.abiCache.abi("everipediaiq", res.abi);
+          eos.fc.abiCache.abi('everipediaiq', res.abi);
         })
         .catch(err => {
           message.error(`${err}`);
         });
     } else {
       eos
-        .getAbi("eparticlectr")
+        .getAbi('eparticlectr')
         .then(res => {
-          eos.fc.abiCache.abi("eparticlectr", res.abi);
+          eos.fc.abiCache.abi('eparticlectr', res.abi);
         })
         .catch(err => {
           message.error(`${err}`);
@@ -316,13 +406,13 @@ export class IQPage extends React.Component {
     }
 
     switch (IqAction) {
-      case "refund":
+      case 'refund':
         actions = this.getRefundTransaction(values, IqAccountName);
         break;
-      case "vote":
+      case 'vote':
         actions = this.getVoteTransaction(values, IqAccountName);
         break;
-      case "reward":
+      case 'reward':
         actions = this.getRewardTransaction(values, IqAccountName);
         break;
       default:
@@ -360,14 +450,14 @@ export class IQPage extends React.Component {
     const { stakeIqQuantity } = values;
     const actions = [
       {
-        account: "everipediaiq",
+        account: 'everipediaiq',
         name: 'brainmeiq',
         authorization: [
           {
             actor: IqAccountName,
             permission: 'active',
           },
-              ],
+        ],
         data: {
           staker: IqAccountName,
           amount: stakeIqQuantity,
@@ -384,7 +474,7 @@ export class IQPage extends React.Component {
     const { refundIqQuantity } = values;
     const actions = [
       {
-        account: "eparticlectr",
+        account: 'eparticlectr',
         name: 'brainclmid',
         authorization: [
           {
@@ -409,7 +499,7 @@ export class IQPage extends React.Component {
     const { isVoteApprove } = this.state;
     const actions = [
       {
-        account: "eparticlectr",
+        account: 'eparticlectr',
         name: 'votebyhash',
         authorization: [
           {
@@ -434,7 +524,7 @@ export class IQPage extends React.Component {
   getRewardTransaction = (values, IqAccountName) => {
     const actions = [
       {
-        account: "eparticlectr",
+        account: 'eparticlectr',
         name: 'rewardclmall',
         authorization: [
           {
@@ -458,23 +548,28 @@ export class IQPage extends React.Component {
     const { IqAccountName } = values;
     const eos = getEos(this.props.SelectedNetWork);
     eos
-      .getAbi("everipediaiq")
+      .getAbi('everipediaiq')
       .then(res => {
-        eos.fc.abiCache.abi("everipediaiq", res.abi);
-        eos.getCurrencyBalance("everipediaiq", IqAccountName, "IQ").then(re => {
-          const IqBalanceFromStake = Number(re[0].substring(0,re[0].length-3));
-          this.setState({
-            IqBalanceFromStake,
-            isSearchIqBalance: true,
-            isSearchIqBalanceSuccess: true,
+        eos.fc.abiCache.abi('everipediaiq', res.abi);
+        eos
+          .getCurrencyBalance('everipediaiq', IqAccountName, 'IQ')
+          .then(re => {
+            const IqBalanceFromStake = Number(
+              re[0].substring(0, re[0].length - 3),
+            );
+            this.setState({
+              IqBalanceFromStake,
+              isSearchIqBalance: true,
+              isSearchIqBalanceSuccess: true,
+            });
+          })
+          .catch(err => {
+            this.setState({
+              IqBalanceFromStake: 0,
+              isSearchIqBalance: true,
+              isSearchIqBalanceSuccess: false,
+            });
           });
-        }).catch(err => {
-          this.setState({
-            IqBalanceFromStake: 0,
-            isSearchIqBalance: true,
-            isSearchIqBalanceSuccess: false,
-          });
-        });
       })
       .catch(err => {
         message.error(`${err}`);
@@ -488,18 +583,36 @@ export class IQPage extends React.Component {
     const values = this.props.form.getFieldsValue();
     const { IqAccountName } = values;
     const eos = getEos(this.props.SelectedNetWork);
-    const nextAccountName = IqAccountName.substr(0, IqAccountName.length - 1) + String.fromCharCode(IqAccountName.charCodeAt(IqAccountName.length - 1) + 1);
+    const nextAccountName =
+      IqAccountName.substr(0, IqAccountName.length - 1) +
+      String.fromCharCode(
+        IqAccountName.charCodeAt(IqAccountName.length - 1) + 1,
+      );
     eos
-      .getAbi("eparticlectr")
+      .getAbi('eparticlectr')
       .then(res => {
-        eos.fc.abiCache.abi("eparticlectr", res.abi);
+        eos.fc.abiCache.abi('eparticlectr', res.abi);
         eos
-          .getTableRows({"scope":"eparticlectr","code":"eparticlectr","table":"staketbl","json":true,"key_type":"name","index_position":"2","limit":"999999999999","lower_bound":IqAccountName,"upper_bound":nextAccountName})
+          .getTableRows({
+            scope: 'eparticlectr',
+            code: 'eparticlectr',
+            table: 'staketbl',
+            json: true,
+            key_type: 'name',
+            index_position: '2',
+            limit: '999999999999',
+            lower_bound: IqAccountName,
+            upper_bound: nextAccountName,
+          })
           .then(tr => {
             const { rows } = tr;
             const StakeIdsForRefund = [];
+            const nowCompletionTime = Math.ceil(new Date().getTime() / 1000);
             rows.forEach(item => {
-              StakeIdsForRefund.push(item.id);
+              // 过期检查
+              if (item.completion_time > nowCompletionTime) {
+                StakeIdsForRefund.push(item.id);
+              }
             });
             this.setState({
               StakeIdsForRefund,
@@ -528,13 +641,24 @@ export class IQPage extends React.Component {
     const values = this.props.form.getFieldsValue();
     const { IqAccountName } = values;
     const eos = getEos(this.props.SelectedNetWork);
-    const nextAccountName = IqAccountName.substr(0, IqAccountName.length - 1) + String.fromCharCode(IqAccountName.charCodeAt(IqAccountName.length - 1) + 1);
+    const nextAccountName =
+      IqAccountName.substr(0, IqAccountName.length - 1) +
+      String.fromCharCode(
+        IqAccountName.charCodeAt(IqAccountName.length - 1) + 1,
+      );
     eos
-      .getAbi("eparticlectr")
+      .getAbi('eparticlectr')
       .then(res => {
-        eos.fc.abiCache.abi("eparticlectr", res.abi);
+        eos.fc.abiCache.abi('eparticlectr', res.abi);
         eos
-          .getTableRows({"scope":"eparticlectr","code":"eparticlectr","table":"brainpwrtbl","lower_bound":IqAccountName,"upper_bound":nextAccountName,"json":true})
+          .getTableRows({
+            scope: 'eparticlectr',
+            code: 'eparticlectr',
+            table: 'brainpwrtbl',
+            lower_bound: IqAccountName,
+            upper_bound: nextAccountName,
+            json: true,
+          })
           .then(tr => {
             const { rows } = tr;
             const BrainPowerForVote = rows[0].power;
@@ -560,13 +684,27 @@ export class IQPage extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const IqAccountNamePlaceholder = this.state.formatMessage(messages.IqAccountNamePlaceholder);
-    const StakeRadioButtonName = this.state.formatMessage(messages.StakeRadioButtonName);
-    const RefundRadioButtonName = this.state.formatMessage(messages.RefundRadioButtonName);
-    const ArticleVoteRadioButtonName = this.state.formatMessage(messages.ArticleVoteRadioButtonName);
-    const RewardRadioButtonName = this.state.formatMessage(messages.RewardRadioButtonName);
-    const ProducersDealTranscation = this.state.formatMessage(utilsMsg.ProducersDealTranscation);
-    const ProducersSendTranscation = this.state.formatMessage(utilsMsg.ProducersSendTranscation);
+    const IqAccountNamePlaceholder = this.state.formatMessage(
+      messages.IqAccountNamePlaceholder,
+    );
+    const StakeRadioButtonName = this.state.formatMessage(
+      messages.StakeRadioButtonName,
+    );
+    const RefundRadioButtonName = this.state.formatMessage(
+      messages.RefundRadioButtonName,
+    );
+    const ArticleVoteRadioButtonName = this.state.formatMessage(
+      messages.ArticleVoteRadioButtonName,
+    );
+    const RewardRadioButtonName = this.state.formatMessage(
+      messages.RewardRadioButtonName,
+    );
+    const ProducersDealTranscation = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscation,
+    );
+    const ProducersSendTranscation = this.state.formatMessage(
+      utilsMsg.ProducersSendTranscation,
+    );
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -587,11 +725,23 @@ export class IQPage extends React.Component {
                 )}
               </FormItem>
               <FormItem {...formItemLayout}>
-                <Radio.Group defaultValue={this.state.IqAction} onChange={this.radioActionOnChange}>
-                  <Radio.Button value="stake">{StakeRadioButtonName}</Radio.Button>
-                  <Radio.Button value="refund">{RefundRadioButtonName}</Radio.Button>
-                  <Radio.Button value="vote">{ArticleVoteRadioButtonName}</Radio.Button>
-                  <Radio.Button value="reward">{RewardRadioButtonName}</Radio.Button>
+                <Radio.Group
+                  buttonStyle="solid"
+                  defaultValue={this.state.IqAction}
+                  onChange={this.radioActionOnChange}
+                >
+                  <Radio.Button value="stake">
+                    {StakeRadioButtonName}
+                  </Radio.Button>
+                  <Radio.Button value="refund">
+                    {RefundRadioButtonName}
+                  </Radio.Button>
+                  <Radio.Button value="vote">
+                    {ArticleVoteRadioButtonName}
+                  </Radio.Button>
+                  <Radio.Button value="reward">
+                    {RewardRadioButtonName}
+                  </Radio.Button>
                 </Radio.Group>
               </FormItem>
               {this.getFormItemNodes()}

@@ -6,6 +6,10 @@ const { Content } = Layout;
 const LayoutContent = styled(Content)`
   background: #f2f4f6;
   padding: 16px;
+  position: relative;
+  &.ant-layout-content {
+    min-height: auto;
+  }
   .ant-btn-sm {
     padding: 0 14px;
     font-size: 10px;
@@ -15,8 +19,8 @@ const LayoutContent = styled(Content)`
 `;
 
 const LayoutContentBox = styled.div`
-  // background: #fff;
-  padding: 0 16px;
+  padding: 16px;
+  min-height: 600px;
 `;
 
 const FormComp = styled(Form)`
