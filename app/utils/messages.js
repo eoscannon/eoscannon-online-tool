@@ -26,6 +26,10 @@ export default defineMessages({
     id: 'Public HeaderMenuVote',
     defaultMessage: '投票',
   },
+  HeaderMenuIQ: {
+    id: 'Public HeaderMenuIQ',
+    defaultMessage: 'IQ',
+  },
   HeaderMenuProxy: {
     id: 'Public HeaderMenuProxy',
     defaultMessage: '代理投票',

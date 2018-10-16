@@ -5,41 +5,31 @@
   "Public HeaderMenuTransfer": "Transfer",
   "Public HeaderMenuBuyRamBytes": "Buy/Sell RAM",
   "Public HeaderMenuVote": "Vote",
+  "Public HeaderMenuIQ": "IQ",
   "Public HeaderMenuProxy": "Proxy vote",
   "Public HeaderMenuUpdateAuth": "Change permissions",
   "Public HeaderMenuRefund": "Refund",
   "Public HeaderMenuAirgrab": "Airgrab",
-  "Public TransactionSuccessNotificationMsg":
-    "Succeed to generate signed transaction",
-  "Public TransactionSuccessNotificationDescription":
-    "Please click the copy signature transaction button or scan the QRCode to get the signature transaction.",
-  "Public TransactionFailNotificationMsg":
-    "Failure to generate a signature transaction",
-  "Public TransactionFailNotificationDescription":
-    "Please reobtain the signature transaction",
+  "Public TransactionSuccessNotificationMsg": "Succeed to generate signed transaction",
+  "Public TransactionSuccessNotificationDescription": "Please click the copy signature transaction button or scan the QRCode to get the signature transaction.",
+  "Public TransactionFailNotificationMsg": "Failure to generate a signature transaction",
+  "Public TransactionFailNotificationDescription": "Please reobtain the signature transaction",
   "Public CopyTransactionSuccessNotificationMsg": "Copy success",
-  "Public CopyTransactionSuccessNotificationDescription":
-    "The signature transaction has been copied to the clipboard. Please go to offline tool signature.",
+  "Public CopyTransactionSuccessNotificationDescription": "The signature transaction has been copied to the clipboard. Please go to offline tool signature.",
   "Public JsonAlertMessage": "Scan the QR Code on offline mobile device",
   "Public JsonAlertDescription": "Or input the signed transaction if no camera",
-  "Public JsonInfoPlaceholder":
-    "Wait for scanning the QR Code to get the signed transaction",
+  "Public JsonInfoPlaceholder": "Wait for scanning the QR Code to get the signed transaction",
   "Public OpenCameraButtonName": "Open Camera",
   "Public ScanQrcodeButtonName": "Scan QR Code",
-  "Public FieldAlertMessage":
-    "Input the fields required to generate a signature transaction",
-  "Public FieldAlertDescription":
-    "The page is offline, and the fields entered will not leak out. Please feel free to enter.",
-  "Public CopyAlertDescription":
-    "Scan QR Code with APP in offline mobile device",
+  "Public FieldAlertMessage": "Input the fields required to generate a signature transaction",
+  "Public FieldAlertDescription": "The page is offline, and the fields entered will not leak out. Please feel free to enter.",
+  "Public CopyAlertDescription": "Scan QR Code with APP in offline mobile device",
   "Public KeyProviderFormItemLabel": "Input the relevant transaction message",
-  "Public KeyProviderFormItemPlaceholder":
-    "Please go to the offline version of the tool to get the transaction message, open the tool, scan the QR code to get it.",
+  "Public KeyProviderFormItemPlaceholder": "Please go to the offline version of the tool to get the transaction message, open the tool, scan the QR code to get it.",
   "Public GetTransactionFormItemButtonName": "Generate transaction",
   "Public CopyAlertMessage": "Step 2/3:",
   "Public CopyTransactionButtonName": "Copy Transaction",
-  "Public TransactionTextAreaPlaceholder":
-    "Wait for generating unsigned transaction",
+  "Public TransactionTextAreaPlaceholder": "Wait for generating unsigned transaction",
   "Public QrCodeInitValue": "Welcome to use the EOS Cannon offline tool",
   "Public FooterCompText": "Provided by EOSCannon ©2018",
   "BuyRamBytesPage SwitchCheckedName": "Buy",
@@ -57,12 +47,10 @@
   "CreateAccountPage BytesLabel": "Bytes",
   "CreateAccountPage CreatorAccountNamePlaceholder": "Creator",
   "CreateAccountPage NewAccountNamePlaceholder": "New Account Name",
-  "CreateAccountPage NewAccountNameHelp":
-    "notes：Account name must be 12 characters and lowercase letter a-z and number 1-5 only.",
+  "CreateAccountPage NewAccountNameHelp": "notes：Account name must be 12 characters and lowercase letter a-z and number 1-5 only.",
   "CreateAccountPage OwnerKeyPlaceholder": "Owner Public Key",
   "CreateAccountPage ActiveKeyPlaceholder": "Active Public Key",
-  "CreateAccountPage BytesHelp":
-    "At least 4KB RAM required, the minimum value is: 8192",
+  "CreateAccountPage BytesHelp": "At least 4KB RAM required, the minimum value is: 8192",
   "CreateAccountPage BytesPlaceholder": "RAM Purchase(in bytes)",
   "CreateAccountPage CPUStakeHelper": "CPU Stake(in EOS)",
   "CreateAccountPage NETStakeHelper": "NET Stake(in EOS)",
@@ -75,8 +63,7 @@
   "ProxyPage ProxyLabel": "Proxy",
   "ProxyPage ProxyScatterHelp": "No account required when using Scatter",
   "RefundPage RefundAlertMessage": "Refund your EOS",
-  "RefundPage RefundAlertDescription":
-    "if your EOS is under refund and the latest undelegate action is 3 days ago",
+  "RefundPage RefundAlertDescription": "if your EOS is under refund and the latest undelegate action is 3 days ago",
   "RefundPage OwnerPlaceholder": "Account",
   "RefundPage OwnerLabel": "Account",
   "StakePage DelegateSwitchCheckedName": "Delegate",
@@ -85,10 +72,8 @@
   "StakePage UnDelegateFromAccountNamePlaceholder": "Unstake Owner",
   "StakePage DelegateReceiverAccountNamePlaceholder": "Recipient",
   "StakePage UnDelegateReceiverAccountNamePlaceholder": "Stake Holder",
-  "StakePage DelegateReceiverAccountNameHelp":
-    "Tip：if 'Stake Owner==Recipient', then stake CPU/NET for yourself, otherwise for others.",
-  "StakePage UnDelegateReceiverAccountNameHelp":
-    "Tip：if 'Stake Owner==Recipient', then unstake CPU/NET from yourself, otherwise from others.",
+  "StakePage DelegateReceiverAccountNameHelp": "Tip：if 'Stake Owner==Recipient', then stake CPU/NET for yourself, otherwise for others.",
+  "StakePage UnDelegateReceiverAccountNameHelp": "Tip：if 'Stake Owner==Recipient', then unstake CPU/NET from yourself, otherwise from others.",
   "StakePage DelegateStakeNetQuantityPlaceholder": "Stake Net(in EOS)",
   "StakePage UnDelegateStakeNetQuantityPlaceholder": "Unstake Net(in EOS)",
   "StakePage DelegateStakeCpuQuantityPlaceholder": "Stake CPU(in EOS)",
@@ -104,8 +89,7 @@
   "TransferPage TransferDigitPlaceholder": "Decimals",
   "TransferPage TransferSymbolPlaceholder": "Symbol",
   "TransferPage TransferMemoPlaceholder": "Memo",
-  "TransferPage TransferMemoHelp":
-    "notes：Required while depositing to exchange",
+  "TransferPage TransferMemoHelp": "notes：Required while depositing to exchange",
   "TransferPage FromLabel": "From",
   "TransferPage ToLabel": "To",
   "TransferPage ContractLabel": "Contract",
@@ -122,15 +106,13 @@
   "UpdateAuthPage PrivateKeyLabel": "PrivateKey",
   "UpdateAuthPage AccountLabel": "Account",
   "VotePage VoterPlaceholder": "Voter",
-  "VotePage ProducersHelp":
-    "notes：Please select the voting node! It can be multiple selected, searchable, and import. input confirm!",
+  "VotePage ProducersHelp": "notes：Please select the voting node! It can be multiple selected, searchable, and import. input confirm!",
   "VotePage ProducersPlaceholder": "Choose Block Producer(s)",
   "VotePage VoterLabel": "Voter",
   "VotePage ProducersLabel": "Producers",
   "boilerplate.containers.LocaleToggle.zh": "zh",
   "boilerplate.containers.LocaleToggle.en": "en",
   "boilerplate.containers.NotFoundPage.header": "Page not found.",
-
   "Public HeaderMenuInfoInit": "Initial Block Info",
   "Public HeaderMenuSendMessage": "Send Transaction",
   "Public HeaderMenuAccountSearch": "Query",
@@ -163,28 +145,23 @@
   "TransferPage FunctionSearchAccountTableContact": "Contract",
   "TransferPage FunctionSearchAccountTableGroup": "Permission",
   "TransferPage FunctionSearchAccountTableAddress": "Public Key",
-  "TransferPage FunctionSearchNoData":
-    "Can't find anything, please check your input",
+  "TransferPage FunctionSearchNoData": "Can't find anything, please check your input",
   "TransferPage FunctionSearchAccountPlaceHolder": "Account",
   "InfoInitPage infoAlertMessage": "Wait for the block info, such as chainId",
-  "InfoInitPage infoAlertDescription":
-    "Next step: Scan the below QRCode with APP in offline mobile device",
+  "InfoInitPage infoAlertDescription": "Next step: Scan the below QRCode with APP in offline mobile device",
   "InfoInitPage infoAlertCopy": "Copy",
   "Public FieldAlertSendMessage": "(Legacy) Send Transaction",
   "Public FieldAlertSendMessageNew": "Send Transaction",
-  "Public SendSuccessMessage":
-    "Send the transaction successfully, please check at the end of the page.",
+  "Public SendSuccessMessage": "Send the transaction successfully, please check at the end of the page.",
   "Public SendSuccess": "Send success",
-  "Public ScanCodeSendSuccessMessage":
-    "Successful transmission, related operation broadcast, transaction ID:",
+  "Public ScanCodeSendSuccessMessage": "Successful transmission, related operation broadcast, transaction ID:",
   "Public ScanCodeSendFailed": "Send failed",
   "Public ScanCodeSendSure": "OK",
   "Public ScanCodeSendCancel": "Cancel",
   "Public ProducersDealTranscation": "Step 1/3: Generate transaction",
   "Public ProducersSendTranscation": "Step 3/3: Send transaction",
   "AirGrabPage AirGrabAlertMessage": "Airgrab",
-  "AirGrabPage AirGrabAlertDescription":
-    "AirGrab, input account, click airdrop button to generate unsigned transaction. Using OfflineTools signature, broadcast can be obtained.",
+  "AirGrabPage AirGrabAlertDescription": "AirGrab, input account, click airdrop button to generate unsigned transaction. Using OfflineTools signature, broadcast can be obtained.",
   "AirGrabPage AirGrabTableColumnsSymbolTitle": "Symbol",
   "AirGrabPage AirGrabTableColumnsActionTitle": "Grab",
   "AirGrabPage AirGrabTableActionButtonName": "Airgrab",
@@ -192,14 +169,10 @@
   "Public ProducersSendTransaction": "Send transaction",
   "Public JsonAlertAttention": "Attention",
   "Public JsonAlertAttentionArt": "Input the correct message.!",
-  "DescribePage describePageFirst":
-    "EOS Cannon Tool, always keep the private key and sign transaction on offline phone, is the safest way to use private key. It can be used as a cold wallet. We recommend you use other wallets to manage small account, and use Cannon Tool to manage large account.",
-  "DescribePage describePageSecond":
-    "Cannon Tool has two parts: offline APP + online PC",
-  "DescribePage describePageThird":
-    "Offline APP can be downloaded by clicking the left menu.",
-  "DescribePage describePageFourth":
-    "All transactions can divide into three steps:",
+  "DescribePage describePageFirst": "EOS Cannon Tool, always keep the private key and sign transaction on offline phone, is the safest way to use private key. It can be used as a cold wallet. We recommend you use other wallets to manage small account, and use Cannon Tool to manage large account.",
+  "DescribePage describePageSecond": "Cannon Tool has two parts: offline APP + online PC",
+  "DescribePage describePageThird": "Offline APP can be downloaded by clicking the left menu.",
+  "DescribePage describePageFourth": "All transactions can divide into three steps:",
   "DescribePage describePagefivth": "Generate ",
   "DescribePage describePagefivthBold": "unsigned ",
   "DescribePage describePagefivthBoldLast": "transaction",
@@ -208,33 +181,24 @@
   "DescribePage describePageSenven": "Send ",
   "DescribePage describePageSenvenBold": "signed ",
   "DescribePage describePageSenvenlast": "transaction",
-  "DescribePage describePageEight":
-    "Tips: For most actions, active private key is needed to sign transaction;",
-  "DescribePage describePageNinth":
-    " For changing keys, please use owner private key to sign transaction.",
+  "DescribePage describePageEight": "Tips: For most actions, active private key is needed to sign transaction;",
+  "DescribePage describePageNinth": " For changing keys, please use owner private key to sign transaction.",
   "DescribePage describePageZero": "Cannon Tools Introduction",
   "DescribePage describePageOwnerZero": "What is OwnerKey and ActiveKey",
   "DescribePage describePageErrorZero": "500 errors cause",
-  "DescribePage describePageOwnerFirst":
-    "Compared with ETH, EOS has extra concepts: accounts and permissions.",
-  "DescribePage describePageOwnerSecond":
-    "Why bring in accounts? More convenient to use and remember, less mistakes, such as the account eostothemoon. The EOS account is similar to ETH address which is a 42-bit string starting with 0x, but the EOS account is only 12-bit characters or less. All ETH operations are for addresses, correspondingly all EOS operations are for accounts.",
-  "DescribePage describePageOwnerThird":
-    "Why bring in permissions? More safety. Different permissions can be bundle with different operations. For example, active permission cannot modify other permissions, but owner permission can. Each permission has a public-private key pair. Using a public and private key means using relative permission. Each EOS account has 2 default permissions, the owner and active permission. The active permission is used with most operations. But owner permission is needed when permissions are need to be modified.",
-  "DescribePage describePageErrorFirst":
-    "The permission is incorrect. Please check whether the private key is correct. Use owner permission to change private key, and use active permission to do other operations.",
-  "DescribePage describePageErrorSecond":
-    "Some fields are incorrectly, please check it carefully.",
-  "DescribePage describePageErrorThird":
-    "The staked CPU is not enough. Please stake more CPU first. You can use https://tool.eoscannon.io/#/accountSearch to check if the CPU is enough.",
+  "DescribePage describePageOwnerFirst": "Compared with ETH, EOS has extra concepts: accounts and permissions.",
+  "DescribePage describePageOwnerSecond": "Why bring in accounts? More convenient to use and remember, less mistakes, such as the account eostothemoon. The EOS account is similar to ETH address which is a 42-bit string starting with 0x, but the EOS account is only 12-bit characters or less. All ETH operations are for addresses, correspondingly all EOS operations are for accounts.",
+  "DescribePage describePageOwnerThird": "Why bring in permissions? More safety. Different permissions can be bundle with different operations. For example, active permission cannot modify other permissions, but owner permission can. Each permission has a public-private key pair. Using a public and private key means using relative permission. Each EOS account has 2 default permissions, the owner and active permission. The active permission is used with most operations. But owner permission is needed when permissions are need to be modified.",
+  "DescribePage describePageErrorFirst": "The permission is incorrect. Please check whether the private key is correct. Use owner permission to change private key, and use active permission to do other operations.",
+  "DescribePage describePageErrorSecond": "Some fields are incorrectly, please check it carefully.",
+  "DescribePage describePageErrorThird": "The staked CPU is not enough. Please stake more CPU first. You can use https://tool.eoscannon.io/#/accountSearch to check if the CPU is enough.",
   "Header HeaderMenuErrorMessage": "Not the right website.",
   "Header HeaderMenuInputMessage": "Input",
   "Header HeaderInputTestNet": "Specify the network",
   "Header ScanCodeSendGetIt": "Got it",
   "Header JsonAlertcloseCamera": "Close Camera",
   "Header offlineSignature": "Offline signature",
-  "Header JsonAlertNoCamera":
-    "Switch to no camera mode, manually paste the signature.",
+  "Header JsonAlertNoCamera": "Switch to no camera mode, manually paste the signature.",
   "Header ProducersChangeBP": "Select BP",
   "Header JsonAlertHaveCamera": "Switch to camera scanning mode.",
   "Header JsonAlerthaveCamera": "With camera",
@@ -250,5 +214,25 @@
   "TransferPage TransferDigit": "Digit",
   "TransferPage TransferSymbol": "Symbol",
   "TransferPage TransferDigitHolder": "Decimals",
-  "TransferPage TransferSymbolHolder": "Symbol"
+  "TransferPage TransferSymbolHolder": "Symbol",
+  "IqPage IqAccountNamePlaceholder": "IQ Account Name",
+  "IqPage StakeRadioButtonName": "Stake IQ",
+  "IqPage RefundRadioButtonName": "Refund IQ",
+  "IqPage ArticleVoteRadioButtonName": "Vote",
+  "IqPage RewardRadioButtonName": "Claim Reward",
+  "IqPage StakeIqQuantityInputPlaceholder": "Please Input Iq Quantity for stake",
+  "IqPage StakeIqQuantityButtonName": "Query Available Iq Quantity for stake",
+  "IqPage StakeIqSearchIqBalanceSuccess": "Query Success，Available Iq Quantity for stake is：{IqBalanceFromStake}，For reference only",
+  "IqPage StakeIqSearchIqBalanceFail": "Query failed. Please check if the iq account name is correct.",
+  "IqPage RefundIqButtonName": "Query Available StakeId fro refund",
+  "IqPage RefundIqInputPlaceholder": "Please Input StakeId",
+  "IqPage RefundIqSearchStakeIdSuccess": "Query Success，Available StakeId for refund is: {StakeIdsForRefund}，For reference only。",
+  "IqPage RefundIqSearchStakeIdFail": "Query failed. Please check if the iq account name is correct.",
+  "IqPage VoteButtonName": "Query BrainPower for Vote Article",
+  "IqPage VoteSearchBrainPowerSuccess": "Query Success，Available BrainPower for Vote Article is: {BrainPowerForVote}，For reference only。",
+  "IqPage VoteSearchBrainPowerFail": "Query failed. Please check if the iq account name is correct.",
+  "IqPage VoteProposalHashInputPlaceholder": "Please Input Proposal Hash",
+  "IqPage VoteBrainpowerAmountInputPlaceholder": "Please Input Brainpower Quantity for vote article",
+  "IqPage VoteSwitchCheckedName": "Favor",
+  "IqPage VoteSwitchUnCheckedName": "Oppose"
 }
