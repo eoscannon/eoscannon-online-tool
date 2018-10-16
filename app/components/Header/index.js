@@ -54,6 +54,9 @@ class HeaderComp extends React.Component {
 
     let defaultSelectedKeys = '12';
     switch (window.location.hash.substring(1)) {
+      case '/iq':
+        defaultSelectedKeys = '13';
+        break;
       case '/dscribe':
         defaultSelectedKeys = '12';
         break;
@@ -197,6 +200,7 @@ class HeaderComp extends React.Component {
     const transfer = formatMessage(utilsMsg.HeaderMenuTransfer);
     const buyRamBytes = formatMessage(utilsMsg.HeaderMenuBuyRamBytes);
     const vote = formatMessage(utilsMsg.HeaderMenuVote);
+    const IQ = formatMessage(utilsMsg.HeaderMenuIQ);
     const proxy = formatMessage(utilsMsg.HeaderMenuProxy);
     const updateAuth = formatMessage(utilsMsg.HeaderMenuUpdateAuth);
     const refund = formatMessage(utilsMsg.HeaderMenuRefund);
@@ -313,6 +317,11 @@ class HeaderComp extends React.Component {
               <Menu.Item key="6">
                 <Link to="/vote" href="/vote">
                   {vote}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="13">
+                <Link href="/iq" to="/iq">
+                  {IQ}
                 </Link>
               </Menu.Item>
               <Menu.Item key="2">
