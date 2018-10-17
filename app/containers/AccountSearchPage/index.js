@@ -6,7 +6,7 @@ import React from 'react'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Form, Select, message, Tabs, Table, Tag } from 'antd'
+import { Form, Select, message, Tabs, Table, Tag, Button } from 'antd'
 import { Progress, Input } from 'utils/antdUtils'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -38,10 +38,10 @@ export class AccountSearchPage extends React.Component {
       memoryContent: '',
       cpuContent: '',
       networkContent: '',
-      cpuStake: '',
-      cpuMortgage: '',
-      networkStake: '',
-      networkMortgage: '',
+      cpuStake: '0',
+      cpuMortgage: '0',
+      networkStake: '0',
+      networkMortgage: '0',
       memoryScale: 0,
       cpuScale: 0,
       networkScale: 0,
@@ -59,6 +59,7 @@ export class AccountSearchPage extends React.Component {
     }
   }
   componentDidMount () {
+    console.log('account===', this.props.match.params.account)
     if (this.props.match.params.account) {
       this.handleSearch(this.props.match.params.account)
     }
@@ -150,6 +151,7 @@ export class AccountSearchPage extends React.Component {
         } else {
           netScale = 0
         }
+
         this.setState({
           info,
           createTime: info.created,
@@ -173,11 +175,33 @@ export class AccountSearchPage extends React.Component {
             ).toFixed(2),
           ),
           cpuScale: Number(Number(cpuScale).toFixed(2)),
-          networkScale: Number(Number(netScale).toFixed(2)),
-
-          cpuStake: info.total_resources.cpu_weight,
-          networkStake: info.total_resources.net_weight
+          networkScale: Number(Number(netScale).toFixed(2))
         })
+        // 对CPU,内存，网络为0 / -1 时的操作
+        if (info.ram_quota <= 0) {
+          this.setState({
+            memoryContent: `${(info.ram_usage / 1024).toFixed(
+              2,
+            )} Kib/unlimited`
+          })
+        }
+        if (info.cpu_limit.max <= 0) {
+          this.setState({
+            cpuContent: 'unlimited/unlimited'
+          })
+        }
+        if (info.net_limit.max <= 0) {
+          this.setState({
+            networkContent: 'unlimited/unlimited'
+          })
+        }
+
+        if (info.total_resources) {
+          this.setState({
+            cpuStake: info.total_resources.cpu_weight,
+            networkStake: info.total_resources.net_weight
+          })
+        }
         console.log('info.permissions===', info.permissions)
         try {
           this.state.powerAddress = []
@@ -219,6 +243,19 @@ export class AccountSearchPage extends React.Component {
       })
   };
 
+  handleSendTransaction = value => {
+    // console.log('value==', value);
+    // const data = encodeURI(JSON.stringify(value));
+    // const data = value;
+    this.props.history.push({
+      pathname: '/transfer',
+      state: {
+        name: value.name,
+        address: value.address,
+        account: this.state.account
+      }
+    })
+  };
   render () {
     const FunctionSearchButton = this.state.formatMessage(
       messages.FunctionSearchButton,
@@ -293,6 +330,22 @@ export class AccountSearchPage extends React.Component {
       {
         title: FunctionSearchAccountTableContact,
         dataIndex: 'address'
+      },
+      {
+        title: '操作',
+        key: 'action',
+        align: 'center',
+        render: (text, record) => (
+          <span>
+            <Button
+              type="primary"
+              size="small"
+              onClick={() => this.handleSendTransaction(record)}
+            >
+              转账
+            </Button>
+          </span>
+        )
       }
     ]
 
