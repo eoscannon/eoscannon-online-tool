@@ -1,4 +1,4 @@
-import { injectGlobal } from "styled-components";
+import { injectGlobal } from 'styled-components'
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
@@ -43,4 +43,4 @@ injectGlobal`
   .ant-form-item-control-wrapper{
     width:100%!important;
   }
-`;
+`

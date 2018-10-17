@@ -1,19 +1,19 @@
-import { createSelector } from "reselect";
-import { initialState } from "./reducer";
+import { createSelector } from 'reselect'
+import { initialState } from './reducer'
 
 /**
  * Direct selector to the languageToggle state domain
  */
-const selectLanguage = state => state.get("language", initialState);
+const selectLanguage = state => state.get('language', initialState)
 
 /**
  * Select the language locale
  */
 
 const makeSelectLocale = () =>
-    createSelector(selectLanguage, languageState => languageState.get("locale"));
+  createSelector(selectLanguage, languageState => languageState.get('locale'))
 
 const makeSelectNetwork = () =>
-    createSelector(selectLanguage, netWorkState => netWorkState.get("netWork"));
+  createSelector(selectLanguage, netWorkState => netWorkState.get('netWork'))
 
-export { selectLanguage, makeSelectLocale, makeSelectNetwork };
+export { selectLanguage, makeSelectLocale, makeSelectNetwork }

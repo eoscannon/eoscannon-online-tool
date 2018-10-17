@@ -1,15 +1,15 @@
-import { changeLocale } from "../actions";
+import { changeLocale } from '../actions'
 
-import { CHANGE_LOCALE } from "../constants";
+import { CHANGE_LOCALE } from '../constants'
 
-describe("LanguageProvider actions", () => {
-    describe("Change Local Action", () => {
-        it("has a type of CHANGE_LOCALE", () => {
-            const expected = {
-                type: CHANGE_LOCALE,
-                locale: "zh"
-            };
-            expect(changeLocale("zh")).toEqual(expected);
-        });
-    });
-});
+describe('LanguageProvider actions', () => {
+  describe('Change Local Action', () => {
+    it('has a type of CHANGE_LOCALE', () => {
+      const expected = {
+        type: CHANGE_LOCALE,
+        locale: 'zh'
+      }
+      expect(changeLocale('zh')).toEqual(expected)
+    })
+  })
+})

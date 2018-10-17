@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Layout, Form } from "antd";
+import styled from 'styled-components'
+import { Layout, Form } from 'antd'
 
-const { Content } = Layout;
+const { Content } = Layout
 
 const LayoutContent = styled(Content)`
   background: #f2f4f6;
@@ -16,12 +16,12 @@ const LayoutContent = styled(Content)`
     border-radius: 4px;
     height: 24px;
   }
-`;
+`
 
 const LayoutContentBox = styled.div`
   padding: 16px;
   min-height: 600px;
-`;
+`
 
 const FormComp = styled(Form)`
   &.ant-form {
@@ -35,6 +35,6 @@ const FormComp = styled(Form)`
   .ant-form-item-label {
     text-align: left;
   }
-`;
+`
 
-export { LayoutContent, LayoutContentBox, FormComp };
+export { LayoutContent, LayoutContentBox, FormComp }

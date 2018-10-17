@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const BodyBox = styled.article`
   background: #262626;
@@ -9,7 +9,7 @@ const BodyBox = styled.article`
   .ant-btn{
     color: #fff;
   }
-`;
+`
 const ConBox = styled.div`
   box-sizing: border-box;
   position: relative;
@@ -46,11 +46,11 @@ const ConBox = styled.div`
     }
   }
 
-`;
+`
 
 const styleComps = {
-    BodyBox,
-    ConBox
-};
+  BodyBox,
+  ConBox
+}
 
-export default styleComps;
+export default styleComps
