@@ -251,14 +251,19 @@
   "IqPage RewardRadioButtonName": "领取奖励",
   "IqPage StakeIqQuantityInputPlaceholder": "请输入IQ质押数量",
   "IqPage StakeIqQuantityButtonName": "查询可质押的IQ数量",
-  "IqPage StakeIqSearchIqBalanceSuccess": "查询成功，可使用的IQ数量为：{IqBalanceFromStake}，仅供参考",
+  "IqPage StakeIqSearchIqBalanceSuccess":
+    "查询成功，可使用的IQ数量为：{IqBalanceFromStake}，仅供参考",
   "IqPage StakeIqSearchIqBalanceFail": "查询失败，请检查账户名是否正确。",
   "IqPage RefundIqButtonName": "查询可赎回的StakeId",
   "IqPage RefundIqInputPlaceholder": "请输入StakeId",
-  "IqPage RefundIqSearchStakeIdSuccess": "查询成功，可赎回的StakeId: {StakeIdsForRefund}，仅供参考。",
+  "IqPage RefundIqSearchStakeIdSuccess":
+    "查询成功，可赎回的StakeId: {StakeIdsForRefund}，仅供参考。",
+  "IqPage RefundIqSearchStakeIdSuccessNull":
+    "查询成功，可赎回的StakeId为空，仅供参考",
   "IqPage RefundIqSearchStakeIdFail": "查询失败，请检查账户名是否正确。",
   "IqPage VoteButtonName": "查询可投票的BrainPower",
-  "IqPage VoteSearchBrainPowerSuccess": "查询成功，可使用的BrainPower为: {BrainPowerForVote}，仅供参考。",
+  "IqPage VoteSearchBrainPowerSuccess":
+    "查询成功，可使用的BrainPower为: {BrainPowerForVote}，仅供参考。",
   "IqPage VoteSearchBrainPowerFail": "查询失败，请检查账户名是否正确。",
   "IqPage VoteProposalHashInputPlaceholder": "请输入文章Hash值",
   "IqPage VoteBrainpowerAmountInputPlaceholder": "请输入投票Brainpower数量",
