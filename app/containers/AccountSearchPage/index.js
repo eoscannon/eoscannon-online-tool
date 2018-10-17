@@ -335,9 +335,13 @@ export class AccountSearchPage extends React.Component {
         title: '操作',
         key: 'action',
         align: 'center',
-        render: (text, record) => (
-          <span>
+        render: (text, record) => {
+          console.log("record.name ===", record.name);
+          const ButtonDisabled = !record.name;
+          return (
+            <span>
             <Button
+              disabled={ButtonDisabled}
               type="primary"
               size="small"
               onClick={() => this.handleSendTransaction(record)}
@@ -345,7 +349,8 @@ export class AccountSearchPage extends React.Component {
               转账
             </Button>
           </span>
-        )
+          )
+        }
       }
     ]
 
