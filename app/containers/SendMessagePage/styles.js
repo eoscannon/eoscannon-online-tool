@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ConBox = styled.div`
   box-sizing: border-box;
@@ -39,7 +39,7 @@ const ConBox = styled.div`
 `;
 
 const styleComps = {
-  ConBox,
+    ConBox
 };
 
 export default styleComps;

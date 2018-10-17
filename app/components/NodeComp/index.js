@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Layout, Form } from 'antd';
+import styled from "styled-components";
+import { Layout, Form } from "antd";
 
 const { Content } = Layout;
 

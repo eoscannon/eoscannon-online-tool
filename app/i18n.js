@@ -8,41 +8,41 @@
  *   You CANNOT use import/export in this file.
  */
 const addLocaleData = require('react-intl').addLocaleData; //eslint-disable-line
-const enLocaleData = require('react-intl/locale-data/en');
-const zhLocaleData = require('react-intl/locale-data/zh');
+const enLocaleData = require("react-intl/locale-data/en");
+const zhLocaleData = require("react-intl/locale-data/zh");
 
-const enTranslationMessages = require('./translations/en.json');
-const zhTranslationMessages = require('./translations/zh.json');
+const enTranslationMessages = require("./translations/en.json");
+const zhTranslationMessages = require("./translations/zh.json");
 
 addLocaleData(enLocaleData);
 addLocaleData(zhLocaleData);
 
-const DEFAULT_LOCALE = navigator.language.startsWith('en') ? 'en' : 'zh';
+const DEFAULT_LOCALE = navigator.language.startsWith("en") ? "en" : "zh";
 
 // prettier-ignore
 const appLocales = [
-  'en',
-  'zh',
+    "en",
+    "zh"
 ];
 
 const formatTranslationMessages = (locale, messages) => {
-  const defaultFormattedMessages =
+    const defaultFormattedMessages =
     locale !== DEFAULT_LOCALE
-      ? formatTranslationMessages(DEFAULT_LOCALE, enTranslationMessages)
-      : {};
-  const flattenFormattedMessages = (formattedMessages, key) => {
-    const formattedMessage =
+        ? formatTranslationMessages(DEFAULT_LOCALE, enTranslationMessages)
+        : {};
+    const flattenFormattedMessages = (formattedMessages, key) => {
+        const formattedMessage =
       !messages[key] && locale !== DEFAULT_LOCALE
-        ? defaultFormattedMessages[key]
-        : messages[key];
-    return Object.assign(formattedMessages, { [key]: formattedMessage });
-  };
-  return Object.keys(messages).reduce(flattenFormattedMessages, {});
+          ? defaultFormattedMessages[key]
+          : messages[key];
+        return Object.assign(formattedMessages, { [key]: formattedMessage });
+    };
+    return Object.keys(messages).reduce(flattenFormattedMessages, {});
 };
 
 const translationMessages = {
-  en: formatTranslationMessages('en', enTranslationMessages),
-  zh: formatTranslationMessages('zh', zhTranslationMessages),
+    en: formatTranslationMessages("en", enTranslationMessages),
+    zh: formatTranslationMessages("zh", zhTranslationMessages)
 };
 
 exports.appLocales = appLocales;
