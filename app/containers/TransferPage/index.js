@@ -7,7 +7,17 @@ import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { Form, Icon, Input, Select, Card, Col, Row, message } from 'antd'
+import {
+  Form,
+  Icon,
+  Input,
+  Select,
+  Card,
+  Col,
+  Row,
+  message,
+  Tooltip
+} from 'antd'
 import eosioAbi from './abi'
 import eosIqAbi from './iqAbi'
 import adcAbi from './adcAbi'
@@ -53,24 +63,30 @@ export class TransferPage extends React.Component {
 
       // const state = this.props.location.state.name.split(' ')
       setTimeout(() => {
-        this.setState({
-          addSymbol: true
-        })
-        this.props.form.setFieldsValue({
-          FromAccountName: this.props.location.state.account,
-          transferSymbolCustom: state[1],
-          transferQuantity: state[0],
-          transferDigitCustom: len,
-          transferContractCustom: this.props.location.state.address
-        })
-      }, 500)
+        if (state[1] === 'EOS') {
+          this.props.form.setFieldsValue({
+            FromAccountName: this.props.location.state.account,
+            transferQuantity: state[0]
+          })
+        } else {
+          this.setState({
+            addSymbol: true
+          })
+          this.props.form.setFieldsValue({
+            FromAccountName: this.props.location.state.account,
+            transferSymbolCustom: state[1],
+            transferQuantity: state[0],
+            transferDigitCustom: len,
+            transferContractCustom: this.props.location.state.address
+          })
+        }
+      }, 300)
     }
   }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps (nextProps) {
-    console.log('nextProps.location===', nextProps.location)
     this.onValuesChange(nextProps)
   }
   /**
@@ -424,7 +440,15 @@ export class TransferPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                      <Tooltip
+                        placement="top"
+                        title={TransferFromAccountNamePlaceholder}
+                      >
+                        <Icon
+                          type="user"
+                          style={{ color: 'rgba(0,0,0,.25)' }}
+                        />
+                      </Tooltip>
                     }
                     placeholder={TransferFromAccountNamePlaceholder}
                   />,
@@ -441,7 +465,15 @@ export class TransferPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                      <Tooltip
+                        placement="top"
+                        title={TransferToAccountNamePlaceholder}
+                      >
+                        <Icon
+                          type="user"
+                          style={{ color: 'rgba(0,0,0,.25)' }}
+                        />
+                      </Tooltip>
                     }
                     placeholder={TransferToAccountNamePlaceholder}
                   />,
@@ -455,10 +487,15 @@ export class TransferPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                      <Icon
-                        type="pay-circle-o"
-                        style={{ color: 'rgba(0,0,0,.25)' }}
-                      />
+                      <Tooltip
+                        placement="top"
+                        title={TransferQuantityPlaceholder}
+                      >
+                        <Icon
+                          type="pay-circle-o"
+                          style={{ color: 'rgba(0,0,0,.25)' }}
+                        />
+                      </Tooltip>
                     }
                     placeholder={TransferQuantityPlaceholder}
                   />,
@@ -496,7 +533,9 @@ export class TransferPage extends React.Component {
                   aria-hidden="true"
                 >
                   {SymbolCustom}{' '}
-                  <Icon type={this.state.addSymbol ? 'up' : 'down'} />
+                  <Tooltip placement="top" title={TransferQuantityPlaceholder}>
+                    <Icon type={this.state.addSymbol ? 'up' : 'down'} />
+                  </Tooltip>
                 </span>
               </FormItem>
               {this.state.addSymbol ? (
@@ -509,10 +548,12 @@ export class TransferPage extends React.Component {
                     })(
                       <Input
                         prefix={
-                          <Icon
-                            type="pay-circle-o"
-                            style={{ color: 'rgba(0,0,0,.25)' }}
-                          />
+                          <Tooltip placement="top" title={TransferSymbolHolder}>
+                            <Icon
+                              type="pay-circle-o"
+                              style={{ color: 'rgba(0,0,0,.25)' }}
+                            />
+                          </Tooltip>
                         }
                         placeholder={TransferSymbolHolder}
                       />,
@@ -526,10 +567,15 @@ export class TransferPage extends React.Component {
                     })(
                       <Input
                         prefix={
-                          <Icon
-                            type="pay-circle-o"
-                            style={{ color: 'rgba(0,0,0,.25)' }}
-                          />
+                          <Tooltip
+                            placement="top"
+                            title={TransferContractHolder}
+                          >
+                            <Icon
+                              type="pay-circle-o"
+                              style={{ color: 'rgba(0,0,0,.25)' }}
+                            />
+                          </Tooltip>
                         }
                         placeholder={TransferContractHolder}
                       />,
@@ -541,10 +587,12 @@ export class TransferPage extends React.Component {
                     })(
                       <Input
                         prefix={
-                          <Icon
-                            type="pay-circle-o"
-                            style={{ color: 'rgba(0,0,0,.25)' }}
-                          />
+                          <Tooltip placement="top" title={TransferDigitHolder}>
+                            <Icon
+                              type="pay-circle-o"
+                              style={{ color: 'rgba(0,0,0,.25)' }}
+                            />
+                          </Tooltip>
                         }
                         placeholder={TransferDigitHolder}
                       />,
@@ -560,10 +608,12 @@ export class TransferPage extends React.Component {
                 })(
                   <Input
                     prefix={
-                      <Icon
-                        type="pay-circle-o"
-                        style={{ color: 'rgba(0,0,0,.25)' }}
-                      />
+                      <Tooltip placement="top" title={TransferMemoPlaceholder}>
+                        <Icon
+                          type="pay-circle-o"
+                          style={{ color: 'rgba(0,0,0,.25)' }}
+                        />
+                      </Tooltip>
                     }
                     placeholder={TransferMemoPlaceholder}
                   />,
