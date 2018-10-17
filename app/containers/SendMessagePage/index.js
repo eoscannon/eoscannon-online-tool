@@ -25,7 +25,7 @@ export class SendMessagePage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      transaction_id: '',
+      transactionId: '',
       formatMessage: this.props.intl.formatMessage
     }
   }
@@ -74,9 +74,9 @@ export class SendMessagePage extends React.Component {
         message.success(
           `${this.state.formatMessage(
             utilsMsg.SendSuccessMessage,
-          )}transaction_id=${res.transaction_id}`,
+          )}transactionId=${res.transaction_id}`,
         )
-        this.setState({ transaction_id: res.transaction_id })
+        this.setState({ transactionId: res.transaction_id })
       })
       .catch(err => {
         message.error(`发送失败，原因：${err}`)
@@ -130,8 +130,8 @@ export class SendMessagePage extends React.Component {
               </Button>
             </FormItem>
             <FormItem style={{ textAlign: 'left' }}>
-              {this.state.transaction_id
-                ? `txid：${this.state.transaction_id}`
+              {this.state.transactionId
+                ? `txid：${this.state.transactionId}`
                 : ''}
             </FormItem>
           </FormComp>
