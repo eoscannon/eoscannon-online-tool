@@ -309,6 +309,13 @@ const symbolList = [
  * */
 const airgrabList = [
   {
+    key: '6',
+    symbol: 'DEOS',
+    account: 'thedeosgames',
+    method: 'claim',
+    url: 'http://deosgames.com'
+  },
+  {
     key: '1',
     symbol: 'ATD',
     account: 'eosatidiumio',

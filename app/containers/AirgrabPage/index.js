@@ -110,7 +110,7 @@ export class AirgrabPage extends React.Component {
     eos.getAbi(record.account).then(res => {
       eos.fc.abiCache.abi(res.account_name, res.abi)
     })
-    const data =
+    var data =
       record.method === 'signup'
         ? {
           owner: AccountName,
@@ -119,6 +119,12 @@ export class AirgrabPage extends React.Component {
         : {
           claimer: AccountName
         }
+    if (record.account === 'thedeosgames') {
+      data = {
+        owner: AccountName,
+        quantity: `0.0000 ${record.symbol}`
+      }
+    }
     eos
       .transaction(
         {
