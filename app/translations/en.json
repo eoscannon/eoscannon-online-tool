@@ -251,34 +251,31 @@
   "TransferPage TransferSymbol": "Symbol",
   "TransferPage TransferDigitHolder": "Decimals",
   "TransferPage TransferSymbolHolder": "Symbol",
-  "IqPage IqAccountNamePlaceholder": "IQ Account Name",
+  "IqPage IqAccountNamePlaceholder": "EOS Account",
   "IqPage StakeRadioButtonName": "Stake IQ",
   "IqPage RefundRadioButtonName": "Refund IQ",
   "IqPage ArticleVoteRadioButtonName": "Vote",
   "IqPage RewardRadioButtonName": "Claim Reward",
-  "IqPage StakeIqQuantityInputPlaceholder":
-    "Please Input Iq Quantity for stake",
-  "IqPage StakeIqQuantityButtonName": "Query Available Iq Quantity for stake",
+  "IqPage StakeIqQuantityInputPlaceholder": "IQ Quantity for stake",
+  "IqPage StakeIqQuantityButtonName": "Query available IQ",
   "IqPage StakeIqSearchIqBalanceSuccess":
-    "Query Success，Available Iq Quantity for stake is：{IqBalanceFromStake}，For reference only",
+    "Available IQ balance：{IqBalanceFromStake}",
   "IqPage StakeIqSearchIqBalanceFail":
-    "Query failed. Please check if the iq account name is correct.",
-  "IqPage RefundIqButtonName": "Query Available StakeId fro refund",
-  "IqPage RefundIqInputPlaceholder": "Please Input StakeId",
+    "Failed. Please check if the EOS account name is correct.",
+  "IqPage RefundIqButtonName": "Query available stakeId",
+  "IqPage RefundIqInputPlaceholder": "StakeId",
   "IqPage RefundIqSearchStakeIdSuccess":
-    "Query Success，Available StakeId for refund is: {StakeIdsForRefund}，For reference only。",
-  "IqPage RefundIqSearchStakeIdSuccessNull":
-    "Query Success，Available StakeId for refund is null，For reference only。",
+    "Available stakeId: {StakeIdsForRefund}",
+  "IqPage RefundIqSearchStakeIdSuccessNull": "No available stakeId",
   "IqPage RefundIqSearchStakeIdFail":
-    "Query failed. Please check if the iq account name is correct.",
-  "IqPage VoteButtonName": "Query BrainPower for Vote Article",
+    "Failed. Please check if the iq account name is correct.",
+  "IqPage VoteButtonName": "Query BrainPower",
   "IqPage VoteSearchBrainPowerSuccess":
-    "Query Success，Available BrainPower for Vote Article is: {BrainPowerForVote}，For reference only。",
+    "Available brainpower: {BrainPowerForVote}",
   "IqPage VoteSearchBrainPowerFail":
-    "Query failed. Please check if the iq account name is correct.",
-  "IqPage VoteProposalHashInputPlaceholder": "Please Input Proposal Hash",
-  "IqPage VoteBrainpowerAmountInputPlaceholder":
-    "Please Input Brainpower Quantity for vote article",
-  "IqPage VoteSwitchCheckedName": "Favor",
-  "IqPage VoteSwitchUnCheckedName": "Oppose"
+    "Failed. Please check if the iq account name is correct.",
+  "IqPage VoteProposalHashInputPlaceholder": "Proposal Hash",
+  "IqPage VoteBrainpowerAmountInputPlaceholder": "Brainpower quantity",
+  "IqPage VoteSwitchCheckedName": "Accept",
+  "IqPage VoteSwitchUnCheckedName": "Reject"
 }
