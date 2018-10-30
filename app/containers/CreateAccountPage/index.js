@@ -219,13 +219,12 @@ export class CreateAccountPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem help={NewAccountNameHelp} {...formItemLayout}>
+              <FormItem {...formItemLayout}>
                 {getFieldDecorator('NewAccountName', {
                   rules: [
                     {
                       required: true,
-                      len: 12,
-                      message: NewAccountNamePlaceholder
+                      message: CreatorAccountNamePlaceholder
                     }
                   ]
                 })(
