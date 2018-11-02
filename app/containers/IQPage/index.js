@@ -6,7 +6,7 @@
 import React from "react";
 import { injectIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Form, Icon, Input, Switch, Card, Col, Row, Radio, Button } from "antd";
+import { Form, Icon, Input, Switch, Card, Col, Row, Button } from "antd";
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 
@@ -22,6 +22,7 @@ import messages from "./messages";
 import utilsMsg from "../../utils/messages";
 
 import { makeSelectNetwork } from "../LanguageProvider/selectors";
+import { Radio } from "../../utils/antdUtils";
 import { message } from "antd/lib/index";
 
 const FormItem = Form.Item;
