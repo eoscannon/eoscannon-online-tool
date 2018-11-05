@@ -46,7 +46,7 @@ export class AccountSearchPage extends React.Component {
       cpuScale: 0,
       networkScale: 0,
       symbolBlance: 0,
-      symbolCode: 'EOS',
+      symbolCode: 'EOS(eosio.token)',
       voteProxy: '',
       accountSearch: '',
       powerAddress: []
@@ -70,8 +70,8 @@ export class AccountSearchPage extends React.Component {
     eos
       .getCurrencyBalance({
         code: key.key,
-        account: this.state.account,
-        symbol: key.label
+        account: this.state.account.trim(),
+        symbol: key.label[0]
       })
       .then(res => {
         this.setState({
@@ -336,19 +336,19 @@ export class AccountSearchPage extends React.Component {
         key: 'action',
         align: 'center',
         render: (text, record) => {
-          console.log("record.name ===", record.name);
-          const ButtonDisabled = !record.name;
+          console.log('record.name ===', record.name)
+          const ButtonDisabled = !record.name
           return (
             <span>
-            <Button
-              disabled={ButtonDisabled}
-              type="primary"
-              size="small"
-              onClick={() => this.handleSendTransaction(record)}
-            >
+              <Button
+                disabled={ButtonDisabled}
+                type="primary"
+                size="small"
+                onClick={() => this.handleSendTransaction(record)}
+              >
               转账
-            </Button>
-          </span>
+              </Button>
+            </span>
           )
         }
       }
@@ -478,12 +478,12 @@ export class AccountSearchPage extends React.Component {
                       <Select
                         labelInValue
                         defaultValue={{ key: this.state.symbolCode }}
-                        style={{ width: 120 }}
+                        style={{ width: 180 }}
                         onChange={this.handleChange}
                       >
                         {symbolList.map((item, index) => (
                           <Option value={item.contract} key={index}>
-                            {item.symbol}
+                            {item.symbol}({item.contract})
                           </Option>
                         ))}
                       </Select>

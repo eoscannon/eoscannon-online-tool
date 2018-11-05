@@ -256,21 +256,21 @@ export class TransferPage extends React.Component {
       this.voteByScatter(eos)
       return
     }
+    const transferContract = this.state.contract
 
     if (
-      this.state.contract !== 'eosio' &&
-      this.state.contract !== 'eosio.token'
+      transferContract !== 'eosio' &&
+      transferContract !== 'eosio.token'
     ) {
-      if (this.state.contract.toUpperCase() === 'EVERIPEDIAIQ') {
+      if (transferContract.toUpperCase() === 'EVERIPEDIAIQ') {
         transferDigit = 3
-        eos.fc.abiCache.abi(this.state.contract, eosIqAbi)
-      } else if (this.state.contract.toUpperCase() === 'CHALLENGEDAC') {
-        eos.fc.abiCache.abi(this.state.contract, adcAbi)
+        eos.fc.abiCache.abi(transferContract, eosIqAbi)
+      } else if (transferContract.toUpperCase() === 'CHALLENGEDAC') {
+        eos.fc.abiCache.abi(transferContract, adcAbi)
       } else {
-        eos.fc.abiCache.abi(this.state.contract, eosioAbi)
+        eos.fc.abiCache.abi(transferContract, eosioAbi)
       }
     }
-    const transferContract = this.state.contract
     eos
       .transaction(
         {
@@ -326,21 +326,21 @@ export class TransferPage extends React.Component {
       this.handleCustomTransaction(eos)
       return
     }
+    const transferContract = this.state.contract.trim()
 
     if (
       this.state.contract !== 'eosio' &&
       this.state.contract !== 'eosio.token'
     ) {
-      if (this.state.contract.toUpperCase() === 'EVERIPEDIAIQ') {
+      if (transferContract.toUpperCase() === 'EVERIPEDIAIQ') {
         transferDigit = 3
-        eos.fc.abiCache.abi(this.state.contract, eosIqAbi)
-      } else if (this.state.contract.toUpperCase() === 'CHALLENGEDAC') {
-        eos.fc.abiCache.abi(this.state.contract, adcAbi)
+        eos.fc.abiCache.abi(transferContract, eosIqAbi)
+      } else if (transferContract.toUpperCase() === 'CHALLENGEDAC') {
+        eos.fc.abiCache.abi(transferContract, adcAbi)
       } else {
-        eos.fc.abiCache.abi(this.state.contract, eosioAbi)
+        eos.fc.abiCache.abi(transferContract, eosioAbi)
       }
     }
-    const transferContract = this.state.contract
 
     eos
       .transaction(
@@ -360,7 +360,7 @@ export class TransferPage extends React.Component {
                 to: ToAccountName,
                 quantity: `${Number(transferQuantity).toFixed(
                   Number(transferDigit),
-                )} ${transferSymbol.label.toUpperCase()}`,
+                )} ${transferSymbol.label[0].toUpperCase()}`,
                 memo: transferMemo || ''
               }
             }
@@ -379,6 +379,7 @@ export class TransferPage extends React.Component {
         })
       })
       .catch(err => {
+        console.log('ee', err)
         openTransactionFailNotification(this.state.formatMessage, err.name)
       })
   };
@@ -506,7 +507,7 @@ export class TransferPage extends React.Component {
                   style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}
                 >
                   {getFieldDecorator('transferSymbol', {
-                    initialValue: { key: 'EOS', label: 'EOS' },
+                    initialValue: { key: 'EOS', label: 'EOS (eosio.token)' },
                     rules: [
                       { required: true, message: TransferSymbolPlaceholder }
                     ]
@@ -519,13 +520,12 @@ export class TransferPage extends React.Component {
                     >
                       {symbolList.map(item => (
                         <Option key={item.contract} value={item.contract}>
-                          {item.symbol}
+                          {item.symbol} ({item.contract})
                         </Option>
                       ))}
                     </Select>,
                   )}
                 </div>
-
                 <span
                   role="article"
                   style={{ marginLeft: 8, fontSize: 12 }}
