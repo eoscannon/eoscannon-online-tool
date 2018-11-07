@@ -341,7 +341,7 @@ export class TransferPage extends React.Component {
         eos.fc.abiCache.abi(transferContract, eosioAbi)
       }
     }
-
+    console.log('transferSymbol===', transferSymbol)
     eos
       .transaction(
         {
@@ -507,7 +507,7 @@ export class TransferPage extends React.Component {
                   style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}
                 >
                   {getFieldDecorator('transferSymbol', {
-                    initialValue: { key: 'EOS', label: 'EOS (eosio.token)' },
+                    initialValue: { key: 'EOS', label: ['EOS', '(eosio.token)'] },
                     rules: [
                       { required: true, message: TransferSymbolPlaceholder }
                     ]
@@ -520,7 +520,7 @@ export class TransferPage extends React.Component {
                     >
                       {symbolList.map(item => (
                         <Option key={item.contract} value={item.contract}>
-                          {item.symbol} ({item.contract})
+                          {item.symbol}({item.contract})
                         </Option>
                       ))}
                     </Select>,
