@@ -60,6 +60,7 @@ export class UpdateAuthPage extends React.Component {
     const values = this.props.form.getFieldsValue()
     const eos = getEos(this.props.SelectedNetWork)
     const { AccountName, ActiveKey, OwnerKey } = values
+
     const actions = []
     if (ActiveKey) {
       const UpdateActiveKeyAction = {
@@ -116,7 +117,11 @@ export class UpdateAuthPage extends React.Component {
         })
         Modal.warning({
           title: '',
-          content: '修改权限请在离线工具上使用Owner私钥进行签名！'
+          content: (
+            <div>
+              修改权限请在离线工具上使用<span style={{color: 'red', fontWeight: 'bold', fontSize: 'large'}}>Owner</span>私钥进行签名！
+            </div>
+          )
         })
       })
       .catch(err => {

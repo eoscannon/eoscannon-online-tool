@@ -75,11 +75,7 @@ export default class DealGetQrcode extends Component {
     // console.log('hexStr==', hexStr)
 
     this.props.form.setFieldsValue({
-      transactionTextArea: JSON.stringify({
-        compression: 'none',
-        transaction: this.props.transaction.transaction,
-        signatures: ['']
-      })
+      transactionTextArea: JSON.stringify(this.props.transaction.transaction)
     })
     this.setState({
       QrCodeValue: hexStr,
