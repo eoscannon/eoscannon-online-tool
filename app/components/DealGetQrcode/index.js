@@ -56,10 +56,14 @@ export default class DealGetQrcode extends Component {
     } else if (this.props.SelectedNetWork === 'other') {
       chainId = storage.getChainId()
     }
+    // console.log('this.state.eos.fc', this.state.eos.fc)
+    // console.log('this.props.transaction.transaction', this.props.transaction.transaction)
+
     const buf = Fcbuffer.toBuffer(
       this.state.eos.fc.structs.transaction,
       this.props.transaction.transaction,
     )
+    // console.log('buf==', buf)
     // const chainIdBuf = new Buffer(chainId);
     const chainIdBuf = Buffer.from(chainId, 'hex')
     const UnSignedBuffer = Buffer.concat([
@@ -68,9 +72,14 @@ export default class DealGetQrcode extends Component {
       Buffer.from(new Uint8Array(32))
     ])
     const hexStr = UnSignedBuffer.toString('hex')
+    // console.log('hexStr==', hexStr)
 
     this.props.form.setFieldsValue({
-      transactionTextArea: hexStr
+      transactionTextArea: JSON.stringify({
+        compression: 'none',
+        transaction: this.props.transaction.transaction,
+        signatures: ['']
+      })
     })
     this.setState({
       QrCodeValue: hexStr,
