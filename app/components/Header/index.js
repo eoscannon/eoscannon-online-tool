@@ -208,6 +208,7 @@ class HeaderComp extends React.Component {
     const updateAuth = formatMessage(utilsMsg.HeaderMenuUpdateAuth)
     const refund = formatMessage(utilsMsg.HeaderMenuRefund)
     const airgrab = formatMessage(utilsMsg.HeaderMenuAirgrab)
+    const proposal = formatMessage(utilsMsg.HeaderMenuProposal)
     const mainNet = formatMessage(utilsMsg.HeaderMenuOffical)
     const testNet = formatMessage(utilsMsg.HeaderMenuTestNet)
     const otherTestNet = formatMessage(utilsMsg.HeaderMenuOtherTestNet)
@@ -349,7 +350,7 @@ class HeaderComp extends React.Component {
               </Menu.Item>
               <Menu.Item key="14">
                 <Link href="/proposal" to="/proposal">
-                proposal
+                  {proposal}
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>

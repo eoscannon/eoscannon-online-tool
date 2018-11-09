@@ -46,6 +46,10 @@ export default defineMessages({
     id: 'Public HeaderMenuAirgrab',
     defaultMessage: '空投'
   },
+  HeaderMenuProposal: {
+    id: 'Public HeaderMenuProposal',
+    defaultMessage: '提案'
+  },
   TransactionSuccessNotificationMsg: {
     id: 'Public TransactionSuccessNotificationMsg',
     defaultMessage: '生成签名报文成功'

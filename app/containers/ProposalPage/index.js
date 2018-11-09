@@ -146,7 +146,7 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: 'account name'
+                    message: '签名账号'
                   }
                 ]
               })(
@@ -157,7 +157,7 @@ export class ProposalPage extends React.Component {
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder='account name'
+                  placeholder='签名账号'
                 />,
               )}
             </FormItem>
@@ -166,7 +166,7 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: 'permission'
+                    message: '签名权限'
                   }
                 ]
               })(
@@ -177,7 +177,7 @@ export class ProposalPage extends React.Component {
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder='permission'
+                  placeholder='签名权限'
                 />,
               )}
             </FormItem>
@@ -192,7 +192,7 @@ export class ProposalPage extends React.Component {
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder='proposer'
+                  placeholder='提案人'
                 />,
               )}
             </FormItem>
@@ -201,7 +201,7 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: 'proposal name'
+                    message: '提案名称'
                   }
                 ]
               })(
@@ -212,7 +212,7 @@ export class ProposalPage extends React.Component {
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder='proposal name'
+                  placeholder='提案名称'
                 />,
               )}
             </FormItem>
