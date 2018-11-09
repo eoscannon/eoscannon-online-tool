@@ -36,6 +36,7 @@ import TransferPage from 'containers/TransferPage/Loadable'
 import CreateAccountPage from 'containers/CreateAccountPage/Loadable'
 import DescribePage from 'containers/DescribePage/Loadable'
 import IQPage from 'containers/IQPage/Loadable'
+import ProposalPage from 'containers/ProposalPage/Loadable'
 import Header from 'components/Header'
 
 import configureStore from './configureStore'
@@ -90,6 +91,7 @@ const render = messages => {
               <Route path="/updateauth" component={UpdateAuthPage} />
               <Route path="/dscribe" component={DescribePage} />
               <Route path="/airgrab" component={AirgrabPage} />
+              <Route path="/proposal" component={ProposalPage} />
               <Route path="/iq" component={IQPage} />
             </Header>
           </Switch>

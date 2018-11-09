@@ -93,6 +93,9 @@ class HeaderComp extends React.Component {
       case '/sendMessage':
         defaultSelectedKeys = '0'
         break
+      case '/proposal':
+        defaultSelectedKeys = '14'
+        break
       default:
         defaultSelectedKeys = '12'
     }
@@ -342,6 +345,11 @@ class HeaderComp extends React.Component {
               <Menu.Item key="11">
                 <Link href="/airgrab" to="/airgrab">
                   {airgrab}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="14">
+                <Link href="/proposal" to="/proposal">
+                proposal
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
