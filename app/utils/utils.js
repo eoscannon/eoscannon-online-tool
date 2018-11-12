@@ -303,6 +303,7 @@ const symbolList = [
   { symbol: 'CET', contract: 'eosiochaince', digit: 4 },
   { symbol: 'CHIP', contract: 'eostgctoken1', digit: 4 },
   { symbol: 'CHL', contract: 'challengedac', digit: 4 },
+  { symbol: 'CITY', contract: 'funcitytoken', digit: 4 },
   { symbol: 'CUBE', contract: 'eoscubetoken', digit: 4 },
 
   { symbol: 'DAB', contract: 'eoscafekorea', digit: 4 },
@@ -328,6 +329,7 @@ const symbolList = [
   { symbol: 'FAID', contract: 'eosfaidchain', digit: 4 },
   { symbol: 'FC', contract: 'fcfundadmins', digit: 4 },
   { symbol: 'FOS', contract: 'farmeosbankx', digit: 4 },
+  { symbol: 'FUN', contract: 'eosfuntoken1', digit: 4 },
 
   { symbol: 'HORUS', contract: 'horustokenio', digit: 4 },
   { symbol: 'HVT', contract: 'hirevibeshvt', digit: 4 },
@@ -374,6 +376,7 @@ const symbolList = [
 
   { symbol: 'TEA', contract: 'linzongsheng', digit: 4 },
   { symbol: 'TOE', contract: 'talkoneos123', digit: 4 },
+  { symbol: 'TOP', contract: 'topdapptoken', digit: 4 },
   { symbol: 'TPT', contract: 'tokendapppub', digit: 4 },
   { symbol: 'TRYBE', contract: 'trybenetwork', digit: 4 },
 
