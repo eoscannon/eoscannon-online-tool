@@ -266,5 +266,11 @@
   "IqPage VoteProposalHashInputPlaceholder": "文章Hash值",
   "IqPage VoteBrainpowerAmountInputPlaceholder": "投票的Brainpower数量",
   "IqPage VoteSwitchCheckedName": "赞成",
-  "IqPage VoteSwitchUnCheckedName": "反对"
+  "IqPage VoteSwitchUnCheckedName": "反对",
+  "ProposalPage CreatorAccountNamePlaceholder": "账户名",
+  "Public HeaderMenuProposal": "提案",
+  "ProposalPage ProposalFirstOne": "步骤1/3:填写提案表单",
+  "ProposalPage ProposalPermission": "签名权限",
+  "ProposalPage Proposaler": "投票人",
+  "ProposalPage ProposalName": "提案名称"
 }

@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { injectIntl } from 'react-intl'
-import { Form, Icon, Input, Card, Col, Row, Modal, Tabs } from 'antd'
+import { Form, Icon, Input, Card, Col, Row, Modal, Tabs, Select } from 'antd'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -22,6 +22,7 @@ import messages from './messages'
 import utilsMsg from '../../utils/messages'
 
 const FormItem = Form.Item
+const Option = Select.Option
 
 export class ProposalPage extends React.Component {
   constructor (props) {
@@ -79,9 +80,6 @@ export class ProposalPage extends React.Component {
       proposal_name: proposalName,
       level: {'actor': account, 'permission': permission}
     }
-    console.log('data===', data)
-    console.log('account===', account)
-    console.log('permission===', permission)
 
     eos
       .transaction(
@@ -116,37 +114,43 @@ export class ProposalPage extends React.Component {
       })
   };
 
+  handleChange=(value)=> {
+    console.log(`selected ${value}`)
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form
-    const VoterPlaceholder = this.state.formatMessage(
-      messages.VoterPlaceholder,
+    const CreatorAccountNamePlaceholder = this.state.formatMessage(
+      messages.CreatorAccountNamePlaceholder,
     )
-    const ProxyHelp = this.state.formatMessage(messages.ProxyHelp)
+    const ProposalFirstOne = this.state.formatMessage(messages.ProposalFirstOne)
 
-    const ProxyPlaceholder = this.state.formatMessage(
-      messages.ProxyPlaceholder,
+    const ProposalPermission = this.state.formatMessage(
+      messages.ProposalPermission,
     )
     // const VoterLabel = this.state.formatMessage(messages.VoterLabel);
     // const ProxyLabel = this.state.formatMessage(messages.ProxyLabel);
-    const ProducersDealTranscationProxy = this.state.formatMessage(
-      utilsMsg.ProducersDealTranscationProxy,
+    const Proposaler = this.state.formatMessage(
+      messages.Proposaler,
     )
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
-    const offlineSignature = this.state.formatMessage(
-      utilsMsg.offlineSignature,
+    const ProposalName = this.state.formatMessage(
+      messages.ProposalName,
     )
+    const children = ['active', 'owner']
+    console.log('children=', children)
     return (
       <LayoutContent>
         <Col span={12}>
-          <Card title="步骤1/3:填写提案表单" bordered={false}>
+          <Card title={ProposalFirstOne} bordered={false}>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('account', {
                 rules: [
                   {
                     required: true,
-                    message: '签名账号'
+                    message: CreatorAccountNamePlaceholder
                   }
                 ]
               })(
@@ -157,7 +161,7 @@ export class ProposalPage extends React.Component {
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder='签名账号'
+                  placeholder={CreatorAccountNamePlaceholder}
                 />,
               )}
             </FormItem>
@@ -166,7 +170,7 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: '签名权限'
+                    message: {ProposalPermission}
                   }
                 ]
               })(
@@ -177,13 +181,14 @@ export class ProposalPage extends React.Component {
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder='签名权限'
+                  placeholder={ProposalPermission}
                 />,
+
               )}
             </FormItem>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('proposer', {
-                rules: [{ required: true, message: 'proposer' }]
+                rules: [{ required: true, message: {Proposaler}}]
               })(
                 <Input
                   prefix={
@@ -192,27 +197,28 @@ export class ProposalPage extends React.Component {
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder='提案人'
+                  placeholder={Proposaler}
                 />,
               )}
+
             </FormItem>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('proposalName', {
                 rules: [
                   {
                     required: true,
-                    message: '提案名称'
+                    message: {ProposalName}
                   }
                 ]
               })(
                 <Input
                   prefix={
                     <Icon
-                      type="user"
+                      type="profile"
                       style={{ color: 'rgba(0,0,0,.25)' }}
                     />
                   }
-                  placeholder='提案名称'
+                  placeholder={ProposalName}
                 />,
               )}
             </FormItem>

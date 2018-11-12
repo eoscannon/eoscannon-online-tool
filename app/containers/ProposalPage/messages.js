@@ -6,17 +6,21 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  VoterPlaceholder: {
-    id: 'ProxyPage VoterPlaceholder',
-    defaultMessage: '请输入您投票的账户名'
+  CreatorAccountNamePlaceholder: {
+    id: 'ProposalPage CreatorAccountNamePlaceholder',
+    defaultMessage: '签名账号'
   },
-  ProxyHelp: {
-    id: 'ProxyPage ProxyHelp',
-    defaultMessage: '注：请输入代理投票的账户名！为空将取消代理！'
+  ProposalFirstOne: {
+    id: 'ProposalPage ProposalFirstOne',
+    defaultMessage: '步骤1/3:填写提案表单'
   },
-  ProxyPlaceholder: {
-    id: 'ProxyPage ProxyPlaceholder',
-    defaultMessage: '请输入代理投票的账户名！ 为空将取消代理'
+  ProposalPermission: {
+    id: 'ProposalPage ProposalPermission',
+    defaultMessage: '签名权限'
+  },
+  Proposaler: {
+    id: 'ProposalPage Proposaler',
+    defaultMessage: '投票人'
   },
   VoterLabel: {
     id: 'ProxyPage VoterLabel',
@@ -29,5 +33,9 @@ export default defineMessages({
   ProxyScatterHelp: {
     id: 'ProxyPage ProxyScatterHelp',
     defaultMessage: '注：使用Scatter将使用已登录的账号签名'
+  },
+  ProposalName: {
+    id: 'ProposalPage ProposalName',
+    defaultMessage: '提案名称'
   }
 })
