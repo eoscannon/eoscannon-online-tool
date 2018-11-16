@@ -432,6 +432,34 @@ const airgrabList = [
     account: 'wizznetwork1',
     method: 'signup',
     url: 'https://wizz.network'
+  },
+  {
+    key: '9',
+    symbol: 'INF',
+    account: 'infinicoinio',
+    method: 'open',
+    url: 'https://www.infiniverse.net/'
+  },
+  {
+    key: '8',
+    symbol: 'HVT',
+    account: 'hirevibeshvt',
+    method: 'claim',
+    url: 'https://www.hirevibes.io/'
+  },
+  {
+    key: '7',
+    symbol: 'ZKS',
+    account: 'zkstokensr4u',
+    method: 'claim',
+    url: 'https://zks.one'
+  },
+  {
+    key: '10',
+    symbol: 'NEB',
+    account: 'nebulatokenn',
+    method: 'open',
+    url: 'https://nebulaprotocol.com'
   }
 ]
 
@@ -449,3 +477,4 @@ export {
   symbolList,
   airgrabList
 }
+
