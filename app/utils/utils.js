@@ -304,16 +304,20 @@ const symbolList = [
   { symbol: 'CHIP', contract: 'eostgctoken1', digit: 4 },
   { symbol: 'CHL', contract: 'challengedac', digit: 4 },
   { symbol: 'CITY', contract: 'funcitytoken', digit: 4 },
+  { symbol: 'CTN', contract: 'funcitytoken', digit: 4 },
   { symbol: 'CUBE', contract: 'eoscubetoken', digit: 4 },
 
   { symbol: 'DAB', contract: 'eoscafekorea', digit: 4 },
+  { symbol: 'DBET', contract: 'dbetminepool', digit: 4 },
   { symbol: 'DEOS', contract: 'thedeosgames', digit: 4 },
-  { symbol: 'DET', contract: 'diceeostoken', digit: 4 },
+  { symbol: 'DET', contract: 'dacincubator', digit: 4 },
   { symbol: 'DICE', contract: 'betdicetoken', digit: 4 },
 
   { symbol: 'EATCOIN', contract: 'eatscience14', digit: 4 },
+  { symbol: 'ECASH', contract: 'horustokenio', digit: 4 },
   { symbol: 'EDNA', contract: 'ednazztokens', digit: 4 },
   { symbol: 'EETH', contract: 'ethsidechain', digit: 4 },
+  { symbol: 'EGT', contract: 'eosiotokener', digit: 4 },
   { symbol: 'ENB', contract: 'eosenbpocket', digit: 4 },
   { symbol: 'EOSDAC', contract: 'eosdactokens', digit: 4 },
   { symbol: 'EOSISH', contract: ' buildertoken ', digit: 4 },
@@ -337,10 +341,12 @@ const symbolList = [
   { symbol: 'IGC', contract: 'eosindiegame', digit: 4 },
   { symbol: 'ITECOIN', contract: 'itecointoken', digit: 4 },
 
+  { symbol: 'JKR', contract: 'eosjackscoin', digit: 4 },
   { symbol: 'JUST', contract: 'eosjusttoken', digit: 4 },
 
   { symbol: 'KARMA', contract: 'therealkarma', digit: 4 },
   { symbol: 'KEO', contract: 'keoskorea111', digit: 4 },
+  { symbol: 'KKK', contract: 'fairkuai3kkk', digit: 4 },
 
   { symbol: 'LITE', contract: ' buildertoken', digit: 4 },
   { symbol: 'LKT', contract: 'chyyshayysha', digit: 4 },
@@ -350,12 +356,15 @@ const symbolList = [
   { symbol: 'LUCKY', contract: 'eoslucktoken', digit: 4 },
   { symbol: 'LZB', contract: 'gqydooigenes', digit: 4 },
 
+  { symbol: 'MAX', contract: 'eosmax1token', digit: 4 },
   { symbol: 'MEV', contract: 'eosvegasjack', digit: 4 },
   { symbol: 'MUGL', contract: 'mugglesspell', digit: 4 },
   { symbol: 'MORE', contract: 'eosiomoreone', digit: 4 },
 
   { symbol: 'OCT', contract: 'octtothemoon', digit: 4 },
+  { symbol: 'ONE', contract: 'onedicewarm2', digit: 4 },
 
+  { symbol: 'P', contract: 'ppppp.e', digit: 4 },
   { symbol: 'PGL', contract: 'prospectorsg', digit: 4 },
   { symbol: 'POKER', contract: 'eospokercoin', digit: 4 },
   { symbol: 'POOR', contract: 'poormantoken', digit: 4 },
@@ -375,12 +384,15 @@ const symbolList = [
   { symbol: 'SVN', contract: 'eoseventoken', digit: 4 },
 
   { symbol: 'TEA', contract: 'linzongsheng', digit: 4 },
+  { symbol: 'TGC', contract: 'eostgctoken1', digit: 4 },
   { symbol: 'TOE', contract: 'talkoneos123', digit: 4 },
   { symbol: 'TOP', contract: 'topdapptoken', digit: 4 },
   { symbol: 'TPT', contract: 'tokendapppub', digit: 4 },
   { symbol: 'TRYBE', contract: 'trybenetwork', digit: 4 },
 
   { symbol: 'WECASH', contract: 'weosservices', digit: 4 },
+  { symbol: 'WINS', contract: 'eoswinonewww', digit: 4 },
+  { symbol: 'WIZBOX', contract: 'wizboxairdro', digit: 4 },
   { symbol: 'WIZZ', contract: 'wizznetwork1', digit: 4 },
 
   { symbol: 'YOU', contract: 'youbaoyoubao', digit: 4 },
