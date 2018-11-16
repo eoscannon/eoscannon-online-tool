@@ -37,6 +37,8 @@ import CreateAccountPage from 'containers/CreateAccountPage/Loadable'
 import DescribePage from 'containers/DescribePage/Loadable'
 import IQPage from 'containers/IQPage/Loadable'
 import ProposalPage from 'containers/ProposalPage/Loadable'
+import ForumVotePage from 'containers/ForumVotePage/Loadable'
+
 // import LinkAuthPage from 'containers/LinkAuthPage/Loadable'
 import Header from 'components/Header'
 
@@ -93,8 +95,8 @@ const render = messages => {
               <Route path="/dscribe" component={DescribePage} />
               <Route path="/airgrab" component={AirgrabPage} />
               <Route path="/proposal" component={ProposalPage} />
+              <Route path="/forumVote" component={ForumVotePage} />
               <Route path="/iq" component={IQPage} />
-
             </Header>
           </Switch>
         </Router>

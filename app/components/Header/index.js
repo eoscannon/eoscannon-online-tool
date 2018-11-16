@@ -96,6 +96,9 @@ class HeaderComp extends React.Component {
       case '/proposal':
         defaultSelectedKeys = '14'
         break
+      case '/forumVote':
+        defaultSelectedKeys = '15'
+        break
       default:
         defaultSelectedKeys = '12'
     }
@@ -209,6 +212,8 @@ class HeaderComp extends React.Component {
     const refund = formatMessage(utilsMsg.HeaderMenuRefund)
     const airgrab = formatMessage(utilsMsg.HeaderMenuAirgrab)
     const proposal = formatMessage(utilsMsg.HeaderMenuProposal)
+    const StatusText = formatMessage(utilsMsg.HeaderMenuStatusText)
+
     const mainNet = formatMessage(utilsMsg.HeaderMenuOffical)
     const testNet = formatMessage(utilsMsg.HeaderMenuTestNet)
     const otherTestNet = formatMessage(utilsMsg.HeaderMenuOtherTestNet)
@@ -351,6 +356,11 @@ class HeaderComp extends React.Component {
               <Menu.Item key="14">
                 <Link href="/proposal" to="/proposal">
                   {proposal}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="15">
+                <Link href="/forumVote" to="/forumVote">
+                  {StatusText}
                 </Link>
               </Menu.Item>
             </Menu.SubMenu>
