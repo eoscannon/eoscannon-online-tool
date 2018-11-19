@@ -22,7 +22,7 @@ import messages from './messages'
 import utilsMsg from '../../utils/messages'
 
 const FormItem = Form.Item
-const RadioGroup = Radio.Group;
+const RadioGroup = Radio.Group
 
 export class ForumVotePage extends React.Component {
   constructor (props) {
@@ -84,7 +84,6 @@ export class ForumVotePage extends React.Component {
       vote: this.state.radio,
       vote_json: ''
     }
-    console.log('data==', data)
     eos
       .transaction(
         {
@@ -114,16 +113,15 @@ export class ForumVotePage extends React.Component {
         })
       })
       .catch(err => {
-        console.log('err:',err)
+        console.log('err:', err)
         openTransactionFailNotification(this.state.formatMessage, err.name)
       })
   };
 
   onChangeRadio = (e) => {
-    console.log('radio2 checked', e.target.value);
     this.setState({
-      radio: e.target.value,
-    });
+      radio: e.target.value
+    })
   }
 
   render () {
