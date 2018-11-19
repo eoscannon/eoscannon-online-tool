@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { injectIntl } from 'react-intl'
-import { Form, Icon, Input, Card, Col, Row, Modal, Tabs } from 'antd'
+import { Form, Icon, Input, Card, Col, Row, Modal, Tabs, Radio } from 'antd'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -22,6 +22,7 @@ import messages from './messages'
 import utilsMsg from '../../utils/messages'
 
 const FormItem = Form.Item
+const RadioGroup = Radio.Group;
 
 export class ForumVotePage extends React.Component {
   constructor (props) {
@@ -33,7 +34,8 @@ export class ForumVotePage extends React.Component {
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
       scatterStatus: false,
-      GetTransactionButtonScatterState: true
+      GetTransactionButtonScatterState: true,
+      radio: 0
     }
   }
   /**
@@ -51,9 +53,9 @@ export class ForumVotePage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue()
-    const { voter, proxy } = values
+    const { voter, statusText, radio, proxy } = values
     this.setState({
-      GetTransactionButtonState: !!voter,
+      GetTransactionButtonState: !!voter && !!radio && !!statusText,
       GetTransactionButtonScatterState: !!proxy
     })
   };
@@ -79,9 +81,10 @@ export class ForumVotePage extends React.Component {
     var data = {
       voter: voter,
       proposal_name: statusText,
-      vote: 0,
+      vote: this.state.radio,
       vote_json: ''
     }
+    console.log('data==', data)
     eos
       .transaction(
         {
@@ -111,9 +114,17 @@ export class ForumVotePage extends React.Component {
         })
       })
       .catch(err => {
+        console.log('err:',err)
         openTransactionFailNotification(this.state.formatMessage, err.name)
       })
   };
+
+  onChangeRadio = (e) => {
+    console.log('radio2 checked', e.target.value);
+    this.setState({
+      radio: e.target.value,
+    });
+  }
 
   render () {
     const { getFieldDecorator } = this.props.form
@@ -133,6 +144,10 @@ export class ForumVotePage extends React.Component {
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
+    const options = [
+      { label: '赞成', value: 1 },
+      { label: '反对', value: 0 }
+    ]
     return (
       <LayoutContent>
         <Col span={12}>
@@ -172,6 +187,19 @@ export class ForumVotePage extends React.Component {
                 />,
               )}
             </FormItem>
+            <FormItem>
+              {getFieldDecorator('radio', {
+                rules: [
+                  {
+                    required: true,
+                    message: StatusText
+                  }
+                ]
+              })(
+                <RadioGroup options={options} onChange={this.onChangeRadio} setFieldsValue={this.state.radio} />
+              )}
+            </FormItem>
+
             <DealGetQrcode
               eos={this.state.eos}
               form={this.props.form}
