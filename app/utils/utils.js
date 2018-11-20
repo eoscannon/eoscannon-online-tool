@@ -331,6 +331,7 @@ const symbolList = [
   { symbol: 'EVR', contract: 'eosvrtokenss', digit: 4 },
 
   { symbol: 'FAID', contract: 'eosfaidchain', digit: 4 },
+  { symbol: 'FAIR', contract: 'faireostoken', digit: 4 },
   { symbol: 'FC', contract: 'fcfundadmins', digit: 4 },
   { symbol: 'FOS', contract: 'farmeosbankx', digit: 4 },
   { symbol: 'FUN', contract: 'eosfuntoken1', digit: 4 },
@@ -384,7 +385,9 @@ const symbolList = [
   { symbol: 'SVN', contract: 'eoseventoken', digit: 4 },
 
   { symbol: 'TEA', contract: 'linzongsheng', digit: 4 },
+  { symbol: 'TEA', contract: 'linzongsheng', digit: 4 },
   { symbol: 'TGC', contract: 'eostgctoken1', digit: 4 },
+  { symbol: 'TKC', contract: 'tkcointkcoin', digit: 4 },
   { symbol: 'TOE', contract: 'talkoneos123', digit: 4 },
   { symbol: 'TOP', contract: 'topdapptoken', digit: 4 },
   { symbol: 'TPT', contract: 'tokendapppub', digit: 4 },
