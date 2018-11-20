@@ -291,7 +291,7 @@ const symbolList = [
 
   { symbol: 'ADD', contract: 'eosadddddddd', digit: 4 },
   { symbol: 'ADE', contract: 'buildertoken', digit: 4 },
-  { symbol: 'ATD', contract: 'eosatidiumio ', digit: 4 },
+  { symbol: 'ATD', contract: 'eosatidiumio', digit: 4 },
 
   { symbol: 'BG', contract: 'bgbgbgbgbgbg', digit: 4 },
   { symbol: 'BLACK', contract: 'eosblackteam', digit: 4 },
@@ -320,7 +320,7 @@ const symbolList = [
   { symbol: 'EGT', contract: 'eosiotokener', digit: 4 },
   { symbol: 'ENB', contract: 'eosenbpocket', digit: 4 },
   { symbol: 'EOSDAC', contract: 'eosdactokens', digit: 4 },
-  { symbol: 'EOSISH', contract: ' buildertoken ', digit: 4 },
+  { symbol: 'EOSISH', contract: 'buildertoken', digit: 4 },
   { symbol: 'EOSNTS', contract: 'eosninetiess', digit: 4 },
   { symbol: 'EOSWIN', contract: 'etwineos1111', digit: 4 },
   { symbol: 'EOX', contract: 'eoxeoxeoxeox', digit: 4 },
@@ -349,7 +349,7 @@ const symbolList = [
   { symbol: 'KEO', contract: 'keoskorea111', digit: 4 },
   { symbol: 'KKK', contract: 'fairkuai3kkk', digit: 4 },
 
-  { symbol: 'LITE', contract: ' buildertoken', digit: 4 },
+  { symbol: 'LITE', contract: 'buildertoken', digit: 4 },
   { symbol: 'LKT', contract: 'chyyshayysha', digit: 4 },
   { symbol: 'LLG', contract: 'llgonebtotal', digit: 4 },
   { symbol: 'LOVE', contract: 'lovewintoken', digit: 4 },
