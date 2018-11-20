@@ -6,7 +6,7 @@ import React from 'react'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Form, Select, message, Tabs, Table, Tag, Button } from 'antd'
+import { Form, Select, message, Tabs, Table, Tag, Button, AutoComplete } from 'antd'
 import { Progress, Input } from 'utils/antdUtils'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -66,17 +66,20 @@ export class AccountSearchPage extends React.Component {
   }
 
   handleChange = key => {
+    let firstSymbol = key.split('(')
+    var newContract = firstSymbol[1].split(')')
+    var newSymbol = key.split(' ')
     const eos = getEos(this.props.SelectedNetWork)
     eos
       .getCurrencyBalance({
-        code: key.key,
+        code: newContract[0],
         account: this.state.account.trim(),
-        symbol: key.label[0]
+        symbol: newSymbol[0]
       })
       .then(res => {
         this.setState({
           symbolBlance: res[0] || 0,
-          symbolCode: key.key
+          symbolCode: newContract[0]
         })
       })
       .catch(() => {
@@ -195,7 +198,6 @@ export class AccountSearchPage extends React.Component {
             networkContent: 'unlimited/unlimited'
           })
         }
-
         if (info.total_resources) {
           this.setState({
             cpuStake: info.total_resources.cpu_weight,
@@ -374,7 +376,9 @@ export class AccountSearchPage extends React.Component {
     ]
 
     const data = this.state.powerAddress
-
+    const children = symbolList.map((item) => (
+      <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
+    ))
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
@@ -475,18 +479,14 @@ export class AccountSearchPage extends React.Component {
                   <TabPane tab={FunctionSearchAccountBalance} key="1">
                     <div style={{ padding: '1rem 0' }}>
                       <span>{FunctionSearchAccountSyblom}：</span>
-                      <Select
-                        labelInValue
-                        defaultValue={{ key: this.state.symbolCode }}
-                        style={{ width: 180 }}
-                        onChange={this.handleChange}
-                      >
-                        {symbolList.map((item, index) => (
-                          <Option value={item.contract} key={index}>
-                            {item.symbol}({item.contract})
-                          </Option>
-                        ))}
-                      </Select>
+                      <AutoComplete
+                        dataSource={children}
+                        placeholder='eos (eosio.token)'
+                        optionLabelProp="value"
+                        onSelect={this.handleChange}
+                        filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                      />
+                      
                     </div>
                     <div>
                       <Table

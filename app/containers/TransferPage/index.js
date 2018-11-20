@@ -16,7 +16,8 @@ import {
   Col,
   Row,
   message,
-  Tooltip
+  Tooltip,
+  AutoComplete
 } from 'antd'
 import eosioAbi from './abi'
 import eosIqAbi from './iqAbi'
@@ -51,7 +52,9 @@ export class TransferPage extends React.Component {
       contract: 'eosio.token',
       number: '',
       symbol: '',
-      code: ''
+      code: '',
+      dataSource: [],
+      transferSymbolSelect: ''
     }
   }
   // init page
@@ -98,12 +101,6 @@ export class TransferPage extends React.Component {
     this.setState({
       GetTransactionButtonState:
         !!FromAccountName && !!ToAccountName && !!transferQuantity
-    })
-  };
-
-  handleChange = val => {
-    this.setState({
-      contract: val.key
     })
   };
 
@@ -326,11 +323,17 @@ export class TransferPage extends React.Component {
       this.handleCustomTransaction(eos)
       return
     }
-    const transferContract = this.state.contract.trim()
+    let firstSymbol = transferSymbol.split('(')
+    var newContract = firstSymbol[1].split(')')
+    var newSymbol = transferSymbol.split(' ')
+    this.setState({
+      contract: newContract[0]
+    })
 
+    const transferContract = newContract[0].trim()
     if (
-      this.state.contract !== 'eosio' &&
-      this.state.contract !== 'eosio.token'
+      newContract[0] !== 'eosio' &&
+      newContract[0] !== 'eosio.token'
     ) {
       if (transferContract.toUpperCase() === 'EVERIPEDIAIQ') {
         transferDigit = 3
@@ -341,7 +344,7 @@ export class TransferPage extends React.Component {
         eos.fc.abiCache.abi(transferContract, eosioAbi)
       }
     }
-    console.log('transferSymbol===', transferSymbol)
+
     eos
       .transaction(
         {
@@ -360,7 +363,7 @@ export class TransferPage extends React.Component {
                 to: ToAccountName,
                 quantity: `${Number(transferQuantity).toFixed(
                   Number(transferDigit),
-                )} ${transferSymbol.label[0].toUpperCase()}`,
+                )} ${newSymbol[0].toUpperCase()}`,
                 memo: transferMemo || ''
               }
             }
@@ -395,21 +398,16 @@ export class TransferPage extends React.Component {
     const TransferQuantityPlaceholder = this.state.formatMessage(
       messages.TransferQuantityPlaceholder,
     )
-    const TransferDigitPlaceholder = this.state.formatMessage(
-      messages.TransferDigitPlaceholder,
-    )
     const TransferSymbolPlaceholder = this.state.formatMessage(
       messages.TransferSymbolPlaceholder,
     )
     const TransferMemoPlaceholder = this.state.formatMessage(
       messages.TransferMemoPlaceholder,
     )
+    const TransferDigitPlaceholder = this.state.formatMessage(
+      messages.TransferDigitPlaceholder,
+    )
     const SymbolCustom = this.state.formatMessage(messages.SymbolCustom)
-    // const TransferSymbol = this.state.formatMessage(messages.TransferSymbol);
-    // const TransferContract = this.state.formatMessage(
-    //   messages.TransferContract,
-    // );
-    // const TransferDigit = this.state.formatMessage(messages.TransferDigit);
     const TransferSymbolHolder = this.state.formatMessage(
       messages.TransferSymbolHolder,
     )
@@ -425,6 +423,9 @@ export class TransferPage extends React.Component {
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
+    const children = symbolList.map((item) => (
+      <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
+    ))
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -507,23 +508,18 @@ export class TransferPage extends React.Component {
                   style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}
                 >
                   {getFieldDecorator('transferSymbol', {
-                    initialValue: { key: 'EOS', label: ['EOS', '(eosio.token)'] },
+                    initialValue: 'eos (eosio.token)',
                     rules: [
                       { required: true, message: TransferSymbolPlaceholder }
                     ]
                   })(
-                    <Select
-                      labelInValue
+                    <AutoComplete
+                      dataSource={children}
+                      placeholder={TransferSymbolHolder}
+                      optionLabelProp="value"
                       style={{ width: '100%' }}
-                      onChange={this.handleChange}
-                      placeholder={TransferDigitPlaceholder}
-                    >
-                      {symbolList.map(item => (
-                        <Option key={item.contract} value={item.contract}>
-                          {item.symbol}({item.contract})
-                        </Option>
-                      ))}
-                    </Select>,
+                      filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                    />
                   )}
                 </div>
                 <span
