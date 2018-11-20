@@ -272,5 +272,9 @@
   "ProposalPage ProposalFirstOne": "步骤1/3:填写提案表单",
   "ProposalPage ProposalPermission": "签名权限",
   "ProposalPage Proposaler": "投票人",
-  "ProposalPage ProposalName": "提案名称"
+  "ProposalPage ProposalName": "提案名称",
+  "ForumVotePage StatusText":"请输入帖子名称",
+  "Header HeaderMenuStatusText":"论坛投票",
+  "ForumVotePage ForumVoteFirst":"步骤1/3:论坛投票"
+
 }

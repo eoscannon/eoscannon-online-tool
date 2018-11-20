@@ -311,5 +311,9 @@ export default defineMessages({
   ProducersDealTranscationProxy: {
     id: 'Header ProducersDealTranscationProxy',
     defaultMessage: '步骤 1/3: 选择代理'
-  }
+  },
+  HeaderMenuStatusText: {
+    id: 'Header HeaderMenuStatusText',
+    defaultMessage: '论坛投票'
+  },
 })
