@@ -401,7 +401,7 @@ const symbolList = [
   { symbol: 'YOU', contract: 'youbaoyoubao', digit: 4 },
   { symbol: 'YUM', contract: 'yumgamescoin', digit: 4 },
 
-  { symbol: 'ZKS', contract: 'zkstokensr4u', digit: 4 }
+  { symbol: 'ZKS', contract: 'zkstokensr4u', digit: 0 }
 
 ]
 

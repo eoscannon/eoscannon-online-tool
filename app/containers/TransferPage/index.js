@@ -62,7 +62,14 @@ export class TransferPage extends React.Component {
     console.log('this.props.location.state===', this.props.location.state)
     if (this.props.location.state) {
       const state = this.props.location.state.name.split(' ')
-      const len = state[0].split('.')[1].length
+      console.log('state[0]==', state[0])
+      var len
+      try{
+        len = state[0].split('.')[1].length
+      }catch(err) {
+        console.log('err:', err)
+        len = 0
+      }
 
       // const state = this.props.location.state.name.split(' ')
       setTimeout(() => {
@@ -122,10 +129,12 @@ export class TransferPage extends React.Component {
       transferContractCustom,
       transferDigitCustom
     } = values
+
     if (
       !transferSymbolCustom ||
       !transferContractCustom ||
-      !transferDigitCustom
+      transferDigitCustom === '' ||
+      transferDigitCustom === undefined
     ) {
       message.warning(this.state.formatMessage(messages.SymbolAttentionInfo))
       return
