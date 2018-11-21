@@ -33,7 +33,7 @@ import ScanQrcode from '../../components/ScanQrcode'
 import DealGetQrcode from '../../components/DealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
-
+import { storage } from '../../utils/storage'
 import { makeSelectNetwork } from '../LanguageProvider/selectors'
 
 const FormItem = Form.Item
@@ -54,15 +54,14 @@ export class TransferPage extends React.Component {
       symbol: '',
       code: '',
       dataSource: [],
-      transferSymbolSelect: ''
+      transferSymbolSelect: '',
+      TransferForm: [] //  本地账号数据
     }
   }
   // init page
   componentDidMount () {
-    console.log('this.props.location.state===', this.props.location.state)
     if (this.props.location.state) {
       const state = this.props.location.state.name.split(' ')
-      console.log('state[0]==', state[0])
       var len
       try{
         len = state[0].split('.')[1].length
@@ -70,7 +69,7 @@ export class TransferPage extends React.Component {
         console.log('err:', err)
         len = 0
       }
-
+     
       // const state = this.props.location.state.name.split(' ')
       setTimeout(() => {
         if (state[1] === 'EOS') {
@@ -91,6 +90,11 @@ export class TransferPage extends React.Component {
           })
         }
       }, 300)
+    }
+    if(storage.getTransferForm()) {
+      this.setState({
+        TransferForm: storage.getTransferForm() || []
+      })
     }
   }
   /**
@@ -116,6 +120,25 @@ export class TransferPage extends React.Component {
       addSymbol: !this.state.addSymbol
     })
   };
+
+  handleSearch = (value) => {
+    this.setState({
+      
+    })
+  }
+
+  onSelect = (value) => {
+    let data = value.split(' ')
+    this.props.form.setFieldsValue({
+      transferMemo: data[1]
+    })
+  }
+
+  setTransferForm = (TransferForm) =>{
+    this.setState({
+      TransferForm: TransferForm
+    })
+  }
 
   handleCustomTransaction = eos => {
     const values = this.props.form.getFieldsValue()
@@ -391,10 +414,23 @@ export class TransferPage extends React.Component {
         })
       })
       .catch(err => {
-        console.log('ee', err)
+        console.log('err', err)
         openTransactionFailNotification(this.state.formatMessage, err.name)
       })
   };
+
+  // 去重
+  unique=(arr)=> {
+    var result = {}
+    var finalResult = []
+    for(let i = 0; i < arr.length;i++) {
+      result[arr[i].out] = arr[i]
+    }
+    for(let item in result) {
+      finalResult.push(result[item])
+    }
+    return finalResult
+  }
 
   render () {
     const { getFieldDecorator } = this.props.form
@@ -413,9 +449,6 @@ export class TransferPage extends React.Component {
     const TransferMemoPlaceholder = this.state.formatMessage(
       messages.TransferMemoPlaceholder,
     )
-    const TransferDigitPlaceholder = this.state.formatMessage(
-      messages.TransferDigitPlaceholder,
-    )
     const SymbolCustom = this.state.formatMessage(messages.SymbolCustom)
     const TransferSymbolHolder = this.state.formatMessage(
       messages.TransferSymbolHolder,
@@ -432,9 +465,15 @@ export class TransferPage extends React.Component {
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
-    const children = symbolList.map((item) => (
+    const children = symbolList.map(item => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
     ))
+    var {TransferForm} = this.state
+    TransferForm = this.unique(TransferForm)
+    const childrenAccount = TransferForm.map((data, index) => (
+      <Option key={data.out + index + ' ' + data.memo}>{data.out}</Option>
+    ))
+
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -449,20 +488,29 @@ export class TransferPage extends React.Component {
                     }
                   ]
                 })(
-                  <Input
-                    prefix={
-                      <Tooltip
-                        placement="top"
-                        title={TransferFromAccountNamePlaceholder}
-                      >
-                        <Icon
-                          type="user"
-                          style={{ color: 'rgba(0,0,0,.25)' }}
-                        />
-                      </Tooltip>
-                    }
-                    placeholder={TransferFromAccountNamePlaceholder}
-                  />,
+                  <AutoComplete
+                    onSearch={this.handleSearch}
+                    onSelect={this.onSelect}
+                    style={{ width: '100%' }}
+                    dataSource={childrenAccount}
+                    filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                  >
+                    <Input
+                      maxLength={12}
+                      prefix={
+                        <Tooltip
+                          placement="top"
+                          title={TransferFromAccountNamePlaceholder}
+                        >
+                          <Icon
+                            type="user"
+                            style={{ color: 'rgba(0,0,0,.25)' }}
+                          />
+                        </Tooltip>
+                      }
+                      placeholder={TransferToAccountNamePlaceholder}
+                    />
+                  </AutoComplete>
                 )}
               </FormItem>
               <FormItem {...formItemLayout}>
@@ -475,6 +523,7 @@ export class TransferPage extends React.Component {
                   ]
                 })(
                   <Input
+                    maxLength={12}
                     prefix={
                       <Tooltip
                         placement="top"
@@ -625,6 +674,8 @@ export class TransferPage extends React.Component {
                 )}
               </FormItem>
               <DealGetQrcode
+                action="transfer"
+                TransferForm={this.state.TransferForm}
                 eos={this.state.eos}
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}

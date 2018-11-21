@@ -1,5 +1,5 @@
 /**
- * Asynchronously loads the component for ProxyPage
+ * Asynchronously loads the component for ForumVotePage
  */
 import Loadable from 'react-loadable'
 

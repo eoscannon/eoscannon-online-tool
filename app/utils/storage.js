@@ -38,4 +38,9 @@ storage.setChainId = name => {
 }
 storage.getChainId = () => storage.get('ChainId')
 
+storage.setTransferForm = TransferForm => {
+  storage.set('TransferForm', TransferForm)
+}
+storage.getTransferForm = () => storage.get('TransferForm')
+
 export { storage }

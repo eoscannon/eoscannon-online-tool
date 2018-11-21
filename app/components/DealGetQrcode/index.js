@@ -11,7 +11,6 @@ import copy from 'copy-to-clipboard'
 import Fcbuffer from 'fcbuffer'
 import config from './../../config'
 import { storage } from '../../utils/storage'
-
 import utilsMsg from '../../utils/messages'
 import {
   openNotification,
@@ -27,7 +26,8 @@ export default class DealGetQrcode extends Component {
     this.state = {
       eos: null,
       QrCodeValue: this.props.QrCodeValue,
-      CopyTransactionButtonState: false
+      CopyTransactionButtonState: false,
+      oldTransaction: {}
     }
   }
 
@@ -42,6 +42,33 @@ export default class DealGetQrcode extends Component {
     ) {
       this.setState({ eos: nextProps.eos }, this.getUnSignedBuffer)
     }
+    if(nextProps.action === 'transfer') {
+      const values = nextProps.form.getFieldsValue()
+      const { FromAccountName, transferMemo } = values
+      let data = {out: FromAccountName, memo: transferMemo}
+      if(JSON.stringify(nextProps.transaction) !== '{}' && data !== nextProps.TransferForm[nextProps.TransferForm.length - 1] && JSON.stringify(this.state.oldTransaction) !== JSON.stringify(nextProps.transaction)) {
+        let arr = nextProps.TransferForm
+        arr.push(data)
+        arr = this.unique(arr)
+        storage.setTransferForm(arr)
+        this.setState({
+          oldTransaction: nextProps.transaction
+        })
+      }
+    }
+  }
+
+  // 去重
+  unique=(arr)=> {
+    var result = {}
+    var finalResult = []
+    for(let i = 0; i < arr.length;i++) {
+      result[arr[i].out] = arr[i]
+    }
+    for(let item in result) {
+      finalResult.push(result[item])
+    }
+    return finalResult
   }
 
   // 生成报文
@@ -56,15 +83,10 @@ export default class DealGetQrcode extends Component {
     } else if (this.props.SelectedNetWork === 'other') {
       chainId = storage.getChainId()
     }
-    // console.log('this.state.eos.fc', this.state.eos.fc)
-    // console.log('this.props.transaction.transaction', this.props.transaction.transaction)
-
     const buf = Fcbuffer.toBuffer(
       this.state.eos.fc.structs.transaction,
       this.props.transaction.transaction,
     )
-    // console.log('buf==', buf)
-    // const chainIdBuf = new Buffer(chainId);
     const chainIdBuf = Buffer.from(chainId, 'hex')
     const UnSignedBuffer = Buffer.concat([
       chainIdBuf,
@@ -72,7 +94,6 @@ export default class DealGetQrcode extends Component {
       Buffer.from(new Uint8Array(32))
     ])
     const hexStr = UnSignedBuffer.toString('hex')
-    // console.log('hexStr==', hexStr)
 
     this.props.form.setFieldsValue({
       transactionTextArea: JSON.stringify(this.props.transaction.transaction)
