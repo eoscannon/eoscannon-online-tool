@@ -121,16 +121,11 @@ export class TransferPage extends React.Component {
     })
   };
 
-  handleSearch = (value) => {
-    this.setState({
-      
-    })
-  }
-
   onSelect = (value) => {
     let data = value.split(' ')
     this.props.form.setFieldsValue({
-      transferMemo: data[1]
+      transferMemo: data[1],
+      FromAccountName: data[0]
     })
   }
 
@@ -138,6 +133,12 @@ export class TransferPage extends React.Component {
     this.setState({
       TransferForm: TransferForm
     })
+  }
+
+  testKong = (FromAccountName) =>{
+    var reg = /(^\s+)|(\s+$)|\s+/g
+    console.log('FromAccountName')
+    return reg.test(FromAccountName)
   }
 
   handleCustomTransaction = eos => {
@@ -153,6 +154,12 @@ export class TransferPage extends React.Component {
       transferDigitCustom
     } = values
 
+    var newFromAccountName
+    if(this.testKong(FromAccountName)) {
+      newFromAccountName = FromAccountName.split(' ')[0]
+    }else{
+      newFromAccountName = FromAccountName
+    }
     if (
       !transferSymbolCustom ||
       !transferContractCustom ||
@@ -180,12 +187,12 @@ export class TransferPage extends React.Component {
               name: 'transfer',
               authorization: [
                 {
-                  actor: FromAccountName,
+                  actor: newFromAccountName,
                   permission: 'active'
                 }
               ],
               data: {
-                from: FromAccountName,
+                from: newFromAccountName,
                 to: ToAccountName,
                 quantity: `${Number(transferQuantity).toFixed(
                   Number(transferDigitCustom),
@@ -362,6 +369,12 @@ export class TransferPage extends React.Component {
       contract: newContract[0]
     })
 
+    var newFromAccountName
+    if(this.testKong(FromAccountName)) {
+      newFromAccountName = FromAccountName.split(' ')[0]
+    }else{
+      newFromAccountName = FromAccountName
+    }
     const transferContract = newContract[0].trim()
     if (
       newContract[0] !== 'eosio' &&
@@ -377,6 +390,7 @@ export class TransferPage extends React.Component {
       }
     }
 
+    console.log('newFromAccountName===', newFromAccountName)
     eos
       .transaction(
         {
@@ -386,12 +400,12 @@ export class TransferPage extends React.Component {
               name: 'transfer',
               authorization: [
                 {
-                  actor: FromAccountName,
+                  actor: newFromAccountName,
                   permission: 'active'
                 }
               ],
               data: {
-                from: FromAccountName,
+                from: newFromAccountName,
                 to: ToAccountName,
                 quantity: `${Number(transferQuantity).toFixed(
                   Number(transferDigit),
@@ -471,7 +485,7 @@ export class TransferPage extends React.Component {
     var {TransferForm} = this.state
     TransferForm = this.unique(TransferForm)
     const childrenAccount = TransferForm.map((data, index) => (
-      <Option key={data.out + index + ' ' + data.memo}>{data.out}</Option>
+      <Option key={data.out + ' ' + data.memo}>{data.out}</Option>
     ))
 
     return (
@@ -489,7 +503,6 @@ export class TransferPage extends React.Component {
                   ]
                 })(
                   <AutoComplete
-                    onSearch={this.handleSearch}
                     onSelect={this.onSelect}
                     style={{ width: '100%' }}
                     dataSource={childrenAccount}
