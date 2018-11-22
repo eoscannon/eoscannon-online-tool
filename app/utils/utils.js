@@ -385,7 +385,6 @@ const symbolList = [
   { symbol: 'SVN', contract: 'eoseventoken', digit: 4 },
 
   { symbol: 'TEA', contract: 'linzongsheng', digit: 4 },
-  { symbol: 'TEA', contract: 'linzongsheng', digit: 4 },
   { symbol: 'TGC', contract: 'eostgctoken1', digit: 4 },
   { symbol: 'TKC', contract: 'tkcointkcoin', digit: 4 },
   { symbol: 'TOE', contract: 'talkoneos123', digit: 4 },
