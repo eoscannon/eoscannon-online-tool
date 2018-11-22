@@ -382,6 +382,7 @@ const symbolList = [
   { symbol: 'SEED', contract: 'parslseed123', digit: 4 },
   { symbol: 'SEVEN', contract: 'xxxsevensxxx', digit: 4 },
   { symbol: 'SHAPE', contract: 'gmaslaunches', digit: 4 },
+  { symbol: 'SST', contract: 'skillshareio', digit: 4 },
   { symbol: 'SVN', contract: 'eoseventoken', digit: 4 },
 
   { symbol: 'TEA', contract: 'linzongsheng', digit: 4 },
