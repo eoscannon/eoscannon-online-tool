@@ -336,6 +336,8 @@ const symbolList = [
   { symbol: 'FOS', contract: 'farmeosbankx', digit: 4 },
   { symbol: 'FUN', contract: 'eosfuntoken1', digit: 4 },
 
+  { symbol: 'GYM', contract: 'gymrewardsio', digit: 4 },
+
   { symbol: 'HORUS', contract: 'horustokenio', digit: 4 },
   { symbol: 'HVT', contract: 'hirevibeshvt', digit: 4 },
 
