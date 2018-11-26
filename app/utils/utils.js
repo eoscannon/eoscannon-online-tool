@@ -315,6 +315,7 @@ const symbolList = [
 
   { symbol: 'EATCOIN', contract: 'eatscience14', digit: 4 },
   { symbol: 'ECASH', contract: 'horustokenio', digit: 4 },
+  { symbol: 'ECTT', contract: 'ectchaincoin', digit: 4 },
   { symbol: 'EDNA', contract: 'ednazztokens', digit: 4 },
   { symbol: 'EETH', contract: 'ethsidechain', digit: 4 },
   { symbol: 'EGT', contract: 'eosiotokener', digit: 4 },
@@ -332,6 +333,7 @@ const symbolList = [
 
   { symbol: 'FAID', contract: 'eosfaidchain', digit: 4 },
   { symbol: 'FAIR', contract: 'faireostoken', digit: 4 },
+  { symbol: 'FAST', contract: 'fastwinadmin', digit: 4 },
   { symbol: 'FC', contract: 'fcfundadmins', digit: 4 },
   { symbol: 'FOS', contract: 'farmeosbankx', digit: 4 },
   { symbol: 'FUN', contract: 'eosfuntoken1', digit: 4 },
@@ -384,6 +386,7 @@ const symbolList = [
   { symbol: 'SEED', contract: 'parslseed123', digit: 4 },
   { symbol: 'SEVEN', contract: 'xxxsevensxxx', digit: 4 },
   { symbol: 'SHAPE', contract: 'gmaslaunches', digit: 4 },
+  { symbol: 'SHARE', contract: 'share.x', digit: 4 },
   { symbol: 'SST', contract: 'skillshareio', digit: 4 },
   { symbol: 'SVN', contract: 'eoseventoken', digit: 4 },
 
