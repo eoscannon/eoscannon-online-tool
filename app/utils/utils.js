@@ -291,6 +291,7 @@ const symbolList = [
 
   { symbol: 'ADD', contract: 'eosadddddddd', digit: 4 },
   { symbol: 'ADE', contract: 'buildertoken', digit: 4 },
+  { symbol: 'ARN', contract: 'aeronaerozzz', digit: 4 },
   { symbol: 'ATD', contract: 'eosatidiumio', digit: 4 },
 
   { symbol: 'BG', contract: 'bgbgbgbgbgbg', digit: 4 },
@@ -403,6 +404,7 @@ const symbolList = [
   { symbol: 'WIZBOX', contract: 'wizboxairdro', digit: 4 },
   { symbol: 'WIZZ', contract: 'wizznetwork1', digit: 4 },
 
+  { symbol: 'YDAPP', contract: 'dacincubator', digit: 4 },
   { symbol: 'YOU', contract: 'youbaoyoubao', digit: 4 },
   { symbol: 'YUM', contract: 'yumgamescoin', digit: 4 },
 
