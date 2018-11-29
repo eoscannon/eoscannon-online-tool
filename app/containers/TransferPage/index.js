@@ -69,7 +69,7 @@ export class TransferPage extends React.Component {
         console.log('err:', err)
         len = 0
       }
-     
+
       // const state = this.props.location.state.name.split(' ')
       setTimeout(() => {
         if (state[1] === 'EOS') {
@@ -521,7 +521,7 @@ export class TransferPage extends React.Component {
                           />
                         </Tooltip>
                       }
-                      placeholder={TransferToAccountNamePlaceholder}
+                      placeholder={TransferFromAccountNamePlaceholder}
                     />
                   </AutoComplete>
                 )}
