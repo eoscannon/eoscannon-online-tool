@@ -36,8 +36,11 @@ export class ForumVotePage extends React.Component {
       scatterStatus: false,
       GetTransactionButtonScatterState: true,
       radio: 0,
-      columnsData: []
-
+      columnsData: [],
+      scope: '',
+      lowerBound: '',
+      upperBound: '',
+      limit: ''
     }
   }
   /**
@@ -74,7 +77,6 @@ export class ForumVotePage extends React.Component {
 
   handleGetTransactionInit = () => {
     this.setState({ scatterStatus: false })
-    const values = this.props.form.getFieldsValue()
     const eos = getEos(this.props.SelectedNetWork)
     // const { account, proposer, proposalName} = values
     var data = {
@@ -162,6 +164,18 @@ export class ForumVotePage extends React.Component {
     })
   }
 
+  changeScope = ()=>{
+
+  }
+  changeLowerBound = ()=>{
+    
+  }
+  changeUpperBound = ()=>{
+    
+  }
+  changeLimit = ()=>{
+    
+  }
   render () {
     const { getFieldDecorator } = this.props.form
     const VoterPlaceholder = this.state.formatMessage(
@@ -292,6 +306,12 @@ export class ForumVotePage extends React.Component {
         <div>
           <Col span={24}>
             <Card title='提案列表' bordered={false}>
+              <div style={{ display: 'flex' }}>
+                <Input placeholder="Scope" value={this.state.scope} onChange={this.changeScope}/>
+                <Input placeholder="LowerBound" value={this.state.lowerBound} onChange={this.changeLowerBound}/>
+                <Input placeholder="UpperBound" value={this.state.upperBound} onChange={this.changeUpperBound}/>
+                <Input placeholder="Limit" value={this.state.limit} onChange={this.changeLimit}/>
+              </div>
               <Table columns={columns} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/>
             </Card>
           </Col>
