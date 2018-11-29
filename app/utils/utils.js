@@ -324,6 +324,7 @@ const symbolList = [
   { symbol: 'EOSDAC', contract: 'eosdactokens', digit: 4 },
   { symbol: 'EOSISH', contract: 'buildertoken', digit: 4 },
   { symbol: 'EOSNTS', contract: 'eosninetiess', digit: 4 },
+  { symbol: 'EOSYX', contract: 'eosyxtoken11', digit: 4 },
   { symbol: 'EOSWIN', contract: 'etwineos1111', digit: 4 },
   { symbol: 'EOX', contract: 'eoxeoxeoxeox', digit: 4 },
   { symbol: 'EPRA', contract: 'epraofficial', digit: 4 },
@@ -345,6 +346,7 @@ const symbolList = [
   { symbol: 'HVT', contract: 'hirevibeshvt', digit: 4 },
 
   { symbol: 'IGC', contract: 'eosindiegame', digit: 4 },
+  { symbol: 'INF', contract: 'infinicoinio', digit: 4 },
   { symbol: 'ITECOIN', contract: 'itecointoken', digit: 4 },
 
   { symbol: 'JKR', contract: 'eosjackscoin', digit: 4 },
