@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { injectIntl } from 'react-intl'
-import { Form, Icon, Input, Card, Col, Row, Modal, Tabs, Radio, Table } from 'antd'
+import { Form, Icon, Input, Card, Col, Row, Modal, Tabs, Radio, Table, Button, InputNumber, Tooltip } from 'antd'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -37,10 +37,10 @@ export class ForumVotePage extends React.Component {
       GetTransactionButtonScatterState: true,
       radio: 0,
       columnsData: [],
-      scope: '',
-      lowerBound: '',
-      upperBound: '',
-      limit: ''
+      scope: 'eosforumrcpp',
+      lowerBound: null,
+      upperBound: null,
+      limit: 100
     }
   }
   /**
@@ -84,12 +84,12 @@ export class ForumVotePage extends React.Component {
       index_position: 1,
       json: true,
       key_type: "i64",
-      limit: 100,
-      lower_bound: null,
-      scope: "eosforumrcpp",
+      limit: this.state.limit,
+      lower_bound: this.state.lowerBound,
+      scope: this.state.scope,
       table: "proposal",
       table_key: '',
-      upper_bound: null
+      upper_bound: this.state.upperBound
     }
 
     eos.getTableRows(data)
@@ -164,17 +164,31 @@ export class ForumVotePage extends React.Component {
     })
   }
 
-  changeScope = ()=>{
-
+  changeScope = (e)=>{
+    const { value } = e.target
+    this.setState({
+      scope: value
+    })
   }
-  changeLowerBound = ()=>{
-    
+  changeLowerBound = (value)=>{
+    console.log('value===', value)
+    this.setState({
+      lowerBound: value
+    })
   }
-  changeUpperBound = ()=>{
-    
+  changeUpperBound = (value)=>{
+    this.setState({
+      upperBound: value
+    })
   }
-  changeLimit = ()=>{
-    
+  changeLimit = (value)=>{
+    this.setState({
+      limit: value
+    })
+  }
+  onSearch = ()=>{
+    console.log('1111')
+    this.handleGetTransactionInit()
   }
   render () {
     const { getFieldDecorator } = this.props.form
@@ -306,11 +320,24 @@ export class ForumVotePage extends React.Component {
         <div>
           <Col span={24}>
             <Card title='提案列表' bordered={false}>
-              <div style={{ display: 'flex' }}>
-                <Input placeholder="Scope" value={this.state.scope} onChange={this.changeScope}/>
-                <Input placeholder="LowerBound" value={this.state.lowerBound} onChange={this.changeLowerBound}/>
-                <Input placeholder="UpperBound" value={this.state.upperBound} onChange={this.changeUpperBound}/>
-                <Input placeholder="Limit" value={this.state.limit} onChange={this.changeLimit}/>
+              <div style={{ display: 'flex', marginBottom: 30 }}>
+                <Tooltip
+                  title='Scope'
+                  placement="topLeft"
+                  overlayClassName="numeric-input"
+                >
+                  <Input placeholder="Scope" maxLength={18} value={this.state.scope} onChange={this.changeScope} style={{width: 130, marginRight: 20}}/>
+                </Tooltip>
+                <InputNumber placeholder="LowerBound" value={this.state.lowerBound} onChange={this.changeLowerBound} style={{marginRight: 20, width: 130}}/>
+                <InputNumber placeholder="UpperBound" value={this.state.upperBound} onChange={this.changeUpperBound} style={{marginRight: 20, width: 130}}/>
+                <Tooltip
+                  title='Limit'
+                  placement="topLeft"
+                  overlayClassName="numeric-input"
+                >
+                  <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
+                </Tooltip>
+                <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
               </div>
               <Table columns={columns} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/>
             </Card>
