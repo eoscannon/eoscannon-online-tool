@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { injectIntl } from 'react-intl'
-import { Form, Icon, Input, Card, Col, Row, Modal, Tabs, Radio } from 'antd'
+import { Form, Icon, Input, Card, Col, Row, Modal, Tabs, Radio, Table } from 'antd'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -35,13 +35,17 @@ export class ForumVotePage extends React.Component {
       transaction: {},
       scatterStatus: false,
       GetTransactionButtonScatterState: true,
-      radio: 0
+      radio: 0,
+      columnsData: []
+
     }
   }
   /**
    * 链接scatter
    * */
-  componentDidMount () {}
+  componentDidMount () {
+    this.handleGetTransactionInit()
+  }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -67,6 +71,40 @@ export class ForumVotePage extends React.Component {
       this.setState({ scatterStatus: false })
     }
   };
+
+  handleGetTransactionInit = () => {
+    this.setState({ scatterStatus: false })
+    const values = this.props.form.getFieldsValue()
+    const eos = getEos(this.props.SelectedNetWork)
+    // const { account, proposer, proposalName} = values
+    var data = {
+      code: "eosforumrcpp",
+      index_position: 1,
+      json: true,
+      key_type: "i64",
+      limit: 100,
+      lower_bound: null,
+      scope: "eosforumrcpp",
+      table: "proposal",
+      table_key: '',
+      upper_bound: null
+    }
+
+    eos.getTableRows(data)
+      .then(tr => {
+        tr.rows.map((item, index)=>{
+          item.key = index
+        })
+        this.setState({
+          columnsData: tr.rows
+        })
+      })
+      .catch(err => {
+        console.log('err ===', err)
+        openTransactionFailNotification(this.state.formatMessage, err.name)
+      })
+  };
+
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -146,88 +184,118 @@ export class ForumVotePage extends React.Component {
       { label: '赞成', value: 1 },
       { label: '反对', value: 0 }
     ]
+
+    const columns = [{
+      title: 'proposal_name',
+      dataIndex: 'proposal_name',
+      key: 'proposal_name',
+      width: 150
+    }, {
+      title: 'proposer',
+      dataIndex: 'proposer',
+      key: 'proposer',
+      width: 150
+    }, {
+      title: 'title',
+      dataIndex: 'title',
+      key: 'title',
+      width: 200
+    }, {
+      title: 'proposal_json',
+      dataIndex: 'proposal_json',
+      key: 'proposal_json'
+    }]
     return (
       <LayoutContent>
-        <Col span={12}>
-          <Card title={ForumVoteFirst} bordered={false}>
-            <FormItem {...formItemLayout}>
-              {getFieldDecorator('voter', {
-                rules: [{ required: true, message: VoterPlaceholder }]
-              })(
-                <Input
-                  prefix={
-                    <Icon
-                      type="user"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
-                  placeholder={VoterPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout}>
-              {getFieldDecorator('statusText', {
-                rules: [
-                  {
-                    required: true,
-                    message: StatusText
-                  }
-                ]
-              })(
-                <Input
-                  prefix={
-                    <Icon
-                      type="user"
-                      style={{ color: 'rgba(0,0,0,.25)' }}
-                    />
-                  }
-                  placeholder={StatusText}
-                />,
-              )}
-            </FormItem>
-            <FormItem>
-              {getFieldDecorator('radio', {
-                rules: [
-                  {
-                    required: true,
-                    message: StatusText
-                  }
-                ]
-              })(
-                <RadioGroup options={options} onChange={this.onChangeRadio} setFieldsValue={this.state.radio} />
-              )}
-            </FormItem>
+        <div>
+          <Col span={12}>
+            <Card title={ForumVoteFirst} bordered={false}>
+              <FormItem {...formItemLayout}>
+                {getFieldDecorator('voter', {
+                  rules: [{ required: true, message: VoterPlaceholder }]
+                })(
+                  <Input
+                    prefix={
+                      <Icon
+                        type="user"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
+                    placeholder={VoterPlaceholder}
+                  />,
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout}>
+                {getFieldDecorator('statusText', {
+                  rules: [
+                    {
+                      required: true,
+                      message: StatusText
+                    }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon
+                        type="user"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
+                    placeholder={StatusText}
+                  />,
+                )}
+              </FormItem>
+              <FormItem>
+                {getFieldDecorator('radio', {
+                  rules: [
+                    {
+                      required: true,
+                      message: StatusText
+                    }
+                  ]
+                })(
+                  <RadioGroup options={options} onChange={this.onChangeRadio} setFieldsValue={this.state.radio} />
+                )}
+              </FormItem>
 
-            <DealGetQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonState={
-                this.state.GetTransactionButtonState
-              }
-              QrCodeValue={this.state.QrCodeValue}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-              voteByScatterClick={this.voteByScatter}
-              scatterStatus={this.state.scatterStatus}
-              GetTransactionButtonScatterState={
-                this.state.GetTransactionButtonScatterState
-              }
-            />
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card title={ProducersSendTranscation} bordered={false}>
-            <ScanQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-            />
-          </Card>
-        </Col>
+              <DealGetQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                GetTransactionButtonClick={this.handleGetTransaction}
+                GetTransactionButtonState={
+                  this.state.GetTransactionButtonState
+                }
+                QrCodeValue={this.state.QrCodeValue}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+                voteByScatterClick={this.voteByScatter}
+                scatterStatus={this.state.scatterStatus}
+                GetTransactionButtonScatterState={
+                  this.state.GetTransactionButtonScatterState
+                }
+              />
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card title={ProducersSendTranscation} bordered={false}>
+              <ScanQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
+            </Card>
+          </Col>
+        </div>
+        <div>
+          <Col span={24}>
+            <Card title='提案列表' bordered={false}>
+              <Table columns={columns} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/>
+            </Card>
+          </Col>
+        </div>
       </LayoutContent>
     )
   }
