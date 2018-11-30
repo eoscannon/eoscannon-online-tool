@@ -136,8 +136,8 @@
   "Public HeaderMenuAccountSearch": "查询",
   "Public HeaderMenuStake": "抵押/赎回",
   "Public HeaderMenuTradeManage": "交易处理",
-  "Public HeaderMenuOffical": "正式网",
-  "Public HeaderMenuTestNet": "佳能测试网",
+  "Public HeaderMenuOffical": "EOS主网",
+  "Public HeaderMenuTestNet": "Worbli",
   "Public HeaderMenuOtherTestNet": "其他测试网",
   "Public ChangeTestNet": "变更测试网",
   "Public HeaderAppDownLoad": "APP下载",
@@ -273,8 +273,7 @@
   "ProposalPage ProposalPermission": "签名权限",
   "ProposalPage Proposaler": "投票人",
   "ProposalPage ProposalName": "提案名称",
-  "ForumVotePage StatusText":"请输入帖子名称",
-  "Header HeaderMenuStatusText":"论坛投票",
-  "ForumVotePage ForumVoteFirst":"步骤1/3:论坛投票"
-
+  "ForumVotePage StatusText": "请输入帖子名称",
+  "Header HeaderMenuStatusText": "论坛投票",
+  "ForumVotePage ForumVoteFirst": "步骤1/3:论坛投票"
 }
