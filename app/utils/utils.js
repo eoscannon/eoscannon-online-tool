@@ -1,76 +1,116 @@
-import ScatterJS from 'scatterjs-core'
-import ScatterEOS from 'scatterjs-plugin-eosjs'
-import EOS from 'eosjs'
-import { notification } from 'antd'
-import producers from './producers.json'
-import utilsMsg from './messages'
-import { storage } from './storage'
-import config from './../config'
+import ScatterJS from 'scatterjs-core';
+import ScatterEOS from 'scatterjs-plugin-eosjs';
+import EOS from 'eosjs';
+import { notification } from 'antd';
+import producers from './producers.json';
+import utilsMsg from './messages';
+import { storage } from './storage';
+import config from './../config';
+import { Modal } from 'antd';
 
-ScatterJS.plugins(new ScatterEOS())
+ScatterJS.plugins(new ScatterEOS());
 
 const formItemLayout = {
   labelCol: {
     xs: { span: 8 },
-    sm: { span: 5 }
+    sm: { span: 5 },
   },
   wrapperCol: {
     xs: { span: 16 },
-    sm: { span: 19 }
-  }
-}
+    sm: { span: 19 },
+  },
+};
 
-const voteNodes = []
+const voteNodes = [];
 producers.forEach(item => {
-  voteNodes.push(item.owner)
-})
+  voteNodes.push(item.owner);
+});
 
-const getEosMain = () =>
-  EOS({
-    httpEndpoint: config.mainHttpEndpoint,
-    chainId: config.mainChainId,
-    expireInSeconds: 60 * 60
-  })
+
+const getLocalTime = i => {
+  //参数i为时区值数字，比如北京为东八区则输进8,纽约为西5区输入-5
+  if (typeof i !== 'number') return;
+  var d = new Date();
+  //得到1970年一月一日到现在的秒数
+  var len = d.getTime();
+  //本地时间与GMT时间的时间偏移差
+  var offset = d.getTimezoneOffset() * 60000;
+  //得到现在的格林尼治时间
+  var utcTime = len + offset;
+  return new Date(utcTime + 3600000 * (i+1));
+};
+
+const getTransactionHeadersFromJsonInfo = (refBlockNum ,refBlockPrefix) => {
+  var time = getLocalTime(8);
+console.log('getLocalTime' , time.toISOString().split('.')[0])
+  return {
+    expiration: time.toISOString().split('.')[0],
+    ref_block_num: parseInt(refBlockNum),
+    ref_block_prefix: parseInt(refBlockPrefix),
+  };
+};
+
+const getEosMain = () =>{
+  const formNew = storage.getForm()
+  console.log('formNew=',formNew)
+  if(!formNew.refBlockNum){
+    Modal.error({
+      content: '未获取到refBlockNum,请前往首页填写并保存！',
+      okText: '关闭'
+    })
+    return
+  }
+  const { refBlockNum ,refBlockPrefix } = formNew
+  const transactionHeaders = getTransactionHeadersFromJsonInfo(refBlockNum ,refBlockPrefix)
+  console.log('transactionHeaders=',transactionHeaders)
+
+  return EOS({
+    httpEndpoint: null,
+    chainId: formNew.chain_id,
+    expireInSeconds: 60 * 60,
+    transactionHeaders
+  });
+}
 
 const getEosTest = () =>
   EOS({
     httpEndpoint: config.testHttpEndpoint,
     chainId: config.testChainId,
-    expireInSeconds: 60 * 60
-  })
+    expireInSeconds: 60 * 60,
+  });
 
 const getEosOtherTest = () =>
   EOS({
     httpEndpoint: storage.getNetwork(),
     chainId: storage.getChainId(),
-    expireInSeconds: 60 * 60
-  })
+    expireInSeconds: 60 * 60,
+  });
 
-const getEos = type => {
+const getEos = (type) => {
   switch (type) {
     case 'main':
-      return getEosMain()
+      return getEosMain();
     case 'test':
-      return getEosTest()
+      return getEosTest();
     case 'other':
-      return getEosOtherTest()
+      return getEosOtherTest();
     default:
-      return getEosMain()
+      return getEosMain();
   }
-}
+};
 
 const getEosByScatter = (type, callback) => {
   switch (type) {
     case 'main':
-      return getEosMainScatter(callback)
+      return getEosMainScatter(callback);
     case 'test':
-      return getEosTestScatter(callback)
+      return getEosTestScatter(callback);
     case 'other':
-      return getEosOtherTestScatter(callback)
+      return getEosOtherTestScatter(callback);
     default:
-      return getEosMainScatter(callback)
+      return getEosMainScatter(callback);
   }
-}
+};
 
 // 使用scatter进行签名
 const getEosMainScatter = callback => {
@@ -79,51 +119,53 @@ const getEosMainScatter = callback => {
     protocol: 'https',
     host: 'mainnet.eoscannon.io',
     port: 443,
-    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
-  }
+    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+  };
   ScatterJS.scatter
     .connect('EOSCannonTool')
     .then(connected => {
-      if (!connected) {return}
-      const { scatter } = ScatterJS
+      if (!connected) {
+        return;
+      }
+      const { scatter } = ScatterJS;
       scatter.forgetIdentity().then(() => {
-        global.scatter = scatter
-        window.scatter = null
-        const requiredFields = { accounts: [network] }
+        global.scatter = scatter;
+        window.scatter = null;
+        const requiredFields = { accounts: [network] };
         scatter
           .getIdentity(requiredFields)
           .then(() => {
             const account = scatter.identity.accounts.find(
               x => x.blockchain === 'eos',
-            )
-            global.AccountByScatter = account
-            const eosOptions = { expireInSeconds: 60 * 5 }
-            const eos = scatter.eos(network, EOS, eosOptions)
-            global.EosByScatter = eos
-            callback()
+            );
+            global.AccountByScatter = account;
+            const eosOptions = { expireInSeconds: 60 * 5 };
+            const eos = scatter.eos(network, EOS, eosOptions);
+            global.EosByScatter = eos;
+            callback();
           })
           .catch(err => {
-            console.log('err:', err)
-          })
-      })
+            console.log('err:', err);
+          });
+      });
     })
     .catch(err => {
-      console.log('err==', err)
+      console.log('err==', err);
       // 从测试网切换过来如果测试数据为空，此处需要重新获取identity
-      const { scatter } = ScatterJS
-      const requiredFields = { accounts: [network] }
+      const { scatter } = ScatterJS;
+      const requiredFields = { accounts: [network] };
       scatter.getIdentity(requiredFields).then(() => {
         const account = scatter.identity.accounts.find(
           x => x.blockchain === 'eos',
-        )
-        global.AccountByScatter = account
-        const eosOptions = { expireInSeconds: 60 * 5 }
-        const eos = scatter.eos(network, EOS, eosOptions)
-        global.EosByScatter = eos
-        callback()
-      })
-    })
-}
+        );
+        global.AccountByScatter = account;
+        const eosOptions = { expireInSeconds: 60 * 5 };
+        const eos = scatter.eos(network, EOS, eosOptions);
+        global.EosByScatter = eos;
+        callback();
+      });
+    });
+};
 
 const getEosTestScatter = callback => {
   const network = {
@@ -131,117 +173,121 @@ const getEosTestScatter = callback => {
     protocol: 'https',
     host: config.testEndpoint,
     port: 443,
-    chainId: config.testChainId
-  }
+    chainId: config.testChainId,
+  };
   ScatterJS.scatter
     .connect('EOSCannonTool')
     .then(connected => {
-      if (!connected) {return}
-      const { scatter } = ScatterJS
+      if (!connected) {
+        return;
+      }
+      const { scatter } = ScatterJS;
       scatter
         .forgetIdentity()
         .then(() => {
-          global.scatter = scatter
-          window.scatter = null
-          const requiredFields = { accounts: [network] }
+          global.scatter = scatter;
+          window.scatter = null;
+          const requiredFields = { accounts: [network] };
           scatter.getIdentity(requiredFields).then(() => {
             const account = scatter.identity.accounts.find(
               x => x.blockchain === 'eos',
-            )
-            global.AccountByScatter = account
-            const eosOptions = { expireInSeconds: 60 * 5 }
-            const eos = scatter.eos(network, EOS, eosOptions)
-            global.EosByScatter = eos
-            callback()
-          })
+            );
+            global.AccountByScatter = account;
+            const eosOptions = { expireInSeconds: 60 * 5 };
+            const eos = scatter.eos(network, EOS, eosOptions);
+            global.EosByScatter = eos;
+            callback();
+          });
         })
         .catch(err => {
-          console.log('err==', err)
-        })
+          console.log('err==', err);
+        });
     })
     .catch(err => {
-      console.log('err==', err)
+      console.log('err==', err);
       // 从测试网切换过来如果测试数据为空，此处需要重新获取identity
-      const { scatter } = ScatterJS
-      const requiredFields = { accounts: [network] }
+      const { scatter } = ScatterJS;
+      const requiredFields = { accounts: [network] };
       scatter.getIdentity(requiredFields).then(() => {
         const account = scatter.identity.accounts.find(
           x => x.blockchain === 'eos',
-        )
-        global.AccountByScatter = account
-        const eosOptions = { expireInSeconds: 60 * 5 }
-        const eos = scatter.eos(network, EOS, eosOptions)
-        global.EosByScatter = eos
-        callback()
-      })
-    })
-}
+        );
+        global.AccountByScatter = account;
+        const eosOptions = { expireInSeconds: 60 * 5 };
+        const eos = scatter.eos(network, EOS, eosOptions);
+        global.EosByScatter = eos;
+        callback();
+      });
+    });
+};
 
 const getEosOtherTestScatter = callback => {
-  console.log(storage.getNetwork().slice(8))
+  console.log(storage.getNetwork().slice(8));
   const network = {
     blockchain: 'eos',
     protocol: 'https',
     host: storage.getNetwork().slice(8),
     port: 443,
-    chainId: storage.getChainId()
-  }
+    chainId: storage.getChainId(),
+  };
   ScatterJS.scatter
     .connect('EOSCannonTool')
     .then(connected => {
-      if (!connected) {return}
-      const { scatter } = ScatterJS
+      if (!connected) {
+        return;
+      }
+      const { scatter } = ScatterJS;
       scatter
         .forgetIdentity()
         .then(() => {
-          global.scatter = scatter
-          window.scatter = null
-          const requiredFields = { accounts: [network] }
+          global.scatter = scatter;
+          window.scatter = null;
+          const requiredFields = { accounts: [network] };
           scatter.getIdentity(requiredFields).then(() => {
             const account = scatter.identity.accounts.find(
               x => x.blockchain === 'eos',
-            )
-            global.AccountByScatter = account
-            const eosOptions = { expireInSeconds: 60 * 5 }
-            const eos = scatter.eos(network, EOS, eosOptions)
-            global.EosByScatter = eos
-            callback()
-          })
+            );
+            global.AccountByScatter = account;
+            const eosOptions = { expireInSeconds: 60 * 5 };
+            const eos = scatter.eos(network, EOS, eosOptions);
+            global.EosByScatter = eos;
+            callback();
+          });
         })
         .catch(err => {
-          console.log('err==', err)
-        })
+          console.log('err==', err);
+        });
     })
     .catch(err => {
-      console.log('err==', err)
+      console.log('err==', err);
       // 从测试网切换过来如果测试数据为空，此处需要重新获取identity
-      const { scatter } = ScatterJS
-      const requiredFields = { accounts: [network] }
+      const { scatter } = ScatterJS;
+      const requiredFields = { accounts: [network] };
       scatter.getIdentity(requiredFields).then(() => {
         const account = scatter.identity.accounts.find(
           x => x.blockchain === 'eos',
-        )
-        global.AccountByScatter = account
-        const eosOptions = { expireInSeconds: 60 * 5 }
-        const eos = scatter.eos(network, EOS, eosOptions)
-        global.EosByScatter = eos
-        callback()
-      })
-    })
-}
+        );
+        global.AccountByScatter = account;
+        const eosOptions = { expireInSeconds: 60 * 5 };
+        const eos = scatter.eos(network, EOS, eosOptions);
+        global.EosByScatter = eos;
+        callback();
+      });
+    });
+};
 // InfoInitPage 获取初始化信息
-async function getEosInfoDetail (type) {
-  const eos = getEos(type)
-  const Info = await eos.getInfo({})
-  const chainDate = new Date(`${Info.head_block_time}Z`)
-  const expiration = new Date(chainDate.getTime() + 60 * 60 * 1000)
-  const Block = await eos.getBlock(Info.last_irreversible_block_num)
+async function getEosInfoDetail(type) {
+  const eos = getEos(type);
+  const Info = await eos.getInfo({});
+  const chainDate = new Date(`${Info.head_block_time}Z`);
+  const expiration = new Date(chainDate.getTime() + 60 * 60 * 1000);
+  const Block = await eos.getBlock(Info.last_irreversible_block_num);
   return {
     expiration: expiration.toISOString().split('.')[0],
     refBlockNum: Info.last_irreversible_block_num & 0xffff,
     refBlockPrefix: Block.ref_block_prefix,
-    chainId: Info.chain_id
-  }
+    chainId: Info.chain_id,
+  };
 }
 
 /**
@@ -253,9 +299,9 @@ const openTransactionSuccessNotification = formatMessage => {
     description: formatMessage(
       utilsMsg.TransactionSuccessNotificationDescription,
     ),
-    duration: 3
-  })
-}
+    duration: 3,
+  });
+};
 /**
  * 提示用户签名失败
  * */
@@ -265,9 +311,9 @@ const openTransactionFailNotification = (formatMessage, what) => {
     description: `${what}，${formatMessage(
       utilsMsg.TransactionFailNotificationDescription,
     )}`,
-    duration: 3
-  })
-}
+    duration: 3,
+  });
+};
 /**
  * 提示用户已复制成功
  * */
@@ -277,13 +323,13 @@ const openNotification = formatMessage => {
     description: formatMessage(
       utilsMsg.CopyTransactionSuccessNotificationDescription,
     ),
-    duration: 3
-  })
-}
+    duration: 3,
+  });
+};
 /**
  * 币种列表
  * */
-const symbolList = [
+const symbolList=[
   { symbol: 'EOS', contract: 'eosio.token', digit: 4 },
   { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
   { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 4 },
@@ -410,89 +456,88 @@ const symbolList = [
   { symbol: 'YOU', contract: 'youbaoyoubao', digit: 4 },
   { symbol: 'YUM', contract: 'yumgamescoin', digit: 4 },
 
-  { symbol: 'ZKS', contract: 'zkstokensr4u', digit: 0 }
-
-]
+  { symbol: 'ZKS', contract: 'zkstokensr4u', digit: 0 },
+];
 
 const symbolListWorbli = [
   { symbol: 'EOS', contract: 'eosio.token', digit: 4 },
-  { symbol: 'WBI', contract: 'worbliworbli', digit: 4 }
-]
+  { symbol: 'WBI', contract: 'worbliworbli', digit: 4 },
+];
 /**
  * 空投列表
  * */
-const airgrabList = [
+const airgrabList=[
   {
     key: '10',
     symbol: 'NEB',
     account: 'nebulatokenn',
     method: 'open',
-    url: 'https://nebulaprotocol.com'
+    url: 'https://nebulaprotocol.com',
   },
   {
     key: '8',
     symbol: 'HVT',
     account: 'hirevibeshvt',
     method: 'claim',
-    url: 'https://www.hirevibes.io/'
+    url: 'https://www.hirevibes.io/',
   },
   {
     key: '7',
     symbol: 'ZKS',
     account: 'zkstokensr4u',
     method: 'claim',
-    url: 'https://zks.one'
+    url: 'https://zks.one',
   },
   {
     key: '9',
     symbol: 'INF',
     account: 'infinicoinio',
     method: 'open',
-    url: 'https://www.infiniverse.net/'
+    url: 'https://www.infiniverse.net/',
   },
   {
     key: '6',
     symbol: 'DEOS',
     account: 'thedeosgames',
     method: 'claim',
-    url: 'http://deosgames.com'
+    url: 'http://deosgames.com',
   },
   {
     key: '1',
     symbol: 'ATD',
     account: 'eosatidiumio',
     method: 'signup',
-    url: 'https://www.atidium.io'
+    url: 'https://www.atidium.io',
   },
   {
     key: '2',
     symbol: 'POOR',
     account: 'poormantoken',
     method: 'signup',
-    url: 'https://eostoolkit.io'
+    url: 'https://eostoolkit.io',
   },
   {
     key: '3',
     symbol: 'RIDL',
     account: 'ridlridlcoin',
     method: 'claim',
-    url: 'https://ridl.get-scatter.com'
+    url: 'https://ridl.get-scatter.com',
   },
   {
     key: '4',
     symbol: 'TRYBE',
     account: 'trybenetwork',
     method: 'claim',
-    url: 'https://trybe.one'
+    url: 'https://trybe.one',
   },
   {
     key: '5',
     symbol: 'WIZZ',
     account: 'wizznetwork1',
     method: 'signup',
-    url: 'https://wizz.network'
-  }
-]
+    url: 'https://wizz.network',
+  },
+];
 
 export {
   voteNodes,
@@ -508,5 +553,4 @@ export {
   symbolList,
   airgrabList,
   symbolListWorbli
-}
-
+};

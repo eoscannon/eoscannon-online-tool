@@ -36,6 +36,12 @@ storage.getNetwork = () => storage.get('Network')
 storage.setChainId = name => {
   storage.set('ChainId', name)
 }
+
+storage.getForm = () => storage.get('Form')
+
+storage.setForm = name => {
+  storage.set('Form', name)
+}
 storage.getChainId = () => storage.get('ChainId')
 
 storage.setTransferForm = TransferForm => {

@@ -289,12 +289,12 @@ class HeaderComp extends React.Component {
           >
             <Menu.Item key="9">
               <Link
-                href="/accountSearch"
-                to="/accountSearch"
+                href="/"
+                to="/"
                 innerRef={() => {}}
               >
                 <Icon type="user" />
-                <span>{accountSearch}</span>
+                <span>首页</span>
               </Link>
             </Menu.Item>
             <Menu.SubMenu

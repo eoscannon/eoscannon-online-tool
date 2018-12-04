@@ -378,11 +378,11 @@ export class AccountSearchPage extends React.Component {
     const data = this.state.powerAddress
     const children = symbolList.map((item) => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
-    ))
+    )) || {}
 
     const childrenWorbli = symbolListWorbli.map((item) => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
-    ))
+    )) || {}
     return (
       <LayoutContentBox>
         <styleComps.ConBox>

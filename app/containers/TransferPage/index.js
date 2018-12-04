@@ -32,6 +32,8 @@ import {
 import { LayoutContent } from '../../components/NodeComp'
 import ScanQrcode from '../../components/ScanQrcode'
 import DealGetQrcode from '../../components/DealGetQrcode'
+import FormCode from '../../components/FormCode' 
+
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
 import { storage } from '../../utils/storage'
@@ -358,7 +360,8 @@ export class TransferPage extends React.Component {
       return
     }
     const values = this.props.form.getFieldsValue()
-    const eos = getEos(this.props.SelectedNetWork)
+    const eos = getEos(this.props.SelectedNetWork,values)
+    console.log('form', values)
     const {
       FromAccountName,
       ToAccountName,
@@ -491,10 +494,10 @@ export class TransferPage extends React.Component {
     )
     const children = symbolList.map(item => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
-    ))
+    )) || {}
     const childrenTest = symbolListWorbli.map(item => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
-    ))
+    )) || {}
 
     var {TransferForm} = this.state
     TransferForm = this.unique(TransferForm)
