@@ -340,6 +340,7 @@ const symbolList = [
   { symbol: 'FOS', contract: 'farmeosbankx', digit: 4 },
   { symbol: 'FUN', contract: 'eosfuntoken1', digit: 4 },
 
+  { symbol: 'GT', contract: 'eosgetgtoken', digit: 4 },
   { symbol: 'GYM', contract: 'gymrewardsio', digit: 4 },
 
   { symbol: 'HORUS', contract: 'horustokenio', digit: 4 },
@@ -376,6 +377,7 @@ const symbolList = [
   { symbol: 'PGL', contract: 'prospectorsg', digit: 4 },
   { symbol: 'POKER', contract: 'eospokercoin', digit: 4 },
   { symbol: 'POOR', contract: 'poormantoken', digit: 4 },
+  { symbol: 'PSI', contract: 'psidicetoken', digit: 4 },
   { symbol: 'PSO', contract: 'cryptopesosc', digit: 4 },
   { symbol: 'PTI', contract: 'ptitokenhome', digit: 4 },
   { symbol: 'PUB', contract: 'publytoken11', digit: 4 },
