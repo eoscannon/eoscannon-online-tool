@@ -414,6 +414,10 @@ const symbolList = [
 
 ]
 
+const symbolListWorbli = [
+  { symbol: 'EOS', contract: 'eosio.token', digit: 4 },
+  { symbol: 'WBI', contract: 'worbliworbli', digit: 4 },
+]
 /**
  * 空投列表
  * */
@@ -502,6 +506,7 @@ export {
   openTransactionFailNotification,
   openNotification,
   symbolList,
-  airgrabList
+  airgrabList,
+  symbolListWorbli
 }
 

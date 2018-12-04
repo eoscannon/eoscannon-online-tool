@@ -26,6 +26,7 @@ import {
   formItemLayout,
   getEos,
   symbolList,
+  symbolListWorbli,
   openTransactionFailNotification
 } from '../../utils/utils'
 import { LayoutContent } from '../../components/NodeComp'
@@ -55,7 +56,8 @@ export class TransferPage extends React.Component {
       code: '',
       dataSource: [],
       transferSymbolSelect: '',
-      TransferForm: [] //  本地账号数据
+      TransferForm: [], //  本地账号数据
+      selectLanguage: 'main'
     }
   }
   // init page
@@ -69,6 +71,9 @@ export class TransferPage extends React.Component {
         console.log('err:', err)
         len = 0
       }
+      this.setState({
+        selectLanguage: this.props.SelectLanguage
+      })
 
       // const state = this.props.location.state.name.split(' ')
       setTimeout(() => {
@@ -102,6 +107,11 @@ export class TransferPage extends React.Component {
    * */
   componentWillReceiveProps (nextProps) {
     this.onValuesChange(nextProps)
+    if(nextProps.SelectLanguage !== this.props.SelectLanguage){
+      this.setState({
+        selectLanguage: nextProps.SelectLanguage
+      })
+    }
   }
   /**
    * 输入框内容变化时，改变按钮状态
@@ -482,6 +492,10 @@ export class TransferPage extends React.Component {
     const children = symbolList.map(item => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
     ))
+    const childrenTest = symbolListWorbli.map(item => (
+      <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
+    ))
+    
     var {TransferForm} = this.state
     TransferForm = this.unique(TransferForm)
     const childrenAccount = TransferForm.map((data, index) => (
@@ -574,7 +588,40 @@ export class TransferPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout} style={{ margin: 0 }}>
+              {this.props.SelectedNetWork === 'test'? (
+                <FormItem {...formItemLayout} style={{ margin: 0 }}>
+                <div
+                  style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}
+                >
+                  {getFieldDecorator('transferSymbol', {
+                    initialValue: 'eos (eosio.token)',
+                    rules: [
+                      { required: true, message: TransferSymbolPlaceholder }
+                    ]
+                  })(
+                    <AutoComplete
+                      dataSource={childrenTest}
+                      placeholder={TransferSymbolHolder}
+                      optionLabelProp="value"
+                      style={{ width: '100%' }}
+                      filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                    />
+                  )}
+                </div>
+                <span
+                  role="article"
+                  style={{ marginLeft: 8, fontSize: 12 }}
+                  onClick={this.toggle}
+                  aria-hidden="true"
+                >
+                  {SymbolCustom}{' '}
+                  <Tooltip placement="top" title={TransferQuantityPlaceholder}>
+                    <Icon type={this.state.addSymbol ? 'up' : 'down'} />
+                  </Tooltip>
+                </span>
+              </FormItem>
+              ):(
+                <FormItem {...formItemLayout} style={{ margin: 0 }}>
                 <div
                   style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}
                 >
@@ -605,6 +652,7 @@ export class TransferPage extends React.Component {
                   </Tooltip>
                 </span>
               </FormItem>
+              )}
               {this.state.addSymbol ? (
                 <div>
                   <FormItem {...formItemLayout}>

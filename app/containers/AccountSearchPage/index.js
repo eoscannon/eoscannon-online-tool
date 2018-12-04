@@ -15,7 +15,7 @@ import styleComps from './styles'
 
 // import { push } from 'react-router-redux';
 
-import { getEos, symbolList } from '../../utils/utils'
+import { getEos, symbolList, symbolListWorbli } from '../../utils/utils'
 import { LayoutContentBox, FormComp } from '../../components/NodeComp'
 import messages from './messages'
 
@@ -379,6 +379,10 @@ export class AccountSearchPage extends React.Component {
     const children = symbolList.map((item) => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
     ))
+
+    const childrenWorbli = symbolListWorbli.map((item) => (
+      <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
+    ))
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
@@ -477,7 +481,20 @@ export class AccountSearchPage extends React.Component {
               <div style={{ padding: '2rem 0' }}>
                 <Tabs defaultActiveKey="1">
                   <TabPane tab={FunctionSearchAccountBalance} key="1">
-                    <div style={{ padding: '1rem 0' }}>
+                    {this.props.SelectedNetWork === 'test' ? (
+                      <div style={{ padding: '1rem 0' }}>
+                      <span>{FunctionSearchAccountSyblom}：</span>
+                      <AutoComplete
+                        dataSource={childrenWorbli}
+                        placeholder='eos (eosio.token)'
+                        optionLabelProp="value"
+                        onSelect={this.handleChange}
+                        filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                      />
+                      
+                    </div>
+                    ) : (
+                      <div style={{ padding: '1rem 0' }}>
                       <span>{FunctionSearchAccountSyblom}：</span>
                       <AutoComplete
                         dataSource={children}
@@ -488,6 +505,7 @@ export class AccountSearchPage extends React.Component {
                       />
                       
                     </div>
+                    )}
                     <div>
                       <Table
                         columns={columnsBlance}
