@@ -483,28 +483,28 @@ export class AccountSearchPage extends React.Component {
                   <TabPane tab={FunctionSearchAccountBalance} key="1">
                     {this.props.SelectedNetWork === 'test' ? (
                       <div style={{ padding: '1rem 0' }}>
-                      <span>{FunctionSearchAccountSyblom}：</span>
-                      <AutoComplete
-                        dataSource={childrenWorbli}
-                        placeholder='eos (eosio.token)'
-                        optionLabelProp="value"
-                        onSelect={this.handleChange}
-                        filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-                      />
-                      
-                    </div>
+                        <span>{FunctionSearchAccountSyblom}：</span>
+                        <AutoComplete
+                          dataSource={childrenWorbli}
+                          placeholder='eos (eosio.token)'
+                          optionLabelProp="value"
+                          onSelect={this.handleChange}
+                          filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                        />
+
+                      </div>
                     ) : (
                       <div style={{ padding: '1rem 0' }}>
-                      <span>{FunctionSearchAccountSyblom}：</span>
-                      <AutoComplete
-                        dataSource={children}
-                        placeholder='eos (eosio.token)'
-                        optionLabelProp="value"
-                        onSelect={this.handleChange}
-                        filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-                      />
-                      
-                    </div>
+                        <span>{FunctionSearchAccountSyblom}：</span>
+                        <AutoComplete
+                          dataSource={children}
+                          placeholder='eos (eosio.token)'
+                          optionLabelProp="value"
+                          onSelect={this.handleChange}
+                          filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                        />
+
+                      </div>
                     )}
                     <div>
                       <Table
