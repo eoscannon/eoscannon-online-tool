@@ -146,8 +146,8 @@
   "TransferPage FunctionSearchButton": "查询",
   "TransferPage FunctionSearchAccount": "账户",
   "TransferPage FunctionSearchCreateTime": "创建时间",
-  "TransferPage FunctionSearchEOSBalance": "EOS余额",
-  "TransferPage FunctionSearchEOSStake": "EOS抵押",
+  "TransferPage FunctionSearchEOSBalance": "余额",
+  "TransferPage FunctionSearchEOSStake": "抵押",
   "TransferPage FunctionSearchEOSVoteProxy": "已投代理",
   "TransferPage FunctionSearchEOSVoteNode": "已投节点",
   "TransferPage FunctionSearchMemory": "内存",
@@ -275,5 +275,7 @@
   "ProposalPage ProposalName": "提案名称",
   "ForumVotePage StatusText": "请输入帖子名称",
   "Header HeaderMenuStatusText": "论坛投票",
-  "ForumVotePage ForumVoteFirst": "步骤1/3:论坛投票"
+  "ForumVotePage ForumVoteFirst": "步骤1/3:论坛投票",
+  "TransferPage FunctionSearchAction": "操作",
+  "TransferPage FunctionSearchActionTransfer": "转账"
 }

@@ -49,7 +49,8 @@ export class AccountSearchPage extends React.Component {
       symbolCode: 'EOS(eosio.token)',
       voteProxy: '',
       accountSearch: '',
-      powerAddress: []
+      powerAddress: [],
+      symbolNet: 'EOS'
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -57,11 +58,25 @@ export class AccountSearchPage extends React.Component {
       this.handleSearch(nextProps.match.params.account)
       this.setState({ account: nextProps.match.params.account })
     }
+    if(nextProps.SelectedNetWork === 'test') {
+      this.setState({
+        symbolNet: 'WBI'
+      })
+    }else{
+      this.setState({
+        symbolNet: 'EOS'
+      })
+    }
   }
   componentDidMount () {
     console.log('account===', this.props.match.params.account)
     if (this.props.match.params.account) {
       this.handleSearch(this.props.match.params.account)
+    }
+    if(this.props.SelectedNetWork === 'test') {
+      this.setState({
+        symbolNet: 'WBI'
+      })
     }
   }
 
@@ -131,14 +146,14 @@ export class AccountSearchPage extends React.Component {
           })
         }
         if (info.voter_info) {
-          stake = `${info.voter_info.staked / 10000} EOS`
+          stake = `${info.voter_info.staked / 10000} ` + this.state.symbolNet
         }
         if (info.refund_request) {
           cpuBack = info.refund_request.cpu_amount
           netWork = info.refund_request.net_amount
         } else {
-          cpuBack = '0 EOS'
-          netWork = '0 EOS'
+          cpuBack = '0 ' + this.state.symbolNet
+          netWork = '0 ' + this.state.symbolNet
         }
         if (info.cpu_limit.used) {
           cpuScale = ((info.cpu_limit.used / info.cpu_limit.max) * 100).toFixed(
@@ -224,7 +239,7 @@ export class AccountSearchPage extends React.Component {
           .getCurrencyBalance({
             code: 'eosio.token',
             account: value,
-            symbol: 'EOS'
+            symbol: this.state.symbolNet
           })
           .then(res => {
             this.setState({
@@ -323,7 +338,12 @@ export class AccountSearchPage extends React.Component {
     const FunctionSearchAccountPlaceHolder = this.state.formatMessage(
       messages.FunctionSearchAccountPlaceHolder,
     )
-
+    const FunctionSearchAction = this.state.formatMessage(
+      messages.FunctionSearchAction,
+    )
+    const FunctionSearchActionTransfer = this.state.formatMessage(
+      messages.FunctionSearchActionTransfer,
+    )
     const columnsBlance = [
       {
         title: FunctionSearchAccountTableBalance,
@@ -334,11 +354,10 @@ export class AccountSearchPage extends React.Component {
         dataIndex: 'address'
       },
       {
-        title: '操作',
+        title: FunctionSearchAction,
         key: 'action',
         align: 'center',
         render: (text, record) => {
-          console.log('record.name ===', record.name)
           const ButtonDisabled = !record.name
           return (
             <span>
@@ -348,7 +367,7 @@ export class AccountSearchPage extends React.Component {
                 size="small"
                 onClick={() => this.handleSendTransaction(record)}
               >
-              转账
+                {FunctionSearchActionTransfer}
               </Button>
             </span>
           )
@@ -407,10 +426,10 @@ export class AccountSearchPage extends React.Component {
                     {FunctionSearchCreateTime}：{this.state.createTime}
                   </span>
                   <span>
-                    {FunctionSearchEOSBalance}：{this.state.balance}
+                    {this.state.symbolNet}{FunctionSearchEOSBalance}：{this.state.balance}
                   </span>
                   <span>
-                    {FunctionSearchEOSStake}：{this.state.stake}
+                    {this.state.symbolNet}{FunctionSearchEOSStake}：{this.state.stake}
                   </span>
                   {this.state.voteProxy ? (
                     <span>

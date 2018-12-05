@@ -155,5 +155,13 @@ export default defineMessages({
   FunctionSearchAccountPlaceHolder: {
     id: 'TransferPage FunctionSearchAccountPlaceHolder',
     defaultMessage: '请输入账号'
+  },
+  FunctionSearchAction: {
+    id: 'TransferPage FunctionSearchAction',
+    defaultMessage: '操作'
+  },
+  FunctionSearchActionTransfer: {
+    id: 'TransferPage FunctionSearchActionTransfer',
+    defaultMessage: '转账'
   }
 })

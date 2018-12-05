@@ -145,8 +145,8 @@
   "TransferPage FunctionSearchButton": "Query",
   "TransferPage FunctionSearchAccount": "Account",
   "TransferPage FunctionSearchCreateTime": "Create Time",
-  "TransferPage FunctionSearchEOSBalance": "EOS Balance",
-  "TransferPage FunctionSearchEOSStake": "EOS Stake",
+  "TransferPage FunctionSearchEOSBalance": " Balance",
+  "TransferPage FunctionSearchEOSStake": " Stake",
   "TransferPage FunctionSearchEOSVoteProxy": "Voter Proxy",
   "TransferPage FunctionSearchEOSVoteNode": "Vote",
   "TransferPage FunctionSearchMemory": "Memory",
@@ -286,5 +286,7 @@
   "ProposalPage ProposalName": "Proposal Name",
   "ForumVotePage StatusText": "Please import a forum",
   "Header HeaderMenuStatusText": "Forum Vote",
-  "ForumVotePage ForumVoteFirst": "Step 1/3: Forum Vote"
+  "ForumVotePage ForumVoteFirst": "Step 1/3: Forum Vote",
+  "TransferPage FunctionSearchAction": "Action",
+  "TransferPage FunctionSearchActionTransfer": "Transfer"
 }
