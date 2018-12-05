@@ -505,7 +505,7 @@ export class AccountSearchPage extends React.Component {
                         <span>{FunctionSearchAccountSyblom}：</span>
                         <AutoComplete
                           dataSource={childrenWorbli}
-                          placeholder='eos (eosio.token)'
+                          placeholder={this.state.symbolNet  + ' (eosio.token)'}
                           optionLabelProp="value"
                           onSelect={this.handleChange}
                           filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
@@ -517,7 +517,7 @@ export class AccountSearchPage extends React.Component {
                         <span>{FunctionSearchAccountSyblom}：</span>
                         <AutoComplete
                           dataSource={children}
-                          placeholder='eos (eosio.token)'
+                          placeholder={this.state.symbolNet  + ' (eosio.token)'}
                           optionLabelProp="value"
                           onSelect={this.handleChange}
                           filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}

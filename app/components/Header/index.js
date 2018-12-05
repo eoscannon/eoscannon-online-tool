@@ -361,11 +361,11 @@ class HeaderComp extends React.Component {
                   {proposal}
                 </Link>
               </Menu.Item>
-              {/* <Menu.Item key="15">
+              <Menu.Item key="15">
                 <Link href="/forumVote" to="/forumVote">
                   {StatusText}
                 </Link>
-              </Menu.Item> */}
+              </Menu.Item>
               <Menu.Item key="16">
                 <Link href="/worbli" to="/worbli">
                  Worbli

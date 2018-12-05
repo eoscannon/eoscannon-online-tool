@@ -274,8 +274,8 @@
   "ProposalPage Proposaler": "投票人",
   "ProposalPage ProposalName": "提案名称",
   "ForumVotePage StatusText": "请输入帖子名称",
-  "Header HeaderMenuStatusText": "论坛投票",
-  "ForumVotePage ForumVoteFirst": "步骤1/3:论坛投票",
+  "Header HeaderMenuStatusText": "Forum投票",
+  "ForumVotePage ForumVoteFirst": "步骤1/3:Forum投票",
   "TransferPage FunctionSearchAction": "操作",
   "TransferPage FunctionSearchActionTransfer": "转账"
 }
