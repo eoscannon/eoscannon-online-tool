@@ -402,6 +402,7 @@ const symbolList = [
   { symbol: 'TOP', contract: 'topdapptoken', digit: 4 },
   { symbol: 'TPT', contract: 'tokendapppub', digit: 4 },
   { symbol: 'TRYBE', contract: 'trybenetwork', digit: 4 },
+  { symbol: 'TXT', contract: 'trusteamwins', digit: 4 },
 
   { symbol: 'WECASH', contract: 'weosservices', digit: 4 },
   { symbol: 'WINS', contract: 'eoswinonewww', digit: 4 },
