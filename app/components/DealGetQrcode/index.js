@@ -183,7 +183,7 @@ export default class DealGetQrcode extends Component {
               {specialStatusCompontent ? (
                   <div>
                     <div style={{ fontSize: "16px",fontWeight:"bold"}}>{CopyAlertMessage}</div>
-                    <span>{CopyOwnerAlertDescriptionFirst}<span style={{fontWeight:'bold',color:"red"}}>Owner</span>{CopyOwnerAlertDescriptionLast}</span>
+                    <span style={{display: "block",lineHeight:"22px"}}>{CopyOwnerAlertDescriptionFirst}<span style={{fontWeight:'bold',color:"red"}}>Owner</span>{CopyOwnerAlertDescriptionLast}</span>
                   </div>
                 ) : (
                   <Alert
