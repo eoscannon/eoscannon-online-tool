@@ -136,6 +136,12 @@ export default class DealGetQrcode extends Component {
     const CopyOwnerAlertDescription = this.props.formatMessage(
       utilsMsg.CopyOwnerAlertDescription,
     )
+    const CopyOwnerAlertDescriptionFirst = this.props.formatMessage(
+      utilsMsg.CopyOwnerAlertDescriptionFirst,
+    )
+    const CopyOwnerAlertDescriptionLast = this.props.formatMessage(
+      utilsMsg.CopyOwnerAlertDescriptionLast,
+    )
     const scatterSignature = this.props.formatMessage(
       utilsMsg.scatterSignature,
     )
@@ -173,20 +179,19 @@ export default class DealGetQrcode extends Component {
         )}
         {this.props.scatterStatus ? null : (
           <div>
-            <FormItem>
+            <FormItem style={{border:"1px solid #91d5ff",padding: "10px 15px",backgroundColor: "#e6f7ff", borderRadius: "3px"}}>
               {specialStatusCompontent ? (
-                <Alert
-                  message={CopyAlertMessage}
-                  description={CopyOwnerAlertDescription}
-                  type="info"
-                />
-              ) : (
-                <Alert
-                  message={CopyAlertMessage}
-                  description={CopyAlertDescription}
-                  type="info"
-                />
-              )}
+                  <div>
+                    <div style={{ fontSize: "16px",fontWeight:"bold"}}>{CopyAlertMessage}</div>
+                    <span>{CopyOwnerAlertDescriptionFirst}<span style={{fontWeight:'bold',color:"red"}}>Owner</span>{CopyOwnerAlertDescriptionLast}</span>
+                  </div>
+                ) : (
+                  <Alert
+                    message={CopyAlertMessage}
+                    description={CopyAlertDescription}
+                    type="info"
+                  />
+                )}
             </FormItem>
             <FormItem>
               {getFieldDecorator('transactionTextArea', {

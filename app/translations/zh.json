@@ -281,5 +281,8 @@
   "TransferPage FunctionSearchActionTransfer": "转账",
   "ProxyPage LabelApprove": "赞成",
   "ProxyPage LabelAgaist": "反对",
-  "ForumVotePage ProposalList": "提案列表"
+  "ForumVotePage ProposalList": "提案列表",
+  "Public CopyOwnerAlertDescriptionFirst":"打开离线工具APP，扫描以下二维码，并用",
+  "Public CopyOwnerAlertDescriptionLast":"权限的私钥签名"
+
 }

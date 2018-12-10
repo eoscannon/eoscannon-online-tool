@@ -294,6 +294,8 @@
   "ProxyPage LabelAgaist": "Agaist",
   "ForumVotePage ProposalList": "Proposal List",
   "Public CopyAlertMessage": "Step 2/3:Signature transaction",
-  "Public CopyOwnerAlertDescription":"Scan QR Code with APP in offline mobile device, and sign it with the private key of the owner's permission."
+  "Public CopyOwnerAlertDescription":"Scan QR Code with Owner permission in offline mobile device",
+  "Public CopyOwnerAlertDescriptionFirst":"Scan QR Code with ",
+  "Public CopyOwnerAlertDescriptionLast":" permission in offline mobile device"
 
 }

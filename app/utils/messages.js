@@ -316,4 +316,12 @@ export default defineMessages({
     id: 'Header HeaderMenuStatusText',
     defaultMessage: '论坛投票'
   },
+  CopyOwnerAlertDescriptionFirst:{
+    id: 'Public CopyOwnerAlertDescriptionFirst',
+    defaultMessage: '打开离线工具APP，扫描以下二维码，并用Owner'
+  },
+  CopyOwnerAlertDescriptionLast:{
+    id: 'Public CopyOwnerAlertDescriptionLast',
+    defaultMessage: '权限的私钥签名'
+  }
 })
