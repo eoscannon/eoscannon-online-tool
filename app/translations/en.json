@@ -182,7 +182,8 @@
   "Public ScanCodeSendCancel": "Cancel",
   "Public ProducersDealTranscation": "Step 1/3: Generate transaction",
   "Public ProducersSendTranscation": "Step 3/3: Send transaction",
-  "AirGrabPage AirGrabAlertMessage": "Claim your WBI token with securitycode",
+  "worbliPage AirGrabAlertMessage": "Claim your WBI token with securitycode",
+  "AirGrabPage AirGrabAlertMessage": "AirGrab",
   "AirGrabPage AirGrabAlertDescription":
     "AirGrab, input account, click airdrop button to generate unsigned transaction. Using OfflineTools signature, broadcast can be obtained.",
   "AirGrabPage AirGrabTableColumnsSymbolTitle": "Symbol",
@@ -291,7 +292,8 @@
   "TransferPage FunctionSearchActionTransfer": "Transfer",
   "ProxyPage LabelApprove": "Approve",
   "ProxyPage LabelAgaist": "Agaist",
-  "ForumVotePage ProposalList": "Proposal List"
-
+  "ForumVotePage ProposalList": "Proposal List",
+  "Public CopyAlertMessage": "Step 2/3:Signature transaction",
+  "Public CopyOwnerAlertDescription":"Scan QR Code with APP in offline mobile device, and sign it with the private key of the owner's permission."
 
 }

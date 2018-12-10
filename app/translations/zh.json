@@ -182,7 +182,8 @@
   "Public ScanCodeSendCancel": "取消",
   "Public ProducersDealTranscation": "步骤 1/3: 生成交易",
   "Public ProducersSendTranscation": "步骤 3/3: 发送交易",
-  "AirGrabPage AirGrabAlertMessage": "使用securitycode领取WBI代币",
+  "AirGrabPage AirGrabAlertMessage": "领取空投",
+  "worbliPage AirGrabAlertMessage": "使用securitycode领取WBI代币",
   "AirGrabPage AirGrabAlertDescription":
     "部分糖果需要用户手动领取，在此领取后，耐心等待项目方转币即可。",
   "AirGrabPage AirGrabTableColumnsSymbolTitle": "代币",

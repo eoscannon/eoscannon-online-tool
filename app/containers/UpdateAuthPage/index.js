@@ -147,6 +147,7 @@ export class UpdateAuthPage extends React.Component {
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
+    const CopyOwnerAlertDescription = this.state.formatMessage(utilsMsg.CopyOwnerAlertDescription)
     return (
       <LayoutContent>
         <Row gutter={16}>

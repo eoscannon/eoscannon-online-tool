@@ -7,7 +7,7 @@ import { defineMessages } from 'react-intl'
 
 export default defineMessages({
   AirGrabAlertMessage: {
-    id: 'AirGrabPage AirGrabAlertMessage',
+    id: 'worbliPage AirGrabAlertMessage',
     defaultMessage: '领取空投'
   },
   AirGrabAlertDescription: {
