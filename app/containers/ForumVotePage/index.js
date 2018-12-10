@@ -62,7 +62,7 @@ export class ForumVotePage extends React.Component {
     const values = nextProps.form.getFieldsValue()
     const { voter, statusText, radio, proxy } = values
     this.setState({
-      GetTransactionButtonState: !!voter && !!radio ,
+      GetTransactionButtonState: !!voter && !!statusText ,
       GetTransactionButtonScatterState: !!proxy
     })
   };
@@ -235,6 +235,19 @@ export class ForumVotePage extends React.Component {
       dataIndex: 'proposal_json',
       key: 'proposal_json'
     }]
+
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px',
+    };
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {},
+      onSelect: (record, selected, selectedRows) => {
+        this.props.form.setFieldsValue({statusText:record.proposal_name})
+      },
+      type:"radio"
+    };
     return (
       <LayoutContent>
         <div>
@@ -341,7 +354,7 @@ export class ForumVotePage extends React.Component {
                 </Tooltip>
                 <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
               </div>
-              <Table columns={columns} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/>
+              <Table columns={columns} rowSelection={rowSelection} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/>
             </Card>
           </Col>
         </div>
