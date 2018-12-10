@@ -179,9 +179,9 @@ export default class DealGetQrcode extends Component {
         )}
         {this.props.scatterStatus ? null : (
           <div>
-            <FormItem style={{border:"1px solid #91d5ff",padding: "10px 15px",backgroundColor: "#e6f7ff", borderRadius: "3px"}}>
+            <FormItem >
               {specialStatusCompontent ? (
-                  <div>
+                  <div style={{border:"1px solid #91d5ff",padding: "10px 15px",backgroundColor: "#e6f7ff", borderRadius: "3px"}}>
                     <div style={{ fontSize: "16px",fontWeight:"bold"}}>{CopyAlertMessage}</div>
                     <span style={{display: "block",lineHeight:"22px"}}>{CopyOwnerAlertDescriptionFirst}<span style={{fontWeight:'bold',color:"red"}}>Owner</span>{CopyOwnerAlertDescriptionLast}</span>
                   </div>
