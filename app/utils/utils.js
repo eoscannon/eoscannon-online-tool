@@ -327,6 +327,7 @@ const symbolList = [
   { symbol: 'EOSYX', contract: 'eosyxtoken11', digit: 4 },
   { symbol: 'EOSWIN', contract: 'etwineos1111', digit: 4 },
   { symbol: 'EOX', contract: 'eoxeoxeoxeox', digit: 4 },
+  { symbol: 'EPL', contract: 'alibabapoole', digit: 4 },
   { symbol: 'EPRA', contract: 'epraofficial', digit: 4 },
   { symbol: 'ET', contract: 'endlesstoken', digit: 4 },
   { symbol: 'ESA', contract: 'shadowbanker', digit: 4 },
@@ -360,6 +361,7 @@ const symbolList = [
   { symbol: 'LITE', contract: 'buildertoken', digit: 4 },
   { symbol: 'LKT', contract: 'chyyshayysha', digit: 4 },
   { symbol: 'LLG', contract: 'llgonebtotal', digit: 4 },
+  { symbol: 'LNT', contract: 'lucknumtokengit ', digit: 4 },
   { symbol: 'LOVE', contract: 'lovewintoken', digit: 4 },
   { symbol: 'LUCK', contract: 'eosluckchain', digit: 4 },
   { symbol: 'LUCKY', contract: 'eoslucktoken', digit: 4 },
@@ -404,6 +406,8 @@ const symbolList = [
   { symbol: 'TRYBE', contract: 'trybenetwork', digit: 4 },
   { symbol: 'TXT', contract: 'trusteamwins', digit: 4 },
 
+  { symbol: 'UCTT', contract: 'uctokenowner', digit: 4 },
+
   { symbol: 'WECASH', contract: 'weosservices', digit: 4 },
   { symbol: 'WINS', contract: 'eoswinonewww', digit: 4 },
   { symbol: 'WIZBOX', contract: 'wizboxairdro', digit: 4 },
@@ -411,6 +415,7 @@ const symbolList = [
 
   { symbol: 'YDAPP', contract: 'dacincubator', digit: 4 },
   { symbol: 'YOU', contract: 'youbaoyoubao', digit: 4 },
+  { symbol: 'YT', contract: 'okkkkkkkkkkk', digit: 4 },
   { symbol: 'YUM', contract: 'yumgamescoin', digit: 4 },
 
   { symbol: 'ZKS', contract: 'zkstokensr4u', digit: 0 }
