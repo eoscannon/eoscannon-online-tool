@@ -181,17 +181,17 @@ export default class DealGetQrcode extends Component {
           <div>
             <FormItem >
               {specialStatusCompontent ? (
-                  <div style={{border:"1px solid #91d5ff",padding: "10px 15px",backgroundColor: "#e6f7ff", borderRadius: "3px"}}>
-                    <div style={{ fontSize: "16px",fontWeight:"bold"}}>{CopyAlertMessage}</div>
-                    <span style={{display: "block",lineHeight:"22px"}}>{CopyOwnerAlertDescriptionFirst}<span style={{fontWeight:'bold',color:"red"}}>Owner</span>{CopyOwnerAlertDescriptionLast}</span>
-                  </div>
-                ) : (
-                  <Alert
-                    message={CopyAlertMessage}
-                    description={CopyAlertDescription}
-                    type="info"
-                  />
-                )}
+                <div style={{border: '1px solid #91d5ff', padding: '10px 15px', backgroundColor: '#e6f7ff', borderRadius: '3px'}}>
+                  <div style={{ fontSize: '16px', fontWeight: 'bold'}}>{CopyAlertMessage}</div>
+                  <span style={{display: 'block', lineHeight: '22px'}}>{CopyOwnerAlertDescriptionFirst}<span style={{fontWeight: 'bold', color: 'red'}}>Owner</span>{CopyOwnerAlertDescriptionLast}</span>
+                </div>
+              ) : (
+                <Alert
+                  message={CopyAlertMessage}
+                  description={CopyAlertDescription}
+                  type="info"
+                />
+              )}
             </FormItem>
             <FormItem>
               {getFieldDecorator('transactionTextArea', {
