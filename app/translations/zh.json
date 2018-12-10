@@ -182,7 +182,7 @@
   "Public ScanCodeSendCancel": "取消",
   "Public ProducersDealTranscation": "步骤 1/3: 生成交易",
   "Public ProducersSendTranscation": "步骤 3/3: 发送交易",
-  "AirGrabPage AirGrabAlertMessage": "领取空投",
+  "AirGrabPage AirGrabAlertMessage": "用securitycode去Claim你的WBI币",
   "AirGrabPage AirGrabAlertDescription":
     "部分糖果需要用户手动领取，在此领取后，耐心等待项目方转币即可。",
   "AirGrabPage AirGrabTableColumnsSymbolTitle": "代币",
@@ -268,7 +268,7 @@
   "IqPage VoteSwitchCheckedName": "赞成",
   "IqPage VoteSwitchUnCheckedName": "反对",
   "ProposalPage CreatorAccountNamePlaceholder": "账户名",
-  "Public HeaderMenuProposal": "提案",
+  "Public HeaderMenuProposal": "多签",
   "ProposalPage ProposalFirstOne": "步骤1/3:填写提案表单",
   "ProposalPage ProposalPermission": "签名权限",
   "ProposalPage Proposaler": "投票人",
@@ -277,5 +277,8 @@
   "Header HeaderMenuStatusText": "Forum投票",
   "ForumVotePage ForumVoteFirst": "步骤1/3:Forum投票",
   "TransferPage FunctionSearchAction": "操作",
-  "TransferPage FunctionSearchActionTransfer": "转账"
+  "TransferPage FunctionSearchActionTransfer": "转账",
+  "ProxyPage LabelApprove": "赞成",
+  "ProxyPage LabelAgaist": "反对",
+  "ForumVotePage ProposalList": "提案列表"
 }

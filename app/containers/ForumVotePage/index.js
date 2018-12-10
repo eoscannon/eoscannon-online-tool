@@ -62,7 +62,7 @@ export class ForumVotePage extends React.Component {
     const values = nextProps.form.getFieldsValue()
     const { voter, statusText, radio, proxy } = values
     this.setState({
-      GetTransactionButtonState: !!voter && !!radio && !!statusText,
+      GetTransactionButtonState: !!voter && !!radio ,
       GetTransactionButtonScatterState: !!proxy
     })
   };
@@ -187,7 +187,6 @@ export class ForumVotePage extends React.Component {
     })
   }
   onSearch = ()=>{
-    console.log('1111')
     this.handleGetTransactionInit()
   }
   render () {
@@ -196,6 +195,9 @@ export class ForumVotePage extends React.Component {
       messages.VoterPlaceholder,
     )
     const StatusText = this.state.formatMessage(messages.StatusText)
+    const LabelApprove = this.state.formatMessage(messages.LabelApprove)
+    const LabelAgaist = this.state.formatMessage(messages.LabelAgaist)
+    const ProposalList = this.state.formatMessage(messages.ProposalList)
 
     const ForumVoteFirst = this.state.formatMessage(
       messages.ForumVoteFirst,
@@ -209,8 +211,8 @@ export class ForumVotePage extends React.Component {
       utilsMsg.ProducersSendTranscation,
     )
     const options = [
-      { label: '赞成', value: 1 },
-      { label: '反对', value: 0 }
+      { label: LabelApprove, value: 1 },
+      { label: LabelAgaist, value: 0 }
     ]
 
     const columns = [{
@@ -319,7 +321,7 @@ export class ForumVotePage extends React.Component {
         </div>
         <div>
           <Col span={24}>
-            <Card title='提案列表' bordered={false}>
+            <Card title={ProposalList} bordered={false}>
               <div style={{ display: 'flex', marginBottom: 30 }}>
                 <Tooltip
                   title='Scope'

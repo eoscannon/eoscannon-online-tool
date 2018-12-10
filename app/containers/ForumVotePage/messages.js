@@ -25,5 +25,17 @@ export default defineMessages({
   ProxyScatterHelp: {
     id: 'ProxyPage ProxyScatterHelp',
     defaultMessage: '注：使用Scatter将使用已登录的账号签名'
-  }
+  },
+  LabelApprove: {
+    id: 'ProxyPage LabelApprove',
+    defaultMessage: '赞成'
+  },
+  LabelAgaist: {
+    id: 'ProxyPage LabelAgaist',
+    defaultMessage: '反对'
+  },
+  ProposalList: {
+    id: 'ForumVotePage ProposalList',
+    defaultMessage: '提案列表'
+  },
 })
