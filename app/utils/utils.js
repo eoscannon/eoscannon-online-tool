@@ -312,7 +312,9 @@ const symbolList = [
   { symbol: 'DBET', contract: 'dbetminepool', digit: 4 },
   { symbol: 'DEOS', contract: 'thedeosgames', digit: 4 },
   { symbol: 'DET', contract: 'dacincubator', digit: 4 },
+  { symbol: 'DIA', contract: 'diatokencore', digit: 4 },
   { symbol: 'DICE', contract: 'betdicetoken', digit: 4 },
+  { symbol: 'DK', contract: 'dicekingcoin', digit: 4 },
 
   { symbol: 'EATCOIN', contract: 'eatscience14', digit: 4 },
   { symbol: 'ECASH', contract: 'horustokenio', digit: 4 },
@@ -327,6 +329,7 @@ const symbolList = [
   { symbol: 'EOSYX', contract: 'eosyxtoken11', digit: 4 },
   { symbol: 'EOSWIN', contract: 'etwineos1111', digit: 4 },
   { symbol: 'EOX', contract: 'eoxeoxeoxeox', digit: 4 },
+  { symbol: 'EPL', contract: 'alibabapoole', digit: 4 },
   { symbol: 'EPRA', contract: 'epraofficial', digit: 4 },
   { symbol: 'ET', contract: 'endlesstoken', digit: 4 },
   { symbol: 'ESA', contract: 'shadowbanker', digit: 4 },
@@ -337,6 +340,7 @@ const symbolList = [
   { symbol: 'FAIR', contract: 'faireostoken', digit: 4 },
   { symbol: 'FAST', contract: 'fastwinadmin', digit: 4 },
   { symbol: 'FC', contract: 'fcfundadmins', digit: 4 },
+  { symbol: 'FISH', contract: 'fishjoytoken', digit: 4 },
   { symbol: 'FOS', contract: 'farmeosbankx', digit: 4 },
   { symbol: 'FUN', contract: 'eosfuntoken1', digit: 4 },
 
@@ -360,6 +364,7 @@ const symbolList = [
   { symbol: 'LITE', contract: 'buildertoken', digit: 4 },
   { symbol: 'LKT', contract: 'chyyshayysha', digit: 4 },
   { symbol: 'LLG', contract: 'llgonebtotal', digit: 4 },
+  { symbol: 'LNT', contract: 'lucknumtokengit ', digit: 4 },
   { symbol: 'LOVE', contract: 'lovewintoken', digit: 4 },
   { symbol: 'LUCK', contract: 'eosluckchain', digit: 4 },
   { symbol: 'LUCKY', contract: 'eoslucktoken', digit: 4 },
@@ -399,10 +404,13 @@ const symbolList = [
   { symbol: 'TGC', contract: 'eostgctoken1', digit: 4 },
   { symbol: 'TKC', contract: 'tkcointkcoin', digit: 4 },
   { symbol: 'TOE', contract: 'talkoneos123', digit: 4 },
+  { symbol: 'TOOK', contract: 'taketooktook', digit: 4 },
   { symbol: 'TOP', contract: 'topdapptoken', digit: 4 },
   { symbol: 'TPT', contract: 'tokendapppub', digit: 4 },
   { symbol: 'TRYBE', contract: 'trybenetwork', digit: 4 },
   { symbol: 'TXT', contract: 'trusteamwins', digit: 4 },
+
+  { symbol: 'UCTT', contract: 'uctokenowner', digit: 4 },
 
   { symbol: 'WECASH', contract: 'weosservices', digit: 4 },
   { symbol: 'WINS', contract: 'eoswinonewww', digit: 4 },
@@ -411,6 +419,7 @@ const symbolList = [
 
   { symbol: 'YDAPP', contract: 'dacincubator', digit: 4 },
   { symbol: 'YOU', contract: 'youbaoyoubao', digit: 4 },
+  { symbol: 'YT', contract: 'okkkkkkkkkkk', digit: 4 },
   { symbol: 'YUM', contract: 'yumgamescoin', digit: 4 },
 
   { symbol: 'ZKS', contract: 'zkstokensr4u', digit: 0 }
