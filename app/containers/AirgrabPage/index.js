@@ -11,6 +11,9 @@ import { Form, Icon, Input, Alert, Card, Col, Row, Table, Button } from 'antd'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { makeSelectNetwork } from '../LanguageProvider/selectors'
+import eosioAbi from '../TransferPage/abi'
+import eosIqAbi from '../TransferPage/iqAbi'
+import adcAbi from '../TransferPage/adcAbi'
 
 import {
   formItemLayout,
@@ -107,11 +110,26 @@ export class AirgrabPage extends React.Component {
     const values = this.props.form.getFieldsValue()
     const eos = getEos(this.props.SelectedNetWork)
     const { AccountName } = values
-    eos.getAbi(record.account).then(res => {
-     eos.fc.abiCache.abi(res.account_name, res.abi)
-    }).catch(err=>{
-      console.log('err', err)
-    })
+    // eos.getAbi(record.account).then(res => {
+    //  eos.fc.abiCache.abi(res.account_name, res.abi)
+    // }).catch(err=>{
+    //   console.log('err', err)
+    // })
+    console.log('record', record)
+
+    if (
+      record.account !== 'eosio' &&
+      record.account !== 'eosio.token'
+    ) {
+      if (record.account.toUpperCase() === 'EVERIPEDIAIQ') {
+        transferDigit = 3
+        eos.fc.abiCache.abi(record.account, eosIqAbi)
+      } else if (record.account.toUpperCase() === 'CHALLENGEDAC') {
+        eos.fc.abiCache.abi(record.account, adcAbi)
+      } else {
+        eos.fc.abiCache.abi(record.account, eosioAbi)
+      }
+    }
     var data
     if (record.method === 'signup' && record.symbol !== 'SEED') {
       data = {
