@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { injectIntl } from 'react-intl'
-import { Form, Icon, Input, Card, Col, Row, Modal, Tabs, Radio, Table, Button, InputNumber, Tooltip } from 'antd'
+import { Form, Icon, Input, Card, Col, Row, Modal, Tabs, Radio, Table, Button, InputNumber, Tooltip, Select, List, Progress } from 'antd'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -20,9 +20,13 @@ import ScanQrcode from '../../components/ScanQrcode'
 import DealGetQrcode from '../../components/DealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
+import { now } from 'moment';
+import zan from './zan.svg'
+import cai from './cai.svg'
 
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
+const Option = Select.Option;
 
 export class ForumVotePage extends React.Component {
   constructor (props) {
@@ -40,7 +44,8 @@ export class ForumVotePage extends React.Component {
       scope: 'eosforumrcpp',
       lowerBound: null,
       upperBound: null,
-      limit: 100
+      limit: 100,
+      creatTimeData:[]
     }
   }
   /**
@@ -78,35 +83,67 @@ export class ForumVotePage extends React.Component {
   handleGetTransactionInit = () => {
     this.setState({ scatterStatus: false })
     const eos = getEos(this.props.SelectedNetWork)
-    // const { account, proposer, proposalName} = values
-    var data = {
-      code: "eosforumrcpp",
-      index_position: 1,
-      json: true,
-      key_type: "i64",
-      limit: this.state.limit,
-      lower_bound: this.state.lowerBound,
-      scope: this.state.scope,
-      table: "proposal",
-      table_key: '',
-      upper_bound: this.state.upperBound
-    }
-
-    eos.getTableRows(data)
-      .then(tr => {
-        tr.rows.map((item, index)=>{
-          item.key = index
+      fetch("https://s3.amazonaws.com/api.eosvotes.io/eosvotes/tallies/latest.json", {
+        method: "GET",
+      }).then((response)=> {
+        response.status     //=> number 100–599
+        response.statusText //=> String
+        response.headers    //=> Headers
+        response.url        //=> String
+         response.text().then( responseText => {
+          responseText = JSON.parse(responseText)
+          function* values(responseText) {
+            for (let prop of Object.keys(responseText)) // own properties, you might use
+                yield responseText[prop];
+          }
+          let arr = Array.from(values(responseText));
+          // console.log('arr---',eval('(' +arr[3].proposal.proposal_json + ')'))
+          this.setState({
+            columnsData: arr,
+          })
+          this.handleChange({key:'2'})
         })
-        this.setState({
-          columnsData: tr.rows
-        })
-      })
-      .catch(err => {
-        console.log('err ===', err)
-        openTransactionFailNotification(this.state.formatMessage, err.name)
       })
   };
 
+  sortVotes = (arr)=>{
+    for(let i=0;i<arr.length;i++){
+      for(let j=0;j<arr.length-1-i;j++){
+        if(arr[j].stats.votes.total < arr[j+1].stats.votes.total){
+          let temp = arr[j]
+          arr[j] = arr[j+1]
+          arr[j+1] = temp
+        }
+      }
+    }
+    return arr
+  }
+
+  sortExpired =(arr)=>{
+    for(let i=0;i<arr.length;i++){
+      for(let j=0;j<arr.length-1-i;j++){
+        if(new Date(arr[j].proposal.expires_at).getTime() < new Date(arr[j+1].proposal.expires_at).getTime() ){
+          let temp = arr[j]
+          arr[j] = arr[j+1]
+          arr[j+1] = temp
+        }
+      }
+    }
+    return arr
+  }
+
+  sortCreated =(arr)=>{
+    for(let i=0;i<arr.length;i++){
+      for(let j=0;j<arr.length-1-i;j++){
+        if(new Date(arr[j].proposal.created_at).getTime() < new Date(arr[j+1].proposal.created_at).getTime() ){
+          let temp = arr[j]
+          arr[j] = arr[j+1]
+          arr[j+1] = temp
+        }
+      }
+    }
+    return arr
+  }
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -186,9 +223,37 @@ export class ForumVotePage extends React.Component {
       limit: value
     })
   }
+
   onSearch = ()=>{
     this.handleGetTransactionInit()
   }
+
+  handleChange=(key)=>{
+    if(key.key==="2"){
+      let data = this.sortVotes(this.state.columnsData)
+      this.setState({
+        columnsData: data
+      })
+    }else if(key.key === '0'){
+      let data = this.sortCreated(this.state.columnsData)
+      this.setState({columnsData: data})
+    }else if(key.key ==='1'){
+      let data = this.sortExpired(this.state.columnsData)
+      this.setState({columnsData: data})
+    }
+  }
+
+  getTime = (time)=>{
+    let nowTime = new Date(new Date(time).getTime()+ 8 * 60 * 60 * 1000)
+    let year = nowTime.getFullYear()
+    let mon = nowTime.getMonth() >=10 ? nowTime.getMonth() :'0'+nowTime.getMonth() 
+    let date = nowTime.getDate()  >=10 ? nowTime.getDate() :'0'+nowTime.getDate() 
+    let hours = nowTime.getHours()  >=10 ? nowTime.getHours() :'0'+nowTime.getHours() 
+    let min = nowTime.getMinutes() >=10 ? nowTime.getMinutes() :'0'+nowTime.getMinutes() 
+    let second =nowTime.getSeconds() >=10 ? nowTime.getSeconds() :'0'+nowTime.getSeconds() 
+    return year +'-'+ mon +'-'+ date +'  '+ hours +':'+ min +':'+ second
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form
     const VoterPlaceholder = this.state.formatMessage(
@@ -236,11 +301,6 @@ export class ForumVotePage extends React.Component {
       key: 'proposal_json'
     }]
 
-    const radioStyle = {
-      display: 'block',
-      height: '30px',
-      lineHeight: '30px',
-    };
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {},
       onSelect: (record, selected, selectedRows) => {
@@ -248,6 +308,7 @@ export class ForumVotePage extends React.Component {
       },
       type:"radio"
     };
+ 
     return (
       <LayoutContent>
         <div>
@@ -350,11 +411,43 @@ export class ForumVotePage extends React.Component {
                   placement="topLeft"
                   overlayClassName="numeric-input"
                 >
+                
                   <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
                 </Tooltip>
+                <Select labelInValue defaultValue={{ key: '按投票者数量排序' }} style={{ width: 180 }} onChange={this.handleChange} style={{marginRight: 20}}>
+                   <Option value="0">按创建时间排序</Option>
+                   <Option value="1">按过期时间排序</Option>
+                   <Option value="2">按投票者数量排序</Option>
+                 </Select> 
                 <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
               </div>
-              <Table columns={columns} rowSelection={rowSelection} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/>
+              <List
+                itemLayout="horizontal"
+                dataSource={this.state.columnsData}
+                renderItem={item => (
+                  <List.Item>
+                    <div style={{ display: 'block',width:"100%" }}>
+                      <div style={{display:'flex',justifyContent: "space-between"}}>
+                        <span>ID:{item.proposal.proposal_name}</span>
+                        <span>发起者:{item.proposal.proposer}</span>
+                      </div>
+                      <div style={{fontSize: "16px",fontWeight: "bold"}}>{item.proposal.proposal_name}</div>
+                      <div style={{padding: "10px 0"}}>{item.proposal.proposal_json}</div>
+                      <div style={{display:'flex',justifyContent: "space-between"}}>
+                        <span>创建时间:{this.getTime(item.proposal.created_at)}</span>
+                        <span>过期时间:{this.getTime(item.proposal.expires_at)}</span>
+                      </div>
+                      <div style={{display:"flex",justifyContent: "space-between",padding: '5px 0'}}>
+                        <span style={{color: "#77b163"}}><img src={zan} style={{ width: "20px"}} /> 赞成:{item.stats.staked[1]/10000 } EOS({item.stats.votes[1] || 0 } 投票者)</span>
+                        <span style={{color: "#f1496c"}}><img src={cai} style={{ width: "20px"}} /> 反对:{item.stats.staked[0]/10000} EOS({item.stats.votes[0]|| 0 } 投票者)</span>
+                      </div>
+                      <div>
+                      <Progress percent={Number((item.stats.staked[1]/item.stats.staked.total*100).toFixed(2))}  />
+                      </div>
+                    </div>
+                  </List.Item>
+                )}
+              />              {/* <Table columns={columns} bordered rowSelection={rowSelection} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/> */}
             </Card>
           </Col>
         </div>
