@@ -12,5 +12,6 @@ import Input from "antd/lib/input";
 import "antd/lib/input/style/css";
 import Radio from "antd/lib/radio";
 import "antd/lib/radio/style/css";
-
-export { Layout, Menu, Icon, Progress, Input, Radio };
+import List from "antd/lib/list";
+import "antd/lib/list/style/css";
+export { Layout, Menu, Icon, Progress, Input, Radio, List };
