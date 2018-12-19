@@ -62,10 +62,6 @@ export class AccountSearchPage extends React.Component {
       this.setState({
         symbolNet: 'WBI'
       })
-    }else{
-      this.setState({
-        symbolNet: 'EOS'
-      })
     }
   }
   componentDidMount () {
@@ -126,6 +122,16 @@ export class AccountSearchPage extends React.Component {
     eos
       .getAccount({ account_name: value })
       .then(info => {
+        if (info.total_resources) {
+          this.setState({
+            cpuStake: info.total_resources.cpu_weight,
+            networkStake: info.total_resources.net_weight
+          })
+          let symbolType = info.total_resources.cpu_weight.split(' ')[1]
+          this.setState({
+            symbolNet :symbolType
+          })
+        }
         if (info.voter_info) {
           this.setState({ voteProxy: info.voter_info.proxy })
           if (info.voter_info.producers.length > 0) {
@@ -213,12 +219,7 @@ export class AccountSearchPage extends React.Component {
             networkContent: 'unlimited/unlimited'
           })
         }
-        if (info.total_resources) {
-          this.setState({
-            cpuStake: info.total_resources.cpu_weight,
-            networkStake: info.total_resources.net_weight
-          })
-        }
+       
         console.log('info.permissions===', info.permissions)
         try {
           this.state.powerAddress = []
