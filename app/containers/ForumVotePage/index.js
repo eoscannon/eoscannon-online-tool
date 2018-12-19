@@ -442,8 +442,8 @@ export class ForumVotePage extends React.Component {
                         <span style={{color: "#8c98ba"}}>{ProposalListExpiredTime}:{this.getTime(item.proposal.expires_at)}</span>
                       </div>
                       <div style={{display:"flex",justifyContent: "space-between",padding: '5px 0'}}>
-                        <span style={{color: "#77b163"}}><img src={zan} style={{ width: "20px"}} /> {ProposalListAgreee}:{item.stats.staked[1]/10000 } EOS({item.stats.votes[1] || 0 } {ProposalListVoter})</span>
-                        <span style={{color: "#f1496c"}}><img src={cai} style={{ width: "20px"}} /> {ProposalListAginst}:{item.stats.staked[0]/10000} EOS({item.stats.votes[0]|| 0 } {ProposalListVoter})</span>
+                        <span style={{color: "#77b163"}}><Icon type="like" style={{ color: "#77b163",verticalAlign: 'initial'}}/> {ProposalListAgreee}:{item.stats.staked[1]/10000 } EOS({item.stats.votes[1] || 0 } {ProposalListVoter})</span>
+                        <span style={{color: "#f1496c"}}><Icon type="dislike" style={{ color: "#f1496c",verticalAlign: 'initial'}}/> {ProposalListAginst}:{item.stats.staked[0]/10000} EOS({item.stats.votes[0]|| 0 } {ProposalListVoter})</span>
                       </div>
                       <div>
                       <Progress percent={Number((item.stats.staked[1]/item.stats.staked.total*100).toFixed(2))} strokeColor='#82bf5c' strokeWidth= {13}  />
