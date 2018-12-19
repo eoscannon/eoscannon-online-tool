@@ -296,6 +296,14 @@
   "Public CopyAlertMessage": "Step 2/3:Signature transaction",
   "Public CopyOwnerAlertDescription":"Scan QR Code with Owner permission in offline mobile device",
   "Public CopyOwnerAlertDescriptionFirst":"Scan QR Code with ",
-  "Public CopyOwnerAlertDescriptionLast":" permission in offline mobile device"
-
+  "Public CopyOwnerAlertDescriptionLast":" permission in offline mobile device",
+  "ForumVotePage ProposalListFounder": "Proposed By ",
+  "ForumVotePage ProposalListCreatedTime": "Created Time",
+  "ForumVotePage ProposalListExpiredTime": "Expiration Time",
+  "ForumVotePage ProposalListAgreee": "Yes",
+  "ForumVotePage ProposalListVoter": "Voters",
+  "ForumVotePage ProposalListAginst": "No",
+  "ForumVotePage ProposalListVoterQuantity": "Sort By Total Voters",
+  "ForumVotePage ProposalListExpiredSort": "Sort By Expriation Time",
+  "ForumVotePage ProposalListCreatedSort": "Sort By Creation Time"
 }

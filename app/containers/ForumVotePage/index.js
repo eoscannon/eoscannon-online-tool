@@ -97,7 +97,6 @@ export class ForumVotePage extends React.Component {
                 yield responseText[prop];
           }
           let arr = Array.from(values(responseText));
-          // console.log('arr---',eval('(' +arr[3].proposal.proposal_json + ')'))
           this.setState({
             columnsData: arr,
           })
@@ -246,7 +245,7 @@ export class ForumVotePage extends React.Component {
   getTime = (time)=>{
     let nowTime = new Date(new Date(time).getTime()+ 8 * 60 * 60 * 1000)
     let year = nowTime.getFullYear()
-    let mon = nowTime.getMonth() >=10 ? nowTime.getMonth() :'0'+nowTime.getMonth() 
+    let mon = nowTime.getMonth() >=10 ? nowTime.getMonth()+1 :'0'+(nowTime.getMonth()+1 )
     let date = nowTime.getDate()  >=10 ? nowTime.getDate() :'0'+nowTime.getDate() 
     let hours = nowTime.getHours()  >=10 ? nowTime.getHours() :'0'+nowTime.getHours() 
     let min = nowTime.getMinutes() >=10 ? nowTime.getMinutes() :'0'+nowTime.getMinutes() 
@@ -263,15 +262,20 @@ export class ForumVotePage extends React.Component {
     const LabelApprove = this.state.formatMessage(messages.LabelApprove)
     const LabelAgaist = this.state.formatMessage(messages.LabelAgaist)
     const ProposalList = this.state.formatMessage(messages.ProposalList)
+    const ProposalListFounder = this.state.formatMessage(messages.ProposalListFounder)
+    const ProposalListCreatedTime = this.state.formatMessage(messages.ProposalListCreatedTime)
+    const ProposalListExpiredTime = this.state.formatMessage(messages.ProposalListExpiredTime)
+    const ProposalListAgreee = this.state.formatMessage(messages.ProposalListAgreee)
+    const ProposalListVoter = this.state.formatMessage(messages.ProposalListVoter)
+    const ProposalListAginst = this.state.formatMessage(messages.ProposalListAginst)
+    const ProposalListVoterQuantity = this.state.formatMessage(messages.ProposalListVoterQuantity)
+    const ProposalListExpiredSort = this.state.formatMessage(messages.ProposalListExpiredSort)
+    const ProposalListCreatedSort = this.state.formatMessage(messages.ProposalListCreatedSort)
 
     const ForumVoteFirst = this.state.formatMessage(
       messages.ForumVoteFirst,
     )
-    // const VoterLabel = this.state.formatMessage(messages.VoterLabel);
-    // const ProxyLabel = this.state.formatMessage(messages.ProxyLabel);
-    // const ProducersDealTranscationProxy = this.state.formatMessage(
-    //   utilsMsg.ProducersDealTranscationProxy,
-    // )
+  
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
@@ -414,10 +418,10 @@ export class ForumVotePage extends React.Component {
                 
                   <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
                 </Tooltip>
-                <Select labelInValue defaultValue={{ key: '按投票者数量排序' }} style={{ width: 180 }} onChange={this.handleChange} style={{marginRight: 20}}>
-                   <Option value="0">按创建时间排序</Option>
-                   <Option value="1">按过期时间排序</Option>
-                   <Option value="2">按投票者数量排序</Option>
+                <Select labelInValue defaultValue={{ key: ProposalListVoterQuantity }} style={{ width: 180 }} onChange={this.handleChange} style={{marginRight: 20}}>
+                   <Option value="0">{ProposalListCreatedSort}</Option>
+                   <Option value="1">{ProposalListExpiredSort}</Option>
+                   <Option value="2">{ProposalListVoterQuantity}</Option>
                  </Select> 
                 <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
               </div>
@@ -429,20 +433,20 @@ export class ForumVotePage extends React.Component {
                     <div style={{ display: 'block',width:"100%" }}>
                       <div style={{display:'flex',justifyContent: "space-between"}}>
                         <span>ID:{item.proposal.proposal_name}</span>
-                        <span>发起者:{item.proposal.proposer}</span>
+                        <span>{ProposalListFounder}:{item.proposal.proposer}</span>
                       </div>
                       <div style={{fontSize: "16px",fontWeight: "bold"}}>{item.proposal.proposal_name}</div>
-                      <div style={{padding: "10px 0"}}>{item.proposal.proposal_json}</div>
+                      <div style={{padding: "0px 0px 10px 0"}}>{item.proposal.proposal_json}</div>
                       <div style={{display:'flex',justifyContent: "space-between"}}>
-                        <span>创建时间:{this.getTime(item.proposal.created_at)}</span>
-                        <span>过期时间:{this.getTime(item.proposal.expires_at)}</span>
+                        <span style={{color: "#8c98ba"}}>{ProposalListCreatedTime}:{this.getTime(item.proposal.created_at)}</span>
+                        <span style={{color: "#8c98ba"}}>{ProposalListExpiredTime}:{this.getTime(item.proposal.expires_at)}</span>
                       </div>
                       <div style={{display:"flex",justifyContent: "space-between",padding: '5px 0'}}>
-                        <span style={{color: "#77b163"}}><img src={zan} style={{ width: "20px"}} /> 赞成:{item.stats.staked[1]/10000 } EOS({item.stats.votes[1] || 0 } 投票者)</span>
-                        <span style={{color: "#f1496c"}}><img src={cai} style={{ width: "20px"}} /> 反对:{item.stats.staked[0]/10000} EOS({item.stats.votes[0]|| 0 } 投票者)</span>
+                        <span style={{color: "#77b163"}}><img src={zan} style={{ width: "20px"}} /> {ProposalListAgreee}:{item.stats.staked[1]/10000 } EOS({item.stats.votes[1] || 0 } {ProposalListVoter})</span>
+                        <span style={{color: "#f1496c"}}><img src={cai} style={{ width: "20px"}} /> {ProposalListAginst}:{item.stats.staked[0]/10000} EOS({item.stats.votes[0]|| 0 } {ProposalListVoter})</span>
                       </div>
                       <div>
-                      <Progress percent={Number((item.stats.staked[1]/item.stats.staked.total*100).toFixed(2))}  />
+                      <Progress percent={Number((item.stats.staked[1]/item.stats.staked.total*100).toFixed(2))} strokeColor='#82bf5c' strokeWidth= {13}  />
                       </div>
                     </div>
                   </List.Item>

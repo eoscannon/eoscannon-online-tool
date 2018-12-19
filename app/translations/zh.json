@@ -283,6 +283,14 @@
   "ProxyPage LabelAgaist": "反对",
   "ForumVotePage ProposalList": "提案列表",
   "Public CopyOwnerAlertDescriptionFirst":"打开离线工具APP，扫描以下二维码，并用",
-  "Public CopyOwnerAlertDescriptionLast":"权限的私钥签名"
-
+  "Public CopyOwnerAlertDescriptionLast":"权限的私钥签名",
+  "ForumVotePage ProposalListFounder": "发起者",
+  "ForumVotePage ProposalListCreatedTime": "创建时间",
+  "ForumVotePage ProposalListExpiredTime": "过期时间",
+  "ForumVotePage ProposalListAgreee": "赞成",
+  "ForumVotePage ProposalListVoter": "投票者",
+  "ForumVotePage ProposalListAginst": "反对",
+  "ForumVotePage ProposalListVoterQuantity": "按投票者数量排序",
+  "ForumVotePage ProposalListExpiredSort": "按过期时间排序",
+  "ForumVotePage ProposalListCreatedSort": "按创建时间排序"
 }

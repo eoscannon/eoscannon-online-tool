@@ -38,4 +38,41 @@ export default defineMessages({
     id: 'ForumVotePage ProposalList',
     defaultMessage: '提案列表'
   },
+  ProposalListFounder: {
+    id: 'ForumVotePage ProposalListFounder',
+    defaultMessage: '发起者'
+  }, 
+  ProposalListCreatedTime: {
+    id: 'ForumVotePage ProposalListCreatedTime',
+    defaultMessage: '创建时间'
+  },
+  ProposalListExpiredTime: {
+    id: 'ForumVotePage ProposalListExpiredTime',
+    defaultMessage: '过期时间'
+  },
+  ProposalListAgreee: {
+    id: 'ForumVotePage ProposalListAgreee',
+    defaultMessage: '赞成'
+  },
+  ProposalListVoter: {
+    id: 'ForumVotePage ProposalListVoter',
+    defaultMessage: '投票者'
+  }, 
+  ProposalListAginst: {
+    id: 'ForumVotePage ProposalListAginst',
+    defaultMessage: '反对'
+  }, 
+  ProposalListVoterQuantity: {
+    id: 'ForumVotePage ProposalListVoterQuantity',
+    defaultMessage: '按投票者数量排序'
+  }, 
+  ProposalListExpiredSort: {
+    id: 'ForumVotePage ProposalListExpiredSort',
+    defaultMessage: '按过期时间排序'
+  }, 
+  ProposalListCreatedSort: {
+    id: 'ForumVotePage ProposalListCreatedSort',
+    defaultMessage: '按创建时间排序'
+  }, 
+
 })
