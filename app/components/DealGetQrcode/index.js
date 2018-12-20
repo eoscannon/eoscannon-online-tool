@@ -75,11 +75,14 @@ export default class DealGetQrcode extends Component {
   getUnSignedBuffer = () => {
     const MainChainId = config.mainChainId
     const TestChainId = config.testChainId
+    const telosChainId = config.testTelosChainId
     let chainId
     if (this.props.SelectedNetWork === 'main') {
       chainId = MainChainId
     } else if (this.props.SelectedNetWork === 'test') {
       chainId = TestChainId
+    }else if(this.props.SelectedNetWork === 'telos'){
+      chainId = telosChainId
     } else if (this.props.SelectedNetWork === 'other') {
       chainId = storage.getChainId()
     }
