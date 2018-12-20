@@ -83,11 +83,11 @@
   "StakePage DelegateFromAccountNamePlaceholder": "抵押账号",
   "StakePage UnDelegateFromAccountNamePlaceholder": "赎回账号",
   "StakePage DelegateReceiverAccountNamePlaceholder": "接收抵押的账号",
-  "StakePage UnDelegateReceiverAccountNamePlaceholder": "接受赎回的账号",
+  "StakePage UnDelegateReceiverAccountNamePlaceholder": "被赎回的账号",
   "StakePage DelegateReceiverAccountNameHelp":
     "注：账号A帮B抵押CPU/NET，则A为抵押账号，B为接收抵押的账号",
   "StakePage UnDelegateReceiverAccountNameHelp":
-    "注：账号A解除帮B抵押CPU/NET，则A为赎回账号，B为接受赎回的账号",
+    "注：账号A解除帮B抵押CPU/NET，则A为赎回账号，B为被赎回的账号",
   "StakePage DelegateStakeNetQuantityPlaceholder": "抵押的NET数量，单位为EOS",
   "StakePage UnDelegateStakeNetQuantityPlaceholder": "赎回的NET数量，单位为EOS",
   "StakePage DelegateStakeCpuQuantityPlaceholder": "抵押的CPU数量，单位为EOS",
@@ -282,8 +282,9 @@
   "ProxyPage LabelApprove": "赞成",
   "ProxyPage LabelAgaist": "反对",
   "ForumVotePage ProposalList": "提案列表",
-  "Public CopyOwnerAlertDescriptionFirst":"打开离线工具APP，扫描以下二维码，并用",
-  "Public CopyOwnerAlertDescriptionLast":"权限的私钥签名",
+  "Public CopyOwnerAlertDescriptionFirst":
+    "打开离线工具APP，扫描以下二维码，并用",
+  "Public CopyOwnerAlertDescriptionLast": "权限的私钥签名",
   "ForumVotePage ProposalListFounder": "发起者",
   "ForumVotePage ProposalListCreatedTime": "创建时间",
   "ForumVotePage ProposalListExpiredTime": "过期时间",
