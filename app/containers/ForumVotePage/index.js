@@ -66,7 +66,7 @@ export class ForumVotePage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue()
-    const { voter, statusText, radio, proxy } = values
+    const { voter, statusText, proxy } = values
     this.setState({
       GetTransactionButtonState: !!voter && !!statusText ,
       GetTransactionButtonScatterState: !!proxy
@@ -284,35 +284,6 @@ export class ForumVotePage extends React.Component {
       { label: LabelApprove, value: 1 },
       { label: LabelAgaist, value: 0 }
     ]
-
-    const columns = [{
-      title: 'proposal_name',
-      dataIndex: 'proposal_name',
-      key: 'proposal_name',
-      width: 150
-    }, {
-      title: 'proposer',
-      dataIndex: 'proposer',
-      key: 'proposer',
-      width: 150
-    }, {
-      title: 'title',
-      dataIndex: 'title',
-      key: 'title',
-      width: 200
-    }, {
-      title: 'proposal_json',
-      dataIndex: 'proposal_json',
-      key: 'proposal_json'
-    }]
-
-    const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {},
-      onSelect: (record, selected, selectedRows) => {
-        this.props.form.setFieldsValue({statusText:record.proposal_name})
-      },
-      type:"radio"
-    };
  
     return (
       <LayoutContent>

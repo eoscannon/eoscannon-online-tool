@@ -108,6 +108,8 @@ class HeaderComp extends React.Component {
     this.setState({
       defaultSelectedKeys
     })
+    storage.setBaseSymbol('EOS')
+
   }
 
   onOpenChange = openKeys => {
@@ -133,6 +135,11 @@ class HeaderComp extends React.Component {
       this.setState({
         visible: true
       })
+      storage.setBaseSymbol('EOS')
+    }else if(value ==='test'){
+      storage.setBaseSymbol('WBI')
+    }else if(value === 'telos'){
+      storage.setBaseSymbol('TLOS')
     }
     this.props.onDispatchChangeNetworkReducer(value)
   };

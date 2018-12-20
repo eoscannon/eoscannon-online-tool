@@ -20,6 +20,7 @@ import ScanQrcode from '../../components/ScanQrcode'
 import DealGetQrcode from '../../components/DealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
+import { storage } from '../../utils/storage'
 
 import { makeSelectNetwork } from '../LanguageProvider/selectors'
 
@@ -60,20 +61,22 @@ export class StakePage extends React.Component {
     const eos = global.EosByScatter
     const account = global.AccountByScatter
     const values = this.props.form.getFieldsValue()
+    const baseSymbol =storage.getBaseSymbol()
     const {
       FromAccountName,
       ReceiverAccountName,
       stakeNetQuantity,
       stakeCpuQuantity
     } = values
+
     if (this.state.isDelegatebw) {
       eos
         .delegatebw(
           {
             from: FromAccountName,
             receiver: ReceiverAccountName || FromAccountName,
-            stake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
-            stake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
+            stake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} ${baseSymbol}`,
+            stake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} ${baseSymbol}`,
             transfer: 0
           },
           { authorization: [`${account.name}@${account.authority}`] }
@@ -101,8 +104,8 @@ export class StakePage extends React.Component {
           {
             from: FromAccountName,
             receiver: ReceiverAccountName,
-            unstake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
-            unstake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`
+            unstake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} ${baseSymbol}`,
+            unstake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} ${baseSymbol}`
           },
           { authorization: [`${account.name}@${account.authority}`] }
         )
@@ -149,6 +152,8 @@ export class StakePage extends React.Component {
     }
     const values = this.props.form.getFieldsValue()
     const eos = getEos(this.props.SelectedNetWork)
+    const baseSymbol =storage.getBaseSymbol()
+    console.log('baseSymbol==',baseSymbol)
     const {
       FromAccountName,
       ReceiverAccountName,
@@ -161,8 +166,8 @@ export class StakePage extends React.Component {
           {
             from: FromAccountName,
             receiver: ReceiverAccountName || FromAccountName,
-            stake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
-            stake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`,
+            stake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} ${baseSymbol}`,
+            stake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} ${baseSymbol}`,
             transfer: 0
           },
           {
@@ -185,8 +190,8 @@ export class StakePage extends React.Component {
           {
             from: FromAccountName,
             receiver: ReceiverAccountName,
-            unstake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} EOS`,
-            unstake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} EOS`
+            unstake_net_quantity: `${Number(stakeNetQuantity).toFixed(4)} ${baseSymbol}`,
+            unstake_cpu_quantity: `${Number(stakeCpuQuantity).toFixed(4)} ${baseSymbol}`
           },
           {
             sign: false,

@@ -16,6 +16,7 @@ import {
   getEos,
   openTransactionFailNotification
 } from '../../utils/utils'
+import { storage } from '../../utils/storage'
 import { LayoutContent } from '../../components/NodeComp'
 import ScanQrcode from '../../components/ScanQrcode'
 import DealGetQrcode from '../../components/DealGetQrcode'
@@ -83,6 +84,8 @@ export class BuyRamBytesPage extends React.Component {
       BytesQuantity,
       EosQuantity
     } = values
+    const baseSymbol =storage.getBaseSymbol()
+
     let actionsName = this.state.isBuyRam ? 'buyrambytes' : 'sellram'
     if (this.state.isBuyRam) {
       actionsName = this.state.radioStatus === 1 ? 'buyram' : 'buyrambytes'
@@ -92,7 +95,7 @@ export class BuyRamBytesPage extends React.Component {
         ? {
           quant: `${Number(EosQuantity)
             .toFixed(4)
-            .toString()} EOS`
+            .toString()} ${baseSymbol}`
         }
         : { bytes: Number(BytesQuantity) }
     const data = this.state.isBuyRam

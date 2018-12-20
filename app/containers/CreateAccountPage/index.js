@@ -17,6 +17,7 @@ import {
   openTransactionFailNotification
 } from '../../utils/utils'
 import { LayoutContent } from '../../components/NodeComp'
+import { storage } from '../../utils/storage'
 
 import ScanQrcode from '../../components/ScanQrcode'
 import DealGetQrcode from '../../components/DealGetQrcode'
@@ -74,6 +75,8 @@ export class CreateAccountPage extends React.Component {
     if (!this.state.GetTransactionButtonState) {
       return
     }
+    const baseSymbol =storage.getBaseSymbol()
+
     const values = this.props.form.getFieldsValue()
     const eos = getEos(this.props.SelectedNetWork)
     const {
@@ -133,10 +136,10 @@ export class CreateAccountPage extends React.Component {
         receiver: NewAccountName,
         stake_net_quantity: `${Number(StakeNetQuantity)
           .toFixed(4)
-          .toString()} EOS`,
+          .toString()} ${baseSymbol}`,
         stake_cpu_quantity: `${Number(StakeCpuQuantity)
           .toFixed(4)
-          .toString()} EOS`,
+          .toString()} ${baseSymbol}`,
         transfer: 0
       }
     }

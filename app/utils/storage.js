@@ -32,6 +32,10 @@ storage.setNetwork = name => {
   storage.set('Network', name)
 }
 storage.getNetwork = () => storage.get('Network')
+storage.setBaseSymbol = symbol => {
+  storage.set('BaseSymbol', symbol)
+}
+storage.getBaseSymbol = () => storage.get('BaseSymbol')
 
 storage.setChainId = name => {
   storage.set('ChainId', name)
