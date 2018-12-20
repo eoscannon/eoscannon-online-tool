@@ -135,7 +135,7 @@ export class TransferPage extends React.Component {
     let data = value.split(' ')
     this.props.form.setFieldsValue({
       transferMemo: data[1],
-      FromAccountName: data[0]
+      ToAccountName: data[0]
     })
   }
 
@@ -144,13 +144,13 @@ export class TransferPage extends React.Component {
       TransferForm: TransferForm
     })
   }
-
+  //
   testKong = (FromAccountName) =>{
     var reg = /(^\s+)|(\s+$)|\s+/g
     console.log('FromAccountName')
     return reg.test(FromAccountName)
   }
-
+  // 自定义交易 func
   handleCustomTransaction = eos => {
     const values = this.props.form.getFieldsValue()
     const {
@@ -164,11 +164,11 @@ export class TransferPage extends React.Component {
       transferDigitCustom
     } = values
 
-    var newFromAccountName
-    if(this.testKong(FromAccountName)) {
-      newFromAccountName = FromAccountName.split(' ')[0]
+    var newToAccountName
+    if(this.testKong(ToAccountName)) {
+      newToAccountName = ToAccountName.split(' ')[0]
     }else{
-      newFromAccountName = FromAccountName
+      newToAccountName = ToAccountName
     }
     if (
       !transferSymbolCustom ||
@@ -197,13 +197,13 @@ export class TransferPage extends React.Component {
               name: 'transfer',
               authorization: [
                 {
-                  actor: newFromAccountName,
+                  actor: FromAccountName,
                   permission: 'active'
                 }
               ],
               data: {
-                from: newFromAccountName,
-                to: ToAccountName,
+                from: FromAccountName,
+                to: newToAccountName,
                 quantity: `${Number(transferQuantity).toFixed(
                   Number(transferDigitCustom),
                 )} ${transferSymbolCustom.toUpperCase()}`,
@@ -379,11 +379,11 @@ export class TransferPage extends React.Component {
       contract: newContract[0]
     })
 
-    var newFromAccountName
-    if(this.testKong(FromAccountName)) {
-      newFromAccountName = FromAccountName.split(' ')[0]
+    var newToAccountName
+    if(this.testKong(ToAccountName)) {
+      newToAccountName = ToAccountName.split(' ')[0]
     }else{
-      newFromAccountName = FromAccountName
+      newToAccountName = ToAccountName
     }
     const transferContract = newContract[0].trim()
     if (
@@ -400,7 +400,7 @@ export class TransferPage extends React.Component {
       }
     }
 
-    console.log('newFromAccountName===', newFromAccountName)
+    console.log('newToAccountName===', newToAccountName)
     eos
       .transaction(
         {
@@ -410,13 +410,13 @@ export class TransferPage extends React.Component {
               name: 'transfer',
               authorization: [
                 {
-                  actor: newFromAccountName,
+                  actor: FromAccountName,
                   permission: 'active'
                 }
               ],
               data: {
-                from: newFromAccountName,
-                to: ToAccountName,
+                from: FromAccountName,
+                to: newToAccountName,
                 quantity: `${Number(transferQuantity).toFixed(
                   Number(transferDigit),
                 )} ${newSymbol[0].toUpperCase()}`,
@@ -516,28 +516,21 @@ export class TransferPage extends React.Component {
                     }
                   ]
                 })(
-                  <AutoComplete
-                    onSelect={this.onSelect}
-                    style={{ width: '100%' }}
-                    dataSource={childrenAccount}
-                    filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-                  >
-                    <Input
-                      maxLength={12}
-                      prefix={
-                        <Tooltip
-                          placement="top"
-                          title={TransferFromAccountNamePlaceholder}
-                        >
-                          <Icon
-                            type="user"
-                            style={{ color: 'rgba(0,0,0,.25)' }}
-                          />
-                        </Tooltip>
-                      }
-                      placeholder={TransferFromAccountNamePlaceholder}
-                    />
-                  </AutoComplete>
+                  <Input
+                    maxLength={12}
+                    prefix={
+                      <Tooltip
+                        placement="top"
+                        title={TransferFromAccountNamePlaceholder}
+                      >
+                        <Icon
+                          type="user"
+                          style={{ color: 'rgba(0,0,0,.25)' }}
+                        />
+                      </Tooltip>
+                    }
+                    placeholder={TransferFromAccountNamePlaceholder}
+                  />,
                 )}
               </FormItem>
               <FormItem {...formItemLayout}>
@@ -549,21 +542,29 @@ export class TransferPage extends React.Component {
                     }
                   ]
                 })(
-                  <Input
-                    maxLength={12}
-                    prefix={
-                      <Tooltip
-                        placement="top"
-                        title={TransferToAccountNamePlaceholder}
-                      >
-                        <Icon
-                          type="user"
-                          style={{ color: 'rgba(0,0,0,.25)' }}
-                        />
-                      </Tooltip>
-                    }
-                    placeholder={TransferToAccountNamePlaceholder}
-                  />,
+                  <AutoComplete
+                    onSelect={this.onSelect}
+                    style={{ width: '100%' }}
+                    dataSource={childrenAccount}
+                    filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                  >
+                    <Input
+                      maxLength={12}
+                      prefix={
+                        <Tooltip
+                          placement="top"
+                          title={TransferToAccountNamePlaceholder}
+                        >
+                          <Icon
+                            type="user"
+                            style={{ color: 'rgba(0,0,0,.25)' }}
+                          />
+                        </Tooltip>
+                      }
+                      placeholder={TransferToAccountNamePlaceholder}
+                    />
+                  </AutoComplete>
+
                 )}
               </FormItem>
               <FormItem {...formItemLayout}>
