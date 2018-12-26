@@ -102,6 +102,9 @@ class HeaderComp extends React.Component {
       case '/worbli':
         defaultSelectedKeys = '16'
         break
+      case '/scanLogin':
+        defaultSelectedKeys = '17'
+        break
       default:
         defaultSelectedKeys = '12'
     }
@@ -304,6 +307,16 @@ class HeaderComp extends React.Component {
                 <span>{accountSearch}</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="17">
+              <Link
+                href="/scanLogin"
+                to="/scanLogin"
+                innerRef={() => {}}
+              >
+                <Icon type="user" />
+                <span>扫码登录</span>
+              </Link>
+            </Menu.Item>
             <Menu.SubMenu
               key="1"
               title={
@@ -378,6 +391,7 @@ class HeaderComp extends React.Component {
                  Worbli
                 </Link>
               </Menu.Item>
+              
             </Menu.SubMenu>
             <Menu.SubMenu
               key="2"
