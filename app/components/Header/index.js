@@ -139,9 +139,9 @@ class HeaderComp extends React.Component {
         visible: true
       })
       storage.setBaseSymbol('EOS')
-    }else if(value ==='test'){
+    }else if(value === 'test') {
       storage.setBaseSymbol('WBI')
-    }else if(value === 'telos'){
+    }else if(value === 'telos') {
       storage.setBaseSymbol('TLOS')
     }
     this.props.onDispatchChangeNetworkReducer(value)
@@ -307,7 +307,7 @@ class HeaderComp extends React.Component {
                 <span>{accountSearch}</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="17">
+            {/* <Menu.Item key="17">
               <Link
                 href="/scanLogin"
                 to="/scanLogin"
@@ -316,7 +316,7 @@ class HeaderComp extends React.Component {
                 <Icon type="user" />
                 <span>扫码登录</span>
               </Link>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.SubMenu
               key="1"
               title={
@@ -391,7 +391,7 @@ class HeaderComp extends React.Component {
                  Worbli
                 </Link>
               </Menu.Item>
-              
+
             </Menu.SubMenu>
             <Menu.SubMenu
               key="2"
