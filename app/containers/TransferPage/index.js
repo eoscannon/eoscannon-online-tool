@@ -57,6 +57,7 @@ export class TransferPage extends React.Component {
       dataSource: [],
       transferSymbolSelect: '',
       TransferForm: [], //   本地账号数据
+      FromAccount:[],
       selectLanguage: 'main'
     }
   }
@@ -98,7 +99,8 @@ export class TransferPage extends React.Component {
     }
     if(storage.getTransferForm()) {
       this.setState({
-        TransferForm: storage.getTransferForm() || []
+        TransferForm: storage.getTransferForm() || [],
+        FromAccount: storage.getFromAccount() || []
       })
     }
   }
@@ -138,10 +140,15 @@ export class TransferPage extends React.Component {
       ToAccountName: data[0]
     })
   }
+  onSelectFromAccount = (value) =>{
+    this.props.form.setFieldsValue({
+      FromAccountName: value
+    })
+  }
 
   setTransferForm = (TransferForm) =>{
     this.setState({
-      TransferForm: TransferForm
+      TransferForm: TransferForm,
     })
   }
 
@@ -401,7 +408,6 @@ export class TransferPage extends React.Component {
       }
     }
 
-    console.log('newToAccountName===', newToAccountName)
     eos
       .transaction(
         {
@@ -497,10 +503,13 @@ export class TransferPage extends React.Component {
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
     ))
 
-    var {TransferForm} = this.state
+    var {TransferForm ,FromAccount} = this.state
     TransferForm = this.unique(TransferForm)
     const childrenAccount = TransferForm.map((data, index) => (
       <Option key={data.out + ' ' + data.memo}>{data.out}</Option>
+    ))
+    const AccountFrom = FromAccount.map((data, index) => (
+      <Option key={data}>{data}</Option>
     ))
 
     return (
@@ -517,6 +526,12 @@ export class TransferPage extends React.Component {
                     }
                   ]
                 })(
+                  <AutoComplete
+                    onSelect={this.onSelectFromAccount}
+                    style={{ width: '100%' }}
+                    dataSource={AccountFrom}
+                    filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                  >
                   <Input
                     maxLength={12}
                     prefix={
@@ -531,7 +546,8 @@ export class TransferPage extends React.Component {
                       </Tooltip>
                     }
                     placeholder={TransferFromAccountNamePlaceholder}
-                  />,
+                  />
+                  </AutoComplete>,
                 )}
               </FormItem>
               <FormItem {...formItemLayout}>
@@ -739,6 +755,7 @@ export class TransferPage extends React.Component {
               <DealGetQrcode
                 action="transfer"
                 TransferForm={this.state.TransferForm}
+                FromAccount={this.state.FromAccount}
                 eos={this.state.eos}
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}

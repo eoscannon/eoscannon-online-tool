@@ -44,19 +44,24 @@ export default class DealGetQrcode extends Component {
     }
     if(nextProps.action === 'transfer') {
       const values = nextProps.form.getFieldsValue()
-      const { ToAccountName, transferMemo } = values
+      const { ToAccountName, transferMemo, FromAccountName } = values
       let newToAccountName
       if(this.testKong(ToAccountName)) {
         newToAccountName = ToAccountName.split(' ')[0]
       }else{
         newToAccountName = ToAccountName
       }
+      console.log('nextprosp ==',nextProps)
       let data = {out: newToAccountName, memo: transferMemo}
       if(JSON.stringify(nextProps.transaction) !== '{}' && data !== nextProps.TransferForm[nextProps.TransferForm.length - 1] && JSON.stringify(this.state.oldTransaction) !== JSON.stringify(nextProps.transaction)) {
         let arr = nextProps.TransferForm
         arr.push(data)
         arr = this.unique(arr)
         storage.setTransferForm(arr)
+        let array = nextProps.FromAccount
+        array.push(FromAccountName)
+        array = this.uniqueArr(array)
+        storage.setFromAccount(array)
         this.setState({
           oldTransaction: nextProps.transaction
         })
@@ -64,7 +69,7 @@ export default class DealGetQrcode extends Component {
     }
   }
 
-  // 去重
+  // 对象类型去重
   unique=(arr)=> {
     var result = {}
     var finalResult = []
@@ -76,8 +81,25 @@ export default class DealGetQrcode extends Component {
     }
     return finalResult
   }
+ // 简单数组去重
+ uniqueArr= (array) => {
+  // res用来存储结果
+  var res = [];
+  for (var i = 0, arrayLen = array.length; i < arrayLen; i++) {
+      for (var j = 0, resLen = res.length; j < resLen; j++ ) {
+          if (array[i] === res[j]) {
+              break;
+          }
+      }
+      // 如果array[i]是唯一的，那么执行完循环，j等于resLen
+      if (j === resLen) {
+          res.push(array[i])
+      }
+  }
+  return res;
+}
 
-  // 排除空字段
+// 排除空字段
   testKong = (FromAccountName) =>{
     var reg = /(^\s+)|(\s+$)|\s+/g
     return reg.test(FromAccountName)

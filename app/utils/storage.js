@@ -47,4 +47,9 @@ storage.setTransferForm = TransferForm => {
 }
 storage.getTransferForm = () => storage.get('TransferForm')
 
+storage.setFromAccount = FromAccount => {
+  storage.set('FromAccount', FromAccount)
+}
+storage.getFromAccount = () => storage.get('FromAccount')
+
 export { storage }
