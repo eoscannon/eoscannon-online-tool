@@ -144,12 +144,13 @@ export class TransferPage extends React.Component {
       TransferForm: TransferForm
     })
   }
-  //
+
+  // 排除空字段
   testKong = (FromAccountName) =>{
     var reg = /(^\s+)|(\s+$)|\s+/g
-    console.log('FromAccountName')
     return reg.test(FromAccountName)
   }
+  
   // 自定义交易 func
   handleCustomTransaction = eos => {
     const values = this.props.form.getFieldsValue()

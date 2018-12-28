@@ -44,8 +44,14 @@ export default class DealGetQrcode extends Component {
     }
     if(nextProps.action === 'transfer') {
       const values = nextProps.form.getFieldsValue()
-      const { FromAccountName, transferMemo } = values
-      let data = {out: FromAccountName, memo: transferMemo}
+      const { ToAccountName, transferMemo } = values
+      let newToAccountName
+      if(this.testKong(ToAccountName)) {
+        newToAccountName = ToAccountName.split(' ')[0]
+      }else{
+        newToAccountName = ToAccountName
+      }
+      let data = {out: newToAccountName, memo: transferMemo}
       if(JSON.stringify(nextProps.transaction) !== '{}' && data !== nextProps.TransferForm[nextProps.TransferForm.length - 1] && JSON.stringify(this.state.oldTransaction) !== JSON.stringify(nextProps.transaction)) {
         let arr = nextProps.TransferForm
         arr.push(data)
@@ -69,6 +75,12 @@ export default class DealGetQrcode extends Component {
       finalResult.push(result[item])
     }
     return finalResult
+  }
+
+  // 排除空字段
+  testKong = (FromAccountName) =>{
+    var reg = /(^\s+)|(\s+$)|\s+/g
+    return reg.test(FromAccountName)
   }
 
   // 生成报文
