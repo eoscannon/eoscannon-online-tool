@@ -63,7 +63,37 @@ export class TransferPage extends React.Component {
   }
   // init page
   componentDidMount () {
+   if( this.props.location.search ){
+    this.setState({addSymbol : true})
+    const query = this.props.location.search 
+
+    const arr = query.split('?')[1].split('&') // ['?s=', 'f=7']
+    var newArr = {}
+    for(let i in arr){
+      let data = arr[i].split('=')
+      newArr[data[0]] = data[1]
+    }
+    
+
+    // 接收到数据后插入表格
+    this.props.form.setFieldsValue({
+      FromAccountName:newArr.from,
+      ToAccountName:newArr.to,
+      transferQuantity:newArr.amount,
+      transferMemo:newArr.memo,
+     })
+    setTimeout(()=>{
+      let digt = newArr.amount.split('.')[1].length
+      this.props.form.setFieldsValue({
+        transferSymbolCustom: newArr.token,
+        transferContractCustom: newArr.contract,
+        transferDigitCustom: digt
+       })
+    },500)
+   }
+  
     if (this.props.location.state) {
+      console.log('this.props.location.state== ',this.props.location.state)
       const state = this.props.location.state.name.split(' ')
       var len
       try{
