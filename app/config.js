@@ -12,4 +12,9 @@ export default {
   testTelosEndpoint: 'telos.eosphere.io',
   testTelosChainId:
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
+
+  testKylinHttpEndpoint: 'https://api-kylin.eosasia.one',
+  testKylinEndpoint: 'api-kylin.eosasia.one',
+  testKylinChainId:
+  '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
 }

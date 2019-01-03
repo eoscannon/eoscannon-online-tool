@@ -46,6 +46,13 @@ const getEosTelosTest = () =>
     expireInSeconds: 60 * 60
   })
 
+const getEosKylinTest = () =>
+  EOS({
+    httpEndpoint: config.testKylinHttpEndpoint,
+    chainId: config.testKylinChainId,
+    expireInSeconds: 60 * 60
+  })
+
 const getEosOtherTest = () =>
   EOS({
     httpEndpoint: storage.getNetwork(),
@@ -61,6 +68,8 @@ const getEos = type => {
       return getEosTest()
     case 'telos':
       return getEosTelosTest()
+    case 'kylin':
+      return getEosKylinTest()
     case 'other':
       return getEosOtherTest()
     default:

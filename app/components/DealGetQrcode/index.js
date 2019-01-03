@@ -110,6 +110,7 @@ export default class DealGetQrcode extends Component {
     const MainChainId = config.mainChainId
     const TestChainId = config.testChainId
     const telosChainId = config.testTelosChainId
+    const testKylinChainId  = config.testKylinChainId
     let chainId
     if (this.props.SelectedNetWork === 'main') {
       chainId = MainChainId
@@ -117,6 +118,8 @@ export default class DealGetQrcode extends Component {
       chainId = TestChainId
     }else if(this.props.SelectedNetWork === 'telos'){
       chainId = telosChainId
+    } else if(this.props.SelectedNetWork === 'kylin'){
+      chainId = testKylinChainId
     } else if (this.props.SelectedNetWork === 'other') {
       chainId = storage.getChainId()
     }
