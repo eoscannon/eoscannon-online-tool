@@ -63,6 +63,7 @@ export class TransferPage extends React.Component {
   }
   // init page
   componentDidMount () {
+    //获取URL 参数
    if( this.props.location.search ){
     this.setState({addSymbol : true})
     const query = this.props.location.search 
@@ -73,25 +74,37 @@ export class TransferPage extends React.Component {
       let data = arr[i].split('=')
       newArr[data[0]] = data[1]
     }
-    
 
     // 接收到数据后插入表格
-    this.props.form.setFieldsValue({
-      FromAccountName:newArr.from,
-      ToAccountName:newArr.to,
-      transferQuantity:newArr.amount,
-      transferMemo:newArr.memo,
-     })
-    setTimeout(()=>{
-      let digt = newArr.amount.split('.')[1].length
+    try{
       this.props.form.setFieldsValue({
-        transferSymbolCustom: newArr.token,
-        transferContractCustom: newArr.contract,
-        transferDigitCustom: digt
+        FromAccountName:newArr.from,
+        ToAccountName:newArr.to,
+        transferQuantity:newArr.amount,
+        transferMemo:newArr.memo,
        })
-    },500)
+    }catch(err){
+      console.log('err === ',err)
+    }
+   
+    setTimeout(()=>{
+      try{
+        this.props.form.setFieldsValue({
+          transferSymbolCustom: newArr.token,
+          transferContractCustom: newArr.contract,
+          transferDigitCustom:  4
+        })
+        let digt = newArr.amount.split('.')[1].length
+        this.props.form.setFieldsValue({
+          transferDigitCustom: digt || 4
+        })
+        }catch(err){
+          console.log('err == ',err)
+        }
+      },500)
    }
   
+   //从account search page来的参数获取
     if (this.props.location.state) {
       console.log('this.props.location.state== ',this.props.location.state)
       const state = this.props.location.state.name.split(' ')
