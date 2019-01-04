@@ -466,6 +466,13 @@ const symbolListWorbli = [
  * */
 const airgrabList = [
   {
+    key: '11',
+    symbol: 'BRM',
+    account: 'openbrmeos11',
+    method: 'open',
+    url: 'https://openbrm.io'
+  },
+  {
     key: '10',
     symbol: 'NEB',
     account: 'nebulatokenn',
@@ -514,13 +521,14 @@ const airgrabList = [
     method: 'signup',
     url: 'https://eostoolkit.io'
   },
-  {
+/**  {
     key: '3',
     symbol: 'RIDL',
     account: 'ridlridlcoin',
     method: 'claim',
     url: 'https://ridl.get-scatter.com'
   },
+**/
   {
     key: '4',
     symbol: 'TRYBE',
