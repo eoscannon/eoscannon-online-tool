@@ -306,6 +306,7 @@ const symbolList = [
   { symbol: 'ARN', contract: 'aeronaerozzz', digit: 4 },
   { symbol: 'ATD', contract: 'eosatidiumio', digit: 4 },
 
+  { symbol: 'BEAN', contract: 'thebeantoken', digit: 4 },
   { symbol: 'BEST', contract: 'eosgamecoin2', digit: 4 },
   { symbol: 'BETX', contract: 'thebetxtoken', digit: 4 },
   { symbol: 'BG', contract: 'bgbgbgbgbgbg', digit: 4 },
@@ -443,6 +444,7 @@ const symbolList = [
   { symbol: 'UCTT', contract: 'uctokenowner', digit: 4 },
 
   { symbol: 'WECASH', contract: 'weosservices', digit: 4 },
+  { symbol: 'WIN', contract: 'windividends', digit: 4 },
   { symbol: 'WINS', contract: 'eoswinonewww', digit: 4 },
   { symbol: 'WIZBOX', contract: 'wizboxairdro', digit: 4 },
   { symbol: 'WIZZ', contract: 'wizznetwork1', digit: 4 },
