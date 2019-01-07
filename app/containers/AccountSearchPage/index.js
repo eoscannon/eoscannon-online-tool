@@ -53,13 +53,15 @@ export class AccountSearchPage extends React.Component {
       powerAddress: [],
       symbolNet: 'EOS',
       columnsData : [],
-      checked: true ,
+      checked: 'keydata' ,
       limit: 100,
       columnsMykey:[],
       lowerBound: '',
       upperBound: '',
       scope : '',
-      eos: {}
+      eos: {},
+      mykeyVisvible: false,
+      tableRows: []
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -119,69 +121,129 @@ export class AccountSearchPage extends React.Component {
     this.setState({ accountSearch: e.target.value })
   };
 // 搜索mykey账户信息
-  handSearchTableRows = (checked)=>{
-    const eos = getEos(this.props.SelectedNetWork)
-    eos.getTableRows({
-      'code': this.state.account,
-      'json': true,
-      'limit': this.state.limit,
-      'lower_bound': this.state.lowerBound,
-      'scope': this.state.scope,
-      'table': checked,
-      'upper_bound':this.state.upperBound
-    }).then(data=>{
-      console.log(' data== ',data)
-
-    }).catch(err=>{
-      console.log('err == ',err)
-    })
-  }
+  // handSearchTableRows = (checked)=>{
+  //   this.onSearch(checked)
+  
+  // }
 // mykey 账户切换 选项
   handleChangeCheck = e =>{
     console.log('handleChangeCheck==',e.target.value)
-    this.setState({ checked : e.target.value});
+    this.setState({ checked : e.target.value, columnsData:[], columnsData: []});
+
     if(e.target.value === 'keydata'){
-      this.setState({  columnsMykey: [{
-        title: 'index(key)',
-        dataIndex: 'index',
-        key: 'index',
-        width: 150
-      }, {
-        title: 'key',
-        dataIndex: 'key',
-        key: 'key',
-        width: 300
-      }]})
+      this.setState({  
+        columnsMykey: [{
+          title: 'index(key)',
+          dataIndex: 'index',
+          key: 'index',
+          width: 150
+        }, {
+          title: 'key',
+          key: 'keyData',
+          width: 300,
+          render:(text,record)=>(
+            <div>
+              <div><span>pubkey:</span> {record.keyData.pubkey}</div>
+              <div><span>status:</span> {record.keyData.status}</div>
+              <div><span>nonce:</span> {record.keyData.nonce}</div>
+            </div>
+          )
+        }]
+      })
     }else if(e.target.value === 'backupdata'){
       this.setState({ columnsMykey: [{
         title: 'index(key)',
         dataIndex: 'index',
         key: 'index',
-        width: 150
+        width: 50
       }, {
         title: 'value',
         dataIndex: 'value',
         key: 'value',
-        width: 300
+        width: 350
       }]})
     }else if(e.target.value === 'subacct'){
       this.setState({ columnsMykey: [{
         title: 'sub_account(key)',
         dataIndex: 'sub_account',
         key: 'sub_account',
-        width: 150
       }, {
         title: 'sub_admin_key',
-        dataIndex: 'sub_admin_key',
         key: 'sub_admin_key',
-        width: 300
-      }]})
-    }else if(e.target.value === 'subassetsumn'){
-      this.setState({})
+        render:(text,record)=>(
+          <div>
+            <div><span>pubkey:</span> {record.sub_admin_key.pubkey}</div>
+            <div><span>status:</span> {record.sub_admin_key.status}</div>
+            <div><span>nonce:</span> {record.sub_admin_key.nonce}</div>
+        </div>
+        )
+      },{
+        title: 'sub_external_key',
+        key: 'sub_external_key',
+        render:(text,record)=> (
+          <div>
+            <div><span>pubkey:</span> {record.sub_external_key.pubkey}</div>
+            <div><span>status:</span> {record.sub_external_key.status}</div>
+            <div><span>nonce:</span> {record.sub_external_key.nonce}</div>
+          </div>
+        )
+      },{
+        title: 'whitelist',
+        dataIndex: 'whitelist',
+        key: 'whitelist',
+        render: whitelist => (
+          <span>
+            {whitelist.map(v => <span color="blue" key={v}>{v}</span> )}
+          </span>
+        ),
+      }, {
+        title: 'exasset_list',
+        dataIndex: 'exasset_list',
+        key: 'exasset_list',
+        width: 200,
+        render:(exasset_list)=>(
+          <div>
+            {exasset_list.map((v ,i)=> 
+              <div key={i}>
+                <div><span>quantity:</span> {v.quantity}</div>
+                <div><span>contract:</span> {v.contract}</div>
+            </div>)}
+          </div>
+        )
+      }
+    ]})
+    }else if(e.target.value === 'subassetsum'){
+      this.setState({  
+        columnsMykey: [{
+          title: 'key',
+          dataIndex: 'key',
+          key: 'key',
+        },{
+          title: 'main_account',
+          dataIndex: 'main_account',
+          key: 'main_account',
+        },  {
+          title: 'exasset_list',
+          dataIndex: 'exasset_list',
+          key: 'exasset_list',
+          render:(exasset_list)=>(
+            <div>
+              {exasset_list.map((v ,i) => 
+                <div key={i}>
+                  <div><span>quantity:</span> {v.quantity}</div>
+                  <div><span>contract:</span> {v.contract}</div>
+              </div>)}
+            </div>
+          )
+        }]})
     }
-  this.handSearchTableRows( e.target.value)
+    // console.log(' this.state.columnsMykey== ', this.state.columnsMykey)
+
+   this.onSearch( {target:{value: e.target.value}})
     
   }
+
+  //主程搜索数据
   handleSearch = value => {
     // this.props.dispatch(push('/login'));
     this.setState({
@@ -329,6 +391,14 @@ export class AccountSearchPage extends React.Component {
               this.state.formatMessage(messages.FunctionSearchNoData),
             )
           })
+          // 设置mykey data
+          this.setState({mykeyVisvible: true})
+          try{
+            this.handleChangeCheck({target:{value:'keydata'}})
+          }
+          catch(err){
+            console.log('err == ',err)
+          }
       })
       .catch(() => {
         message.error(this.state.formatMessage(messages.FunctionSearchNoData))
@@ -372,6 +442,76 @@ export class AccountSearchPage extends React.Component {
       upperBound: value
     })
   }
+  
+  onSearch = (checked)=>{
+    console.log('checked == ',checked)
+    var checkdata 
+    try{
+      if(checked.target.value){
+        checkdata = checked.target.value
+      }else{
+        checkdata = this.state.checked
+      }
+    }catch(err){
+      console.log('err == ',err)
+      checkdata = this.statechecked
+    }
+    console.log('checkdata ===',checkdata)
+    const eos = getEos(this.props.SelectedNetWork)
+    let data ={
+      'code': this.state.account,
+      'json': true,
+      'limit': this.state.limit,
+      'lower_bound': this.state.lowerBound,
+      'scope': this.state.scope,
+      'table':  checkdata,
+      'upper_bound':this.state.upperBound
+    }
+    eos.getTableRows(data).then(v=>{
+      var dataNew = []
+      console.log('v== ', v)
+      console.log('this.state.checked == ', this.state.checked)
+      if(this.state.checked === 'keydata'){
+        v.rows.map((v,i)=>{
+          dataNew.push({
+            key : i,
+            index: i,
+            keyData: v.key
+          }
+          )})
+      }else if(this.state.checked === 'backupdata'){
+        v.rows.map((v,i)=>{
+          dataNew.push({
+            key : i,
+            index: v.index,
+            value: v.value,
+          })
+        })
+      }else if(this.state.checked === 'subacct'){
+        v.rows.map((v,i)=>{
+          console.log('v=== ',v)
+          dataNew.push({
+            key : i,
+            ...v
+          })
+        })
+      }else if(this.state.checked === 'subassetsum'){
+        v.rows.map((v,i)=>{
+          console.log('v=== ',v)
+
+          dataNew.push({
+            key : i,
+            ...v
+          })
+        })
+      }
+      console.log(' this.state.columnsData== ', this.state.columnsData)
+      this.setState({columnsData:dataNew})
+    }).catch(err=>{
+      console.log('err == ',err)
+    })
+  }
+
 
   render () {
     const FunctionSearchButton = this.state.formatMessage(
@@ -631,6 +771,7 @@ export class AccountSearchPage extends React.Component {
                         columns={columnsBlance}
                         dataSource={dataBlance}
                         pagination={false}
+                        
                       />
                     </div>
                   </TabPane>
@@ -645,17 +786,16 @@ export class AccountSearchPage extends React.Component {
               </div>
             </div>
           ) : null}
-
-        <div>
-            <Card title='mykey' bordered={false}>
+          {this.state.mykeyVisvible  ? (
+          <div >
+            <Card title='MYKEY' bordered={true} type="inner" style={{ marginTop: '21px', background: '#fafafa'}}>
             <div>
-           <Radio.Group defaultValue="keydata" buttonStyle="solid"  style={{padding:'10px 0'}} onChange={this.handleChangeCheck}>
-              <Radio.Button value="keydata" style={{margin:'0 10px',width: 130}}>keydata</Radio.Button>
-              <Radio.Button value="backupdata" style={{margin:'0 10px',width: 130}}>backupdata</Radio.Button>
-              <Radio.Button value="subacct" style={{margin:'0 10px',width: 130}}>subacct</Radio.Button>
-              <Radio.Button value="subassetsum" style={{margin:'0 10px',width: 130}}>subassetsum</Radio.Button>
-            </Radio.Group>
-  
+              <Radio.Group defaultValue="keydata" buttonStyle="solid"  style={{padding:'10px 0'}} onChange={this.handleChangeCheck}>
+                <Radio.Button value="keydata" style={{margin:'0 10px'}}>keydata</Radio.Button>
+                <Radio.Button value="backupdata" style={{margin:'0 10px'}}>backupdata</Radio.Button>
+                <Radio.Button value="subacct" style={{margin:'0 10px'}}>subacct</Radio.Button>
+                <Radio.Button value="subassetsum" style={{margin:'0 10px'}}>subassetsum</Radio.Button>
+              </Radio.Group>
             </div>
               <div style={{ display: 'flex', marginBottom: 30 }}>
                 <Tooltip
@@ -674,12 +814,13 @@ export class AccountSearchPage extends React.Component {
                 >
                   <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
                 </Tooltip>
-                
                 <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
               </div>
-               <Table columns={this.state.columnsMykey} bordered  dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/>
+               <Table columns={this.state.columnsMykey} bordered={false}  dataSource={this.state.columnsData} scroll={{ x: 1500 }} pagination={{ pageSize: 50 }}/>
             </Card>
-        </div>
+          </div>
+          ) : null} 
+        
         </styleComps.ConBox>
       </LayoutContentBox>
     )
