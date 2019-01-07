@@ -6,7 +6,7 @@ import React from 'react'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Form, Select, message, Tabs, Table, Tag, Button, AutoComplete } from 'antd'
+import { Form, Select, message, Tabs, Table, Tag, Button, AutoComplete, Card, Tooltip, InputNumber, Radio } from 'antd'
 import { Progress, Input } from 'utils/antdUtils'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -22,6 +22,7 @@ import messages from './messages'
 const { Search } = Input
 const { Option } = Select
 const { TabPane } = Tabs
+const { CheckableTag } = Tag;
 
 export class AccountSearchPage extends React.Component {
   constructor (props) {
@@ -50,7 +51,15 @@ export class AccountSearchPage extends React.Component {
       voteProxy: '',
       accountSearch: '',
       powerAddress: [],
-      symbolNet: 'EOS'
+      symbolNet: 'EOS',
+      columnsData : [],
+      checked: true ,
+      limit: 100,
+      columnsMykey:[],
+      lowerBound: '',
+      upperBound: '',
+      scope : '',
+      eos: {}
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -63,8 +72,12 @@ export class AccountSearchPage extends React.Component {
         symbolNet: 'WBI'
       })
     }
+    const eos = getEos(this.props.SelectedNetWork)
+    this.setState({eos: eos})
   }
   componentDidMount () {
+    const eos = getEos(this.props.SelectedNetWork)
+    this.setState({eos: eos})
     console.log('account===', this.props.match.params.account)
     if (this.props.match.params.account) {
       this.handleSearch(this.props.match.params.account)
@@ -80,8 +93,7 @@ export class AccountSearchPage extends React.Component {
     let firstSymbol = key.split('(')
     var newContract = firstSymbol[1].split(')')
     var newSymbol = key.split(' ')
-    const eos = getEos(this.props.SelectedNetWork)
-    eos
+    this.state.eos
       .getCurrencyBalance({
         code: newContract[0],
         account: this.state.account.trim(),
@@ -106,7 +118,70 @@ export class AccountSearchPage extends React.Component {
   onChangeAccount = e => {
     this.setState({ accountSearch: e.target.value })
   };
+// 搜索mykey账户信息
+  handSearchTableRows = (checked)=>{
+    const eos = getEos(this.props.SelectedNetWork)
+    eos.getTableRows({
+      'code': this.state.account,
+      'json': true,
+      'limit': this.state.limit,
+      'lower_bound': this.state.lowerBound,
+      'scope': this.state.scope,
+      'table': checked,
+      'upper_bound':this.state.upperBound
+    }).then(data=>{
+      console.log(' data== ',data)
 
+    }).catch(err=>{
+      console.log('err == ',err)
+    })
+  }
+// mykey 账户切换 选项
+  handleChangeCheck = e =>{
+    console.log('handleChangeCheck==',e.target.value)
+    this.setState({ checked : e.target.value});
+    if(e.target.value === 'keydata'){
+      this.setState({  columnsMykey: [{
+        title: 'index(key)',
+        dataIndex: 'index',
+        key: 'index',
+        width: 150
+      }, {
+        title: 'key',
+        dataIndex: 'key',
+        key: 'key',
+        width: 300
+      }]})
+    }else if(e.target.value === 'backupdata'){
+      this.setState({ columnsMykey: [{
+        title: 'index(key)',
+        dataIndex: 'index',
+        key: 'index',
+        width: 150
+      }, {
+        title: 'value',
+        dataIndex: 'value',
+        key: 'value',
+        width: 300
+      }]})
+    }else if(e.target.value === 'subacct'){
+      this.setState({ columnsMykey: [{
+        title: 'sub_account(key)',
+        dataIndex: 'sub_account',
+        key: 'sub_account',
+        width: 150
+      }, {
+        title: 'sub_admin_key',
+        dataIndex: 'sub_admin_key',
+        key: 'sub_admin_key',
+        width: 300
+      }]})
+    }else if(e.target.value === 'subassetsumn'){
+      this.setState({})
+    }
+  this.handSearchTableRows( e.target.value)
+    
+  }
   handleSearch = value => {
     // this.props.dispatch(push('/login'));
     this.setState({
@@ -262,9 +337,6 @@ export class AccountSearchPage extends React.Component {
   };
 
   handleSendTransaction = value => {
-    // console.log('value==', value);
-    // const data = encodeURI(JSON.stringify(value));
-    // const data = value;
     this.props.history.push({
       pathname: '/transfer',
       state: {
@@ -274,6 +346,33 @@ export class AccountSearchPage extends React.Component {
       }
     })
   };
+
+  changeLimit = value=>{
+    this.setState({
+      limit: value
+    })
+  }
+
+  changeScope = (e)=>{
+    const { value } = e.target
+    this.setState({
+      scope: value
+    })
+  }
+
+  changeLowerBound = (value)=>{
+    console.log('value===', value)
+    this.setState({
+      lowerBound: value
+    })
+  }
+
+  changeUpperBound = (value)=>{
+    this.setState({
+      upperBound: value
+    })
+  }
+
   render () {
     const FunctionSearchButton = this.state.formatMessage(
       messages.FunctionSearchButton,
@@ -394,6 +493,8 @@ export class AccountSearchPage extends React.Component {
         dataIndex: 'address'
       }
     ]
+   
+
 
     const data = this.state.powerAddress
     const children = symbolList.map((item) => (
@@ -511,7 +612,6 @@ export class AccountSearchPage extends React.Component {
                           onSelect={this.handleChange}
                           filterOption={(inputValue, option) => option.props.children[0].toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                         />
-
                       </div>
                     ) : (
                       <div style={{ padding: '1rem 0' }}>
@@ -545,6 +645,41 @@ export class AccountSearchPage extends React.Component {
               </div>
             </div>
           ) : null}
+
+        <div>
+            <Card title='mykey' bordered={false}>
+            <div>
+           <Radio.Group defaultValue="keydata" buttonStyle="solid"  style={{padding:'10px 0'}} onChange={this.handleChangeCheck}>
+              <Radio.Button value="keydata" style={{margin:'0 10px',width: 130}}>keydata</Radio.Button>
+              <Radio.Button value="backupdata" style={{margin:'0 10px',width: 130}}>backupdata</Radio.Button>
+              <Radio.Button value="subacct" style={{margin:'0 10px',width: 130}}>subacct</Radio.Button>
+              <Radio.Button value="subassetsum" style={{margin:'0 10px',width: 130}}>subassetsum</Radio.Button>
+            </Radio.Group>
+  
+            </div>
+              <div style={{ display: 'flex', marginBottom: 30 }}>
+                <Tooltip
+                  title='Scope'
+                  placement="topLeft"
+                  overlayClassName="numeric-input"
+                >
+                  <Input placeholder="Scope" maxLength={18} value={this.state.scope} onChange={this.changeScope} style={{width: 130, marginRight: 20,marginLeft:10}}/>
+                </Tooltip>
+                <InputNumber placeholder="LowerBound" value={this.state.lowerBound} onChange={this.changeLowerBound} style={{marginRight: 20, width: 130}}/>
+                <InputNumber placeholder="UpperBound" value={this.state.upperBound} onChange={this.changeUpperBound} style={{marginRight: 20, width: 130}}/>
+                <Tooltip
+                  title='Limit'
+                  placement="topLeft"
+                  overlayClassName="numeric-input"
+                >
+                  <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
+                </Tooltip>
+                
+                <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
+              </div>
+               <Table columns={this.state.columnsMykey} bordered  dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/>
+            </Card>
+        </div>
         </styleComps.ConBox>
       </LayoutContentBox>
     )

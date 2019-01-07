@@ -51,7 +51,7 @@ export class ForumVotePage extends React.Component {
   }
   /**
    * 链接scatter
-   * */
+   **/
   componentDidMount () {
     this.handleGetTransactionInit()
   }
