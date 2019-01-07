@@ -160,9 +160,16 @@ export class AirgrabPage extends React.Component {
       data = {
         owner: AccountName,
         sym: `0,${record.symbol}`,
-      };
+      }
     }
-    console.log('data',data)
+    if (record.account === 'openbrmeos11') {
+      data = {
+        owner: AccountName,
+        symbol: `0.000 ${record.symbol}`,
+        ram_payer: AccountName
+      }
+    }
+//    console.log('data', data)
 
     eos
       .transaction(
