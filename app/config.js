@@ -7,7 +7,7 @@ export default {
   testEndpoint: 'worbli.eoscannon.io',
   testChainId:
     '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
-    
+
   testTelosHttpEndpoint: 'https://telos.eosphere.io',
   testTelosEndpoint: 'telos.eosphere.io',
   testTelosChainId:
@@ -17,4 +17,6 @@ export default {
   testKylinEndpoint: 'api-kylin.eosasia.one',
   testKylinChainId:
   '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
+  databaseNameArr: ['keydata', 'backupdata', 'subacct', 'subassetsum'],
+  networkCodeArr: ['tuboshuismgr', '']
 }
