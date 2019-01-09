@@ -293,5 +293,19 @@
   "ForumVotePage ProposalListAginst": "反对",
   "ForumVotePage ProposalListVoterQuantity": "按投票者数量排序",
   "ForumVotePage ProposalListExpiredSort": "按过期时间排序",
-  "ForumVotePage ProposalListCreatedSort": "按创建时间排序"
+  "ForumVotePage ProposalListCreatedSort": "按创建时间排序",
+  "AccountSearchPage FunctionSearchActionIndex":"索引",
+  "AccountSearchPage FunctionSearchActionKey":"密钥",
+  "AccountSearchPage FunctionSearchActionBackupPeople":"紧急联络人",
+  "AccountSearchPage FunctionSearchActionSubAccount":"子账号",
+  "AccountSearchPage FunctionSearchActionSubAdminKey":"管理密钥",
+  "AccountSearchPage FunctionSearchActionSubExternalKey":"外部密钥",
+  "AccountSearchPage FunctionSearchActionWhiteList":"白名单",
+  "AccountSearchPage FunctionSearchActionExassetList":"资产列表",
+  "AccountSearchPage FunctionSearchActionPubkey":"公钥",
+  "AccountSearchPage FunctionSearchActionStatus":"状态",
+  "AccountSearchPage FunctionSearchActionNonce":"序列",
+  "AccountSearchPage FunctionSearchActionQuantity":"数量",
+  "AccountSearchPage FunctionSearchActionContract":"合约"
+
 }

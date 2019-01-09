@@ -163,5 +163,58 @@ export default defineMessages({
   FunctionSearchActionTransfer: {
     id: 'TransferPage FunctionSearchActionTransfer',
     defaultMessage: '转账'
-  }
+  },
+
+  FunctionSearchActionIndex:{
+    id: 'AccountSearchPage FunctionSearchActionIndex',
+    defaultMessage: '索引'
+  },
+  FunctionSearchActionKey:{
+    id: 'AccountSearchPage FunctionSearchActionKey',
+    defaultMessage: '公钥'
+  },
+  FunctionSearchActionBackupPeople:{
+    id: 'AccountSearchPage FunctionSearchActionBackupPeople',
+    defaultMessage: '紧急联络人'
+  },
+  FunctionSearchActionSubAccount:{
+    id: 'AccountSearchPage FunctionSearchActionSubAccount',
+    defaultMessage: '子账号'
+  },
+  FunctionSearchActionSubAdminKey:{
+    id: 'AccountSearchPage FunctionSearchActionSubAdminKey',
+    defaultMessage: '主账号'
+  },
+  FunctionSearchActionSubExternalKey:{
+    id: 'AccountSearchPage FunctionSearchActionSubExternalKey',
+    defaultMessage: '子账号'
+  },
+  FunctionSearchActionWhiteList:{
+    id: 'AccountSearchPage FunctionSearchActionWhiteList',
+    defaultMessage: '白名单'
+  },
+  FunctionSearchActionExassetList:{
+    id: 'AccountSearchPage FunctionSearchActionExassetList',
+    defaultMessage: '资产列表'
+  },
+  FunctionSearchActionPubkey:{
+    id: 'AccountSearchPage FunctionSearchActionPubkey',
+    defaultMessage: '公钥'
+  },
+  FunctionSearchActionStatus:{
+    id: 'AccountSearchPage FunctionSearchActionStatus',
+    defaultMessage: '状态'
+  },
+  FunctionSearchActionNonce:{
+    id: 'AccountSearchPage FunctionSearchActionNonce',
+    defaultMessage: '序列'
+  },
+  FunctionSearchActionQuantity:{
+    id: 'AccountSearchPage FunctionSearchActionQuantity',
+    defaultMessage: '余额'
+  },
+  FunctionSearchActionContract:{
+    id: 'AccountSearchPage FunctionSearchActionContract',
+    defaultMessage: '合约'
+  },
 })

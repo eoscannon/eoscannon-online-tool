@@ -66,6 +66,7 @@ export class AccountSearchPage extends React.Component {
     }
   }
   componentWillReceiveProps (nextProps) {
+
     if (nextProps.match.params.account) {
       this.handleSearch(nextProps.match.params.account)
       this.setState({ account: nextProps.match.params.account })
@@ -77,7 +78,10 @@ export class AccountSearchPage extends React.Component {
     }
     const eos = getEos(this.props.SelectedNetWork)
     this.setState({eos: eos})
+    // console.log('SelectedNetWork  == ',this.props.SelectedNetWork)
+
   }
+
   componentDidMount () {
     const eos = getEos(this.props.SelectedNetWork)
     this.setState({eos: eos})
@@ -133,62 +137,64 @@ export class AccountSearchPage extends React.Component {
     if(e.target.value === 'keydata') {
       this.setState({
         columnsMykey: [{
-          title: 'index(key)',
+          title: this.state.formatMessage(
+            messages.FunctionSearchActionIndex,
+          ),
           dataIndex: 'index',
           key: 'index',
           width: 150
         }, {
-          title: 'key',
+          title: this.state.formatMessage( messages.FunctionSearchActionKey),
           key: 'keyData',
           width: 300,
           render: (text, record)=>(
             <div>
-              <div><span>pubkey:</span> {record.keyData.pubkey}</div>
-              <div><span>status:</span> {record.keyData.status}</div>
-              <div><span>nonce:</span> {record.keyData.nonce}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.keyData.pubkey}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.keyData.status}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.keyData.nonce}</div>
             </div>
           )
         }]
       })
     }else if(e.target.value === 'backupdata') {
       this.setState({ columnsMykey: [{
-        title: 'index(key)',
+        title:  this.state.formatMessage(messages.FunctionSearchActionIndex ),
         dataIndex: 'index',
         key: 'index',
         width: 50
       }, {
-        title: 'value',
+        title: this.state.formatMessage(messages.FunctionSearchActionBackupPeople ),
         dataIndex: 'value',
         key: 'value',
         width: 350
       }]})
     }else if(e.target.value === 'subacct') {
       this.setState({ columnsMykey: [{
-        title: 'sub_account(key)',
+        title:  this.state.formatMessage(messages.FunctionSearchActionSubAccount ),
         dataIndex: 'sub_account',
         key: 'sub_account'
       }, {
-        title: 'sub_admin_key',
+        title: this.state.formatMessage(messages.FunctionSearchActionSubAdminKey ),
         key: 'sub_admin_key',
         render: (text, record)=>(
           <div>
-            <div><span>pubkey:</span> {record.sub_admin_key.pubkey}</div>
-            <div><span>status:</span> {record.sub_admin_key.status}</div>
-            <div><span>nonce:</span> {record.sub_admin_key.nonce}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.sub_admin_key.pubkey}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_admin_key.status}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_admin_key.nonce}</div>
           </div>
         )
       }, {
-        title: 'sub_external_key',
+        title: this.state.formatMessage(messages.FunctionSearchActionSubExternalKey ),
         key: 'sub_external_key',
         render: (text, record)=> (
           <div>
-            <div><span>pubkey:</span> {record.sub_external_key.pubkey}</div>
-            <div><span>status:</span> {record.sub_external_key.status}</div>
-            <div><span>nonce:</span> {record.sub_external_key.nonce}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )} :</span> {record.sub_external_key.pubkey}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_external_key.status}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_external_key.nonce}</div>
           </div>
         )
       }, {
-        title: 'whitelist',
+        title: this.state.formatMessage(messages.FunctionSearchActionWhiteList ),
         dataIndex: 'whitelist',
         key: 'whitelist',
         render: whitelist => (
@@ -197,7 +203,7 @@ export class AccountSearchPage extends React.Component {
           </span>
         )
       }, {
-        title: 'exasset_list',
+        title: this.state.formatMessage(messages.FunctionSearchActionExassetList ),
         dataIndex: 'exasset_list',
         key: 'exasset_list',
         width: 200,
@@ -205,8 +211,8 @@ export class AccountSearchPage extends React.Component {
           <div>
             {exasset_list.map((v, i)=>
               <div key={i}>
-                <div><span>quantity:</span> {v.quantity}</div>
-                <div><span>contract:</span> {v.contract}</div>
+                <div><span>{this.state.formatMessage(messages.FunctionSearchActionQuantity )}:</span> {v.quantity}</div>
+                <div><span>{this.state.formatMessage(messages.FunctionSearchActionContract )}:</span> {v.contract}</div>
               </div>)}
           </div>
         )
@@ -215,23 +221,23 @@ export class AccountSearchPage extends React.Component {
     }else if(e.target.value === 'subassetsum') {
       this.setState({
         columnsMykey: [{
-          title: 'key',
+          title:  this.state.formatMessage(messages.FunctionSearchActionIndex),
           dataIndex: 'key',
           key: 'key'
         }, {
-          title: 'main_account',
+          title: this.state.formatMessage(messages.FunctionSearchActionSubAdminKey ),
           dataIndex: 'main_account',
           key: 'main_account'
         }, {
-          title: 'exasset_list',
+          title: this.state.formatMessage(messages.FunctionSearchActionExassetList ),
           dataIndex: 'exasset_list',
           key: 'exasset_list',
           render: (exasset_list)=>(
             <div>
               {exasset_list.map((v, i) =>
                 <div key={i}>
-                  <div><span>quantity:</span> {v.quantity}</div>
-                  <div><span>contract:</span> {v.contract}</div>
+                  <div><span>{this.state.formatMessage(messages.FunctionSearchActionQuantity )}:</span> {v.quantity}</div>
+                  <div><span>{this.state.formatMessage(messages.FunctionSearchActionContract )}:</span> {v.contract}</div>
                 </div>)}
             </div>
           )
@@ -479,8 +485,7 @@ export class AccountSearchPage extends React.Component {
             key: i,
             index: i,
             keyData: v.key
-          }
-          )
+          })
         })
       }else if(this.state.checked === 'backupdata') {
         v.rows.map((v, i)=>{
@@ -492,7 +497,6 @@ export class AccountSearchPage extends React.Component {
         })
       }else if(this.state.checked === 'subacct') {
         v.rows.map((v, i)=>{
-          console.log('v=== ', v)
           dataNew.push({
             key: i,
             ...v
@@ -585,6 +589,46 @@ export class AccountSearchPage extends React.Component {
     const FunctionSearchActionTransfer = this.state.formatMessage(
       messages.FunctionSearchActionTransfer,
     )
+
+    const FunctionSearchActionIndex = this.state.formatMessage(
+      messages.FunctionSearchActionIndex,
+    )
+    const FunctionSearchActionKey = this.state.formatMessage(
+      messages.FunctionSearchActionKey,
+    )
+    const FunctionSearchActionBackupPeople = this.state.formatMessage(
+      messages.FunctionSearchActionBackupPeople,
+    )
+    const FunctionSearchActionSubAccount = this.state.formatMessage(
+      messages.FunctionSearchActionSubAccount,
+    )
+    const FunctionSearchActionSubAdminKey = this.state.formatMessage(
+      messages.FunctionSearchActionSubAdminKey,
+    )
+    const FunctionSearchActionSubExternalKey = this.state.formatMessage(
+      messages.FunctionSearchActionSubExternalKey,
+    )
+    const FunctionSearchActionWhiteList = this.state.formatMessage(
+      messages.FunctionSearchActionWhiteList,
+    )
+    const FunctionSearchActionExassetList = this.state.formatMessage(
+      messages.FunctionSearchActionExassetList,
+    )
+    const FunctionSearchActionPubkey = this.state.formatMessage(
+      messages.FunctionSearchActionPubkey,
+    )  
+    const FunctionSearchActionStatus = this.state.formatMessage(
+      messages.FunctionSearchActionStatus,
+    )
+    const FunctionSearchActionNonce = this.state.formatMessage(
+      messages.FunctionSearchActionNonce,
+    )
+    const FunctionSearchActionQuantity = this.state.formatMessage(
+      messages.FunctionSearchActionQuantity,
+    )
+    const FunctionSearchActionContract = this.state.formatMessage(
+      messages.FunctionSearchActionContract,
+    )
     const columnsBlance = [
       {
         title: FunctionSearchAccountTableBalance,
@@ -643,6 +687,9 @@ export class AccountSearchPage extends React.Component {
     const childrenWorbli = symbolListWorbli.map((item) => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
     ))
+
+    console.log('this.state.account  == ',this.state.account)
+
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
@@ -787,13 +834,13 @@ export class AccountSearchPage extends React.Component {
           ) : null}
           {this.state.mykeyVisvible ? (
             <div >
-              <Card title='MYKEY' bordered={true} type="inner" style={{ marginTop: '21px', background: '#fafafa'}}>
+              <Card title='MYKEY' bordered={true} type="inner" style={{ marginTop: '21px'}}>
                 <div>
                   <Radio.Group defaultValue="keydata" buttonStyle="solid" style={{padding: '10px 0'}} onChange={this.handleChangeCheck}>
-                    <Radio.Button value="keydata" style={{margin: '0 10px'}}>keydata</Radio.Button>
-                    <Radio.Button value="backupdata" style={{margin: '0 10px'}}>backupdata</Radio.Button>
-                    <Radio.Button value="subacct" style={{margin: '0 10px'}}>subacct</Radio.Button>
-                    <Radio.Button value="subassetsum" style={{margin: '0 10px'}}>subassetsum</Radio.Button>
+                    <Radio.Button value="keydata" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>keydata</Radio.Button>
+                    <Radio.Button value="backupdata" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>backupdata</Radio.Button>
+                    <Radio.Button value="subacct" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>subacct</Radio.Button>
+                    <Radio.Button value="subassetsum" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>subassetsum</Radio.Button>
                   </Radio.Group>
                 </div>
                 <div style={{ display: 'flex', marginBottom: 30 }}>
@@ -813,7 +860,7 @@ export class AccountSearchPage extends React.Component {
                   >
                     <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
                   </Tooltip>
-                  <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
+                  <Button type="primary"  onClick={this.onSearch}>{FunctionSearchButton}</Button>
                 </div>
                 <Table columns={this.state.columnsMykey} bordered={false} dataSource={this.state.columnsData} scroll={{ x: 1500 | true }} pagination={{ pageSize: 50 }}/>
               </Card>

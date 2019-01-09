@@ -8,6 +8,9 @@ const ConBox = styled.div`
     display: flex;
     padding-top: 2rem;
   }
+  label:before{
+    left:0px!important;
+  }
   .firstContent {
     width: 50%;
     span {
