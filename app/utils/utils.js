@@ -521,7 +521,7 @@ const airgrabList = [
     method: 'signup',
     url: 'https://eostoolkit.io'
   },
-/**  {
+  /**  {
     key: '3',
     symbol: 'RIDL',
     account: 'ridlridlcoin',

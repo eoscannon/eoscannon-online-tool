@@ -108,7 +108,7 @@ export class AirgrabPage extends React.Component {
     const eos = getEos(this.props.SelectedNetWork)
     const { AccountName } = values
     eos.getAbi(record.account).then(res => {
-     eos.fc.abiCache.abi(res.account_name, res.abi)
+      eos.fc.abiCache.abi(res.account_name, res.abi)
     }).catch(err=>{
       console.log('err', err)
     })
@@ -116,19 +116,19 @@ export class AirgrabPage extends React.Component {
     if (record.method === 'signup' && record.symbol !== 'SEED') {
       data = {
         owner: AccountName,
-        quantity: `0.0000 ${record.symbol}`,
-      };
+        quantity: `0.0000 ${record.symbol}`
+      }
     }
     if (record.method === 'signup' && record.symbol === 'SEED') {
       data = {
         owner: AccountName,
-        sym: `0.0000 ${record.symbol}`,
-      };
+        sym: `0.0000 ${record.symbol}`
+      }
     }
     if (record.method === 'claim') {
       data = {
         claimer: AccountName
-      };
+      }
     }
     if (record.account === 'thedeosgames') {
       data = {
@@ -140,8 +140,8 @@ export class AirgrabPage extends React.Component {
       data = {
         owner: AccountName,
         symbol: `0.0000 ${record.symbol}`,
-        ram_payer: AccountName,
-      };
+        ram_payer: AccountName
+      }
     }
     if (record.account === 'infinicoinio') {
       data = {
@@ -159,7 +159,7 @@ export class AirgrabPage extends React.Component {
     if (record.account === 'zkstokensr4u') {
       data = {
         owner: AccountName,
-        sym: `0,${record.symbol}`,
+        sym: `0,${record.symbol}`
       }
     }
     if (record.account === 'openbrmeos11') {
@@ -169,7 +169,7 @@ export class AirgrabPage extends React.Component {
         ram_payer: AccountName
       }
     }
-//    console.log('data', data)
+    //    console.log('data', data)
 
     eos
       .transaction(
