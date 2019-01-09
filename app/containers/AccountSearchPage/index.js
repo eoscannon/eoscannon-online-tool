@@ -238,9 +238,11 @@ export class AccountSearchPage extends React.Component {
         }]})
     }
     // console.log(' this.state.columnsMykey== ', this.state.columnsMykey)
-
-    this.onSearch({target: {value: e.target.value}})
-
+    try{
+      this.onSearch({target: {value: e.target.value}})
+    }catch(err){
+      console.log('err === ',err)
+    }
   }
 
   // 主程搜索数据
@@ -392,7 +394,7 @@ export class AccountSearchPage extends React.Component {
             )
           })
           // 设置mykey data
-        this.setState({mykeyVisvible: true, scope: this.state.account})
+        this.setState({scope: this.state.account})
         try{
           this.handleChangeCheck({target: {value: 'keydata'}})
         } catch(err) {
@@ -443,7 +445,7 @@ export class AccountSearchPage extends React.Component {
   }
 
   onSearch = (checked)=>{
-    console.log('checked == ', checked)
+    // console.log('checked == ', checked)
     var checkdata
     try{
       if(checked.target.value) {
@@ -504,7 +506,7 @@ export class AccountSearchPage extends React.Component {
           })
         })
       }
-      console.log(' this.state.columnsData== ', this.state.columnsData)
+      // console.log(' this.state.columnsData== ', this.state.columnsData)
       this.setState({columnsData: dataNew, mykeyVisvible: true})
     }).catch(err=>{
       this.setState({mykeyVisvible: false})
