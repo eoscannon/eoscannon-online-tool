@@ -311,7 +311,7 @@
 
   "AccountSearchPage FunctionSearchActionIndex": "index",
   "AccountSearchPage FunctionSearchActionKey": "key",
-  "AccountSearchPage FunctionSearchActionBackupPeople": "Emergency Contacts",
+  "AccountSearchPage FunctionSearchActionBackupPeople": "emergency_contacts",
   "AccountSearchPage FunctionSearchActionSubAccount": "sub_account",
   "AccountSearchPage FunctionSearchActionSubAdminKey": "admin_key",
   "AccountSearchPage FunctionSearchActionSubExternalKey": "sub_external_key",
