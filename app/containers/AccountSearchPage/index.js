@@ -420,7 +420,10 @@ export class AccountSearchPage extends React.Component {
       })
       .catch(() => {
         message.error(this.state.formatMessage(messages.FunctionSearchNoData))
-        this.setState({ info: '' })
+        this.setState({ 
+          info: '' , 
+          mykeyVisvible: false
+        })
       })
   };
 
