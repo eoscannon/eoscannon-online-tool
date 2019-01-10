@@ -71,11 +71,7 @@ export class AccountSearchPage extends React.Component {
       this.handleSearch(nextProps.match.params.account)
       this.setState({ account: nextProps.match.params.account })
     }
-    if(nextProps.SelectedNetWork === 'test') {
-      this.setState({
-        symbolNet: 'WBI'
-      })
-    }
+  
     const eos = getEos(this.props.SelectedNetWork)
     this.setState({eos: eos})
     // console.log('SelectedNetWork  == ',this.props.SelectedNetWork)
@@ -225,7 +221,7 @@ export class AccountSearchPage extends React.Component {
           dataIndex: 'key',
           key: 'key'
         }, {
-          title: this.state.formatMessage(messages.FunctionSearchActionSubAdminKey ),
+          title: this.state.formatMessage(messages.FunctionSearchActionMainAccount ),
           dataIndex: 'main_account',
           key: 'main_account'
         }, {
@@ -256,8 +252,23 @@ export class AccountSearchPage extends React.Component {
     // this.props.dispatch(push('/login'));
     this.setState({
       accountSearch: value,
-      account: value
+      account: value,
+      cpuStake: 0,
+      networkStake: 0
     })
+    if(this.props.SelectedNetWork === 'test') {
+      this.setState({
+        symbolNet: 'WBI'
+      })
+    }else if(this.props.SelectedNetWork === 'telos'){
+      this.setState({
+        symbolNet: 'TLOS'
+      })
+    }else{
+      this.setState({
+        symbolNet: 'EOS'
+      })
+    }
     const eos = getEos(this.props.SelectedNetWork)
     let stake = 0
     let cpuBack
@@ -590,45 +601,6 @@ export class AccountSearchPage extends React.Component {
       messages.FunctionSearchActionTransfer,
     )
 
-    const FunctionSearchActionIndex = this.state.formatMessage(
-      messages.FunctionSearchActionIndex,
-    )
-    const FunctionSearchActionKey = this.state.formatMessage(
-      messages.FunctionSearchActionKey,
-    )
-    const FunctionSearchActionBackupPeople = this.state.formatMessage(
-      messages.FunctionSearchActionBackupPeople,
-    )
-    const FunctionSearchActionSubAccount = this.state.formatMessage(
-      messages.FunctionSearchActionSubAccount,
-    )
-    const FunctionSearchActionSubAdminKey = this.state.formatMessage(
-      messages.FunctionSearchActionSubAdminKey,
-    )
-    const FunctionSearchActionSubExternalKey = this.state.formatMessage(
-      messages.FunctionSearchActionSubExternalKey,
-    )
-    const FunctionSearchActionWhiteList = this.state.formatMessage(
-      messages.FunctionSearchActionWhiteList,
-    )
-    const FunctionSearchActionExassetList = this.state.formatMessage(
-      messages.FunctionSearchActionExassetList,
-    )
-    const FunctionSearchActionPubkey = this.state.formatMessage(
-      messages.FunctionSearchActionPubkey,
-    )  
-    const FunctionSearchActionStatus = this.state.formatMessage(
-      messages.FunctionSearchActionStatus,
-    )
-    const FunctionSearchActionNonce = this.state.formatMessage(
-      messages.FunctionSearchActionNonce,
-    )
-    const FunctionSearchActionQuantity = this.state.formatMessage(
-      messages.FunctionSearchActionQuantity,
-    )
-    const FunctionSearchActionContract = this.state.formatMessage(
-      messages.FunctionSearchActionContract,
-    )
     const columnsBlance = [
       {
         title: FunctionSearchAccountTableBalance,

@@ -217,4 +217,8 @@ export default defineMessages({
     id: 'AccountSearchPage FunctionSearchActionContract',
     defaultMessage: '合约'
   },
+  FunctionSearchActionMainAccount:{
+    id: 'AccountSearchPage FunctionSearchActionMainAccount',
+    defaultMessage: '主账号'
+  },
 })

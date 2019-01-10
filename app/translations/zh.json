@@ -294,7 +294,7 @@
   "ForumVotePage ProposalListVoterQuantity": "按投票者数量排序",
   "ForumVotePage ProposalListExpiredSort": "按过期时间排序",
   "ForumVotePage ProposalListCreatedSort": "按创建时间排序",
-  "AccountSearchPage FunctionSearchActionIndex":"索引",
+  "AccountSearchPage FunctionSearchActionIndex":"序号",
   "AccountSearchPage FunctionSearchActionKey":"密钥",
   "AccountSearchPage FunctionSearchActionBackupPeople":"紧急联络人",
   "AccountSearchPage FunctionSearchActionSubAccount":"子账号",
@@ -304,8 +304,9 @@
   "AccountSearchPage FunctionSearchActionExassetList":"资产列表",
   "AccountSearchPage FunctionSearchActionPubkey":"公钥",
   "AccountSearchPage FunctionSearchActionStatus":"状态",
-  "AccountSearchPage FunctionSearchActionNonce":"序列",
+  "AccountSearchPage FunctionSearchActionNonce":"nonce",
   "AccountSearchPage FunctionSearchActionQuantity":"数量",
-  "AccountSearchPage FunctionSearchActionContract":"合约"
+  "AccountSearchPage FunctionSearchActionContract":"合约",
+  "AccountSearchPage FunctionSearchActionMainAccount":"主账号"
 
 }

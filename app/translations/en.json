@@ -319,5 +319,6 @@
   "AccountSearchPage FunctionSearchActionStatus":"status",
   "AccountSearchPage FunctionSearchActionNonce":"nonce",
   "AccountSearchPage FunctionSearchActionQuantity":"quantity",
-  "AccountSearchPage FunctionSearchActionContract":"contract"
+  "AccountSearchPage FunctionSearchActionContract":"contract",
+  "AccountSearchPage FunctionSearchActionMainAccount":"main_account"
 }
