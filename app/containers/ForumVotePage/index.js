@@ -15,7 +15,7 @@ import {
   getEos,
   openTransactionFailNotification
 } from '../../utils/utils'
-import { List }  from '../../utils/antdUtils' 
+import { List }  from '../../utils/antdUtils'
 import { LayoutContent } from '../../components/NodeComp'
 import ScanQrcode from '../../components/ScanQrcode'
 import DealGetQrcode from '../../components/DealGetQrcode'
@@ -166,7 +166,7 @@ export class ForumVotePage extends React.Component {
         {
           actions: [
             {
-              account: 'eosforumrcpp',
+              account: 'eosio.forum',
               name: 'vote',
               authorization: [
                 {
@@ -247,10 +247,10 @@ export class ForumVotePage extends React.Component {
     let nowTime = new Date(new Date(time).getTime()+ 8 * 60 * 60 * 1000)
     let year = nowTime.getFullYear()
     let mon = nowTime.getMonth() >=10 ? nowTime.getMonth()+1 :'0'+(nowTime.getMonth()+1 )
-    let date = nowTime.getDate()  >=10 ? nowTime.getDate() :'0'+nowTime.getDate() 
-    let hours = nowTime.getHours()  >=10 ? nowTime.getHours() :'0'+nowTime.getHours() 
-    let min = nowTime.getMinutes() >=10 ? nowTime.getMinutes() :'0'+nowTime.getMinutes() 
-    let second =nowTime.getSeconds() >=10 ? nowTime.getSeconds() :'0'+nowTime.getSeconds() 
+    let date = nowTime.getDate()  >=10 ? nowTime.getDate() :'0'+nowTime.getDate()
+    let hours = nowTime.getHours()  >=10 ? nowTime.getHours() :'0'+nowTime.getHours()
+    let min = nowTime.getMinutes() >=10 ? nowTime.getMinutes() :'0'+nowTime.getMinutes()
+    let second =nowTime.getSeconds() >=10 ? nowTime.getSeconds() :'0'+nowTime.getSeconds()
     return year +'-'+ mon +'-'+ date +'  '+ hours +':'+ min +':'+ second
   }
 
@@ -276,7 +276,7 @@ export class ForumVotePage extends React.Component {
     const ForumVoteFirst = this.state.formatMessage(
       messages.ForumVoteFirst,
     )
-  
+
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
@@ -284,7 +284,7 @@ export class ForumVotePage extends React.Component {
       { label: LabelApprove, value: 1 },
       { label: LabelAgaist, value: 0 }
     ]
- 
+
     return (
       <LayoutContent>
         <div>
@@ -387,14 +387,14 @@ export class ForumVotePage extends React.Component {
                   placement="topLeft"
                   overlayClassName="numeric-input"
                 >
-                
+
                   <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
                 </Tooltip>
                 <Select labelInValue defaultValue={{ key: ProposalListVoterQuantity }} style={{ width: 180 }} onChange={this.handleChange} style={{marginRight: 20}}>
                    <Option value="0">{ProposalListCreatedSort}</Option>
                    <Option value="1">{ProposalListExpiredSort}</Option>
                    <Option value="2">{ProposalListVoterQuantity}</Option>
-                 </Select> 
+                 </Select>
                 <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
               </div>
               <List
