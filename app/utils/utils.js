@@ -475,6 +475,13 @@ const symbolListWorbli = [
  * */
 const airgrabList = [
   {
+    key: '12',
+    symbol: 'SLAM',
+    account: 'slamdevelops',
+    method: 'signup',
+    url: 'https://slamgames.io'
+  },
+  {
     key: '11',
     symbol: 'BRM',
     account: 'openbrmeos11',
