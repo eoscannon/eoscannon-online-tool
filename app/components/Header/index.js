@@ -43,7 +43,8 @@ class HeaderComp extends React.Component {
       openKeys: [],
       rootSubmenuKeys: ['1', '2', '3', '4', '5'],
       testNetUrl: '',
-      visible: false
+      visible: false,
+      mainNetwork:'main'
     }
   }
   /**
@@ -51,7 +52,6 @@ class HeaderComp extends React.Component {
    * */
   componentWillMount () {
     // getEosByScatter();
-
     let defaultSelectedKeys = '12'
     switch (window.location.hash.substring(1)) {
       case '/iq':
@@ -112,6 +112,10 @@ class HeaderComp extends React.Component {
       defaultSelectedKeys
     })
     storage.setBaseSymbol('EOS')
+    
+    let network = storage.getNetwork() || 'main'
+    this.setState({mainNetwork:network, testNetUrl:network})
+    this.props.onDispatchChangeNetworkReducer(network)
 
   }
 
@@ -144,6 +148,7 @@ class HeaderComp extends React.Component {
     }else if(value === 'telos') {
       storage.setBaseSymbol('TLOS')
     }
+    storage.setNetwork(value)
     this.props.onDispatchChangeNetworkReducer(value)
   };
 
@@ -176,6 +181,7 @@ class HeaderComp extends React.Component {
       storage.setChainId(info.chain_id)
     })
     storage.setNetwork(value)
+    console.log('value = ',value)
     this.setState({
       visible: false
     })
@@ -464,7 +470,7 @@ class HeaderComp extends React.Component {
             >
               <Select
                 className="netWork"
-                defaultValue="main"
+                defaultValue={this.state.mainNetwork}
                 style={{ width: 110 }}
                 onChange={this.handleChange}
               >

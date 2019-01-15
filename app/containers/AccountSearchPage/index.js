@@ -234,7 +234,6 @@ export class AccountSearchPage extends React.Component {
             })
           }
   
-          // console.log('info.permissions===', info.permissions)
           try {
             this.state.powerAddress = []
             if (info.permissions.length > 0) {
@@ -274,9 +273,7 @@ export class AccountSearchPage extends React.Component {
           try{
             let AccountList = storage.getAccountName() || []
             AccountList.push(this.state.accountSearch.trim())
-  
             let uniqueList = this.uniqueArr(AccountList)
-            console.log('uniqueList  =  ',uniqueList)
             storage.setAccountName(uniqueList)
             this.handleChangeCheck({target: {value: 'keydata'}})
           } catch(err) {

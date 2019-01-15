@@ -53,9 +53,7 @@ export default class MykeyAccountComp extends Component {
         columnsData: nextProps.columnsData,
         columnsMykey: nextProps.columnsMykey
       })
-      // console.log('columnsData == ',this.state.columnsData)
-      // console.log('columnsMykey == ',this.state.columnsMykey)
-      
+
     }
   }
   componentDidMount () {
