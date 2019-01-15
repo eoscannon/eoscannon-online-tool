@@ -6,8 +6,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button, Alert, Card ,InputNumber, Table, Tooltip, } from 'antd'
-import QRCode from 'qrcode.react'
-import copy from 'copy-to-clipboard'
 import Fcbuffer from 'fcbuffer'
 import config from './../../config'
 import { storage } from '../../utils/storage'
@@ -16,10 +14,8 @@ import {
   openNotification,
   openTransactionSuccessNotification
 } from '../../utils/utils'
-import { Progress, Input ,Radio } from 'utils/antdUtils'
+import {Input ,Radio } from 'utils/antdUtils'
 
-const FormItem = Form.Item
-const { TextArea } = Input
 
 export default class MykeyAccountComp extends Component {
   constructor (props) {
