@@ -65,7 +65,7 @@ export class AccountSearchPage extends React.Component {
       eos: {},
       mykeyVisvible: false,
       tableRows: [],
-      AccountNameList : ['1212121','werqwrwerwe','ggggggg','1212121','werqwrwerwe','ggggggg','1212121','werqwrwerwe','ggggggg',]
+      AccountNameList : []
     }
   }
   componentWillReceiveProps (nextProps) {
