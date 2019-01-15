@@ -15,19 +15,19 @@ import {
   getEos,
   openTransactionFailNotification
 } from '../../utils/utils'
-import { List }  from '../../utils/antdUtils'
+import { List } from '../../utils/antdUtils'
 import { LayoutContent } from '../../components/NodeComp'
 import ScanQrcode from '../../components/ScanQrcode'
 import DealGetQrcode from '../../components/DealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
-import { now } from 'moment';
+import { now } from 'moment'
 import zan from './zan.svg'
 import cai from './cai.svg'
 
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
-const Option = Select.Option;
+const Option = Select.Option
 
 export class ForumVotePage extends React.Component {
   constructor (props) {
@@ -46,7 +46,7 @@ export class ForumVotePage extends React.Component {
       lowerBound: null,
       upperBound: null,
       limit: 100,
-      creatTimeData:[]
+      creatTimeData: []
     }
   }
   /**
@@ -68,7 +68,7 @@ export class ForumVotePage extends React.Component {
     const values = nextProps.form.getFieldsValue()
     const { voter, statusText, proxy } = values
     this.setState({
-      GetTransactionButtonState: !!voter && !!statusText ,
+      GetTransactionButtonState: !!voter && !!statusText,
       GetTransactionButtonScatterState: !!proxy
     })
   };
@@ -84,35 +84,35 @@ export class ForumVotePage extends React.Component {
   handleGetTransactionInit = () => {
     this.setState({ scatterStatus: false })
     const eos = getEos(this.props.SelectedNetWork)
-      fetch("https://s3.amazonaws.com/api.eosvotes.io/eosvotes/tallies/latest.json", {
-        method: "GET",
-      }).then((response)=> {
-        response.status     //=> number 100–599
-        response.statusText //=> String
-        response.headers    //=> Headers
-        response.url        //=> String
-         response.text().then( responseText => {
-          responseText = JSON.parse(responseText)
-          function* values(responseText) {
-            for (let prop of Object.keys(responseText)) // own properties, you might use
-                yield responseText[prop];
-          }
-          let arr = Array.from(values(responseText));
-          this.setState({
-            columnsData: arr,
-          })
-          this.handleChange({key:'2'})
+    fetch('https://s3.amazonaws.com/api.eosvotes.io/eosvotes/tallies/latest.json', {
+      method: 'GET'
+    }).then((response)=> {
+      response.status // => number 100–599
+      response.statusText // => String
+      response.headers // => Headers
+      response.url // => String
+      response.text().then(responseText => {
+        responseText = JSON.parse(responseText)
+        function * values (responseText) {
+          for (let prop of Object.keys(responseText)) // own properties, you might use
+          {yield responseText[prop]}
+        }
+        let arr = Array.from(values(responseText))
+        this.setState({
+          columnsData: arr
         })
+        this.handleChange({key: '2'})
       })
+    })
   };
 
   sortVotes = (arr)=>{
-    for(let i=0;i<arr.length;i++){
-      for(let j=0;j<arr.length-1-i;j++){
-        if(arr[j].stats.votes.total < arr[j+1].stats.votes.total){
+    for(let i = 0;i < arr.length;i++) {
+      for(let j = 0;j < arr.length - 1 - i;j++) {
+        if(arr[j].stats.votes.total < arr[j + 1].stats.votes.total) {
           let temp = arr[j]
-          arr[j] = arr[j+1]
-          arr[j+1] = temp
+          arr[j] = arr[j + 1]
+          arr[j + 1] = temp
         }
       }
     }
@@ -120,12 +120,12 @@ export class ForumVotePage extends React.Component {
   }
 
   sortExpired =(arr)=>{
-    for(let i=0;i<arr.length;i++){
-      for(let j=0;j<arr.length-1-i;j++){
-        if(new Date(arr[j].proposal.expires_at).getTime() < new Date(arr[j+1].proposal.expires_at).getTime() ){
+    for(let i = 0;i < arr.length;i++) {
+      for(let j = 0;j < arr.length - 1 - i;j++) {
+        if(new Date(arr[j].proposal.expires_at).getTime() < new Date(arr[j + 1].proposal.expires_at).getTime()) {
           let temp = arr[j]
-          arr[j] = arr[j+1]
-          arr[j+1] = temp
+          arr[j] = arr[j + 1]
+          arr[j + 1] = temp
         }
       }
     }
@@ -133,12 +133,12 @@ export class ForumVotePage extends React.Component {
   }
 
   sortCreated =(arr)=>{
-    for(let i=0;i<arr.length;i++){
-      for(let j=0;j<arr.length-1-i;j++){
-        if(new Date(arr[j].proposal.created_at).getTime() < new Date(arr[j+1].proposal.created_at).getTime() ){
+    for(let i = 0;i < arr.length;i++) {
+      for(let j = 0;j < arr.length - 1 - i;j++) {
+        if(new Date(arr[j].proposal.created_at).getTime() < new Date(arr[j + 1].proposal.created_at).getTime()) {
           let temp = arr[j]
-          arr[j] = arr[j+1]
-          arr[j+1] = temp
+          arr[j] = arr[j + 1]
+          arr[j + 1] = temp
         }
       }
     }
@@ -229,29 +229,29 @@ export class ForumVotePage extends React.Component {
   }
 
   handleChange=(key)=>{
-    if(key.key==="2"){
+    if(key.key === '2') {
       let data = this.sortVotes(this.state.columnsData)
       this.setState({
         columnsData: data
       })
-    }else if(key.key === '0'){
+    }else if(key.key === '0') {
       let data = this.sortCreated(this.state.columnsData)
       this.setState({columnsData: data})
-    }else if(key.key ==='1'){
+    }else if(key.key === '1') {
       let data = this.sortExpired(this.state.columnsData)
       this.setState({columnsData: data})
     }
   }
 
   getTime = (time)=>{
-    let nowTime = new Date(new Date(time).getTime()+ 8 * 60 * 60 * 1000)
+    let nowTime = new Date(new Date(time).getTime() + 8 * 60 * 60 * 1000)
     let year = nowTime.getFullYear()
-    let mon = nowTime.getMonth() >=10 ? nowTime.getMonth()+1 :'0'+(nowTime.getMonth()+1 )
-    let date = nowTime.getDate()  >=10 ? nowTime.getDate() :'0'+nowTime.getDate()
-    let hours = nowTime.getHours()  >=10 ? nowTime.getHours() :'0'+nowTime.getHours()
-    let min = nowTime.getMinutes() >=10 ? nowTime.getMinutes() :'0'+nowTime.getMinutes()
-    let second =nowTime.getSeconds() >=10 ? nowTime.getSeconds() :'0'+nowTime.getSeconds()
-    return year +'-'+ mon +'-'+ date +'  '+ hours +':'+ min +':'+ second
+    let mon = nowTime.getMonth() >= 10 ? nowTime.getMonth() + 1 : '0' + (nowTime.getMonth() + 1)
+    let date = nowTime.getDate() >= 10 ? nowTime.getDate() : '0' + nowTime.getDate()
+    let hours = nowTime.getHours() >= 10 ? nowTime.getHours() : '0' + nowTime.getHours()
+    let min = nowTime.getMinutes() >= 10 ? nowTime.getMinutes() : '0' + nowTime.getMinutes()
+    let second = nowTime.getSeconds() >= 10 ? nowTime.getSeconds() : '0' + nowTime.getSeconds()
+    return year + '-' + mon + '-' + date + '  ' + hours + ':' + min + ':' + second
   }
 
   render () {
@@ -391,10 +391,10 @@ export class ForumVotePage extends React.Component {
                   <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
                 </Tooltip>
                 <Select labelInValue defaultValue={{ key: ProposalListVoterQuantity }} style={{ width: 180 }} onChange={this.handleChange} style={{marginRight: 20}}>
-                   <Option value="0">{ProposalListCreatedSort}</Option>
-                   <Option value="1">{ProposalListExpiredSort}</Option>
-                   <Option value="2">{ProposalListVoterQuantity}</Option>
-                 </Select>
+                  <Option value="0">{ProposalListCreatedSort}</Option>
+                  <Option value="1">{ProposalListExpiredSort}</Option>
+                  <Option value="2">{ProposalListVoterQuantity}</Option>
+                </Select>
                 <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
               </div>
               <List
@@ -402,23 +402,23 @@ export class ForumVotePage extends React.Component {
                 dataSource={this.state.columnsData}
                 renderItem={item => (
                   <List.Item>
-                    <div style={{ display: 'block',width:"100%" }}>
-                      <div style={{display:'flex',justifyContent: "space-between"}}>
+                    <div style={{ display: 'block', width: '100%' }}>
+                      <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <span>ID:{item.proposal.proposal_name}</span>
                         <span>{ProposalListFounder}:{item.proposal.proposer}</span>
                       </div>
-                      <div style={{fontSize: "16px",fontWeight: "bold"}}>{item.proposal.proposal_name}</div>
-                      <div style={{padding: "0px 0px 10px 0"}}>{item.proposal.proposal_json}</div>
-                      <div style={{display:'flex',justifyContent: "space-between"}}>
-                        <span style={{color: "#8c98ba"}}>{ProposalListCreatedTime}:{this.getTime(item.proposal.created_at)}</span>
-                        <span style={{color: "#8c98ba"}}>{ProposalListExpiredTime}:{this.getTime(item.proposal.expires_at)}</span>
+                      <div style={{fontSize: '16px', fontWeight: 'bold'}}>{item.proposal.proposal_name}</div>
+                      <div style={{padding: '0px 0px 10px 0'}}>{item.proposal.proposal_json}</div>
+                      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <span style={{color: '#8c98ba'}}>{ProposalListCreatedTime}:{this.getTime(item.proposal.created_at)}</span>
+                        <span style={{color: '#8c98ba'}}>{ProposalListExpiredTime}:{this.getTime(item.proposal.expires_at)}</span>
                       </div>
-                      <div style={{display:"flex",justifyContent: "space-between",padding: '5px 0'}}>
-                        <span style={{color: "#77b163"}}><Icon type="like" style={{ color: "#77b163",verticalAlign: 'initial'}}/> {ProposalListAgreee}:{item.stats.staked[1]/10000 } EOS({item.stats.votes[1] || 0 } {ProposalListVoter})</span>
-                        <span style={{color: "#f1496c"}}><Icon type="dislike" style={{ color: "#f1496c",verticalAlign: 'initial'}}/> {ProposalListAginst}:{item.stats.staked[0]/10000} EOS({item.stats.votes[0]|| 0 } {ProposalListVoter})</span>
+                      <div style={{display: 'flex', justifyContent: 'space-between', padding: '5px 0'}}>
+                        <span style={{color: '#77b163'}}><Icon type="like" style={{ color: '#77b163', verticalAlign: 'initial'}}/> {ProposalListAgreee}:{item.stats.staked[1] / 10000 } EOS({item.stats.votes[1] || 0 } {ProposalListVoter})</span>
+                        <span style={{color: '#f1496c'}}><Icon type="dislike" style={{ color: '#f1496c', verticalAlign: 'initial'}}/> {ProposalListAginst}:{item.stats.staked[0] / 10000} EOS({item.stats.votes[0] || 0 } {ProposalListVoter})</span>
                       </div>
                       <div>
-                      <Progress percent={Number((item.stats.staked[1]/item.stats.staked.total*100).toFixed(2))} strokeColor='#82bf5c' strokeWidth= {13}  />
+                        <Progress percent={Number((item.stats.staked[1] / item.stats.staked.total * 100).toFixed(2))} strokeColor='#82bf5c' strokeWidth= {13} />
                       </div>
                     </div>
                   </List.Item>

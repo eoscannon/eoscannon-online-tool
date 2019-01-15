@@ -125,6 +125,12 @@ export class AirgrabPage extends React.Component {
         sym: `0.0000 ${record.symbol}`
       }
     }
+    if (record.account === 'slamdevelops') {
+      data = {
+        owner: AccountName,
+        quantity: `0.00000000 ${record.symbol}`
+      }
+    }
     if (record.method === 'claim') {
       data = {
         claimer: AccountName
