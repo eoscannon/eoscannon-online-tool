@@ -322,5 +322,9 @@
   "AccountSearchPage FunctionSearchActionNonce": "nonce",
   "AccountSearchPage FunctionSearchActionQuantity": "quantity",
   "AccountSearchPage FunctionSearchActionContract": "contract",
-  "AccountSearchPage FunctionSearchActionMainAccount": "main_account"
+  "AccountSearchPage FunctionSearchActionMainAccount": "main_account",
+  "MykeyAccountComp MykeyAccountCompScope":"Scope",
+  "MykeyAccountComp MykeyAccountCompLowerBound":"LowerBound",
+  "MykeyAccountComp MykeyAccountCompUpperBound":"UpperBound",
+  "MykeyAccountComp MykeyAccountCompLimit":"Limit"
 }

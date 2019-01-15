@@ -6,7 +6,7 @@ import React from 'react'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Form, Select, message, Tabs, Table, Tag, Button, AutoComplete, Card, Tooltip, InputNumber } from 'antd'
+import { Form, Select, message, Tabs, Table, Tag, Button, AutoComplete, } from 'antd'
 import { Progress, Input ,Radio } from 'utils/antdUtils'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -14,16 +14,18 @@ import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors'
 import styleComps from './styles'
 
 // import { push } from 'react-router-redux';
+import DealGetQrcode from '../../components/MykeyAccountComp'
 
 import { getEos, symbolList, symbolListWorbli } from '../../utils/utils'
 import { LayoutContentBox, FormComp } from '../../components/NodeComp'
 import messages from './messages'
 import config from './../../config'
+import MykeyAccountComp from '../../components/MykeyAccountComp';
+import { storage } from '../../utils/storage';
 
 const { Search } = Input
 const { Option } = Select
 const { TabPane } = Tabs
-const { CheckableTag } = Tag
 
 export class AccountSearchPage extends React.Component {
   constructor (props) {
@@ -62,7 +64,8 @@ export class AccountSearchPage extends React.Component {
       scope: '',
       eos: {},
       mykeyVisvible: false,
-      tableRows: []
+      tableRows: [],
+      AccountNameList : ['1212121','werqwrwerwe','ggggggg','1212121','werqwrwerwe','ggggggg','1212121','werqwrwerwe','ggggggg',]
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -71,9 +74,12 @@ export class AccountSearchPage extends React.Component {
       this.handleSearch(nextProps.match.params.account)
       this.setState({ account: nextProps.match.params.account })
     }
-  
+    let AccountNameList  = storage.getAccountName() 
     const eos = getEos(this.props.SelectedNetWork)
-    this.setState({eos: eos})
+    this.setState({
+      eos: eos,
+      AccountNameList: AccountNameList
+    })
     // console.log('SelectedNetWork  == ',this.props.SelectedNetWork)
 
   }
@@ -89,8 +95,233 @@ export class AccountSearchPage extends React.Component {
         symbolNet: 'WBI'
       })
     }
+  
+    if(storage.getAccountName() ){
+        let AccountNameList  = storage.getAccountName() 
+        this.setState({
+          AccountNameList: AccountNameList
+        })
+    }
+   
   }
 
+    // 主程搜索数据
+    handleSearch = value => {
+      // this.props.dispatch(push('/login'));
+      this.setState({
+        accountSearch: value,
+        account: value,
+        cpuStake: 0,
+        networkStake: 0
+      })
+      if(this.props.SelectedNetWork === 'test') {
+        this.setState({
+          symbolNet: 'WBI'
+        })
+      }else if(this.props.SelectedNetWork === 'telos'){
+        this.setState({
+          symbolNet: 'TLOS'
+        })
+      }else{
+        this.setState({
+          symbolNet: 'EOS'
+        })
+      }
+      const eos = getEos(this.props.SelectedNetWork)
+      let stake = 0
+      let cpuBack
+      let netWork
+      let cpuScale
+      let netScale
+      eos
+        .getAccount({ account_name: value })
+        .then(info => {
+          if (info.total_resources) {
+            this.setState({
+              cpuStake: info.total_resources.cpu_weight,
+              networkStake: info.total_resources.net_weight
+            })
+            let symbolType = info.total_resources.cpu_weight.split(' ')[1]
+            this.setState({
+              symbolNet: symbolType
+            })
+          }
+          if (info.voter_info) {
+            this.setState({ voteProxy: info.voter_info.proxy })
+            if (info.voter_info.producers.length > 0) {
+              this.setState({
+                voteNodeStatus: true,
+                voteNode: info.voter_info.producers
+              })
+            } else {
+              this.setState({
+                voteNodeStatus: false,
+                voteNode: []
+              })
+            }
+          } else {
+            this.setState({
+              voteNodeStatus: false,
+              voteNode: []
+            })
+          }
+          if (info.voter_info) {
+            stake = `${info.voter_info.staked / 10000} ` + this.state.symbolNet
+          }
+          if (info.refund_request) {
+            cpuBack = info.refund_request.cpu_amount
+            netWork = info.refund_request.net_amount
+          } else {
+            cpuBack = '0 ' + this.state.symbolNet
+            netWork = '0 ' + this.state.symbolNet
+          }
+          if (info.cpu_limit.used) {
+            cpuScale = ((info.cpu_limit.used / info.cpu_limit.max) * 100).toFixed(
+              2,
+            )
+          } else {
+            cpuScale = 0
+          }
+          if (info.net_limit.used) {
+            netScale = ((info.net_limit.used / info.net_limit.max) * 100).toFixed(
+              2,
+            )
+          } else {
+            netScale = 0
+          }
+  
+          this.setState({
+            info,
+            createTime: info.created,
+            stake,
+            memoryContent: `${(info.ram_usage / 1024).toFixed(2)} Kib/${(
+              info.ram_quota / 1024
+            ).toFixed(2)} Kib`,
+            cpuContent: `${info.cpu_limit.used / 1000} ms/${info.cpu_limit.max /
+              1000} ms`,
+            networkContent: `${info.net_limit.used} bytes/${(
+              info.net_limit.max /
+              1024 /
+              1024
+            ).toFixed(2)} Mib`,
+            cpuMortgage: cpuBack,
+            networkMortgage: netWork,
+            memoryScale: Number(
+              (
+                (Math.round(info.ram_usage) / Math.round(info.ram_quota)) *
+                100
+              ).toFixed(2),
+            ),
+            cpuScale: Number(Number(cpuScale).toFixed(2)),
+            networkScale: Number(Number(netScale).toFixed(2))
+          })
+          // 对CPU,内存，网络为0 / -1 时的操作
+          if (info.ram_quota <= 0) {
+            this.setState({
+              memoryContent: `${(info.ram_usage / 1024).toFixed(
+                2,
+              )} Kib/unlimited`
+            })
+          }
+          if (info.cpu_limit.max <= 0) {
+            this.setState({
+              cpuContent: 'unlimited/unlimited'
+            })
+          }
+          if (info.net_limit.max <= 0) {
+            this.setState({
+              networkContent: 'unlimited/unlimited'
+            })
+          }
+  
+          // console.log('info.permissions===', info.permissions)
+          try {
+            this.state.powerAddress = []
+            if (info.permissions.length > 0) {
+              for (let i = 0; i < info.permissions.length; i++) {
+                const object = {}
+                object.key = i
+                object.name = info.permissions[i].perm_name
+                object.address = info.permissions[i].required_auth.keys[0].key
+                this.state.powerAddress.push(object)
+              }
+              // console.log('powerAddress===', this.state.powerAddress);
+            }
+          } catch (err) {
+            console.log('err==', err)
+          }
+          eos
+            .getCurrencyBalance({
+              code: 'eosio.token',
+              account: value,
+              symbol: this.state.symbolNet
+            })
+            .then(res => {
+              this.setState({
+                balance: res[0] || 0,
+                symbolBlance: res[0] || 0,
+                symbolCode: 'eosio.token'
+              })
+            })
+            .catch(() => {
+              message.error(
+                this.state.formatMessage(messages.FunctionSearchNoData),
+              )
+            })
+            // 设置mykey data
+          this.setState({scope: this.state.account})
+         
+          try{
+            let AccountList = storage.getAccountName() || []
+            AccountList.push(this.state.accountSearch.trim())
+  
+            let uniqueList = this.uniqueArr(AccountList)
+            console.log('uniqueList  =  ',uniqueList)
+            storage.setAccountName(uniqueList)
+            this.handleChangeCheck({target: {value: 'keydata'}})
+          } catch(err) {
+            console.log('err == ', err)
+          }
+        })
+        .catch(() => {
+          message.error(this.state.formatMessage(messages.FunctionSearchNoData))
+          this.setState({ 
+            info: '' , 
+            mykeyVisvible: false
+          })
+        })
+    };
+  
+      // 简单数组去重
+  uniqueArr= (array) => {
+      // res用来存储结果
+      var res = [];
+      for (var i = 0, arrayLen = array.length; i < arrayLen; i++) {
+          for (var j = 0, resLen = res.length; j < resLen; j++ ) {
+              if (array[i] === res[j]) {
+                  break;
+              }
+          }
+          // 如果array[i]是唯一的，那么执行完循环，j等于resLen
+          if (j === resLen) {
+              res.push(array[i])
+          }
+      }
+      return res;
+    }
+
+  handleSendTransaction = value => {
+    this.props.history.push({
+      pathname: '/transfer',
+      state: {
+        name: value.name,
+        address: value.address,
+        account: this.state.account
+      }
+    })
+  };
+  
+// 自动补齐币种数据
   handleChange = key => {
     let firstSymbol = key.split('(')
     var newContract = firstSymbol[1].split(')')
@@ -120,11 +351,9 @@ export class AccountSearchPage extends React.Component {
   onChangeAccount = e => {
     this.setState({ accountSearch: e.target.value })
   };
-  // 搜索mykey账户信息
-  // handSearchTableRows = (checked)=>{
-  //   this.onSearch(checked)
+ 
 
-  // }
+
   // mykey 账户切换 选项
   handleChangeCheck = e =>{
     // console.log('handleChangeCheck==',e.target.value)
@@ -247,223 +476,6 @@ export class AccountSearchPage extends React.Component {
     }
   }
 
-  // 主程搜索数据
-  handleSearch = value => {
-    // this.props.dispatch(push('/login'));
-    this.setState({
-      accountSearch: value,
-      account: value,
-      cpuStake: 0,
-      networkStake: 0
-    })
-    if(this.props.SelectedNetWork === 'test') {
-      this.setState({
-        symbolNet: 'WBI'
-      })
-    }else if(this.props.SelectedNetWork === 'telos'){
-      this.setState({
-        symbolNet: 'TLOS'
-      })
-    }else{
-      this.setState({
-        symbolNet: 'EOS'
-      })
-    }
-    const eos = getEos(this.props.SelectedNetWork)
-    let stake = 0
-    let cpuBack
-    let netWork
-    let cpuScale
-    let netScale
-    eos
-      .getAccount({ account_name: value })
-      .then(info => {
-        if (info.total_resources) {
-          this.setState({
-            cpuStake: info.total_resources.cpu_weight,
-            networkStake: info.total_resources.net_weight
-          })
-          let symbolType = info.total_resources.cpu_weight.split(' ')[1]
-          this.setState({
-            symbolNet: symbolType
-          })
-        }
-        if (info.voter_info) {
-          this.setState({ voteProxy: info.voter_info.proxy })
-          if (info.voter_info.producers.length > 0) {
-            this.setState({
-              voteNodeStatus: true,
-              voteNode: info.voter_info.producers
-            })
-          } else {
-            this.setState({
-              voteNodeStatus: false,
-              voteNode: []
-            })
-          }
-        } else {
-          this.setState({
-            voteNodeStatus: false,
-            voteNode: []
-          })
-        }
-        if (info.voter_info) {
-          stake = `${info.voter_info.staked / 10000} ` + this.state.symbolNet
-        }
-        if (info.refund_request) {
-          cpuBack = info.refund_request.cpu_amount
-          netWork = info.refund_request.net_amount
-        } else {
-          cpuBack = '0 ' + this.state.symbolNet
-          netWork = '0 ' + this.state.symbolNet
-        }
-        if (info.cpu_limit.used) {
-          cpuScale = ((info.cpu_limit.used / info.cpu_limit.max) * 100).toFixed(
-            2,
-          )
-        } else {
-          cpuScale = 0
-        }
-        if (info.net_limit.used) {
-          netScale = ((info.net_limit.used / info.net_limit.max) * 100).toFixed(
-            2,
-          )
-        } else {
-          netScale = 0
-        }
-
-        this.setState({
-          info,
-          createTime: info.created,
-          stake,
-          memoryContent: `${(info.ram_usage / 1024).toFixed(2)} Kib/${(
-            info.ram_quota / 1024
-          ).toFixed(2)} Kib`,
-          cpuContent: `${info.cpu_limit.used / 1000} ms/${info.cpu_limit.max /
-            1000} ms`,
-          networkContent: `${info.net_limit.used} bytes/${(
-            info.net_limit.max /
-            1024 /
-            1024
-          ).toFixed(2)} Mib`,
-          cpuMortgage: cpuBack,
-          networkMortgage: netWork,
-          memoryScale: Number(
-            (
-              (Math.round(info.ram_usage) / Math.round(info.ram_quota)) *
-              100
-            ).toFixed(2),
-          ),
-          cpuScale: Number(Number(cpuScale).toFixed(2)),
-          networkScale: Number(Number(netScale).toFixed(2))
-        })
-        // 对CPU,内存，网络为0 / -1 时的操作
-        if (info.ram_quota <= 0) {
-          this.setState({
-            memoryContent: `${(info.ram_usage / 1024).toFixed(
-              2,
-            )} Kib/unlimited`
-          })
-        }
-        if (info.cpu_limit.max <= 0) {
-          this.setState({
-            cpuContent: 'unlimited/unlimited'
-          })
-        }
-        if (info.net_limit.max <= 0) {
-          this.setState({
-            networkContent: 'unlimited/unlimited'
-          })
-        }
-
-        // console.log('info.permissions===', info.permissions)
-        try {
-          this.state.powerAddress = []
-          if (info.permissions.length > 0) {
-            for (let i = 0; i < info.permissions.length; i++) {
-              const object = {}
-              object.key = i
-              object.name = info.permissions[i].perm_name
-              object.address = info.permissions[i].required_auth.keys[0].key
-              this.state.powerAddress.push(object)
-            }
-            // console.log('powerAddress===', this.state.powerAddress);
-          }
-        } catch (err) {
-          console.log('err==', err)
-        }
-        eos
-          .getCurrencyBalance({
-            code: 'eosio.token',
-            account: value,
-            symbol: this.state.symbolNet
-          })
-          .then(res => {
-            this.setState({
-              balance: res[0] || 0,
-              symbolBlance: res[0] || 0,
-              symbolCode: 'eosio.token'
-            })
-          })
-          .catch(() => {
-            message.error(
-              this.state.formatMessage(messages.FunctionSearchNoData),
-            )
-          })
-          // 设置mykey data
-        this.setState({scope: this.state.account})
-        try{
-          this.handleChangeCheck({target: {value: 'keydata'}})
-        } catch(err) {
-          console.log('err == ', err)
-        }
-      })
-      .catch(() => {
-        message.error(this.state.formatMessage(messages.FunctionSearchNoData))
-        this.setState({ 
-          info: '' , 
-          mykeyVisvible: false
-        })
-      })
-  };
-
-  handleSendTransaction = value => {
-    this.props.history.push({
-      pathname: '/transfer',
-      state: {
-        name: value.name,
-        address: value.address,
-        account: this.state.account
-      }
-    })
-  };
-
-  changeLimit = value=>{
-    this.setState({
-      limit: value
-    })
-  }
-
-  changeScope = (e)=>{
-    const { value } = e.target
-    this.setState({
-      scope: value
-    })
-  }
-
-  changeLowerBound = (value)=>{
-    // console.log('value===', value)
-    this.setState({
-      lowerBound: value
-    })
-  }
-
-  changeUpperBound = (value)=>{
-    this.setState({
-      upperBound: value
-    })
-  }
-
   onSearch = (checked)=>{
     // console.log('checked == ', checked)
     var checkdata
@@ -491,8 +503,6 @@ export class AccountSearchPage extends React.Component {
     }
     eos.getTableRows(data).then(v=>{
       var dataNew = []
-      // console.log('v== ', v)
-      // console.log('this.state.checked == ', this.state.checked)
       if(this.state.checked === 'keydata') {
         v.rows.map((v, i)=>{
           dataNew.push({
@@ -530,6 +540,41 @@ export class AccountSearchPage extends React.Component {
       this.setState({mykeyVisvible: false})
       console.log('err == ', err)
     })
+  }
+
+
+  changeLimit = e =>{
+    const { value } = e.target
+    this.setState({
+      limit: value
+    })
+  }
+
+  changeScope = (e)=>{
+    const { value } = e.target
+    this.setState({
+      scope: value
+    })
+  }
+
+  changeLowerBound = (e)=>{
+    const { value } = e.target
+    this.setState({
+      lowerBound: value
+    })
+  }
+
+  changeUpperBound = (e)=>{
+    const { value } = e.target
+    this.setState({
+      upperBound: value
+    })
+  }
+
+  // 历史账户点击
+  handleChangeAccountName = (e)=>{
+    this.setState({account: e , accountSearch:e});
+    this.handleSearch(e);
   }
 
   render () {
@@ -663,8 +708,6 @@ export class AccountSearchPage extends React.Component {
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
     ))
 
-    console.log('this.state.account  == ',this.state.account)
-
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
@@ -677,6 +720,13 @@ export class AccountSearchPage extends React.Component {
               value={this.state.accountSearch.trim()}
               onSearch={this.handleSearch}
             />
+            <div>
+              {this.state.AccountNameList.map((item,index) => (
+               <span key={index} onClick={v=>this.handleChangeAccountName(item)}>
+                  <Tag  style={{marginTop: '5px'}}>{item}</Tag>
+               </span> 
+              ))}
+            </div>
           </FormComp>
           {this.state.info ? (
             <div>
@@ -807,40 +857,27 @@ export class AccountSearchPage extends React.Component {
               </div>
             </div>
           ) : null}
-          {this.state.mykeyVisvible ? (
-            <div >
-              <Card title='MYKEY' bordered={true} type="inner" style={{ marginTop: '21px'}}>
-                <div>
-                  <Radio.Group defaultValue="keydata" buttonStyle="solid" style={{padding: '10px 0'}} onChange={this.handleChangeCheck}>
-                    <Radio.Button value="keydata" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>keydata</Radio.Button>
-                    <Radio.Button value="backupdata" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>backupdata</Radio.Button>
-                    <Radio.Button value="subacct" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>subacct</Radio.Button>
-                    <Radio.Button value="subassetsum" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>subassetsum</Radio.Button>
-                  </Radio.Group>
-                </div>
-                <div style={{ display: 'flex', marginBottom: 30 }}>
-                  <Tooltip
-                    title='Scope'
-                    placement="topLeft"
-                    overlayClassName="numeric-input"
-                  >
-                    <Input placeholder="Scope" maxLength={18} value={this.state.scope} onChange={this.changeScope} style={{width: 130, marginRight: 20, marginLeft: 10}}/>
-                  </Tooltip>
-                  <InputNumber placeholder="LowerBound" value={this.state.lowerBound} onChange={this.changeLowerBound} style={{marginRight: 20, width: 130}}/>
-                  <InputNumber placeholder="UpperBound" value={this.state.upperBound} onChange={this.changeUpperBound} style={{marginRight: 20, width: 130}}/>
-                  <Tooltip
-                    title='Limit'
-                    placement="topLeft"
-                    overlayClassName="numeric-input"
-                  >
-                    <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
-                  </Tooltip>
-                  <Button type="primary"  onClick={this.onSearch}>{FunctionSearchButton}</Button>
-                </div>
-                <Table columns={this.state.columnsMykey} bordered={false} dataSource={this.state.columnsData} scroll={{ x: 1500 | true }} pagination={{ pageSize: 50 }}/>
-              </Card>
-            </div>
-          ) : null}
+          
+          <MykeyAccountComp
+            eos={this.state.eos}
+            form={this.props.form}
+            scope={this.state.scope}
+            mykeyVisvible={this.state.mykeyVisvible}
+            formatMessage={this.state.formatMessage}
+            SelectedNetWork={this.props.SelectedNetWork}
+            onSearch = {this.onSearch}
+            handleChangeCheck={this.handleChangeCheck}
+            columnsData = {this.state.columnsData}
+            columnsMykey = {this.state.columnsMykey}
+            FunctionSearchButton = {FunctionSearchButton}
+            changeScope ={this.changeScope}
+            changeLowerBound ={this.changeLowerBound}
+            changeUpperBound ={this.changeUpperBound}
+            changeLimit ={this.changeLimit}
+            limit = {this.state.limit}
+            lowerBound = {this.state.lowerBound}
+            upperBound = {this.state.upperBound}
+          />
         </styleComps.ConBox>
       </LayoutContentBox>
     )

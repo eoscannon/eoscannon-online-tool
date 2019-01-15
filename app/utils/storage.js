@@ -52,4 +52,9 @@ storage.setFromAccount = FromAccount => {
 }
 storage.getFromAccount = () => storage.get('FromAccount')
 
+storage.setAccountName = AccountName => {
+  storage.set('AccountName', AccountName)
+}
+storage.getAccountName = () => storage.get('AccountName')
+
 export { storage }

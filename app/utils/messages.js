@@ -323,5 +323,21 @@ export default defineMessages({
   CopyOwnerAlertDescriptionLast:{
     id: 'Public CopyOwnerAlertDescriptionLast',
     defaultMessage: '权限的私钥签名'
-  }
+  },
+  MykeyAccountCompScope:{
+    id: 'MykeyAccountComp MykeyAccountCompScope',
+    defaultMessage: '查询范围'
+  },
+  MykeyAccountCompLowerBound:{
+    id: 'MykeyAccountComp MykeyAccountCompLowerBound',
+    defaultMessage: '下界'
+  },
+  MykeyAccountCompUpperBound:{
+    id: 'MykeyAccountComp MykeyAccountCompUpperBound',
+    defaultMessage: '上界'
+  },
+  MykeyAccountCompLimit:{
+    id: 'MykeyAccountComp MykeyAccountCompLimit',
+    defaultMessage: '查询数量'
+  },
 })
