@@ -45,6 +45,12 @@ const getEosTelosTest = () =>
     chainId: config.testTelosChainId,
     expireInSeconds: 60 * 60
   })
+const getEosBOSTest = () =>
+  EOS({
+    httpEndpoint: config.testBosHttpEndpoint,
+    chainId: config.testBosChainId,
+    expireInSeconds: 60 * 60
+  })
 
 const getEosKylinTest = () =>
   EOS({
@@ -68,6 +74,8 @@ const getEos = type => {
       return getEosTest()
     case 'telos':
       return getEosTelosTest()
+    case 'bos':
+      return getEosBOSTest()
     case 'kylin':
       return getEosKylinTest()
     case 'other':

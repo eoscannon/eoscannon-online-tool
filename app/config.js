@@ -13,6 +13,11 @@ export default {
   testTelosChainId:
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
 
+  testBosHttpEndpoint: 'https://mainnet.eoscannon.io/bos',
+  testBosEndpoint: 'mainnet.eoscannon.io/bos',
+  testBosChainId:
+    'd5a3d18fbb3c084e3b1f3fa98c21014b5f3db536cc15d08f9f6479517c6a3d86',
+
   testKylinHttpEndpoint: 'https://api-kylin.eosasia.one',
   testKylinEndpoint: 'api-kylin.eosasia.one',
   testKylinChainId:
