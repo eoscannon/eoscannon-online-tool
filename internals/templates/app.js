@@ -29,6 +29,7 @@ import 'file-loader?name=[name].[ext]!./.htaccess';
 /* eslint-enable import/no-unresolved, import/extensions */
 
 import configureStore from './configureStore';
+import * as serviceWorker from './serviceWorker';
 
 // Import i18n messages
 import { translationMessages } from './i18n';
@@ -85,3 +86,4 @@ if (!window.Intl) {
 //if (process.env.NODE_ENV === 'production') {
 //  require('offline-plugin/runtime').install(); // eslint-disable-line global-require
 //}
+serviceWorker.unregister();
