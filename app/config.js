@@ -13,8 +13,8 @@ export default {
   testTelosChainId:
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
 
-  testBosHttpEndpoint: 'https://worbli.eoscannon.io/bos',
-  testBosEndpoint: 'worbli.eoscannon.io/bos',
+  testBosHttpEndpoint: 'https://hapi.bos.eosrio.io',
+  testBosEndpoint: 'hapi.bos.eosrio.io',
   testBosChainId:
     'd5a3d18fbb3c084e3b1f3fa98c21014b5f3db536cc15d08f9f6479517c6a3d86',
 
