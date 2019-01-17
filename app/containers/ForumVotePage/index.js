@@ -254,6 +254,12 @@ export class ForumVotePage extends React.Component {
     return year + '-' + mon + '-' + date + '  ' + hours + ':' + min + ':' + second
   }
 
+  formatJson =(data)=>{
+    let list = JSON.parse(data.toString())
+    console.log('list = ' , list)
+    return list
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form
     const VoterPlaceholder = this.state.formatMessage(
@@ -407,8 +413,10 @@ export class ForumVotePage extends React.Component {
                         <span>ID:{item.proposal.proposal_name}</span>
                         <span>{ProposalListFounder}:{item.proposal.proposer}</span>
                       </div>
-                      <div style={{fontSize: '16px', fontWeight: 'bold'}}>{item.proposal.proposal_name}</div>
-                      <div style={{padding: '0px 0px 10px 0'}}>{item.proposal.proposal_json}</div>
+                      <div style={{fontSize: '16px', fontWeight: 'bold',padding: "8px 0"}}>{this.formatJson(item.proposal.proposal_json).question}</div>
+                      <div style={{padding: '0px 0px 10px 0'}}>
+                        <pre style={{whiteSpace: "pre-wrap",wordWrap:'break-word',wordBreak:'break-all'}}>{(this.formatJson(item.proposal.proposal_json).content)}</pre>
+                      </div>
                       <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <span style={{color: '#8c98ba'}}>{ProposalListCreatedTime}:{this.getTime(item.proposal.created_at)}</span>
                         <span style={{color: '#8c98ba'}}>{ProposalListExpiredTime}:{this.getTime(item.proposal.expires_at)}</span>
@@ -423,7 +431,8 @@ export class ForumVotePage extends React.Component {
                     </div>
                   </List.Item>
                 )}
-              />              {/* <Table columns={columns} bordered rowSelection={rowSelection} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/> */}
+              />              
+              {/* <Table columns={columns} bordered rowSelection={rowSelection} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/> */}
             </Card>
           </Col>
         </div>
