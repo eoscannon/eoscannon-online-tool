@@ -143,6 +143,8 @@ class HeaderComp extends React.Component {
       storage.setBaseSymbol('WBI')
     }else if(value === 'telos') {
       storage.setBaseSymbol('TLOS')
+    }else if(value === 'bos') {
+      storage.setBaseSymbol('BOS')
     }
     this.props.onDispatchChangeNetworkReducer(value)
   };
