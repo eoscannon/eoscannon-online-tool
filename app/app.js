@@ -40,6 +40,7 @@ import ProposalPage from 'containers/ProposalPage/Loadable'
 import ForumVotePage from 'containers/ForumVotePage/Loadable'
 import WorbliPage from 'containers/WorbliPage/Loadable'
 import ScanLoginPage from 'containers/ScanLoginPage/Loadable'
+import ForumDetailPage from 'containers/ForumDetailPage/Loadable'
 
 // import LinkAuthPage from 'containers/LinkAuthPage/Loadable'
 import Header from 'components/Header'
@@ -99,6 +100,8 @@ const render = messages => {
               <Route path="/proposal" component={ProposalPage} />
               <Route path="/worbli" component={WorbliPage} />
               <Route path="/forumVote" component={ForumVotePage} />
+              <Route path="/forumDetail" component={ForumDetailPage} />
+
               <Route path="/scanLogin" component={ScanLoginPage} />
               <Route path="/iq" component={IQPage} />
             </Header>

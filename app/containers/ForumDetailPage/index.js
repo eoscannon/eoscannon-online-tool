@@ -1,5 +1,5 @@
 /*
- * forumVotePage
+ * forumDetailPage
  *
  */
 
@@ -30,7 +30,7 @@ const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const Option = Select.Option
 
-export class ForumVotePage extends React.Component {
+export class forumDetailPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -42,20 +42,59 @@ export class ForumVotePage extends React.Component {
       scatterStatus: false,
       GetTransactionButtonScatterState: true,
       radio: 0,
-      radioFormList: 0,
       columnsData: [],
       scope: 'eosforumrcpp',
       lowerBound: null,
       upperBound: null,
       limit: 100,
-      creatTimeData: []
+      creatTimeData: [],
+      query: {
+        'id': '1token1vote_20190111',
+        'proposal': {
+          'expires_at': '',
+          'created_at': '',
+          'proposal_json': '{"type":"poll-yn-v1","question":"","content":""}',
+          'title': '',
+          'proposer': '',
+          'proposal_name': ''
+        },
+        'stats': {
+          'votes': {
+            '0': 91,
+            '1': 1066,
+            '200': 1,
+            'total': 1158,
+            'proxies': 64,
+            'accounts': 1094
+          },
+
+          'staked': {
+            '0': 5915921377,
+            '1': 113484545442,
+            '200': 149000,
+            'total': 119400615819
+          },
+          'vote_participation': false,
+          'more_yes': true,
+          'sustained_days': 0,
+          'block_num': 38046000,
+          'currency_supply': 1029609369.2227
+        }
+      }
     }
   }
   /**
    * 链接scatter
    **/
-  componentDidMount () {
+  componentWillMount () {
     this.handleGetTransactionInit()
+    console.log('this.props = ', JSON.stringify(this.props.location.query))
+    if(this.props.location.query && this.props.location.query.item) {
+      this.setState({query: this.props.location.query.item })
+      this.props.form.setFieldsValue({
+        statusText: this.formatJson(this.props.location.query.item.proposal.proposal_json).question
+      })
+    }
   }
   /**
    * 输入框内容变化时，改变按钮状态
@@ -203,16 +242,6 @@ export class ForumVotePage extends React.Component {
     })
   }
 
-  onChangeRadioFormList= (e) => {
-    console.log('e = ', e)
-    this.setState({
-      radioFormList: e.target.value
-    })
-    this.props.form.setFieldsValue({
-      statusText: e.target.value
-    })
-  }
-
   changeScope = (e)=>{
     const { value } = e.target
     this.setState({
@@ -268,6 +297,7 @@ export class ForumVotePage extends React.Component {
 
   formatJson =(data)=>{
     let list = JSON.parse(data.toString())
+    // console.log('list = ' , list)
     return list
   }
 
@@ -304,6 +334,9 @@ export class ForumVotePage extends React.Component {
 
     return (
       <LayoutContent>
+        <Button type="primary" onClick={()=>{window.history.go(-1)}} style={{margin: '10px 0', display: 'flex', alignItems: 'center'}}>
+          <Icon type="left" />Back
+        </Button>
         <div>
           <Col span={12}>
             <Card title={ForumVoteFirst} bordered={false}>
@@ -388,8 +421,8 @@ export class ForumVotePage extends React.Component {
         </div>
         <div>
           <Col span={24}>
-            <Card title={ProposalList} bordered={false}>
-              <div style={{ display: 'flex', marginBottom: 30 }}>
+            <Card title='' bordered={false}>
+              {/* <div style={{ display: 'flex', marginBottom: 30 }}>
                 <Tooltip
                   title='Scope'
                   placement="topLeft"
@@ -413,43 +446,30 @@ export class ForumVotePage extends React.Component {
                   <Option value="2">{ProposalListVoterQuantity}</Option>
                 </Select>
                 <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
+              </div> */}
+              <div>
+                <div style={{ display: 'block', width: '100%' }}>
+                  <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <span>ID:{this.state.query.proposal.proposal_name || ''}</span>
+                    <span>{ProposalListFounder}:{this.state.query.proposal.proposer || ''}</span>
+                  </div>
+                  <div style={{fontSize: '16px', fontWeight: 'bold', padding: '8px 0'}}>{this.formatJson(this.state.query.proposal.proposal_json).question || ''}</div>
+                  <div style={{padding: '0px 0px 10px 0'}}>
+                    <pre style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word', wordBreak: 'break-all'}}>{(this.formatJson(this.state.query.proposal.proposal_json).content || '')}</pre>
+                  </div>
+                  <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <span style={{color: '#8c98ba'}}>{ProposalListCreatedTime}:{this.getTime(this.state.query.proposal.created_at || '')}</span>
+                    <span style={{color: '#8c98ba'}}>{ProposalListExpiredTime}:{this.getTime(this.state.query.proposal.expires_at || '')}</span>
+                  </div>
+                  <div style={{display: 'flex', justifyContent: 'space-between', padding: '5px 0'}}>
+                    <span style={{color: '#77b163'}}><Icon type="like" style={{ color: '#77b163', verticalAlign: 'initial'}}/> {ProposalListAgreee}:{this.state.query.stats.staked[1] / 10000 || ''} EOS({this.state.query.stats.votes[1] || 0 } {ProposalListVoter})</span>
+                    <span style={{color: '#f1496c'}}><Icon type="dislike" style={{ color: '#f1496c', verticalAlign: 'initial'}}/> {ProposalListAginst}:{this.state.query.stats.staked[0] / 10000 || ''} EOS({this.state.query.stats.votes[0] || 0 } {ProposalListVoter})</span>
+                  </div>
+                  <div>
+                    <Progress percent={Number((this.state.query.stats.staked[1] / this.state.query.stats.staked.total * 100 || 0).toFixed(2))} strokeColor='#82bf5c' strokeWidth= {13} />
+                  </div>
+                </div>
               </div>
-              <RadioGroup onChange={this.onChangeRadioFormList} name="radiogroup" defaultValue={0} style={{ width: '100%' }}>
-
-                <List
-                  itemLayout="horizontal"
-                  dataSource={this.state.columnsData}
-                  renderItem={(item, index) => (
-                    <List.Item>
-                      <div style={{ display: 'flex', width: '100%' }}>
-                        <Radio value={this.formatJson(item.proposal.proposal_json).question} key={index}></Radio>
-                        <Link to={{ pathname: '/forumDetail', query: { item: item } }} style={{width: '100%' }}>
-                          <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <span>ID:{item.proposal.proposal_name}</span>
-                            <span>{ProposalListFounder}:{item.proposal.proposer}</span>
-                          </div>
-                          <div style={{fontSize: '16px', fontWeight: 'bold', padding: '8px 0', color: '#000'}}>{this.formatJson(item.proposal.proposal_json).question}</div>
-                          {/* <div style={{padding: '0px 0px 10px 0'}}>
-                            <pre style={{whiteSpace: "pre-wrap",wordWrap:'break-word',wordBreak:'break-all'}}>{(this.formatJson(item.proposal.proposal_json).content)}</pre>
-                          </div> */}
-                          <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <span style={{color: '#8c98ba'}}>{ProposalListCreatedTime}:{this.getTime(item.proposal.created_at)}</span>
-                            <span style={{color: '#8c98ba'}}>{ProposalListExpiredTime}:{this.getTime(item.proposal.expires_at)}</span>
-                          </div>
-                          <div style={{display: 'flex', justifyContent: 'space-between', padding: '5px 0'}}>
-                            <span style={{color: '#77b163'}}><Icon type="like" style={{ color: '#77b163', verticalAlign: 'initial'}}/> {ProposalListAgreee}:{item.stats.staked[1] / 10000 } EOS({item.stats.votes[1] || 0 } {ProposalListVoter})</span>
-                            <span style={{color: '#f1496c'}}><Icon type="dislike" style={{ color: '#f1496c', verticalAlign: 'initial'}}/> {ProposalListAginst}:{item.stats.staked[0] / 10000} EOS({item.stats.votes[0] || 0 } {ProposalListVoter})</span>
-                          </div>
-                          <div>
-                            <Progress percent={Number((item.stats.staked[1] / item.stats.staked.total * 100).toFixed(2))} strokeColor='#82bf5c' strokeWidth= {13} />
-                          </div>
-                        </Link>
-                      </div>
-                    </List.Item>
-                  )}
-                />
-              </RadioGroup>
-
               {/* <Table columns={columns} bordered rowSelection={rowSelection} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/> */}
             </Card>
           </Col>
@@ -459,17 +479,17 @@ export class ForumVotePage extends React.Component {
   }
 }
 
-ForumVotePage.propTypes = {
+forumDetailPage.propTypes = {
   form: PropTypes.object,
   intl: PropTypes.object,
   SelectedNetWork: PropTypes.string
 }
 
-const ForumVotePageIntl = injectIntl(ForumVotePage)
-const ForumVotePageForm = Form.create()(ForumVotePageIntl)
+const forumDetailPageIntl = injectIntl(forumDetailPage)
+const forumDetailPageForm = Form.create()(forumDetailPageIntl)
 
 const mapStateToProps = createStructuredSelector({
   SelectedNetWork: makeSelectNetwork()
 })
 
-export default connect(mapStateToProps)(ForumVotePageForm)
+export default connect(mapStateToProps)(forumDetailPageForm)
