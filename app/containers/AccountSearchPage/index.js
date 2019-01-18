@@ -6,24 +6,24 @@ import React from 'react'
 import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { Form, Select, message, Tabs, Table, Tag, Button, AutoComplete, Card, Tooltip, InputNumber } from 'antd'
-import { Progress, Input ,Radio } from 'utils/antdUtils'
+import { Form, Select, message, Tabs, Table, Tag, Button, AutoComplete } from 'antd'
+import { Progress, Input , Spin } from 'utils/antdUtils'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors'
 import styleComps from './styles'
 
-// import { push } from 'react-router-redux';
-
+// import { push } from 'react-router-redux'
 import { getEos, symbolList, symbolListWorbli } from '../../utils/utils'
 import { LayoutContentBox, FormComp } from '../../components/NodeComp'
 import messages from './messages'
 import config from './../../config'
+import MykeyAccountComp from '../../components/MykeyAccountComp';
+import { storage } from '../../utils/storage';
 
 const { Search } = Input
 const { Option } = Select
 const { TabPane } = Tabs
-const { CheckableTag } = Tag
 
 export class AccountSearchPage extends React.Component {
   constructor (props) {
@@ -62,7 +62,9 @@ export class AccountSearchPage extends React.Component {
       scope: '',
       eos: {},
       mykeyVisvible: false,
-      tableRows: []
+      tableRows: [],
+      AccountNameList : [],
+      loading :false
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -71,10 +73,12 @@ export class AccountSearchPage extends React.Component {
       this.handleSearch(nextProps.match.params.account)
       this.setState({ account: nextProps.match.params.account })
     }
-  
+    let AccountNameList  = storage.getAccountName() 
     const eos = getEos(this.props.SelectedNetWork)
-    this.setState({eos: eos})
-    // console.log('SelectedNetWork  == ',this.props.SelectedNetWork)
+    this.setState({
+      eos: eos,
+      AccountNameList: AccountNameList
+    })
 
   }
 
@@ -89,162 +93,14 @@ export class AccountSearchPage extends React.Component {
         symbolNet: 'WBI'
       })
     }
-  }
-
-  handleChange = key => {
-    let firstSymbol = key.split('(')
-    var newContract = firstSymbol[1].split(')')
-    var newSymbol = key.split(' ')
-    this.state.eos
-      .getCurrencyBalance({
-        code: newContract[0],
-        account: this.state.account.trim(),
-        symbol: newSymbol[0]
-      })
-      .then(res => {
+  
+    if(storage.getAccountName() ){
+        let AccountNameList  = storage.getAccountName() 
         this.setState({
-          symbolBlance: res[0] || 0,
-          symbolCode: newContract[0]
+          AccountNameList: AccountNameList
         })
-      })
-      .catch(() => {
-        message.error(this.state.formatMessage(messages.FunctionSearchNoData))
-        this.setState({
-          balance: 0,
-          symbolBlance: 0,
-          symbolCode: ''
-        })
-      })
-  };
-
-  onChangeAccount = e => {
-    this.setState({ accountSearch: e.target.value })
-  };
-  // 搜索mykey账户信息
-  // handSearchTableRows = (checked)=>{
-  //   this.onSearch(checked)
-
-  // }
-  // mykey 账户切换 选项
-  handleChangeCheck = e =>{
-    // console.log('handleChangeCheck==',e.target.value)
-    this.setState({ checked: e.target.value, columnsData: [], columnsData: []})
-
-    if(e.target.value === 'keydata') {
-      this.setState({
-        columnsMykey: [{
-          title: this.state.formatMessage(
-            messages.FunctionSearchActionIndex,
-          ),
-          dataIndex: 'index',
-          key: 'index',
-          width: 150
-        }, {
-          title: this.state.formatMessage( messages.FunctionSearchActionKey),
-          key: 'keyData',
-          width: 300,
-          render: (text, record)=>(
-            <div>
-              <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.keyData.pubkey}</div>
-              <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.keyData.status}</div>
-              <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.keyData.nonce}</div>
-            </div>
-          )
-        }]
-      })
-    }else if(e.target.value === 'backupdata') {
-      this.setState({ columnsMykey: [{
-        title:  this.state.formatMessage(messages.FunctionSearchActionIndex ),
-        dataIndex: 'index',
-        key: 'index',
-        width: 50
-      }, {
-        title: this.state.formatMessage(messages.FunctionSearchActionBackupPeople ),
-        dataIndex: 'value',
-        key: 'value',
-        width: 350
-      }]})
-    }else if(e.target.value === 'subacct') {
-      this.setState({ columnsMykey: [{
-        title:  this.state.formatMessage(messages.FunctionSearchActionSubAccount ),
-        dataIndex: 'sub_account',
-        key: 'sub_account'
-      }, {
-        title: this.state.formatMessage(messages.FunctionSearchActionSubAdminKey ),
-        key: 'sub_admin_key',
-        render: (text, record)=>(
-          <div>
-            <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.sub_admin_key.pubkey}</div>
-            <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_admin_key.status}</div>
-            <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_admin_key.nonce}</div>
-          </div>
-        )
-      }, {
-        title: this.state.formatMessage(messages.FunctionSearchActionSubExternalKey ),
-        key: 'sub_external_key',
-        render: (text, record)=> (
-          <div>
-            <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )} :</span> {record.sub_external_key.pubkey}</div>
-            <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_external_key.status}</div>
-            <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_external_key.nonce}</div>
-          </div>
-        )
-      }, {
-        title: this.state.formatMessage(messages.FunctionSearchActionWhiteList ),
-        dataIndex: 'whitelist',
-        key: 'whitelist',
-        render: whitelist => (
-          <span>
-            {whitelist.map(v => <span color="blue" key={v}>{v}</span>)}
-          </span>
-        )
-      }, {
-        title: this.state.formatMessage(messages.FunctionSearchActionExassetList ),
-        dataIndex: 'exasset_list',
-        key: 'exasset_list',
-        width: 200,
-        render: (exasset_list)=>(
-          <div>
-            {exasset_list.map((v, i)=>
-              <div key={i}>
-                <div><span>{this.state.formatMessage(messages.FunctionSearchActionQuantity )}:</span> {v.quantity}</div>
-                <div><span>{this.state.formatMessage(messages.FunctionSearchActionContract )}:</span> {v.contract}</div>
-              </div>)}
-          </div>
-        )
-      }
-      ]})
-    }else if(e.target.value === 'subassetsum') {
-      this.setState({
-        columnsMykey: [{
-          title:  this.state.formatMessage(messages.FunctionSearchActionIndex),
-          dataIndex: 'key',
-          key: 'key'
-        }, {
-          title: this.state.formatMessage(messages.FunctionSearchActionMainAccount ),
-          dataIndex: 'main_account',
-          key: 'main_account'
-        }, {
-          title: this.state.formatMessage(messages.FunctionSearchActionExassetList ),
-          dataIndex: 'exasset_list',
-          key: 'exasset_list',
-          render: (exasset_list)=>(
-            <div>
-              {exasset_list.map((v, i) =>
-                <div key={i}>
-                  <div><span>{this.state.formatMessage(messages.FunctionSearchActionQuantity )}:</span> {v.quantity}</div>
-                  <div><span>{this.state.formatMessage(messages.FunctionSearchActionContract )}:</span> {v.contract}</div>
-                </div>)}
-            </div>
-          )
-        }]})
     }
-    // console.log(' this.state.columnsMykey== ', this.state.columnsMykey)
-    try{
-      this.onSearch({target: {value: e.target.value}})
-    }catch(err){
-      console.log('err === ',err)
-    }
+   
   }
 
   // 主程搜索数据
@@ -254,7 +110,9 @@ export class AccountSearchPage extends React.Component {
       accountSearch: value,
       account: value,
       cpuStake: 0,
-      networkStake: 0
+      networkStake: 0,
+      loading: true,
+      info: ''
     })
     if(this.props.SelectedNetWork === 'test') {
       this.setState({
@@ -376,7 +234,6 @@ export class AccountSearchPage extends React.Component {
           })
         }
 
-        // console.log('info.permissions===', info.permissions)
         try {
           this.state.powerAddress = []
           if (info.permissions.length > 0) {
@@ -411,8 +268,13 @@ export class AccountSearchPage extends React.Component {
             )
           })
           // 设置mykey data
-        this.setState({scope: this.state.account})
+        this.setState({scope: this.state.account ,loading :false})
+        
         try{
+          let AccountList = storage.getAccountName() || []
+          AccountList.push(this.state.accountSearch.trim())
+          let uniqueList = this.uniqueArr(AccountList)
+          storage.setAccountName(uniqueList)
           this.handleChangeCheck({target: {value: 'keydata'}})
         } catch(err) {
           console.log('err == ', err)
@@ -422,115 +284,296 @@ export class AccountSearchPage extends React.Component {
         message.error(this.state.formatMessage(messages.FunctionSearchNoData))
         this.setState({ 
           info: '' , 
-          mykeyVisvible: false
+          mykeyVisvible: false,
+          loading :false
         })
       })
   };
 
-  handleSendTransaction = value => {
-    this.props.history.push({
-      pathname: '/transfer',
-      state: {
-        name: value.name,
-        address: value.address,
-        account: this.state.account
+    // 简单数组去重
+  uniqueArr= (array) => {
+      // res用来存储结果
+      var res = [];
+      for (var i = 0, arrayLen = array.length; i < arrayLen; i++) {
+          for (var j = 0, resLen = res.length; j < resLen; j++ ) {
+              if (array[i] === res[j]) {
+                  break;
+              }
+          }
+          // 如果array[i]是唯一的，那么执行完循环，j等于resLen
+          if (j === resLen) {
+              res.push(array[i])
+          }
       }
-    })
-  };
+      return res;
+    }
 
-  changeLimit = value=>{
-    this.setState({
-      limit: value
-    })
-  }
+    handleSendTransaction = value => {
+      this.props.history.push({
+        pathname: '/transfer',
+        state: {
+          name: value.name,
+          address: value.address,
+          account: this.state.account
+        }
+      })
+    };
+    
+  // 自动补齐币种数据
+    handleChange = key => {
+      let firstSymbol = key.split('(')
+      var newContract = firstSymbol[1].split(')')
+      var newSymbol = key.split(' ')
+      this.state.eos
+        .getCurrencyBalance({
+          code: newContract[0],
+          account: this.state.account.trim(),
+          symbol: newSymbol[0]
+        })
+        .then(res => {
+          this.setState({
+            symbolBlance: res[0] || 0,
+            symbolCode: newContract[0]
+          })
+        })
+        .catch(() => {
+          message.error(this.state.formatMessage(messages.FunctionSearchNoData))
+          this.setState({
+            balance: 0,
+            symbolBlance: 0,
+            symbolCode: ''
+          })
+        })
+    };
 
-  changeScope = (e)=>{
-    const { value } = e.target
-    this.setState({
-      scope: value
-    })
-  }
+    onChangeAccount = e => {
+      this.setState({ accountSearch: e.target.value })
+    };
+ 
 
-  changeLowerBound = (value)=>{
-    // console.log('value===', value)
-    this.setState({
-      lowerBound: value
-    })
-  }
 
-  changeUpperBound = (value)=>{
-    this.setState({
-      upperBound: value
-    })
-  }
+    // mykey 账户切换 选项
+    handleChangeCheck = e =>{
+      // console.log('handleChangeCheck==',e.target.value)
+      this.setState({ checked: e.target.value, columnsData: [], columnsData: []})
 
-  onSearch = (checked)=>{
-    // console.log('checked == ', checked)
-    var checkdata
-    try{
-      if(checked.target.value) {
-        checkdata = checked.target.value
-      }else{
+      if(e.target.value === 'keydata') {
+        this.setState({
+          columnsMykey: [{
+            title: this.state.formatMessage(
+              messages.FunctionSearchActionIndex,
+            ),
+            dataIndex: 'index',
+            key: 'index',
+            width: 150
+          }, {
+            title: this.state.formatMessage( messages.FunctionSearchActionKey),
+            key: 'keyData',
+            width: 300,
+            render: (text, record)=>(
+              <div>
+                <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.keyData.pubkey}</div>
+                <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.keyData.status}</div>
+                <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.keyData.nonce}</div>
+              </div>
+            )
+          }]
+        })
+      }else if(e.target.value === 'backupdata') {
+        this.setState({ columnsMykey: [{
+          title:  this.state.formatMessage(messages.FunctionSearchActionIndex ),
+          dataIndex: 'index',
+          key: 'index',
+          width: 50
+        }, {
+          title: this.state.formatMessage(messages.FunctionSearchActionBackupPeople ),
+          dataIndex: 'value',
+          key: 'value',
+          width: 350
+        }]})
+      }else if(e.target.value === 'subacct') {
+        this.setState({ columnsMykey: [{
+          title:  this.state.formatMessage(messages.FunctionSearchActionSubAccount ),
+          dataIndex: 'sub_account',
+          key: 'sub_account'
+        }, {
+          title: this.state.formatMessage(messages.FunctionSearchActionSubAdminKey ),
+          key: 'sub_admin_key',
+          render: (text, record)=>(
+            <div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.sub_admin_key.pubkey}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_admin_key.status}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_admin_key.nonce}</div>
+            </div>
+          )
+        }, {
+          title: this.state.formatMessage(messages.FunctionSearchActionSubExternalKey ),
+          key: 'sub_external_key',
+          render: (text, record)=> (
+            <div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )} :</span> {record.sub_external_key.pubkey}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_external_key.status}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_external_key.nonce}</div>
+            </div>
+          )
+        }, {
+          title: this.state.formatMessage(messages.FunctionSearchActionWhiteList ),
+          dataIndex: 'whitelist',
+          key: 'whitelist',
+          render: whitelist => (
+            <span>
+              {whitelist.map(v => <span color="blue" key={v}>{v}</span>)}
+            </span>
+          )
+        }, {
+          title: this.state.formatMessage(messages.FunctionSearchActionExassetList ),
+          dataIndex: 'exasset_list',
+          key: 'exasset_list',
+          width: 200,
+          render: (exasset_list)=>(
+            <div>
+              {exasset_list.map((v, i)=>
+                <div key={i}>
+                  <div><span>{this.state.formatMessage(messages.FunctionSearchActionQuantity )}:</span> {v.quantity}</div>
+                  <div><span>{this.state.formatMessage(messages.FunctionSearchActionContract )}:</span> {v.contract}</div>
+                </div>)}
+            </div>
+          )
+        }
+        ]})
+      }else if(e.target.value === 'subassetsum') {
+        this.setState({
+          columnsMykey: [{
+            title:  this.state.formatMessage(messages.FunctionSearchActionIndex),
+            dataIndex: 'key',
+            key: 'key'
+          }, {
+            title: this.state.formatMessage(messages.FunctionSearchActionMainAccount ),
+            dataIndex: 'main_account',
+            key: 'main_account'
+          }, {
+            title: this.state.formatMessage(messages.FunctionSearchActionExassetList ),
+            dataIndex: 'exasset_list',
+            key: 'exasset_list',
+            render: (exasset_list)=>(
+              <div>
+                {exasset_list.map((v, i) =>
+                  <div key={i}>
+                    <div><span>{this.state.formatMessage(messages.FunctionSearchActionQuantity )}:</span> {v.quantity}</div>
+                    <div><span>{this.state.formatMessage(messages.FunctionSearchActionContract )}:</span> {v.contract}</div>
+                  </div>)}
+              </div>
+            )
+          }]})
+      }
+      // console.log(' this.state.columnsMykey== ', this.state.columnsMykey)
+      try{
+        this.onSearch({target: {value: e.target.value}})
+      }catch(err){
+        console.log('err === ',err)
+      }
+    }
+
+    onSearch = (checked)=>{
+      // console.log('checked == ', checked)
+      var checkdata
+      try{
+        if(checked.target.value) {
+          checkdata = checked.target.value
+        }else{
+          checkdata = this.state.checked
+        }
+      }catch(err) {
+        console.log('err == ', err)
         checkdata = this.state.checked
       }
-    }catch(err) {
-      console.log('err == ', err)
-      checkdata = this.state.checked
-    }
-    // console.log('checkdata ===',checkdata)
-    const eos = getEos(this.props.SelectedNetWork)
+      // console.log('checkdata ===',checkdata)
+      const eos = getEos(this.props.SelectedNetWork)
 
-    let data = {
-      'code': this.props.SelectedNetWork === 'kylin' ? config.networkCodeArr[0] : config.networkCodeArr[1],
-      'json': true,
-      'limit': this.state.limit,
-      'lower_bound': this.state.lowerBound,
-      'scope': this.state.scope || this.state.account,
-      'table': checkdata,
-      'upper_bound': this.state.upperBound
-    }
-    eos.getTableRows(data).then(v=>{
-      var dataNew = []
-      // console.log('v== ', v)
-      // console.log('this.state.checked == ', this.state.checked)
-      if(this.state.checked === 'keydata') {
-        v.rows.map((v, i)=>{
-          dataNew.push({
-            key: i,
-            index: i,
-            keyData: v.key
-          })
-        })
-      }else if(this.state.checked === 'backupdata') {
-        v.rows.map((v, i)=>{
-          dataNew.push({
-            key: i,
-            index: v.index,
-            value: v.value
-          })
-        })
-      }else if(this.state.checked === 'subacct') {
-        v.rows.map((v, i)=>{
-          dataNew.push({
-            key: i,
-            ...v
-          })
-        })
-      }else if(this.state.checked === 'subassetsum') {
-        v.rows.map((v, i)=>{
-          dataNew.push({
-            key: i,
-            ...v
-          })
-        })
+      let data = {
+        'code': this.props.SelectedNetWork === 'kylin' ? config.networkCodeArr[0] : config.networkCodeArr[1],
+        'json': true,
+        'limit': this.state.limit,
+        'lower_bound': this.state.lowerBound,
+        'scope': this.state.scope || this.state.account,
+        'table': checkdata,
+        'upper_bound': this.state.upperBound
       }
-      // console.log(' this.state.columnsData== ', this.state.columnsData)
-      this.setState({columnsData: dataNew, mykeyVisvible: true})
-    }).catch(err=>{
-      this.setState({mykeyVisvible: false})
-      console.log('err == ', err)
-    })
-  }
+      eos.getTableRows(data).then(v=>{
+        var dataNew = []
+        if(this.state.checked === 'keydata') {
+          v.rows.map((v, i)=>{
+            dataNew.push({
+              key: i,
+              index: i,
+              keyData: v.key
+            })
+          })
+        }else if(this.state.checked === 'backupdata') {
+          v.rows.map((v, i)=>{
+            dataNew.push({
+              key: i,
+              index: v.index,
+              value: v.value
+            })
+          })
+        }else if(this.state.checked === 'subacct') {
+          v.rows.map((v, i)=>{
+            dataNew.push({
+              key: i,
+              ...v
+            })
+          })
+        }else if(this.state.checked === 'subassetsum') {
+          v.rows.map((v, i)=>{
+            dataNew.push({
+              key: i,
+              ...v
+            })
+          })
+        }
+        // console.log(' this.state.columnsData== ', this.state.columnsData)
+        this.setState({columnsData: dataNew, mykeyVisvible: true})
+      }).catch(err=>{
+        this.setState({mykeyVisvible: false})
+        console.log('err == ', err)
+      })
+    }
+
+
+    changeLimit = e =>{
+      const { value } = e.target
+      this.setState({
+        limit: value
+      })
+    }
+
+    changeScope = (e)=>{
+      const { value } = e.target
+      this.setState({
+        scope: value
+      })
+    }
+
+    changeLowerBound = (e)=>{
+      const { value } = e.target
+      this.setState({
+        lowerBound: value
+      })
+    }
+
+    changeUpperBound = (e)=>{
+      const { value } = e.target
+      this.setState({
+        upperBound: value
+      })
+    }
+
+    // 历史账户点击
+    handleChangeAccountName = (e)=>{
+      this.setState({account: e , accountSearch:e});
+      this.handleSearch(e);
+    }
 
   render () {
     const FunctionSearchButton = this.state.formatMessage(
@@ -663,8 +706,6 @@ export class AccountSearchPage extends React.Component {
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
     ))
 
-    console.log('this.state.account  == ',this.state.account)
-
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
@@ -677,6 +718,13 @@ export class AccountSearchPage extends React.Component {
               value={this.state.accountSearch.trim()}
               onSearch={this.handleSearch}
             />
+            <div>
+              {this.state.AccountNameList.map((item,index) => (
+               <span key={index} onClick={v=>this.handleChangeAccountName(item)}>
+                  <Tag  style={{marginTop: '5px'}}>{item}</Tag>
+               </span> 
+              ))}
+            </div>
           </FormComp>
           {this.state.info ? (
             <div>
@@ -807,40 +855,36 @@ export class AccountSearchPage extends React.Component {
               </div>
             </div>
           ) : null}
-          {this.state.mykeyVisvible ? (
-            <div >
-              <Card title='MYKEY' bordered={true} type="inner" style={{ marginTop: '21px'}}>
-                <div>
-                  <Radio.Group defaultValue="keydata" buttonStyle="solid" style={{padding: '10px 0'}} onChange={this.handleChangeCheck}>
-                    <Radio.Button value="keydata" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>keydata</Radio.Button>
-                    <Radio.Button value="backupdata" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>backupdata</Radio.Button>
-                    <Radio.Button value="subacct" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>subacct</Radio.Button>
-                    <Radio.Button value="subassetsum" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>subassetsum</Radio.Button>
-                  </Radio.Group>
-                </div>
-                <div style={{ display: 'flex', marginBottom: 30 }}>
-                  <Tooltip
-                    title='Scope'
-                    placement="topLeft"
-                    overlayClassName="numeric-input"
-                  >
-                    <Input placeholder="Scope" maxLength={18} value={this.state.scope} onChange={this.changeScope} style={{width: 130, marginRight: 20, marginLeft: 10}}/>
-                  </Tooltip>
-                  <InputNumber placeholder="LowerBound" value={this.state.lowerBound} onChange={this.changeLowerBound} style={{marginRight: 20, width: 130}}/>
-                  <InputNumber placeholder="UpperBound" value={this.state.upperBound} onChange={this.changeUpperBound} style={{marginRight: 20, width: 130}}/>
-                  <Tooltip
-                    title='Limit'
-                    placement="topLeft"
-                    overlayClassName="numeric-input"
-                  >
-                    <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
-                  </Tooltip>
-                  <Button type="primary"  onClick={this.onSearch}>{FunctionSearchButton}</Button>
-                </div>
-                <Table columns={this.state.columnsMykey} bordered={false} dataSource={this.state.columnsData} scroll={{ x: 1500 | true }} pagination={{ pageSize: 50 }}/>
-              </Card>
+        
+        {this.state.loading ? (
+           <div className="example">
+              <Spin />
             </div>
+            ): null}
+          
+          {this.state.info ? (
+            <MykeyAccountComp
+            eos={this.state.eos}
+            form={this.props.form}
+            scope={this.state.scope}
+            mykeyVisvible={this.state.mykeyVisvible}
+            formatMessage={this.state.formatMessage}
+            SelectedNetWork={this.props.SelectedNetWork}
+            onSearch = {this.onSearch}
+            handleChangeCheck={this.handleChangeCheck}
+            columnsData = {this.state.columnsData}
+            columnsMykey = {this.state.columnsMykey}
+            FunctionSearchButton = {FunctionSearchButton}
+            changeScope ={this.changeScope}
+            changeLowerBound ={this.changeLowerBound}
+            changeUpperBound ={this.changeUpperBound}
+            changeLimit ={this.changeLimit}
+            limit = {this.state.limit}
+            lowerBound = {this.state.lowerBound}
+            upperBound = {this.state.upperBound}
+          />
           ) : null}
+          
         </styleComps.ConBox>
       </LayoutContentBox>
     )

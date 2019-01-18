@@ -8,6 +8,13 @@ const ConBox = styled.div`
     display: flex;
     padding-top: 2rem;
   }
+  .example{
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 50px 50px;
+    margin: 20px 0;
+  }
   label:before{
     left:0px!important;
   }

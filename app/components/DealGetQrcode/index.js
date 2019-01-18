@@ -51,7 +51,7 @@ export default class DealGetQrcode extends Component {
       }else{
         newToAccountName = ToAccountName
       }
-      console.log('nextprosp ==',nextProps)
+      // console.log('nextprosp ==',nextProps)
       let data = {out: newToAccountName, memo: transferMemo}
       if(JSON.stringify(nextProps.transaction) !== '{}' && data !== nextProps.TransferForm[nextProps.TransferForm.length - 1] && JSON.stringify(this.state.oldTransaction) !== JSON.stringify(nextProps.transaction)) {
         let arr = nextProps.TransferForm

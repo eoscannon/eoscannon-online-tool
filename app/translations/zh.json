@@ -307,6 +307,11 @@
   "AccountSearchPage FunctionSearchActionNonce":"nonce",
   "AccountSearchPage FunctionSearchActionQuantity":"数量",
   "AccountSearchPage FunctionSearchActionContract":"合约",
-  "AccountSearchPage FunctionSearchActionMainAccount":"主账号"
+  "AccountSearchPage FunctionSearchActionMainAccount":"主账号",
+  "MykeyAccountComp MykeyAccountCompScope":"查询范围",
+  "MykeyAccountComp MykeyAccountCompLowerBound":"下界",
+  "MykeyAccountComp MykeyAccountCompUpperBound":"上界",
+  "MykeyAccountComp MykeyAccountCompLimit":"查询数量"
+
 
 }
