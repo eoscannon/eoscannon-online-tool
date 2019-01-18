@@ -51,7 +51,7 @@ const getEosBOSTest = () =>
     chainId: config.testBosChainId,
     expireInSeconds: 60 * 60
   })
-
+  
 const getEosKylinTest = () =>
   EOS({
     httpEndpoint: config.testKylinHttpEndpoint,
@@ -313,6 +313,8 @@ const symbolList = [
   { symbol: 'EOS', contract: 'eosio.token', digit: 4 },
   { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
   { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 4 },
+  { symbol: 'WAL', contract: 'whaleextoken', digit: 4 },
+
   { symbol: 'IQ', contract: 'everipediaiq', digit: 3 },
 
   { symbol: 'EBTC', contract: 'bitpietokens', digit: 4 },
