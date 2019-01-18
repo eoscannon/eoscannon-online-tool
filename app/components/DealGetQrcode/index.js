@@ -111,6 +111,8 @@ export default class DealGetQrcode extends Component {
     const TestChainId = config.testChainId
     const telosChainId = config.testTelosChainId
     const testKylinChainId  = config.testKylinChainId
+    const testBosChainId  = config.testBosChainId
+
     let chainId
     if (this.props.SelectedNetWork === 'main') {
       chainId = MainChainId
@@ -120,6 +122,8 @@ export default class DealGetQrcode extends Component {
       chainId = telosChainId
     } else if(this.props.SelectedNetWork === 'kylin'){
       chainId = testKylinChainId
+    }else if(this.props.SelectedNetWork === 'bos'){
+      chainId = testBosChainId
     } else if (this.props.SelectedNetWork === 'other') {
       chainId = storage.getChainId()
     }
@@ -283,5 +287,6 @@ DealGetQrcode.propTypes = {
   transaction: PropTypes.object,
   QrCodeValue: PropTypes.string,
   SelectedNetWork: PropTypes.string,
-  isHiddenGetTransactionButton: PropTypes.bool
+  isHiddenGetTransactionButton: PropTypes.bool,
+  GetTransactionButtonScatterState: PropTypes.bool,
 }

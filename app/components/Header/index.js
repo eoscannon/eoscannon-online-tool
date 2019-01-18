@@ -147,6 +147,8 @@ class HeaderComp extends React.Component {
       storage.setBaseSymbol('WBI')
     }else if(value === 'telos') {
       storage.setBaseSymbol('TLOS')
+    }else if(value === 'bos') {
+      storage.setBaseSymbol('BOS')
     }
     storage.setNetwork(value)
     this.props.onDispatchChangeNetworkReducer(value)
@@ -478,6 +480,7 @@ class HeaderComp extends React.Component {
                 <Option value="test">{testNet}</Option>
                 <Option value="telos">TELOS</Option>
                 <Option value="kylin">KYLIN</Option>
+                <Option value="bos">BOS</Option>
                 <Option value="other">{otherTestNet}</Option>
               </Select>
               <div
