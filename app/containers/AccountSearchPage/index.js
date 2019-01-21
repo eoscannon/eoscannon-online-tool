@@ -73,7 +73,7 @@ export class AccountSearchPage extends React.Component {
       this.handleSearch(nextProps.match.params.account)
       this.setState({ account: nextProps.match.params.account })
     }
-    let AccountNameList  = storage.getAccountName() 
+    let AccountNameList  = storage.getAccountName() || []
     const eos = getEos(this.props.SelectedNetWork)
     this.setState({
       eos: eos,
