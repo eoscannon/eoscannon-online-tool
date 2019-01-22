@@ -34,7 +34,7 @@ export class ForumVotePage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      eos: null,
+      eos: {},
       formatMessage: this.props.intl.formatMessage,
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
@@ -84,8 +84,6 @@ export class ForumVotePage extends React.Component {
   };
 
   handleGetTransactionInit = () => {
-    this.setState({ scatterStatus: false })
-    const eos = getEos(this.props.SelectedNetWork)
     fetch('https://s3.amazonaws.com/api.eosvotes.io/eosvotes/tallies/latest.json', {
       method: 'GET'
     }).then((response)=> {
@@ -100,10 +98,37 @@ export class ForumVotePage extends React.Component {
           {yield responseText[prop]}
         }
         let arr = Array.from(values(responseText))
-        this.setState({
-          columnsData: arr
-        })
-        this.handleChange({key: '2'})
+
+        setTimeout(() => {
+          this.setState({
+            columnsData: arr
+          })
+          this.handleChange({key: '2'})
+        }, 200);
+      })
+    })
+  };
+
+  handleGetTransactionChange = () => {
+    this.setState({ scatterStatus: false })
+    fetch('https://s3.amazonaws.com/api.eosvotes.io/eosvotes/tallies/latest.json', {
+      method: 'GET'
+    }).then((response)=> {
+      response.status // => number 100–599
+      response.statusText // => String
+      response.headers // => Headers
+      response.url // => String
+      response.text().then(responseText => {
+        responseText = JSON.parse(responseText)
+        function * values (responseText) {
+          for (let prop of Object.keys(responseText)) // own properties, you might use
+          {yield responseText[prop]}
+        }
+        let arr = Array.from(values(responseText))
+          this.setState({
+            columnsData: arr
+          })
+          this.handleChange({key: '2'})
       })
     })
   };
@@ -204,7 +229,7 @@ export class ForumVotePage extends React.Component {
   }
 
   onChangeRadioFormList= (e) => {
-    console.log('e = ', e)
+    // console.log('e = ', e)
     this.setState({
       radioFormList: e.target.value
     })
@@ -220,7 +245,6 @@ export class ForumVotePage extends React.Component {
     })
   }
   changeLowerBound = (value)=>{
-    console.log('value===', value)
     this.setState({
       lowerBound: value
     })
@@ -237,7 +261,7 @@ export class ForumVotePage extends React.Component {
   }
 
   onSearch = ()=>{
-    this.handleGetTransactionInit()
+    this.handleGetTransactionChange()
   }
 
   handleChange=(key)=>{
@@ -422,7 +446,7 @@ export class ForumVotePage extends React.Component {
                   renderItem={(item, index) => (
                     <List.Item>
                       <div style={{ display: 'flex', width: '100%' }}>
-                        <Radio value={this.formatJson(item.proposal.proposal_json).question} key={index}></Radio>
+                        <Radio value={item.id} key={item.id}></Radio>
                         <Link to={{ pathname: '/forumDetail', query: { item: item } }} style={{width: '100%' }}>
                           <div style={{display: 'flex', justifyContent: 'space-between'}}>
                             <span>ID:{item.proposal.proposal_name}</span>

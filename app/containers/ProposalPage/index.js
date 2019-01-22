@@ -140,8 +140,7 @@ export class ProposalPage extends React.Component {
     const ProposalName = this.state.formatMessage(
       messages.ProposalName,
     )
-    const children = ['active', 'owner']
-    console.log('children=', children)
+    // const children = ['active', 'owner']
     return (
       <LayoutContent>
         <Col span={12}>
@@ -171,7 +170,7 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: {ProposalPermission}
+                    message: ProposalPermission
                   }
                 ]
               })(
@@ -189,7 +188,7 @@ export class ProposalPage extends React.Component {
             </FormItem>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('proposer', {
-                rules: [{ required: true, message: {Proposaler}}]
+                rules: [{ required: true, message: Proposaler}]
               })(
                 <Input
                   prefix={
@@ -208,7 +207,7 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: {ProposalName}
+                    message: ProposalName
                   }
                 ]
               })(

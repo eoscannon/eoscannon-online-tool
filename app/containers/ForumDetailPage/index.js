@@ -88,12 +88,13 @@ export class forumDetailPage extends React.Component {
    **/
   componentWillMount () {
     this.handleGetTransactionInit()
-    console.log('this.props = ', JSON.stringify(this.props.location.query))
     if(this.props.location.query && this.props.location.query.item) {
       this.setState({query: this.props.location.query.item })
-      this.props.form.setFieldsValue({
-        statusText: this.formatJson(this.props.location.query.item.proposal.proposal_json).question
-      })
+      setTimeout(() => {
+        this.props.form.setFieldsValue({
+          statusText: this.props.location.query.item.id
+        })
+      }, 500);
     }
   }
   /**
