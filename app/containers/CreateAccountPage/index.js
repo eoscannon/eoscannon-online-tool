@@ -57,6 +57,10 @@ export class CreateAccountPage extends React.Component {
       StakeNetQuantity,
       StakeCpuQuantity
     } = values
+    console.log('AccountName == ', AccountName)
+    // AccountName ? nextProps.form.setFieldsValue({'AccountName': AccountName.toLowerCase().trim()}) : ''
+    // NewAccountName ? nextProps.form.setFieldsValue({'NewAccountName': NewAccountName.toLowerCase().trim()}) : ''
+
     this.setState({
       GetTransactionButtonState:
         !!AccountName &&
@@ -165,6 +169,22 @@ export class CreateAccountPage extends React.Component {
       })
   };
 
+  checkAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({AccountName:value})
+    callback();
+    return
+  }
+
+  checkNewAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({NewAccountName:value})
+    callback();
+    return;
+
+  }
+
+
   render () {
     const { getFieldDecorator } = this.props.form
     const CreatorAccountNamePlaceholder = this.state.formatMessage(
@@ -203,6 +223,7 @@ export class CreateAccountPage extends React.Component {
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
+  
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -211,7 +232,10 @@ export class CreateAccountPage extends React.Component {
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('AccountName', {
                   rules: [
-                    { required: true, message: CreatorAccountNamePlaceholder }
+                    { required: true,
+                     message: CreatorAccountNamePlaceholder ,
+                     validator: this.checkAccountName 
+                     }
                   ]
                 })(
                   <Input
@@ -227,7 +251,9 @@ export class CreateAccountPage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: CreatorAccountNamePlaceholder
+                      message: CreatorAccountNamePlaceholder ,
+                      validator: this.checkNewAccountName
+
                     }
                   ]
                 })(

@@ -108,6 +108,7 @@ export class VotePage extends React.Component {
   voteByScatter = () => {
     getEosByScatter(this.props.SelectedNetWork, this.handleTranscationScatter)
   };
+
   handleTranscationScatter = () => {
     this.setState({ scatterStatus: true })
     const eos = global.EosByScatter
@@ -143,6 +144,22 @@ export class VotePage extends React.Component {
         // openTransactionFailNotification(this.state.formatMessage, err.name);
       })
   };
+
+  checkvoter = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({voter : value})
+    callback();
+    return
+  }
+
+
+  checkproducers = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({producers : value})
+    callback();
+    return
+  }
+
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -182,7 +199,11 @@ export class VotePage extends React.Component {
                   <FormItem {...formItemLayout}>
                     {getFieldDecorator('voter', {
                       rules: [
-                        { required: true, message: VotePageVoterPlaceholder }
+                        { 
+                          required: true,
+                          message: VotePageVoterPlaceholder,
+                          validator: this.checkvoter
+                        }
                       ]
                     })(
                       <Input
@@ -201,7 +222,8 @@ export class VotePage extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: VotePageProducersPlaceholder
+                          message: VotePageProducersPlaceholder,
+                          validator: this.checkproducers
                         }
                       ]
                     })(

@@ -139,6 +139,22 @@ export class ProxyPage extends React.Component {
         })
       })
   };
+
+
+  checkvoter = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({voter : value})
+    callback();
+    return
+  }
+
+  checkproxy = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({proxy : value})
+    callback();
+    return
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form
     const VoterPlaceholder = this.state.formatMessage(
@@ -177,7 +193,11 @@ export class ProxyPage extends React.Component {
                 <Card title={ProducersDealTranscationProxy} bordered={false}>
                   <FormItem {...formItemLayout}>
                     {getFieldDecorator('voter', {
-                      rules: [{ required: true, message: VoterPlaceholder }]
+                      rules: [{ 
+                        required: true, 
+                        message: VoterPlaceholder ,
+                        validator: this.checkvoter
+                      }]
                     })(
                       <Input
                         prefix={
@@ -195,7 +215,8 @@ export class ProxyPage extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: ProxyPlaceholder
+                          message: ProxyPlaceholder,
+                          validator: this.checkproxy
                         }
                       ],
                       initialValue: 'cannonproxy1'

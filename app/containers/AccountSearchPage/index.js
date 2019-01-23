@@ -107,7 +107,7 @@ export class AccountSearchPage extends React.Component {
   handleSearch = value => {
     // this.props.dispatch(push('/login'));
     this.setState({
-      accountSearch: value,
+      accountSearch: value.toLowerCase().trim(),
       account: value,
       cpuStake: 0,
       networkStake: 0,
@@ -715,7 +715,7 @@ export class AccountSearchPage extends React.Component {
               enterButton={FunctionSearchButton}
               size="large"
               onChange={this.onChangeAccount}
-              value={this.state.accountSearch.trim()}
+              value={this.state.accountSearch.trim().toLowerCase()}
               onSearch={this.handleSearch}
             />
             <div>

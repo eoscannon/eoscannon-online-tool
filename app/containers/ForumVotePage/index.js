@@ -295,6 +295,14 @@ export class ForumVotePage extends React.Component {
     return list
   }
 
+
+  checkvoter = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({voter : value})
+    callback();
+    return
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form
     const VoterPlaceholder = this.state.formatMessage(
@@ -333,7 +341,11 @@ export class ForumVotePage extends React.Component {
             <Card title={ForumVoteFirst} bordered={false}>
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('voter', {
-                  rules: [{ required: true, message: VoterPlaceholder }]
+                  rules: [{
+                     required: true,
+                      message: VoterPlaceholder,
+                      validator: this.checkvoter
+                    }]
                 })(
                   <Input
                     prefix={
@@ -351,7 +363,7 @@ export class ForumVotePage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: StatusText
+                      message: StatusText,
                     }
                   ]
                 })(

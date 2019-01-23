@@ -119,6 +119,28 @@ export class ProposalPage extends React.Component {
     console.log(`selected ${value}`)
   }
 
+
+  checkaccount = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({account : value})
+    callback();
+    return
+  }
+
+  checkpermission = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({permission : value})
+    callback();
+    return
+  }
+
+  checkproposer = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({proposer : value})
+    callback();
+    return
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form
     const CreatorAccountNamePlaceholder = this.state.formatMessage(
@@ -150,7 +172,8 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: CreatorAccountNamePlaceholder
+                    message: CreatorAccountNamePlaceholder,
+                    validator: this.checkaccount
                   }
                 ]
               })(
@@ -170,7 +193,8 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: ProposalPermission
+                    message: ProposalPermission,
+                    validator: this.checkpermission
                   }
                 ]
               })(
@@ -188,7 +212,11 @@ export class ProposalPage extends React.Component {
             </FormItem>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('proposer', {
-                rules: [{ required: true, message: Proposaler}]
+                rules: [{
+                   required: true,
+                    message: Proposaler,
+                    validator: this.checkproposer
+                    }]
               })(
                 <Input
                   prefix={
