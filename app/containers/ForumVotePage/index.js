@@ -63,6 +63,10 @@ export class ForumVotePage extends React.Component {
   componentWillReceiveProps (nextProps) {
     this.onValuesChange(nextProps)
   }
+
+  componentWillUnmount(){
+    this.mounted = false;
+  }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -84,6 +88,8 @@ export class ForumVotePage extends React.Component {
   };
 
   handleGetTransactionInit = () => {
+    this.mounted = true;
+
     fetch('https://s3.amazonaws.com/api.eosvotes.io/eosvotes/tallies/latest.json', {
       method: 'GET'
     }).then((response)=> {
@@ -99,12 +105,13 @@ export class ForumVotePage extends React.Component {
         }
         let arr = Array.from(values(responseText))
 
-        setTimeout(() => {
+        if(this.mounted) {
           this.setState({
             columnsData: arr
-          })
+          })  
           this.handleChange({key: '2'})
-        }, 200);
+        }
+        
       })
     })
   };

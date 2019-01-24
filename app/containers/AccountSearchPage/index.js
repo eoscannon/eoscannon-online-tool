@@ -536,7 +536,7 @@ export class AccountSearchPage extends React.Component {
         this.setState({columnsData: dataNew, mykeyVisvible: true})
       }).catch(err=>{
         this.setState({mykeyVisvible: false})
-        console.log('err == ', err)
+        console.log('get MYKEY data failed', )
       })
     }
 
