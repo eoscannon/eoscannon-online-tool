@@ -110,6 +110,10 @@ export class ProposalPage extends React.Component {
         })
       })
       .catch(err => {
+         this.setState({
+           eos:{},
+          transaction: {}
+        })
         console.log('err = ',err)
         openTransactionFailNotification(this.state.formatMessage, err.name)
       })

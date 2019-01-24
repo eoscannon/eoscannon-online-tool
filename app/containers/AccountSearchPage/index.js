@@ -277,7 +277,7 @@ export class AccountSearchPage extends React.Component {
           storage.setAccountName(uniqueList)
           this.handleChangeCheck({target: {value: 'keydata'}})
         } catch(err) {
-          console.log('err == ', err)
+          console.log('Get MYKEY data failed ')
         }
       })
       .catch(() => {

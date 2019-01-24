@@ -460,9 +460,9 @@ export class ForumVotePage extends React.Component {
                       <div style={{ display: 'flex', width: '100%' }}>
                         <Radio value={item.proposal.proposal_name} key={item.proposal.proposal_name}></Radio>
                         <Link to={{ pathname: '/forumDetail', query: { item: item } }} style={{width: '100%' }}>
-                          <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <span>ID:{item.proposal.proposal_name}</span>
-                            <span>{ProposalListFounder}:{item.proposal.proposer}</span>
+                          <div style={{display: 'flex', justifyContent: 'space-between',color: '#8c98ba'}}>
+                            <span>ID : {item.proposal.proposal_name}</span>
+                            <span>{ProposalListFounder} : {item.proposal.proposer}</span>
                           </div>
                           <div style={{fontSize: '16px', fontWeight: 'bold', padding: '8px 0', color: '#000'}}>{item.proposal.title}</div>
                           {/* <div style={{padding: '0px 0px 10px 0'}}>

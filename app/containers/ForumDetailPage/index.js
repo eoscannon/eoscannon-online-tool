@@ -87,9 +87,9 @@ export class forumDetailPage extends React.Component {
   /**
    * 链接scatter
    **/
-  componentWillMount () {
-    this.handleGetTransactionInit()
-    console.log('this.props.location.query = ',this.props.location.query)
+  componentDidMount () {
+    // this.handleGetTransactionInit()
+    // console.log('this.props.location.query = ',this.props.location.query)
     if(this.props.location.query && this.props.location.query.item) {
       this.setState({
         query: this.props.location.query.item,
@@ -272,7 +272,7 @@ export class forumDetailPage extends React.Component {
   }
 
   onSearch = ()=>{
-    this.handleGetTransactionInit()
+    // this.handleGetTransactionInit()
   }
 
   handleChange=(key)=>{
@@ -343,9 +343,7 @@ export class forumDetailPage extends React.Component {
 
     return (
       <LayoutContent>
-        <Button type="primary" onClick={()=>{window.history.go(-1)}} style={{margin: '10px 0', display: 'flex', alignItems: 'center'}}>
-          <Icon type="left" />Back
-        </Button>
+      
         <div>
           <Col span={12}>
             <Card title={ForumVoteFirst} bordered={false}>
@@ -433,6 +431,9 @@ export class forumDetailPage extends React.Component {
             <Col span={24}>
             <Card title='' bordered={false}>
               <div>
+                <Button type="primary" ghost onClick={()=>{window.history.go(-1)}} style={{margin: '10px 0 30px', display: 'flex', alignItems: 'center', paddingLeft: '10px'}}>
+                  <Icon type="left" />Back
+                </Button>
                 <div style={{ display: 'block', width: '100%' }}>
                   <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <span>ID:{this.state.query.proposal.proposal_name || ''}</span>
