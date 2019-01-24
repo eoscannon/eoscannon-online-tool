@@ -141,6 +141,20 @@ export class BuyRamBytesPage extends React.Component {
       })
   };
 
+  checkPayerAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({PayerAccountName : value})
+    callback();
+    return
+  }
+
+  checkReceiverAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({ReceiverAccountName : value})
+    callback();
+    return
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form
     const SwitchCheckedName = this.state.formatMessage(
@@ -188,7 +202,8 @@ export class BuyRamBytesPage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: PayerAccountNamePlaceholder
+                      message: PayerAccountNamePlaceholder,
+                      validator: this.checkPayerAccountName
                     }
                   ]
                 })(
@@ -207,7 +222,8 @@ export class BuyRamBytesPage extends React.Component {
                       rules: [
                         {
                           required: false,
-                          message: ReceiverAccountNamePlaceholder
+                          message: ReceiverAccountNamePlaceholder,
+                          validator: this.checkReceiverAccountName
                         }
                       ]
                     })(

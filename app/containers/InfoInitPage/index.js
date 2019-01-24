@@ -40,7 +40,7 @@ export class InfoInitPage extends React.Component {
       this.handleGetTransaction(nextProps.SelectedNetWork)
     }
   }
-  componentWillMount () {
+  componentDidMount () {
     this.handleGetTransaction(this.props.SelectedNetWork)
   }
   /**
@@ -48,9 +48,9 @@ export class InfoInitPage extends React.Component {
    * */
   handleGetTransaction = SelectedNetWork => {
     getEosInfoDetail(SelectedNetWork).then(BlockInfo => {
-      this.props.form.setFieldsValue({
-        transaction: JSON.stringify(BlockInfo)
-      })
+      // this.props.form.setFieldsValue({
+      //   transaction: JSON.stringify(BlockInfo)
+      // })
       this.setState({
         QrCodeValue: JSON.stringify(BlockInfo)
       })
@@ -100,7 +100,7 @@ export class InfoInitPage extends React.Component {
             </div>
           </FormItem>
           <FormItem>
-            <TextArea value={this.state.QrCodeValue} rows="4" disabled="true" />
+            <TextArea value={this.state.QrCodeValue} rows="4" disabled />
           </FormItem>
           <FormItem>
             <Button

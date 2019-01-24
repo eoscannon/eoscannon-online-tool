@@ -129,6 +129,14 @@ export class UpdateAuthPage extends React.Component {
       })
   };
 
+  checkAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({AccountName : value})
+    callback();
+    return
+  }
+
+
   render () {
     const { getFieldDecorator } = this.props.form
     const UpdateAuthAccountNamePlaceholder = this.state.formatMessage(
@@ -158,7 +166,8 @@ export class UpdateAuthPage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: UpdateAuthAccountNamePlaceholder
+                      message: UpdateAuthAccountNamePlaceholder,
+                      validator: this.checkAccountName
                     }
                   ]
                 })(

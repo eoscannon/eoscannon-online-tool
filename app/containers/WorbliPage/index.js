@@ -116,6 +116,13 @@ export class WorbliPage extends React.Component {
     console.log(`selected ${value}`)
   }
 
+  checkAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({AccountName : value})
+    callback();
+    return
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form
     const AirGrabAlertMessage = this.state.formatMessage(
@@ -148,7 +155,11 @@ export class WorbliPage extends React.Component {
               </FormItem>
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('AccountName', {
-                  rules: [{ required: true, message: OwnerPlaceholder }]
+                  rules: [{ 
+                    required: true,
+                     message: OwnerPlaceholder,
+                     validator: this.checkAccountName
+                    }]
                 })(
                   <Input
                     prefix={

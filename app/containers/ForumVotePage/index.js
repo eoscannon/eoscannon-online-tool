@@ -34,7 +34,7 @@ export class ForumVotePage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      eos: null,
+      eos: {},
       formatMessage: this.props.intl.formatMessage,
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
@@ -63,6 +63,10 @@ export class ForumVotePage extends React.Component {
   componentWillReceiveProps (nextProps) {
     this.onValuesChange(nextProps)
   }
+
+  componentWillUnmount(){
+    this.mounted = false;
+  }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -84,8 +88,8 @@ export class ForumVotePage extends React.Component {
   };
 
   handleGetTransactionInit = () => {
-    this.setState({ scatterStatus: false })
-    const eos = getEos(this.props.SelectedNetWork)
+    this.mounted = true;
+
     fetch('https://s3.amazonaws.com/api.eosvotes.io/eosvotes/tallies/latest.json', {
       method: 'GET'
     }).then((response)=> {
@@ -100,10 +104,38 @@ export class ForumVotePage extends React.Component {
           {yield responseText[prop]}
         }
         let arr = Array.from(values(responseText))
-        this.setState({
-          columnsData: arr
-        })
-        this.handleChange({key: '2'})
+
+        if(this.mounted) {
+          this.setState({
+            columnsData: arr
+          })  
+          this.handleChange({key: '2'})
+        }
+        
+      })
+    })
+  };
+
+  handleGetTransactionChange = () => {
+    this.setState({ scatterStatus: false })
+    fetch('https://s3.amazonaws.com/api.eosvotes.io/eosvotes/tallies/latest.json', {
+      method: 'GET'
+    }).then((response)=> {
+      response.status // => number 100–599
+      response.statusText // => String
+      response.headers // => Headers
+      response.url // => String
+      response.text().then(responseText => {
+        responseText = JSON.parse(responseText)
+        function * values (responseText) {
+          for (let prop of Object.keys(responseText)) // own properties, you might use
+          {yield responseText[prop]}
+        }
+        let arr = Array.from(values(responseText))
+          this.setState({
+            columnsData: arr
+          })
+          this.handleChange({key: '2'})
       })
     })
   };
@@ -204,7 +236,7 @@ export class ForumVotePage extends React.Component {
   }
 
   onChangeRadioFormList= (e) => {
-    console.log('e = ', e)
+    // console.log('e = ', e)
     this.setState({
       radioFormList: e.target.value
     })
@@ -220,7 +252,6 @@ export class ForumVotePage extends React.Component {
     })
   }
   changeLowerBound = (value)=>{
-    console.log('value===', value)
     this.setState({
       lowerBound: value
     })
@@ -237,7 +268,7 @@ export class ForumVotePage extends React.Component {
   }
 
   onSearch = ()=>{
-    this.handleGetTransactionInit()
+    this.handleGetTransactionChange()
   }
 
   handleChange=(key)=>{
@@ -269,6 +300,14 @@ export class ForumVotePage extends React.Component {
   formatJson =(data)=>{
     let list = JSON.parse(data.toString())
     return list
+  }
+
+
+  checkvoter = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({voter : value})
+    callback();
+    return
   }
 
   render () {
@@ -309,7 +348,11 @@ export class ForumVotePage extends React.Component {
             <Card title={ForumVoteFirst} bordered={false}>
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('voter', {
-                  rules: [{ required: true, message: VoterPlaceholder }]
+                  rules: [{
+                     required: true,
+                      message: VoterPlaceholder,
+                      validator: this.checkvoter
+                    }]
                 })(
                   <Input
                     prefix={
@@ -327,7 +370,7 @@ export class ForumVotePage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: StatusText
+                      message: StatusText,
                     }
                   ]
                 })(
@@ -422,13 +465,13 @@ export class ForumVotePage extends React.Component {
                   renderItem={(item, index) => (
                     <List.Item>
                       <div style={{ display: 'flex', width: '100%' }}>
-                        <Radio value={this.formatJson(item.proposal.proposal_json).question} key={index}></Radio>
+                        <Radio value={item.proposal.proposal_name} key={item.proposal.proposal_name}></Radio>
                         <Link to={{ pathname: '/forumDetail', query: { item: item } }} style={{width: '100%' }}>
-                          <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <span>ID:{item.proposal.proposal_name}</span>
-                            <span>{ProposalListFounder}:{item.proposal.proposer}</span>
+                          <div style={{display: 'flex', justifyContent: 'space-between',color: '#8c98ba'}}>
+                            <span>ID : {item.proposal.proposal_name}</span>
+                            <span>{ProposalListFounder} : {item.proposal.proposer}</span>
                           </div>
-                          <div style={{fontSize: '16px', fontWeight: 'bold', padding: '8px 0', color: '#000'}}>{this.formatJson(item.proposal.proposal_json).question}</div>
+                          <div style={{fontSize: '16px', fontWeight: 'bold', padding: '8px 0', color: '#000'}}>{item.proposal.title}</div>
                           {/* <div style={{padding: '0px 0px 10px 0'}}>
                             <pre style={{whiteSpace: "pre-wrap",wordWrap:'break-word',wordBreak:'break-all'}}>{(this.formatJson(item.proposal.proposal_json).content)}</pre>
                           </div> */}

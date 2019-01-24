@@ -686,6 +686,13 @@ export class IQPage extends React.Component {
           });
   };
 
+  checkAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({IqAccountName : value})
+    callback();
+    return
+  }
+
   render () {
       const { getFieldDecorator } = this.props.form;
       const IqAccountNamePlaceholder = this.state.formatMessage(
@@ -717,7 +724,11 @@ export class IQPage extends React.Component {
                           <FormItem {...formItemLayout}>
                               {getFieldDecorator("IqAccountName", {
                                   rules: [
-                                      { required: true, message: IqAccountNamePlaceholder }
+                                      { 
+                                        required: true, 
+                                        message: IqAccountNamePlaceholder,
+                                        validator: this.checkAccountName
+                                    }
                                   ]
                               })(
                                   <Input

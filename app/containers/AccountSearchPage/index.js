@@ -73,7 +73,7 @@ export class AccountSearchPage extends React.Component {
       this.handleSearch(nextProps.match.params.account)
       this.setState({ account: nextProps.match.params.account })
     }
-    let AccountNameList  = storage.getAccountName() 
+    let AccountNameList  = storage.getAccountName() || []
     const eos = getEos(this.props.SelectedNetWork)
     this.setState({
       eos: eos,
@@ -107,7 +107,7 @@ export class AccountSearchPage extends React.Component {
   handleSearch = value => {
     // this.props.dispatch(push('/login'));
     this.setState({
-      accountSearch: value,
+      accountSearch: value.toLowerCase().trim(),
       account: value,
       cpuStake: 0,
       networkStake: 0,
@@ -277,7 +277,7 @@ export class AccountSearchPage extends React.Component {
           storage.setAccountName(uniqueList)
           this.handleChangeCheck({target: {value: 'keydata'}})
         } catch(err) {
-          console.log('err == ', err)
+          console.log('Get MYKEY data failed ')
         }
       })
       .catch(() => {
@@ -536,7 +536,7 @@ export class AccountSearchPage extends React.Component {
         this.setState({columnsData: dataNew, mykeyVisvible: true})
       }).catch(err=>{
         this.setState({mykeyVisvible: false})
-        console.log('err == ', err)
+        console.log('get MYKEY data failed', )
       })
     }
 
@@ -715,7 +715,7 @@ export class AccountSearchPage extends React.Component {
               enterButton={FunctionSearchButton}
               size="large"
               onChange={this.onChangeAccount}
-              value={this.state.accountSearch.trim()}
+              value={this.state.accountSearch.trim().toLowerCase()}
               onSearch={this.handleSearch}
             />
             <div>

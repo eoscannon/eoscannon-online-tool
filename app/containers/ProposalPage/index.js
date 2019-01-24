@@ -110,6 +110,10 @@ export class ProposalPage extends React.Component {
         })
       })
       .catch(err => {
+         this.setState({
+           eos:{},
+          transaction: {}
+        })
         console.log('err = ',err)
         openTransactionFailNotification(this.state.formatMessage, err.name)
       })
@@ -117,6 +121,28 @@ export class ProposalPage extends React.Component {
 
   handleChange=(value)=> {
     console.log(`selected ${value}`)
+  }
+
+
+  checkaccount = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({account : value})
+    callback();
+    return
+  }
+
+  checkpermission = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({permission : value})
+    callback();
+    return
+  }
+
+  checkproposer = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({proposer : value})
+    callback();
+    return
   }
 
   render () {
@@ -140,8 +166,7 @@ export class ProposalPage extends React.Component {
     const ProposalName = this.state.formatMessage(
       messages.ProposalName,
     )
-    const children = ['active', 'owner']
-    console.log('children=', children)
+    // const children = ['active', 'owner']
     return (
       <LayoutContent>
         <Col span={12}>
@@ -151,7 +176,8 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: CreatorAccountNamePlaceholder
+                    message: CreatorAccountNamePlaceholder,
+                    validator: this.checkaccount
                   }
                 ]
               })(
@@ -171,7 +197,8 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: {ProposalPermission}
+                    message: ProposalPermission,
+                    validator: this.checkpermission
                   }
                 ]
               })(
@@ -189,7 +216,11 @@ export class ProposalPage extends React.Component {
             </FormItem>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('proposer', {
-                rules: [{ required: true, message: {Proposaler}}]
+                rules: [{
+                   required: true,
+                    message: Proposaler,
+                    validator: this.checkproposer
+                    }]
               })(
                 <Input
                   prefix={
@@ -208,7 +239,7 @@ export class ProposalPage extends React.Component {
                 rules: [
                   {
                     required: true,
-                    message: {ProposalName}
+                    message: ProposalName
                   }
                 ]
               })(

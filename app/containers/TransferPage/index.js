@@ -506,6 +506,20 @@ export class TransferPage extends React.Component {
     return finalResult
   }
 
+  checkFromAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({FromAccountName : value})
+    callback();
+    return
+  }
+
+  checkToAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({ToAccountName : value})
+    callback();
+    return
+  }
+
   render () {
     const { getFieldDecorator } = this.props.form
     const TransferFromAccountNamePlaceholder = this.state.formatMessage(
@@ -565,7 +579,8 @@ export class TransferPage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: TransferFromAccountNamePlaceholder
+                      message: TransferFromAccountNamePlaceholder,
+                      validator: this.checkFromAccountName
                     }
                   ]
                 })(
@@ -598,7 +613,8 @@ export class TransferPage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: TransferToAccountNamePlaceholder
+                      message: TransferToAccountNamePlaceholder,
+                      validator: this.checkToAccountName 
                     }
                   ]
                 })(

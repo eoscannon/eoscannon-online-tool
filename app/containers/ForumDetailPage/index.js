@@ -48,6 +48,7 @@ export class forumDetailPage extends React.Component {
       upperBound: null,
       limit: 100,
       creatTimeData: [],
+      contentVisible : false,
       query: {
         'id': '1token1vote_20190111',
         'proposal': {
@@ -60,19 +61,19 @@ export class forumDetailPage extends React.Component {
         },
         'stats': {
           'votes': {
-            '0': 91,
-            '1': 1066,
+            '0': 0,
+            '1': 0,
             '200': 1,
-            'total': 1158,
-            'proxies': 64,
-            'accounts': 1094
+            'total': 0,
+            'proxies': 0,
+            'accounts': 0
           },
 
           'staked': {
-            '0': 5915921377,
-            '1': 113484545442,
-            '200': 149000,
-            'total': 119400615819
+            '0': 0,
+            '1': 0,
+            '200': 0,
+            'total': 0
           },
           'vote_participation': false,
           'more_yes': true,
@@ -86,14 +87,19 @@ export class forumDetailPage extends React.Component {
   /**
    * 链接scatter
    **/
-  componentWillMount () {
-    this.handleGetTransactionInit()
-    console.log('this.props = ', JSON.stringify(this.props.location.query))
+  componentDidMount () {
+    // this.handleGetTransactionInit()
+    // console.log('this.props.location.query = ',this.props.location.query)
     if(this.props.location.query && this.props.location.query.item) {
-      this.setState({query: this.props.location.query.item })
-      this.props.form.setFieldsValue({
-        statusText: this.formatJson(this.props.location.query.item.proposal.proposal_json).question
+      this.setState({
+        query: this.props.location.query.item,
+        contentVisible: true
       })
+      setTimeout(() => {
+        this.props.form.setFieldsValue({
+          statusText: this.props.location.query.item.proposal.proposal_name
+        })
+      }, 500);
     }
   }
   /**
@@ -266,7 +272,7 @@ export class forumDetailPage extends React.Component {
   }
 
   onSearch = ()=>{
-    this.handleGetTransactionInit()
+    // this.handleGetTransactionInit()
   }
 
   handleChange=(key)=>{
@@ -292,6 +298,9 @@ export class forumDetailPage extends React.Component {
     let hours = nowTime.getHours() >= 10 ? nowTime.getHours() : '0' + nowTime.getHours()
     let min = nowTime.getMinutes() >= 10 ? nowTime.getMinutes() : '0' + nowTime.getMinutes()
     let second = nowTime.getSeconds() >= 10 ? nowTime.getSeconds() : '0' + nowTime.getSeconds()
+    if(!year){
+      return 
+    }
     return year + '-' + mon + '-' + date + '  ' + hours + ':' + min + ':' + second
   }
 
@@ -334,9 +343,7 @@ export class forumDetailPage extends React.Component {
 
     return (
       <LayoutContent>
-        <Button type="primary" onClick={()=>{window.history.go(-1)}} style={{margin: '10px 0', display: 'flex', alignItems: 'center'}}>
-          <Icon type="left" />Back
-        </Button>
+      
         <div>
           <Col span={12}>
             <Card title={ForumVoteFirst} bordered={false}>
@@ -420,40 +427,19 @@ export class forumDetailPage extends React.Component {
           </Col>
         </div>
         <div>
-          <Col span={24}>
+          {this.state.contentVisible ? (
+            <Col span={24}>
             <Card title='' bordered={false}>
-              {/* <div style={{ display: 'flex', marginBottom: 30 }}>
-                <Tooltip
-                  title='Scope'
-                  placement="topLeft"
-                  overlayClassName="numeric-input"
-                >
-                  <Input placeholder="Scope" maxLength={18} value={this.state.scope} onChange={this.changeScope} style={{width: 130, marginRight: 20}}/>
-                </Tooltip>
-                <InputNumber placeholder="LowerBound" value={this.state.lowerBound} onChange={this.changeLowerBound} style={{marginRight: 20, width: 130}}/>
-                <InputNumber placeholder="UpperBound" value={this.state.upperBound} onChange={this.changeUpperBound} style={{marginRight: 20, width: 130}}/>
-                <Tooltip
-                  title='Limit'
-                  placement="topLeft"
-                  overlayClassName="numeric-input"
-                >
-
-                  <InputNumber placeholder="Limit" value={this.state.limit} onChange={this.changeLimit} style={{marginRight: 20}}/>
-                </Tooltip>
-                <Select labelInValue defaultValue={{ key: ProposalListVoterQuantity }} style={{ width: 180 }} onChange={this.handleChange} style={{marginRight: 20}}>
-                  <Option value="0">{ProposalListCreatedSort}</Option>
-                  <Option value="1">{ProposalListExpiredSort}</Option>
-                  <Option value="2">{ProposalListVoterQuantity}</Option>
-                </Select>
-                <Button type="primary" icon="search" onClick={this.onSearch}>Search</Button>
-              </div> */}
               <div>
+                <Button type="primary" ghost onClick={()=>{window.history.go(-1)}} style={{margin: '10px 0 30px', display: 'flex', alignItems: 'center', paddingLeft: '10px'}}>
+                  <Icon type="left" />Back
+                </Button>
                 <div style={{ display: 'block', width: '100%' }}>
                   <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <span>ID:{this.state.query.proposal.proposal_name || ''}</span>
                     <span>{ProposalListFounder}:{this.state.query.proposal.proposer || ''}</span>
                   </div>
-                  <div style={{fontSize: '16px', fontWeight: 'bold', padding: '8px 0'}}>{this.formatJson(this.state.query.proposal.proposal_json).question || ''}</div>
+                  <div style={{fontSize: '16px', fontWeight: 'bold', padding: '8px 0'}}>{this.state.query.proposal.title || ''}</div>
                   <div style={{padding: '0px 0px 10px 0'}}>
                     <pre style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word', wordBreak: 'break-all'}}>{(this.formatJson(this.state.query.proposal.proposal_json).content || '')}</pre>
                   </div>
@@ -473,6 +459,7 @@ export class forumDetailPage extends React.Component {
               {/* <Table columns={columns} bordered rowSelection={rowSelection} dataSource={this.state.columnsData} pagination={{ pageSize: 50 }} scroll={{ y: 500 }}/> */}
             </Card>
           </Col>
+          ) :null}
         </div>
       </LayoutContent>
     )

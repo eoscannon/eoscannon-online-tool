@@ -25,7 +25,7 @@ export default class DealGetQrcode extends Component {
     super(props)
     this.state = {
       eos: null,
-      QrCodeValue: this.props.QrCodeValue,
+      QrCodeValue: '',
       CopyTransactionButtonState: false,
       oldTransaction: {}
     }
@@ -40,8 +40,9 @@ export default class DealGetQrcode extends Component {
       nextProps.transaction !== this.props.transaction &&
       !nextProps.scatterStatus
     ) {
-      this.setState({ eos: nextProps.eos }, this.getUnSignedBuffer)
+       JSON.stringify(nextProps.transaction) === '{}' ?  this.setState({QrCodeValue: ''}, this.props.form.setFieldsValue({ transactionTextArea: ''})) : this.setState({ eos: nextProps.eos }, this.getUnSignedBuffer)
     }
+
     if(nextProps.action === 'transfer') {
       const values = nextProps.form.getFieldsValue()
       const { ToAccountName, transferMemo, FromAccountName } = values
@@ -237,40 +238,42 @@ export default class DealGetQrcode extends Component {
                 />
               )}
             </FormItem>
-            <FormItem>
-              {getFieldDecorator('transactionTextArea', {
-                rules: [
-                  { required: true, message: TransactionTextAreaPlaceholder }
-                ]
-              })(
-                <TextArea
-                  disabled="true"
-                  autosize={{ minRows: 4, maxRows: 12 }}
-                  placeholder={TransactionTextAreaPlaceholder}
-                />,
-              )}
-            </FormItem>
-            <FormItem>
-              <div style={{ textAlign: 'center' }}>
-                {JSON.stringify(this.props.transaction) === '{}' ? null : (
-                  <QRCode
-                    value={this.state.QrCodeValue}
-                    size={256}
-                    style={{ transform: ' rotate(270deg)' }}
-                  />
+              <FormItem>
+                {getFieldDecorator('transactionTextArea', {
+                  rules: [
+                    { required: true, message: TransactionTextAreaPlaceholder }
+                  ]
+                })(
+                  <TextArea
+                    disabled
+                    autosize={{ minRows: 4, maxRows: 12 }}
+                    placeholder={TransactionTextAreaPlaceholder}
+                  />,
                 )}
+              </FormItem>
+            {this.state.QrCodeValue  ===  ''  ? null : (
+              <div>
+                <FormItem>
+                  <div style={{ textAlign: 'center' }}>
+                      <QRCode
+                        value={this.state.QrCodeValue}
+                        size={256}
+                        style={{ transform: ' rotate(270deg)' }}
+                      />
+                  </div>
+                </FormItem>
+                <FormItem style={{ textAlign: 'center' }}>
+                  <Button
+                    type="primary"
+                    className="form-button"
+                    disabled={!this.state.CopyTransactionButtonState}
+                    onClick={this.handleCopyTransaction}
+                  >
+                    {CopyTransactionButtonName}
+                  </Button>
+                </FormItem>
               </div>
-            </FormItem>
-            <FormItem style={{ textAlign: 'center' }}>
-              <Button
-                type="primary"
-                className="form-button"
-                disabled={!this.state.CopyTransactionButtonState}
-                onClick={this.handleCopyTransaction}
-              >
-                {CopyTransactionButtonName}
-              </Button>
-            </FormItem>
+            )}
           </div>
         )}
       </div>

@@ -210,6 +210,21 @@ export class StakePage extends React.Component {
     }
   };
 
+  checkFromAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({FromAccountName : value})
+    callback();
+    return
+  }
+
+  checkReceiverAccountName = (rule, value, callback) => {
+    value = value.toLowerCase().trim()
+    this.props.form.setFieldsValue({ReceiverAccountName : value})
+    callback();
+    return
+  }
+
+
   render () {
     const { getFieldDecorator } = this.props.form
     const DelegateSwitchCheckedName = this.state.formatMessage(
@@ -271,7 +286,11 @@ export class StakePage extends React.Component {
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('FromAccountName', {
                   rules: [
-                    { required: true, message: FromAccountNamePlaceholder }
+                    { 
+                      required: true, 
+                      message: FromAccountNamePlaceholder,
+                      validator: this.checkFromAccountName 
+                       }
                   ]
                 })(
                   <Input
@@ -287,7 +306,8 @@ export class StakePage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: ReceiverAccountNamePlaceholder
+                      message: ReceiverAccountNamePlaceholder,
+                      validator: this.checkReceiverAccountName
                     }
                   ]
                 })(
