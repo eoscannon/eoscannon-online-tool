@@ -16,4 +16,7 @@ import List from "antd/lib/list";
 import "antd/lib/list/style/css";
 import Spin from "antd/lib/spin";
 import "antd/lib/spin/style/css";
-export { Layout, Menu, Icon, Progress, Input, Radio, List, Spin };
+import Tooltip from "antd/lib/tooltip";
+import "antd/lib/tooltip/style/css";
+
+export { Layout, Menu, Icon, Progress, Input, Radio, List, Spin, Tooltip };

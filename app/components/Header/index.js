@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom'
 import { Layout, Select, Popover, Modal, Input, message } from 'antd'
 import EOS from 'eosjs'
 
-import { Menu, Icon } from '../../utils/antdUtils'
+import { Menu, Icon, Tooltip } from '../../utils/antdUtils'
 import utilsMsg from '../../utils/messages'
 import { storage } from '../../utils/storage'
 import FooterComp from '../../components/Footer'
@@ -32,6 +32,8 @@ import {
 // 自定义变量
 const { Header, Sider, Content } = Layout
 const { Option } = Select
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 
 class HeaderComp extends React.Component {
   constructor (props) {
@@ -44,7 +46,9 @@ class HeaderComp extends React.Component {
       rootSubmenuKeys: ['1', '2', '3', '4', '5'],
       testNetUrl: '',
       visible: false,
-      mainNetwork:'main'
+      mainNetwork:'main',
+          current: 'mail',
+
     }
   }
   /**
@@ -215,6 +219,14 @@ class HeaderComp extends React.Component {
       },
     )
   };
+
+    handleClick = (e) => {
+    console.log('click ', e);
+    this.setState({
+      current: e.key,
+    });
+  }
+
 
   render () {
     const { formatMessage } = this.props.intl
@@ -466,6 +478,23 @@ class HeaderComp extends React.Component {
             {/*
              <span>一般操作请使用active key</span>
              */}
+              {/* <Menu
+        onClick={this.handleClick}
+        selectedKeys={[this.state.current]}
+        mode="horizontal"
+      >
+   
+        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />Navigation Three - Submenu</span>}>
+          <MenuItemGroup title="Item 1">
+            <Menu.Item key="setting:1">Option 1</Menu.Item>
+            <Menu.Item key="setting:2">Option 2</Menu.Item>
+          </MenuItemGroup>
+          <MenuItemGroup title="Item 2">
+            <Menu.Item key="setting:3">Option 3</Menu.Item>
+            <Menu.Item key="setting:4">Option 4</Menu.Item>
+          </MenuItemGroup>
+        </SubMenu>
+      </Menu> */}
             <div
               className="userBox"
               style={{ float: 'right', display: 'flex', alignItems: 'center' }}
@@ -503,7 +532,9 @@ class HeaderComp extends React.Component {
             okText={sure}
             cancelText={cancel}
           >
-            <Input onChange={this.changeNet} />
+            <Tooltip title="https://mainnet.eoscannon.io">
+              <Input onChange={this.changeNet} />
+            </Tooltip>
           </Modal>
         </Layout>
       </Layout>

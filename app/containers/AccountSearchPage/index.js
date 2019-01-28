@@ -29,7 +29,7 @@ export class AccountSearchPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      info: '',
+      info: '',  // 账号数据可见
       formatMessage: this.props.intl.formatMessage,
       account: '',
       createTime: '',
@@ -64,7 +64,11 @@ export class AccountSearchPage extends React.Component {
       mykeyVisvible: false,
       tableRows: [],
       AccountNameList : [],
-      loading :false
+      loading :false,
+      mainAccountArr: [], // 公钥关联的主网账号
+      bosAccountArr: [],  //  公钥关联的bos网账号
+      pubkeyDataVisvible: false, // 公钥账号数据可见
+
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -106,8 +110,11 @@ export class AccountSearchPage extends React.Component {
   // 主程搜索数据
   handleSearch = value => {
     // this.props.dispatch(push('/login'));
+    if(value.length <= 12 ){
+     value = value.toLowerCase().trim()
+    }
     this.setState({
-      accountSearch: value.toLowerCase().trim(),
+      accountSearch: value,
       account: value,
       cpuStake: 0,
       networkStake: 0,
@@ -127,15 +134,21 @@ export class AccountSearchPage extends React.Component {
         symbolNet: 'EOS'
       })
     }
-    const eos = getEos(this.props.SelectedNetWork)
+    const eos = getEos( this.props.SelectedNetWork )
     let stake = 0
     let cpuBack
     let netWork
     let cpuScale
     let netScale
+    // 判断是 搜索公钥
+    if(this.state.accountSearch.length > 20){
+      this.handlePubKey(eos)
+      return;
+    }
     eos
       .getAccount({ account_name: value })
       .then(info => {
+        this.setState({pubkeyDataVisvible : false})
         if (info.total_resources) {
           this.setState({
             cpuStake: info.total_resources.cpu_weight,
@@ -277,7 +290,7 @@ export class AccountSearchPage extends React.Component {
           storage.setAccountName(uniqueList)
           this.handleChangeCheck({target: {value: 'keydata'}})
         } catch(err) {
-          console.log('Get MYKEY data failed ')
+          console.log('Get MYKEY Data failed ')
         }
       })
       .catch(() => {
@@ -289,6 +302,33 @@ export class AccountSearchPage extends React.Component {
         })
       })
   };
+  //按照公钥搜索信息
+  handlePubKey = () =>{
+    let eosMain = getEos( 'main' )
+    eosMain.getKeyAccounts(this.state.accountSearch).then(res =>{
+      console.log('res ',res)
+      this.setState({mainAccountArr : res.account_names, pubkeyDataVisvible: true})
+    }).catch(err=>{
+      console.log('err = ',err)
+    })
+
+    let eosBos = getEos( 'bos' )
+    eosBos.getKeyAccounts(this.state.accountSearch).then(res =>{
+      console.log('res ',res)
+      this.setState({bosAccountArr : res.account_names,  pubkeyDataVisvible: true})
+    }).catch(err=>{
+      console.log('err = ',err)
+    })
+    this.setState({ 
+      mykeyVisvible: false,
+      loading :false
+    })
+
+  }
+  //按照账号搜索信息
+  handleAccountSearch = ()=>{
+
+  }
 
     // 简单数组去重
   uniqueArr= (array) => {
@@ -308,272 +348,276 @@ export class AccountSearchPage extends React.Component {
       return res;
     }
 
-    handleSendTransaction = value => {
-      this.props.history.push({
-        pathname: '/transfer',
-        state: {
-          name: value.name,
-          address: value.address,
-          account: this.state.account
-        }
-      })
-    };
+  handleSendTransaction = value => {
+    this.props.history.push({
+      pathname: '/transfer',
+      state: {
+        name: value.name,
+        address: value.address,
+        account: this.state.account
+      }
+    })
+  };
     
   // 自动补齐币种数据
-    handleChange = key => {
-      let firstSymbol = key.split('(')
-      var newContract = firstSymbol[1].split(')')
-      var newSymbol = key.split(' ')
-      this.state.eos
-        .getCurrencyBalance({
-          code: newContract[0],
-          account: this.state.account.trim(),
-          symbol: newSymbol[0]
-        })
-        .then(res => {
-          this.setState({
-            symbolBlance: res[0] || 0,
-            symbolCode: newContract[0]
-          })
-        })
-        .catch(() => {
-          message.error(this.state.formatMessage(messages.FunctionSearchNoData))
-          this.setState({
-            balance: 0,
-            symbolBlance: 0,
-            symbolCode: ''
-          })
-        })
-    };
-
-    onChangeAccount = e => {
-      this.setState({ accountSearch: e.target.value })
-    };
- 
-
-
-    // mykey 账户切换 选项
-    handleChangeCheck = e =>{
-      // console.log('handleChangeCheck==',e.target.value)
-      this.setState({ checked: e.target.value, columnsData: [], columnsData: []})
-
-      if(e.target.value === 'keydata') {
+  handleChange = key => {
+    let firstSymbol = key.split('(')
+    var newContract = firstSymbol[1].split(')')
+    var newSymbol = key.split(' ')
+    this.state.eos
+      .getCurrencyBalance({
+        code: newContract[0],
+        account: this.state.account.trim(),
+        symbol: newSymbol[0]
+      })
+      .then(res => {
         this.setState({
-          columnsMykey: [{
-            title: this.state.formatMessage(
-              messages.FunctionSearchActionIndex,
-            ),
-            dataIndex: 'index',
-            key: 'index',
-            width: 150
-          }, {
-            title: this.state.formatMessage( messages.FunctionSearchActionKey),
-            key: 'keyData',
-            width: 300,
-            render: (text, record)=>(
-              <div>
-                <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.keyData.pubkey}</div>
-                <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.keyData.status}</div>
-                <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.keyData.nonce}</div>
-              </div>
-            )
-          }]
+          symbolBlance: res[0] || 0,
+          symbolCode: newContract[0]
         })
-      }else if(e.target.value === 'backupdata') {
-        this.setState({ columnsMykey: [{
-          title:  this.state.formatMessage(messages.FunctionSearchActionIndex ),
+      })
+      .catch(() => {
+        message.error(this.state.formatMessage(messages.FunctionSearchNoData))
+        this.setState({
+          balance: 0,
+          symbolBlance: 0,
+          symbolCode: ''
+        })
+      })
+  };
+
+  onChangeAccount = e => {
+    var data= e.target.value
+    // if(data.length <= 12){
+    //   data = data.toLowerCase().trim();
+    // }
+    this.setState({ accountSearch: data })
+  };
+ 
+  // mykey 账户切换 选项
+  handleChangeCheck = e =>{
+    this.setState({ checked: e.target.value, columnsData: [], columnsData: []})
+
+    if(e.target.value === 'keydata') {
+      this.setState({
+        columnsMykey: [{
+          title: this.state.formatMessage(
+            messages.FunctionSearchActionIndex,
+          ),
           dataIndex: 'index',
           key: 'index',
-          width: 50
+          width: 150
         }, {
-          title: this.state.formatMessage(messages.FunctionSearchActionBackupPeople ),
-          dataIndex: 'value',
-          key: 'value',
-          width: 350
-        }]})
-      }else if(e.target.value === 'subacct') {
-        this.setState({ columnsMykey: [{
-          title:  this.state.formatMessage(messages.FunctionSearchActionSubAccount ),
-          dataIndex: 'sub_account',
-          key: 'sub_account'
-        }, {
-          title: this.state.formatMessage(messages.FunctionSearchActionSubAdminKey ),
-          key: 'sub_admin_key',
+          title: this.state.formatMessage( messages.FunctionSearchActionKey),
+          key: 'keyData',
+          width: 300,
           render: (text, record)=>(
             <div>
-              <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.sub_admin_key.pubkey}</div>
-              <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_admin_key.status}</div>
-              <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_admin_key.nonce}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.keyData.pubkey}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.keyData.status}</div>
+              <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.keyData.nonce}</div>
             </div>
           )
+        }]
+      })
+    }else if(e.target.value === 'backupdata') {
+      this.setState({ columnsMykey: [{
+        title:  this.state.formatMessage(messages.FunctionSearchActionIndex ),
+        dataIndex: 'index',
+        key: 'index',
+        width: 50
+      }, {
+        title: this.state.formatMessage(messages.FunctionSearchActionBackupPeople ),
+        dataIndex: 'value',
+        key: 'value',
+        width: 350
+      }]})
+    }else if(e.target.value === 'subacct') {
+      this.setState({ columnsMykey: [{
+        title:  this.state.formatMessage(messages.FunctionSearchActionSubAccount ),
+        dataIndex: 'sub_account',
+        key: 'sub_account'
+      }, {
+        title: this.state.formatMessage(messages.FunctionSearchActionSubAdminKey ),
+        key: 'sub_admin_key',
+        render: (text, record)=>(
+          <div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )}:</span> {record.sub_admin_key.pubkey}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_admin_key.status}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_admin_key.nonce}</div>
+          </div>
+        )
+      }, {
+        title: this.state.formatMessage(messages.FunctionSearchActionSubExternalKey ),
+        key: 'sub_external_key',
+        render: (text, record)=> (
+          <div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )} :</span> {record.sub_external_key.pubkey}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_external_key.status}</div>
+            <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_external_key.nonce}</div>
+          </div>
+        )
+      }, {
+        title: this.state.formatMessage(messages.FunctionSearchActionWhiteList ),
+        dataIndex: 'whitelist',
+        key: 'whitelist',
+        render: whitelist => (
+          <span>
+            {whitelist.map(v => <span color="blue" key={v}>{v}</span>)}
+          </span>
+        )
+      }, {
+        title: this.state.formatMessage(messages.FunctionSearchActionExassetList ),
+        dataIndex: 'exasset_list',
+        key: 'exasset_list',
+        width: 200,
+        render: (exasset_list)=>(
+          <div>
+            {exasset_list.map((v, i)=>
+              <div key={i}>
+                <div><span>{this.state.formatMessage(messages.FunctionSearchActionQuantity )}:</span> {v.quantity}</div>
+                <div><span>{this.state.formatMessage(messages.FunctionSearchActionContract )}:</span> {v.contract}</div>
+              </div>)}
+          </div>
+        )
+      }
+      ]})
+    }else if(e.target.value === 'subassetsum') {
+      this.setState({
+        columnsMykey: [{
+          title:  this.state.formatMessage(messages.FunctionSearchActionIndex),
+          dataIndex: 'key',
+          key: 'key'
         }, {
-          title: this.state.formatMessage(messages.FunctionSearchActionSubExternalKey ),
-          key: 'sub_external_key',
-          render: (text, record)=> (
-            <div>
-              <div><span>{this.state.formatMessage(messages.FunctionSearchActionPubkey )} :</span> {record.sub_external_key.pubkey}</div>
-              <div><span>{this.state.formatMessage(messages.FunctionSearchActionStatus )}  :</span> {record.sub_external_key.status}</div>
-              <div><span>{this.state.formatMessage(messages.FunctionSearchActionNonce )}  :</span> {record.sub_external_key.nonce}</div>
-            </div>
-          )
-        }, {
-          title: this.state.formatMessage(messages.FunctionSearchActionWhiteList ),
-          dataIndex: 'whitelist',
-          key: 'whitelist',
-          render: whitelist => (
-            <span>
-              {whitelist.map(v => <span color="blue" key={v}>{v}</span>)}
-            </span>
-          )
+          title: this.state.formatMessage(messages.FunctionSearchActionMainAccount ),
+          dataIndex: 'main_account',
+          key: 'main_account'
         }, {
           title: this.state.formatMessage(messages.FunctionSearchActionExassetList ),
           dataIndex: 'exasset_list',
           key: 'exasset_list',
-          width: 200,
           render: (exasset_list)=>(
             <div>
-              {exasset_list.map((v, i)=>
+              {exasset_list.map((v, i) =>
                 <div key={i}>
                   <div><span>{this.state.formatMessage(messages.FunctionSearchActionQuantity )}:</span> {v.quantity}</div>
                   <div><span>{this.state.formatMessage(messages.FunctionSearchActionContract )}:</span> {v.contract}</div>
                 </div>)}
             </div>
           )
-        }
-        ]})
-      }else if(e.target.value === 'subassetsum') {
-        this.setState({
-          columnsMykey: [{
-            title:  this.state.formatMessage(messages.FunctionSearchActionIndex),
-            dataIndex: 'key',
-            key: 'key'
-          }, {
-            title: this.state.formatMessage(messages.FunctionSearchActionMainAccount ),
-            dataIndex: 'main_account',
-            key: 'main_account'
-          }, {
-            title: this.state.formatMessage(messages.FunctionSearchActionExassetList ),
-            dataIndex: 'exasset_list',
-            key: 'exasset_list',
-            render: (exasset_list)=>(
-              <div>
-                {exasset_list.map((v, i) =>
-                  <div key={i}>
-                    <div><span>{this.state.formatMessage(messages.FunctionSearchActionQuantity )}:</span> {v.quantity}</div>
-                    <div><span>{this.state.formatMessage(messages.FunctionSearchActionContract )}:</span> {v.contract}</div>
-                  </div>)}
-              </div>
-            )
-          }]})
-      }
-      // console.log(' this.state.columnsMykey== ', this.state.columnsMykey)
-      try{
-        this.onSearch({target: {value: e.target.value}})
-      }catch(err){
-        console.log('err === ',err)
-      }
+        }]})
     }
+    // console.log(' this.state.columnsMykey== ', this.state.columnsMykey)
+    try{
+      this.onSearch({target: {value: e.target.value}})
+    }catch(err){
+      console.log('err === ',err)
+    }
+  }
 
-    onSearch = (checked)=>{
-      // console.log('checked == ', checked)
-      var checkdata
-      try{
-        if(checked.target.value) {
-          checkdata = checked.target.value
-        }else{
-          checkdata = this.state.checked
-        }
-      }catch(err) {
-        console.log('err == ', err)
+  onSearch = (checked)=>{
+    // console.log('checked == ', checked)
+    var checkdata
+    try{
+      if(checked.target.value) {
+        checkdata = checked.target.value
+      }else{
         checkdata = this.state.checked
       }
-      // console.log('checkdata ===',checkdata)
-      const eos = getEos(this.props.SelectedNetWork)
+    }catch(err) {
+      console.log('err == ', err)
+      checkdata = this.state.checked
+    }
+    // console.log('checkdata ===',checkdata)
+    const eos = getEos(this.props.SelectedNetWork)
 
-      let data = {
-        'code': this.props.SelectedNetWork === 'kylin' ? config.networkCodeArr[0] : config.networkCodeArr[1],
-        'json': true,
-        'limit': this.state.limit,
-        'lower_bound': this.state.lowerBound,
-        'scope': this.state.scope || this.state.account,
-        'table': checkdata,
-        'upper_bound': this.state.upperBound
+    let data = {
+      'code': this.props.SelectedNetWork === 'kylin' ? config.networkCodeArr[0] : config.networkCodeArr[1],
+      'json': true,
+      'limit': this.state.limit,
+      'lower_bound': this.state.lowerBound,
+      'scope': this.state.scope || this.state.account,
+      'table': checkdata,
+      'upper_bound': this.state.upperBound
+    }
+    eos.getTableRows(data).then(v=>{
+      var dataNew = []
+      if(this.state.checked === 'keydata') {
+        v.rows.map((v, i)=>{
+          dataNew.push({
+            key: i,
+            index: i,
+            keyData: v.key
+          })
+        })
+      }else if(this.state.checked === 'backupdata') {
+        v.rows.map((v, i)=>{
+          dataNew.push({
+            key: i,
+            index: v.index,
+            value: v.value
+          })
+        })
+      }else if(this.state.checked === 'subacct') {
+        v.rows.map((v, i)=>{
+          dataNew.push({
+            key: i,
+            ...v
+          })
+        })
+      }else if(this.state.checked === 'subassetsum') {
+        v.rows.map((v, i)=>{
+          dataNew.push({
+            key: i,
+            ...v
+          })
+        })
       }
-      eos.getTableRows(data).then(v=>{
-        var dataNew = []
-        if(this.state.checked === 'keydata') {
-          v.rows.map((v, i)=>{
-            dataNew.push({
-              key: i,
-              index: i,
-              keyData: v.key
-            })
-          })
-        }else if(this.state.checked === 'backupdata') {
-          v.rows.map((v, i)=>{
-            dataNew.push({
-              key: i,
-              index: v.index,
-              value: v.value
-            })
-          })
-        }else if(this.state.checked === 'subacct') {
-          v.rows.map((v, i)=>{
-            dataNew.push({
-              key: i,
-              ...v
-            })
-          })
-        }else if(this.state.checked === 'subassetsum') {
-          v.rows.map((v, i)=>{
-            dataNew.push({
-              key: i,
-              ...v
-            })
-          })
-        }
-        // console.log(' this.state.columnsData== ', this.state.columnsData)
-        this.setState({columnsData: dataNew, mykeyVisvible: true})
-      }).catch(err=>{
-        this.setState({mykeyVisvible: false})
-        console.log('get MYKEY data failed', )
-      })
-    }
+      // console.log(' this.state.columnsData== ', this.state.columnsData)
+      this.setState({columnsData: dataNew, mykeyVisvible: true})
+    }).catch(err=>{
+      this.setState({mykeyVisvible: false})
+      console.log('get MYKEY data failed', )
+    })
+  }
 
+  changeLimit = e =>{
+    const { value } = e.target
+    this.setState({
+      limit: value
+    })
+  }
 
-    changeLimit = e =>{
-      const { value } = e.target
-      this.setState({
-        limit: value
-      })
-    }
+  changeScope = (e)=>{
+    const { value } = e.target
+    this.setState({
+      scope: value
+    })
+  }
 
-    changeScope = (e)=>{
-      const { value } = e.target
-      this.setState({
-        scope: value
-      })
-    }
+  changeLowerBound = (e)=>{
+    const { value } = e.target
+    this.setState({
+      lowerBound: value
+    })
+  }
 
-    changeLowerBound = (e)=>{
-      const { value } = e.target
-      this.setState({
-        lowerBound: value
-      })
-    }
+  changeUpperBound = (e)=>{
+    const { value } = e.target
+    this.setState({
+      upperBound: value
+    })
+  }
 
-    changeUpperBound = (e)=>{
-      const { value } = e.target
-      this.setState({
-        upperBound: value
-      })
-    }
+  // 历史账户点击
+  handleChangeAccountName = (e)=>{
+    this.setState({account: e , accountSearch:e});
+    this.handleSearch(e);
+  }
 
-    // 历史账户点击
-    handleChangeAccountName = (e)=>{
-      this.setState({account: e , accountSearch:e});
-      this.handleSearch(e);
-    }
+  handleChangeBosAccountName=(e)=>{
+
+  }
 
   render () {
     const FunctionSearchButton = this.state.formatMessage(
@@ -705,7 +749,7 @@ export class AccountSearchPage extends React.Component {
     const childrenWorbli = symbolListWorbli.map((item) => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
     ))
-
+    
     return (
       <LayoutContentBox>
         <styleComps.ConBox>
@@ -715,17 +759,41 @@ export class AccountSearchPage extends React.Component {
               enterButton={FunctionSearchButton}
               size="large"
               onChange={this.onChangeAccount}
-              value={this.state.accountSearch.trim().toLowerCase()}
+              value={this.state.accountSearch}
               onSearch={this.handleSearch}
             />
             <div>
               {this.state.AccountNameList.map((item,index) => (
                <span key={index} onClick={v=>this.handleChangeAccountName(item)}>
-                  <Tag  style={{marginTop: '5px'}}>{item}</Tag>
-               </span> 
+                  <Tag style={{marginTop: '5px'}}>{item}</Tag>
+               </span>
               ))}
             </div>
           </FormComp>
+          {this.state.pubkeyDataVisvible ? (
+            <div>
+              <div style={{padding: '10px'}}>
+                {this.state.mainAccountArr.length > 0 ? (
+                  <div>
+                    <span>主网账户组: </span>
+                    {this.state.mainAccountArr.map(item=>(
+                      <span key={item} onClick={v=>this.handleChangeAccountName(item)}><Tag>{item}</Tag></span>
+                    ))}
+                  </div>
+                ):null}
+              </div>
+              <div style={{padding: '10px'}}>
+                {this.state.bosAccountArr.length > 0 ? (
+                  <div>
+                    <span>BOS账户组: </span>
+                    {this.state.bosAccountArr.map(item=>(
+                      <span key={item} onClick={v=>this.handleChangeBosAccountName(item)}><Tag>{item}</Tag></span>
+                    ))}
+                  </div>
+                ):null}
+              </div>
+            </div>
+          ) : null}
           {this.state.info ? (
             <div>
               <div className="content">
