@@ -130,6 +130,23 @@ export function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
       registration.unregister();
-    });
+      console.log('注销成功') 
+    }).catch(err=>{
+      console.log('err ',err)
+    })
+   
+    navigator.serviceWorker.getRegistration().then((registration) => {
+      registration && registration.unregister().then((boolean) => {
+        boolean ? console.log('注销成功') : console.log('注销失败')
+      });
+    }).catch(err=>{
+      console.log('err ',err)
+    })
+    
+    caches.keys().then(keyList => {
+      return Promise.all(keyList.map(key => {
+        return caches.delete(key)
+      }))
+    })
   }
 }
