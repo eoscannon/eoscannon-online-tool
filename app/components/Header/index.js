@@ -413,8 +413,18 @@ class HeaderComp extends React.Component {
                  Worbli
                 </Link>
               </Menu.Item>
+              {/* <Menu.Item key="8">
+                <Link to="/infoInit" href="/infoInit">
+                  {initInfo}
+                </Link>
+              </Menu.Item> */}
+              <Menu.Item key="0">
+                <Link to="/sendMessage" href="/sendMessage">
+                  {sendMessage}
+                </Link>
+              </Menu.Item>
             </SubMenu>
-            <Menu.SubMenu
+            {/* <Menu.SubMenu
               key="2"
               title={
                 <span>
@@ -423,17 +433,7 @@ class HeaderComp extends React.Component {
                 </span>
               }
             >
-              <Menu.Item key="8">
-                <Link to="/infoInit" href="/infoInit">
-                  {initInfo}
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="0">
-                <Link to="/sendMessage" href="/sendMessage">
-                  {sendMessage}
-                </Link>
-              </Menu.Item>
-            </Menu.SubMenu>
+            </Menu.SubMenu> */}
             <Menu.SubMenu
               key="15"
               title={
