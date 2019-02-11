@@ -340,4 +340,8 @@ export default defineMessages({
     id: 'MykeyAccountComp MykeyAccountCompLimit',
     defaultMessage: '查询数量'
   },
+  HelpPage:{
+    id: 'header HelpPage',
+    defaultMessage: 'Help'
+  },
 })

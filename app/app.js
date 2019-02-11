@@ -77,7 +77,7 @@ const render = messages => {
         <Router history={history}>
           <Switch>
             <Header>
-              <Route exact path="/" component={DescribePage} />
+              <Route exact path="/" component={TransferPage} />
               <Route path="/infoInit" component={InfoInitPage} />
               <Route path="/sendMessage" component={SendMessagePage} />
               <Route path="/transfer" component={TransferPage} />

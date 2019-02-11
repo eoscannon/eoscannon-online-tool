@@ -326,5 +326,7 @@
   "MykeyAccountComp MykeyAccountCompScope":"Scope",
   "MykeyAccountComp MykeyAccountCompLowerBound":"LowerBound",
   "MykeyAccountComp MykeyAccountCompUpperBound":"UpperBound",
-  "MykeyAccountComp MykeyAccountCompLimit":"Limit"
+  "MykeyAccountComp MykeyAccountCompLimit":"Limit",
+
+  "header HelpPage":"Help"
 }

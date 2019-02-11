@@ -311,7 +311,9 @@
   "MykeyAccountComp MykeyAccountCompScope":"查询范围",
   "MykeyAccountComp MykeyAccountCompLowerBound":"下界",
   "MykeyAccountComp MykeyAccountCompUpperBound":"上界",
-  "MykeyAccountComp MykeyAccountCompLimit":"查询数量"
+  "MykeyAccountComp MykeyAccountCompLimit":"查询数量",
+
+  "header HelpPage":"帮助"
 
 
 }

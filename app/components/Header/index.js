@@ -40,15 +40,14 @@ class HeaderComp extends React.Component {
     super(props)
     this.state = {
       LogoName: true,
-      defaultSelectedKeys: '12',
+      defaultSelectedKeys: '3',
       collapsed: false,
-      openKeys: [],
+      openKeys: ['tradeManage'],
       rootSubmenuKeys: ['1', '2', '3', '4', '5'],
       testNetUrl: '',
       visible: false,
       mainNetwork:'main',
-          current: 'mail',
-
+      current: 'mail',
     }
   }
   /**
@@ -56,7 +55,7 @@ class HeaderComp extends React.Component {
    * */
   componentWillMount () {
     // getEosByScatter();
-    let defaultSelectedKeys = '12'
+    let defaultSelectedKeys = '3'
     switch (window.location.hash.substring(1)) {
       case '/iq':
         defaultSelectedKeys = '13'
@@ -110,7 +109,7 @@ class HeaderComp extends React.Component {
         defaultSelectedKeys = '17'
         break
       default:
-        defaultSelectedKeys = '12'
+        defaultSelectedKeys = '3'
     }
     this.setState({
       defaultSelectedKeys
@@ -220,13 +219,11 @@ class HeaderComp extends React.Component {
     )
   };
 
-    handleClick = (e) => {
-    console.log('click ', e);
+  handleClick = (e) => {
     this.setState({
       current: e.key,
     });
   }
-
 
   render () {
     const { formatMessage } = this.props.intl
@@ -257,6 +254,9 @@ class HeaderComp extends React.Component {
     const inputTestNet = formatMessage(utilsMsg.HeaderInputTestNet)
     const sure = formatMessage(utilsMsg.ScanCodeSendSure)
     const cancel = formatMessage(utilsMsg.ScanCodeSendCancel)
+    const HelpPage = formatMessage(utilsMsg.HelpPage)
+
+    
     const contentAndriod = (
       <div>
         <div>
@@ -316,12 +316,14 @@ class HeaderComp extends React.Component {
             defaultSelectedKeys={[this.state.defaultSelectedKeys]}
             openKeys={this.state.openKeys}
             onOpenChange={this.onOpenChange}
+            // defaultOpenKeys = {["tradeManage"]}
           >
             <Menu.Item key="9">
               <Link
                 href="/accountSearch"
                 to="/accountSearch"
                 innerRef={() => {}}
+                style={{ display:'flex',alignItems: 'center'}}
               >
                 <Icon type="user" />
                 <span>{accountSearch}</span>
@@ -337,8 +339,8 @@ class HeaderComp extends React.Component {
                 <span>扫码登录</span>
               </Link>
             </Menu.Item> */}
-            <Menu.SubMenu
-              key="1"
+            <SubMenu
+              key="tradeManage"
               title={
                 <span>
                   <Icon type="area-chart" />
@@ -411,8 +413,7 @@ class HeaderComp extends React.Component {
                  Worbli
                 </Link>
               </Menu.Item>
-
-            </Menu.SubMenu>
+            </SubMenu>
             <Menu.SubMenu
               key="2"
               title={
@@ -460,7 +461,19 @@ class HeaderComp extends React.Component {
                 </Popover>
               </Menu.Item>
             </Menu.SubMenu>
+            <Menu.Item key="12">
+              <Link
+                href="/dscribe"
+                to="/dscribe"
+                innerRef={() => {}}
+                style={{ display:'flex',alignItems: 'center'}}
+              >
+                <Icon type="notification" />
+                <span>{HelpPage} </span>
+              </Link>
+            </Menu.Item>
           </Menu>
+
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }}>
@@ -479,22 +492,22 @@ class HeaderComp extends React.Component {
              <span>一般操作请使用active key</span>
              */}
               {/* <Menu
-        onClick={this.handleClick}
-        selectedKeys={[this.state.current]}
-        mode="horizontal"
-      >
-   
-        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />Navigation Three - Submenu</span>}>
-          <MenuItemGroup title="Item 1">
-            <Menu.Item key="setting:1">Option 1</Menu.Item>
-            <Menu.Item key="setting:2">Option 2</Menu.Item>
-          </MenuItemGroup>
-          <MenuItemGroup title="Item 2">
-            <Menu.Item key="setting:3">Option 3</Menu.Item>
-            <Menu.Item key="setting:4">Option 4</Menu.Item>
-          </MenuItemGroup>
-        </SubMenu>
-      </Menu> */}
+                onClick={this.handleClick}
+                selectedKeys={[this.state.current]}
+                mode="horizontal"
+              >
+          
+                <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />Navigation Three - Submenu</span>}>
+                  <MenuItemGroup title="Item 1">
+                    <Menu.Item key="setting:1">Option 1</Menu.Item>
+                    <Menu.Item key="setting:2">Option 2</Menu.Item>
+                  </MenuItemGroup>
+                  <MenuItemGroup title="Item 2">
+                    <Menu.Item key="setting:3">Option 3</Menu.Item>
+                    <Menu.Item key="setting:4">Option 4</Menu.Item>
+                  </MenuItemGroup>
+                </SubMenu>
+              </Menu> */}
             <div
               className="userBox"
               style={{ float: 'right', display: 'flex', alignItems: 'center' }}
