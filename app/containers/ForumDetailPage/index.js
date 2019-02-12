@@ -11,6 +11,8 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { makeSelectNetwork } from '../LanguageProvider/selectors'
+import {markdown}  from "markdown"
+
 import {
   formItemLayout,
   getEos,
@@ -340,10 +342,10 @@ export class forumDetailPage extends React.Component {
       { label: LabelApprove, value: 1 },
       { label: LabelAgaist, value: 0 }
     ]
+  
 
     return (
       <LayoutContent>
-      
         <div>
           <Col span={12}>
             <Card title={ForumVoteFirst} bordered={false}>
@@ -441,7 +443,8 @@ export class forumDetailPage extends React.Component {
                   </div>
                   <div style={{fontSize: '16px', fontWeight: 'bold', padding: '8px 0'}}>{this.state.query.proposal.title || ''}</div>
                   <div style={{padding: '0px 0px 10px 0'}}>
-                    <pre style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word', wordBreak: 'break-all'}}>{(this.formatJson(this.state.query.proposal.proposal_json).content || '')}</pre>
+                    {/* <div id='markdown'>{markdown.toHTML(this.formatJson(this.props.location.query.item.proposal.proposal_json).content)}</div> */}
+                    <div  dangerouslySetInnerHTML={{__html: (markdown.toHTML(this.formatJson(this.state.query.proposal.proposal_json).content) || '')}}></div>
                   </div>
                   <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <span style={{color: '#8c98ba'}}>{ProposalListCreatedTime}:{this.getTime(this.state.query.proposal.created_at || '')}</span>
