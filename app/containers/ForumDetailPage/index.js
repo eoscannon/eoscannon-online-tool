@@ -443,8 +443,7 @@ export class forumDetailPage extends React.Component {
                   </div>
                   <div style={{fontSize: '16px', fontWeight: 'bold', padding: '8px 0'}}>{this.state.query.proposal.title || ''}</div>
                   <div style={{padding: '0px 0px 10px 0'}}>
-                    {/* <div id='markdown'>{markdown.toHTML(this.formatJson(this.props.location.query.item.proposal.proposal_json).content)}</div> */}
-                    <div  dangerouslySetInnerHTML={{__html: (markdown.toHTML(this.formatJson(this.state.query.proposal.proposal_json).content) || '')}}></div>
+                    <div dangerouslySetInnerHTML={{__html: (markdown.toHTML(this.formatJson(this.state.query.proposal.proposal_json).content) || '')}}></div>
                   </div>
                   <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <span style={{color: '#8c98ba'}}>{ProposalListCreatedTime}:{this.getTime(this.state.query.proposal.created_at || '')}</span>

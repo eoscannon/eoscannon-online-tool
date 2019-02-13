@@ -72,7 +72,6 @@ export class AccountSearchPage extends React.Component {
     }
   }
   componentWillReceiveProps (nextProps) {
-
     if (nextProps.match.params.account) {
       this.handleSearch(nextProps.match.params.account)
       this.setState({ account: nextProps.match.params.account })
@@ -83,7 +82,6 @@ export class AccountSearchPage extends React.Component {
       eos: eos,
       AccountNameList: AccountNameList
     })
-
   }
 
   componentDidMount () {
@@ -98,17 +96,16 @@ export class AccountSearchPage extends React.Component {
       })
     }
   
-    if(storage.getAccountName() ){
+    if(storage.getAccountName()){
         let AccountNameList  = storage.getAccountName() 
         this.setState({
           AccountNameList: AccountNameList
         })
+      }
     }
-   
-  }
 
   // 主程搜索数据
-  handleSearch = value => {
+  handleSearch = (value,key) => {
     // this.props.dispatch(push('/login'));
     if(value.length <= 12 ){
      value = value.toLowerCase().trim()
@@ -134,15 +131,21 @@ export class AccountSearchPage extends React.Component {
         symbolNet: 'EOS'
       })
     }
-    const eos = getEos( this.props.SelectedNetWork )
+    var netProxy
+    if(key){
+      netProxy = key
+    }else{
+      netProxy = this.props.SelectedNetWork
+    }
+    const eos = getEos( netProxy )
     let stake = 0
     let cpuBack
     let netWork
     let cpuScale
     let netScale
     // 判断是 搜索公钥
-    if(this.state.accountSearch.length > 20){
-      this.handlePubKey(eos)
+    if(value.length > 20){
+      this.handlePubKey(value)
       return;
     }
     eos
@@ -282,7 +285,6 @@ export class AccountSearchPage extends React.Component {
           })
           // 设置mykey data
         this.setState({scope: this.state.account ,loading :false})
-        
         try{
           let AccountList = storage.getAccountName() || []
           AccountList.push(this.state.accountSearch.trim())
@@ -303,18 +305,15 @@ export class AccountSearchPage extends React.Component {
       })
   };
   //按照公钥搜索信息
-  handlePubKey = () =>{
+  handlePubKey = (e) =>{
     let eosMain = getEos( 'main' )
-    eosMain.getKeyAccounts(this.state.accountSearch).then(res =>{
-      console.log('res ',res)
+    eosMain.getKeyAccounts( e).then(res =>{
       this.setState({mainAccountArr : res.account_names, pubkeyDataVisvible: true})
     }).catch(err=>{
       console.log('err = ',err)
     })
-
     let eosBos = getEos( 'bos' )
-    eosBos.getKeyAccounts(this.state.accountSearch).then(res =>{
-      console.log('res ',res)
+    eosBos.getKeyAccounts(e).then(res =>{
       this.setState({bosAccountArr : res.account_names,  pubkeyDataVisvible: true})
     }).catch(err=>{
       console.log('err = ',err)
@@ -323,7 +322,6 @@ export class AccountSearchPage extends React.Component {
       mykeyVisvible: false,
       loading :false
     })
-
   }
   //按照账号搜索信息
   handleAccountSearch = ()=>{
@@ -348,6 +346,7 @@ export class AccountSearchPage extends React.Component {
       return res;
     }
 
+    //router to transfer page 
   handleSendTransaction = value => {
     this.props.history.push({
       pathname: '/transfer',
@@ -386,6 +385,7 @@ export class AccountSearchPage extends React.Component {
       })
   };
 
+  //
   onChangeAccount = e => {
     var data= e.target.value
     // if(data.length <= 12){
@@ -610,13 +610,19 @@ export class AccountSearchPage extends React.Component {
   }
 
   // 历史账户点击
-  handleChangeAccountName = (e)=>{
+  handleChangeAccountName = (e,key)=>{
     this.setState({account: e , accountSearch:e});
-    this.handleSearch(e);
+    if(key==='main'){
+      this.props.onDispatchChangeNetworkReducer('main')
+    }
+    this.handleSearch(e,key);
   }
 
   handleChangeBosAccountName=(e)=>{
-
+    this.setState({account: e , accountSearch:e});
+    this.props.onDispatchChangeNetworkReducer('bos')
+    setTimeout(this.handleSearch(e,'bos'),1000)
+    
   }
 
   render () {
@@ -765,7 +771,11 @@ export class AccountSearchPage extends React.Component {
             <div>
               {this.state.AccountNameList.map((item,index) => (
                <span key={index} onClick={v=>this.handleChangeAccountName(item)}>
-                  <Tag style={{marginTop: '5px'}}>{item}</Tag>
+                 {item.length<=12?(
+                    <Tag style={{marginTop: '5px'}}>{item}</Tag>
+                 ):(
+                  <Tag style={{marginTop: '5px'}}>{item.substring(0,10)}<span>...</span></Tag>
+                 )}
                </span>
               ))}
             </div>
@@ -777,7 +787,7 @@ export class AccountSearchPage extends React.Component {
                   <div>
                     <span>主网账户组: </span>
                     {this.state.mainAccountArr.map(item=>(
-                      <span key={item} onClick={v=>this.handleChangeAccountName(item)}><Tag>{item}</Tag></span>
+                      <span key={item} onClick={v=>this.handleChangeAccountName(item,'main')}><Tag>{item}</Tag></span>
                     ))}
                   </div>
                 ):null}
@@ -965,7 +975,11 @@ AccountSearchPage.propTypes = {
 }
 // 在组件上挂载状态控制
 export function mapDispatchToProps (dispatch) {
-  return { dispatch }
+  return { 
+    dispatch ,
+    onDispatchChangeNetworkReducer: locale =>
+    dispatch({ type: 'app/Network/CHANGE_LOCALE', locale })
+  }
 }
 const mapStateToProps = createStructuredSelector({
   SelectedNetWork: makeSelectNetwork()

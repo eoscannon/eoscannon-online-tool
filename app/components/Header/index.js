@@ -10,9 +10,11 @@ import { Helmet } from 'react-helmet'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Layout, Select, Popover, Modal, Input, message } from 'antd'
+import { Layout, Select, Popover, Modal, Input, message, Form } from 'antd'
 import EOS from 'eosjs'
-
+import {
+  formItemLayout
+} from '../../utils/utils'
 import { Menu, Icon, Tooltip } from '../../utils/antdUtils'
 import utilsMsg from '../../utils/messages'
 import { storage } from '../../utils/storage'
@@ -34,6 +36,7 @@ const { Header, Sider, Content } = Layout
 const { Option } = Select
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+const FormItem = Form.Item
 
 class HeaderComp extends React.Component {
   constructor (props) {
@@ -49,6 +52,15 @@ class HeaderComp extends React.Component {
       mainNetwork:'main',
       current: 'mail',
     }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    let value =  this.props.form.getFieldsValue()
+    const {formItemNetWork} = value
+    if( formItemNetWork !== nextProps.netWork){
+      this.props.form.setFieldsValue({formItemNetWork : nextProps.netWork})
+    }
+
   }
   /**
    * 根据URL地址，重新设置默认菜单选项
@@ -226,6 +238,8 @@ class HeaderComp extends React.Component {
   }
 
   render () {
+    const { getFieldDecorator } = this.props.form
+    
     const { formatMessage } = this.props.intl
     const initInfo = formatMessage(utilsMsg.HeaderMenuInfoInit)
     const createAccount = formatMessage(utilsMsg.HeaderMenuCreateAccount)
@@ -512,19 +526,34 @@ class HeaderComp extends React.Component {
               className="userBox"
               style={{ float: 'right', display: 'flex', alignItems: 'center' }}
             >
-              <Select
-                className="netWork"
-                defaultValue={this.state.mainNetwork}
-                style={{ width: 110 }}
-                onChange={this.handleChange}
+            <Form>
+              <FormItem
+                {...formItemLayout}
               >
-                <Option value="main">{mainNet}</Option>
-                <Option value="test">{testNet}</Option>
-                <Option value="telos">TELOS</Option>
-                <Option value="kylin">KYLIN</Option>
-                <Option value="bos">BOS</Option>
-                <Option value="other">{otherTestNet}</Option>
-              </Select>
+              {getFieldDecorator('formItemNetWork', {
+                initialValue: this.state.mainNetwork,
+                rules: [
+                  {
+                    required: true,
+                  }
+                ]
+              })(
+                <Select
+                  className="netWork"
+                  style={{ width: 110 }}
+                  onChange={this.handleChange}
+                >
+                  <Option value="main">{mainNet}</Option>
+                  <Option value="test">{testNet}</Option>
+                  <Option value="telos">TELOS</Option>
+                  <Option value="kylin">KYLIN</Option>
+                  <Option value="bos">BOS</Option>
+                  <Option value="other">{otherTestNet}</Option>
+                </Select>
+              )}
+              </FormItem>
+            </Form>
+              
               <div
                 className="en"
                 aria-hidden="true"
@@ -556,6 +585,7 @@ class HeaderComp extends React.Component {
 }
 
 HeaderComp.propTypes = {
+  form: PropTypes.object,
   intl: PropTypes.object,
   locale: PropTypes.string,
   children: PropTypes.node,
@@ -565,6 +595,8 @@ HeaderComp.propTypes = {
 
 const HeaderCompIntl = injectIntl(HeaderComp)
 // 挂载中间件到组件；
+const HeaderCompForm = Form.create()(HeaderCompIntl)
+
 function mapDispatchToProps (dispatch) {
   return {
     dispatch,
@@ -583,4 +615,4 @@ const mapStateToProps = createStructuredSelector({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(HeaderCompIntl)
+)(HeaderCompForm)
