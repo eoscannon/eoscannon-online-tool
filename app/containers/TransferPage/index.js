@@ -168,6 +168,15 @@ export class TransferPage extends React.Component {
       GetTransactionButtonState:
         !!FromAccountName && !!ToAccountName && !!transferQuantity
     })
+    // let oldValue = this.props.form.getFieldsValue()
+    // console.log('transferQuantity =',transferQuantity)
+    // console.log('this.props.form.transferQuantity =',oldValue.transferQuantity )
+
+    // if(transferQuantity && oldValue.transferQuantity !== transferQuantity){
+    
+    //   let item = transferQuantity.replace(/\,/g, "");
+    //   // this.props.form.setFieldsValue({transferQuantity: item})
+    // }
   };
 
   toggle = () => {
@@ -230,6 +239,7 @@ export class TransferPage extends React.Component {
       message.warning(this.state.formatMessage(messages.SymbolAttentionInfo))
       return
     }
+ 
     // 判断是否为自定义symbol
     eos
       .getAbi(transferContractCustom.toLowerCase())
@@ -419,6 +429,9 @@ export class TransferPage extends React.Component {
     } = values
     let transferDigit = 4
     // let transferContract;
+    var itemQuantity = transferQuantity.replace(/,/g, "");
+    this.props.form.setFieldsValue({transferQuantity: itemQuantity})
+
     if (this.state.addSymbol) {
       this.handleCustomTransaction(eos)
       return
@@ -451,6 +464,7 @@ export class TransferPage extends React.Component {
       }
     }
 
+
     eos
       .transaction(
         {
@@ -467,7 +481,7 @@ export class TransferPage extends React.Component {
               data: {
                 from: FromAccountName,
                 to: newToAccountName,
-                quantity: `${Number(transferQuantity).toFixed(
+                quantity: `${Number(itemQuantity).toFixed(
                   Number(transferDigit),
                 )} ${newSymbol[0].toUpperCase()}`,
                 memo: transferMemo || ''
@@ -553,6 +567,8 @@ export class TransferPage extends React.Component {
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
+    const transfer = this.state.formatMessage(utilsMsg.HeaderMenuTransfer)
+
     const children = symbolList.map(item => (
       <Option key={item.symbol + ' (' + item.contract + ')'} label={item.contract}>{item.symbol} ({item.contract})</Option>
     ))
@@ -573,7 +589,7 @@ export class TransferPage extends React.Component {
       <LayoutContent>
         <Row gutter={16}>
           <Col span={12}>
-            <Card title={ProducersDealTranscation} bordered={false}>
+            <Card title={ProducersDealTranscation+"("+transfer+")"} bordered={false}>
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('FromAccountName', {
                   rules: [

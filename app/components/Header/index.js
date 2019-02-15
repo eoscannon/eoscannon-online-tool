@@ -343,6 +343,7 @@ class HeaderComp extends React.Component {
                 <span>{accountSearch}</span>
               </Link>
             </Menu.Item>
+           
             {/* <Menu.Item key="17">
               <Link
                 href="/scanLogin"
@@ -427,11 +428,11 @@ class HeaderComp extends React.Component {
                  Worbli
                 </Link>
               </Menu.Item>
-              {/* <Menu.Item key="8">
+              <Menu.Item key="8">
                 <Link to="/infoInit" href="/infoInit">
                   {initInfo}
                 </Link>
-              </Menu.Item> */}
+              </Menu.Item>
               <Menu.Item key="0">
                 <Link to="/sendMessage" href="/sendMessage">
                   {sendMessage}
@@ -526,9 +527,10 @@ class HeaderComp extends React.Component {
               className="userBox"
               style={{ float: 'right', display: 'flex', alignItems: 'center' }}
             >
-            <Form>
+            {/* <Form> */}
               <FormItem
                 {...formItemLayout}
+                style={{marginBottom:0,}}
               >
               {getFieldDecorator('formItemNetWork', {
                 initialValue: this.state.mainNetwork,
@@ -552,7 +554,7 @@ class HeaderComp extends React.Component {
                 </Select>
               )}
               </FormItem>
-            </Form>
+            {/* </Form> */}
               
               <div
                 className="en"
