@@ -42,7 +42,7 @@
   "Public TransactionTextAreaPlaceholder":
     "Wait for generating unsigned transaction",
   "Public QrCodeInitValue": "Welcome to use the EOS Cannon offline tool",
-  "Public FooterCompText": "Provided by EOSCannon ©2018",
+  "Public FooterCompText": "Provided by EOSCannon ©2018-2019",
   "BuyRamBytesPage SwitchCheckedName": "Buy",
   "BuyRamBytesPage SwitchUnCheckedName": "Sell",
   "BuyRamBytesPage PayerAccountNameLabel": "Payer",
@@ -63,7 +63,7 @@
   "CreateAccountPage OwnerKeyPlaceholder": "Owner Public Key",
   "CreateAccountPage ActiveKeyPlaceholder": "Active Public Key",
   "CreateAccountPage BytesHelp":
-    "At least 4KB RAM required, the minimum value is: 8192",
+    "At least 3KB RAM required, the minimum value is: 5120",
   "CreateAccountPage BytesPlaceholder": "RAM Purchase(in bytes)",
   "CreateAccountPage CPUStakeHelper": "CPU Stake(in EOS)",
   "CreateAccountPage NETStakeHelper": "NET Stake(in EOS)",
@@ -328,5 +328,7 @@
   "MykeyAccountComp MykeyAccountCompUpperBound":"UpperBound",
   "MykeyAccountComp MykeyAccountCompLimit":"Limit",
 
-  "header HelpPage":"Help"
+  "header HelpPage":"Help",
+  "AccountSearchPage FunctionSearchMainRelative":"Main network related account: ",
+  "AccountSearchPage FunctionSearchBosRelative":"BOS related account: "
 }

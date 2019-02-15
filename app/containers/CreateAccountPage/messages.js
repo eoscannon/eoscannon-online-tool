@@ -41,7 +41,7 @@ export default defineMessages({
   },
   BytesHelp: {
     id: 'CreateAccountPage BytesHelp',
-    defaultMessage: '注：内存Bytes数量至少为4kb，推荐数值为：8192'
+    defaultMessage: '注：内存Bytes数量至少为3kb，推荐数值为：5120'
   },
   BytesPlaceholder: {
     id: 'CreateAccountPage BytesPlaceholder',

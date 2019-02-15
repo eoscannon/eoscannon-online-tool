@@ -41,7 +41,7 @@
   "Public CopyTransactionButtonName": "复制报文",
   "Public TransactionTextAreaPlaceholder": "请复制生成的报文",
   "Public QrCodeInitValue": "欢迎使用EOS佳能工具",
-  "Public FooterCompText": "EOS佳能 荣誉出品 ©2018",
+  "Public FooterCompText": "EOS佳能 荣誉出品 ©2018-2019",
   "BuyRamBytesPage SwitchCheckedName": "购买",
   "BuyRamBytesPage SwitchUnCheckedName": "出售",
   "BuyRamBytesPage PayerAccountNameLabel": "支付账户",
@@ -62,7 +62,7 @@
     "注：新账号应为12位字符和数字，而且仅限小写字母a-z和数字1-5",
   "CreateAccountPage OwnerKeyPlaceholder": "新账号Active权限的公钥",
   "CreateAccountPage ActiveKeyPlaceholder": "新账号Owner权限的公钥",
-  "CreateAccountPage BytesHelp": "注：内存数量至少为4kb，推荐数值为：8192",
+  "CreateAccountPage BytesHelp": "注：内存数量至少为3kb，推荐数值为：5120",
   "CreateAccountPage BytesPlaceholder":
     "购买的内存数量，单位为byte，1kb=1024bytes",
   "CreateAccountPage StakeNetQuantityPlaceholder": "抵押的NET数量，单位为EOS",
@@ -313,7 +313,9 @@
   "MykeyAccountComp MykeyAccountCompUpperBound":"上界",
   "MykeyAccountComp MykeyAccountCompLimit":"查询数量",
 
-  "header HelpPage":"帮助"
+  "header HelpPage":"帮助",
+  "AccountSearchPage FunctionSearchMainRelative":"主网相关账号",
+  "AccountSearchPage FunctionSearchBosRelative":"BOS相关账号"
 
 
 }
