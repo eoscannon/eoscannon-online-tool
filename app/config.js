@@ -8,8 +8,8 @@ export default {
   testChainId:
     '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
 
-  testTelosHttpEndpoint: 'https://telos.eosphere.io',
-  testTelosEndpoint: 'telos.eosphere.io',
+  testTelosHttpEndpoint: 'https://telos.caleos.io',
+  testTelosEndpoint: 'telos.caleos.io',
   testTelosChainId:
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
 
