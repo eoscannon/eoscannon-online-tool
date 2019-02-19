@@ -61,14 +61,14 @@ export class AccountSearchPage extends React.Component {
       upperBound: '',
       scope: '',
       eos: {},
-      mykeyVisvible: false,
+      mykeyVisvible: false, // MyKey账号数据可见
       tableRows: [],
       AccountNameList : [],
       loading :false,
       mainAccountArr: [], // 公钥关联的主网账号
       bosAccountArr: [],  //  公钥关联的bos网账号
       pubkeyDataVisvible: false, // 公钥账号数据可见
-
+      
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -77,6 +77,7 @@ export class AccountSearchPage extends React.Component {
       this.setState({ account: nextProps.match.params.account })
     }
     let AccountNameList  = storage.getAccountName() || []
+    AccountNameList = this.splitLocalAccount(AccountNameList,nextProps.SelectedNetWork)
     const eos = getEos(this.props.SelectedNetWork)
     this.setState({
       eos: eos,
@@ -98,6 +99,7 @@ export class AccountSearchPage extends React.Component {
   
     if(storage.getAccountName()){
         let AccountNameList  = storage.getAccountName() 
+        AccountNameList = this.splitLocalAccount(AccountNameList,this.props.SelectedNetWork)
         this.setState({
           AccountNameList: AccountNameList
         })
@@ -287,7 +289,7 @@ export class AccountSearchPage extends React.Component {
         this.setState({scope: this.state.account ,loading :false})
         try{
           let AccountList = storage.getAccountName() || []
-          AccountList.push(this.state.accountSearch.trim())
+          AccountList.push(this.props.SelectedNetWork + ':' +this.state.accountSearch.trim())
           let uniqueList = this.uniqueArr(AccountList)
           storage.setAccountName(uniqueList)
           this.handleChangeCheck({target: {value: 'keydata'}})
@@ -327,8 +329,21 @@ export class AccountSearchPage extends React.Component {
   handleAccountSearch = ()=>{
 
   }
+  // 根据网络分离本地记录的账号
+  splitLocalAccount = (namelist, network) =>{
+    var listArr = [],
+    reg = new RegExp(network),
+    regTest = new RegExp(':')
 
-    // 简单数组去重
+    namelist.map(item=>{
+      if(regTest.test(item) && reg.test(item.split(':')[0])){
+        listArr.push(item.split(':')[1])
+      }
+    })
+    return listArr
+  }
+
+  // 简单数组去重
   uniqueArr= (array) => {
       // res用来存储结果
       var res = [];
