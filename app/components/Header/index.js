@@ -23,9 +23,7 @@ import eosCannonLogo from '../../images/eosLogo.png'
 import eosCannonLogoBig from '../../images/eos_cannon_logo_opacity4.png'
 import downloadAndroid from './1.1.3.png'
 import downloadIos from './ios.png'
-// import {
-//  getEosByScatter,
-// } from '../../utils/utils';
+import config from '../../config';
 import {
   makeSelectLocale,
   makeSelectNetwork
@@ -153,17 +151,18 @@ class HeaderComp extends React.Component {
   };
 
   handleChange = value => {
-    if (value === 'other') {
+    let reg = new RegExp('https')
+    if (value === 'other' || reg.test(this.props.SelectedNetWork)) {
       this.setState({
         visible: true
       })
       storage.setBaseSymbol('EOS')
-    }else if(value === 'test') {
-      storage.setBaseSymbol('WBI')
-    }else if(value === 'telos') {
-      storage.setBaseSymbol('TLOS')
-    }else if(value === 'bos') {
-      storage.setBaseSymbol('BOS')
+    }else{
+      for(let i=0 ;i<config.netWorkConfig.length;i++){
+        if(value === config.netWorkConfig[i].networkName){
+          storage.setBaseSymbol(config.netWorkConfig[i].BaseSymbol)
+        }
+      }
     }
     storage.setNetwork(value)
     this.props.onDispatchChangeNetworkReducer(value)
@@ -198,7 +197,6 @@ class HeaderComp extends React.Component {
       storage.setChainId(info.chain_id)
     })
     storage.setNetwork(value)
-    console.log('value = ',value)
     this.setState({
       visible: false
     })
@@ -546,7 +544,7 @@ class HeaderComp extends React.Component {
                   onChange={this.handleChange}
                 >
                   <Option value="main">{mainNet}</Option>
-                  <Option value="test">{testNet}</Option>
+                  <Option value="worbli">{testNet}</Option>
                   <Option value="telos">TELOS</Option>
                   <Option value="kylin">KYLIN</Option>
                   <Option value="bos">BOS</Option>

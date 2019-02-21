@@ -20,6 +20,7 @@ import messages from './messages'
 import config from './../../config'
 import MykeyAccountComp from '../../components/MykeyAccountComp';
 import { storage } from '../../utils/storage';
+import { type } from 'os';
 
 const { Search } = Input
 const { Option } = Select
@@ -68,7 +69,7 @@ export class AccountSearchPage extends React.Component {
       mainAccountArr: [], // 公钥关联的主网账号
       bosAccountArr: [],  //  公钥关联的bos网账号
       pubkeyDataVisvible: false, // 公钥账号数据可见
-      
+
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -78,7 +79,7 @@ export class AccountSearchPage extends React.Component {
     }
     let AccountNameList  = storage.getAccountName() || []
     AccountNameList = this.splitLocalAccount(AccountNameList,nextProps.SelectedNetWork)
-    const eos = getEos(this.props.SelectedNetWork)
+    const eos = getEos(nextProps.SelectedNetWork)
     this.setState({
       eos: eos,
       AccountNameList: AccountNameList
@@ -119,22 +120,23 @@ export class AccountSearchPage extends React.Component {
       networkStake: 0,
       loading: true,
       info: ''
-    })
-    if(this.props.SelectedNetWork === 'test') {
-      this.setState({
-        symbolNet: 'WBI'
-      })
-    }else if(this.props.SelectedNetWork === 'telos'){
-      this.setState({
-        symbolNet: 'TLOS'
-      })
-    }else{
+    })   
+    for(let i; i< config.netWorkConfig.length; i++){
+      if(this.props.SelectedNetWork === config.netWorkConfig[i].networkName && config.netWorkConfig[i].chainId){
+        this.setState({
+          symbolNet: config.netWorkConfig[i].BaseSymbol
+        })
+      }
+    }
+    let reg = new RegExp('https')
+    if(reg.test(this.props.SelectedNetWork) || type ==='other'){
       this.setState({
         symbolNet: 'EOS'
       })
     }
+
     var netProxy
-    if(key){
+    if(typeof(key) === 'string'){
       netProxy = key
     }else{
       netProxy = this.props.SelectedNetWork

@@ -24,41 +24,6 @@ const voteNodes = []
 producers.forEach(item => {
   voteNodes.push(item.owner)
 })
-
-const getEosMain = () =>
-  EOS({
-    httpEndpoint: config.mainHttpEndpoint,
-    chainId: config.mainChainId,
-    expireInSeconds: 60 * 60
-  })
-
-const getEosTest = () =>
-  EOS({
-    httpEndpoint: config.testHttpEndpoint,
-    chainId: config.testChainId,
-    expireInSeconds: 60 * 60
-  })
-
-const getEosTelosTest = () =>
-  EOS({
-    httpEndpoint: config.testTelosHttpEndpoint,
-    chainId: config.testTelosChainId,
-    expireInSeconds: 60 * 60
-  })
-const getEosBOSTest = () =>
-  EOS({
-    httpEndpoint: config.testBosHttpEndpoint,
-    chainId: config.testBosChainId,
-    expireInSeconds: 60 * 60
-  })
-  
-const getEosKylinTest = () =>
-  EOS({
-    httpEndpoint: config.testKylinHttpEndpoint,
-    chainId: config.testKylinChainId,
-    expireInSeconds: 60 * 60
-  })
-
 const getEosOtherTest = () =>
   EOS({
     httpEndpoint: storage.getNetwork(),
@@ -66,23 +31,24 @@ const getEosOtherTest = () =>
     expireInSeconds: 60 * 60
   })
 
+const getEosNetwork = (HttpEndpoint,eoschainId) =>
+  EOS({
+    httpEndpoint: HttpEndpoint,
+    chainId: eoschainId,
+    expireInSeconds: 60 * 60
+  })
+
 const getEos = type => {
-  switch (type) {
-    case 'main':
-      return getEosMain()
-    case 'test':
-      return getEosTest()
-    case 'telos':
-      return getEosTelosTest()
-    case 'bos':
-      return getEosBOSTest()
-    case 'kylin':
-      return getEosKylinTest()
-    case 'other':
-      return getEosOtherTest()
-    default:
-      return getEosMain()
+  for(let i=0; i<config.netWorkConfig.length; i++){
+    if(config.netWorkConfig[i].networkName === type){
+      return getEosNetwork(config.netWorkConfig[i].Endpoint, config.netWorkConfig[i].chainId)
+    }
   }
+  let reg = new RegExp('https')
+  if(reg.test(type) || type ==='other'){
+    return getEosOtherTest()
+  }
+
 }
 
 const getEosByScatter = (type, callback) => {
@@ -313,7 +279,7 @@ const symbolList = [
   { symbol: 'EOS', contract: 'eosio.token', digit: 4 },
   { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
   { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 4 },
-  { symbol: 'WAL', contract: 'whaleextoken', digit: 4 },
+  { symbol: 'WAL', contract: 'whaleextoken', digit: 3 },
 
   { symbol: 'IQ', contract: 'everipediaiq', digit: 3 },
 
@@ -547,14 +513,6 @@ const airgrabList = [
     method: 'signup',
     url: 'https://eostoolkit.io'
   },
-  /**  {
-    key: '3',
-    symbol: 'RIDL',
-    account: 'ridlridlcoin',
-    method: 'claim',
-    url: 'https://ridl.get-scatter.com'
-  },
-**/
   {
     key: '4',
     symbol: 'TRYBE',
@@ -575,8 +533,6 @@ export {
   voteNodes,
   formItemLayout,
   getEos,
-  getEosTest,
-  getEosMain,
   getEosByScatter,
   getEosInfoDetail,
   openTransactionSuccessNotification,
