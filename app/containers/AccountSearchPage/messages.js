@@ -221,4 +221,12 @@ export default defineMessages({
     id: 'AccountSearchPage FunctionSearchActionMainAccount',
     defaultMessage: '主账号'
   },
+  FunctionSearchMainRelative:{
+    id: 'AccountSearchPage FunctionSearchMainRelative',
+    defaultMessage: '主网相关账号'
+  },
+  FunctionSearchBosRelative:{
+    id: 'AccountSearchPage FunctionSearchBosRelative',
+    defaultMessage: 'BOS相关账号'
+  },
 })

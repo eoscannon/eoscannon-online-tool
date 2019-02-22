@@ -55,7 +55,7 @@ const getEosByScatter = (type, callback) => {
   switch (type) {
     case 'main':
       return getEosMainScatter(callback)
-    case 'test':
+    case 'worbli':
       return getEosTestScatter(callback)
     case 'other':
       return getEosOtherTestScatter(callback)

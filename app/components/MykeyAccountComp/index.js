@@ -42,20 +42,16 @@ export default class MykeyAccountComp extends Component {
     if (
       nextProps.eos 
     ) {
-      // console.log('next: ', nextProps)
       this.setState({ 
         eos: nextProps.eos ,
         mykeyVisvible: nextProps.mykeyVisvible, 
         columnsData: nextProps.columnsData,
         columnsMykey: nextProps.columnsMykey
       })
-
     }
   }
   componentDidMount () {
   }
-
-
 
   render () {
     const { getFieldDecorator } = this.props.form
@@ -73,9 +69,9 @@ export default class MykeyAccountComp extends Component {
     )
     return (
       <div>
-       {this.state.mykeyVisvible ? (
+       {/* {this.state.mykeyVisvible ? ( */}
           <div >
-            <Card title='MYKEY' bordered={true} type="inner" style={{ marginTop: '21px'}}>
+            {/* <Card title='MYKEY' bordered={true} type="inner" style={{ marginTop: '21px'}}> */}
               <div>
                 <Radio.Group defaultValue="keydata" buttonStyle="solid" style={{padding: '10px 0'}} onChange={this.props.handleChangeCheck}>
                   <Radio.Button value="keydata" style={{margin: '0 10px',border: '1px solid #1890ff',borderRadius: '3px',left: '0px'}}>keydata</Radio.Button>
@@ -104,9 +100,9 @@ export default class MykeyAccountComp extends Component {
                 <Button type="primary"  onClick={this.props.onSearch}>{this.props.FunctionSearchButton}</Button>
               </div>
               <Table columns={this.state.columnsMykey} bordered={false} dataSource={this.state.columnsData} scroll={{ x: 1500 | true }} pagination={{ pageSize: 50 }}/>
-            </Card>
+            {/* </Card> */}
           </div>
-        ) : null}
+        {/* ) : null} */}
       </div>
     )
   }

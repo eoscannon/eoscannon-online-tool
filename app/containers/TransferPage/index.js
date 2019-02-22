@@ -677,7 +677,7 @@ export class TransferPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              {this.props.SelectedNetWork === 'test' ? (
+              {this.props.SelectedNetWork === 'worbli' ? (
                 <FormItem {...formItemLayout} style={{ margin: 0 }}>
                   <div
                     style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}

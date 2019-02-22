@@ -7,7 +7,14 @@ export default {
     BaseSymbol: 'EOS',
     Endpoint:'https://mainnet.eoscannon.io',
     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-  },{
+  },
+  {
+    networkName:'eosxmaiApi',
+    BaseSymbol: 'EOS',
+    Endpoint:'https://history.cryptolions.io',
+    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+  },
+  {
     networkName:'worbli',
     BaseSymbol: 'WBI',
     Endpoint:'https://worbli.eoscannon.io',
