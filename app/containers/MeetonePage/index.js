@@ -32,6 +32,7 @@ export class MeetonePage extends React.Component {
       eos: null,
       formatMessage: this.props.intl.formatMessage,
       GetTransactionButtonState: false, // 获取报文按钮可点击状态
+      isHiddenGetTransactionButton: true, // 获取报文按钮可点击状态
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
       scatterStatus: false,
@@ -64,10 +65,6 @@ export class MeetonePage extends React.Component {
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
   handleGetTransaction = record => {
-    // if (!this.state.GetTransactionButtonState) {
-    //   return
-    // }
-    const values = this.props.form.getFieldsValue()
     const eos = getEos('meetone')
     eos.getAbi('airgrab.m').then(res => {
       eos.fc.abiCache.abi(res.account_name, res.abi)
@@ -79,7 +76,6 @@ export class MeetonePage extends React.Component {
       symbol: `4,MEETONE`,
       ram_payer: record
     }
-    console.log('data', data)
     eos
       .transaction(
         {
@@ -169,16 +165,9 @@ export class MeetonePage extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
-              <FormItem>
-                <Alert
-                  message={AirGrabAlertMessage}
-                  description=''
-                  type="info"
-                />
-              </FormItem>
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('AccountName', {
-                  rules: [{ 
+                  rules: [{
                     required: true,
                      message: OwnerPlaceholder,
                      validator: this.checkAccountName
@@ -209,6 +198,7 @@ export class MeetonePage extends React.Component {
                 formatMessage={this.state.formatMessage}
                 GetTransactionButtonClick={this.handleGetTransaction}
                 GetTransactionButtonState={this.state.GetTransactionButtonState}
+                isHiddenGetTransactionButton={this.state.isHiddenGetTransactionButton}
                 QrCodeValue={this.state.QrCodeValue}
                 SelectedNetWork={this.props.SelectedNetWork}
                 transaction={this.state.transaction}

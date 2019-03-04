@@ -114,7 +114,6 @@ export default class DealGetQrcode extends Component {
         chainId = config.netWorkConfig[i].chainId
       }
     }
-    console.log('this.props.SelectedNetWork dealgetqrcode,',this.props.SelectedNetWork )
     let reg = new RegExp('https')
     if(reg.test(this.props.SelectedNetWork) || this.props.SelectedNetWork ==='other'){
       chainId = storage.getChainId()
