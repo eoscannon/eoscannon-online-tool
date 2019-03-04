@@ -24,6 +24,7 @@ import utilsMsg from '../../utils/messages'
 const FormItem = Form.Item
 const Option = Select.Option
 const Search = Input.Search;
+const { CheckableTag } = Tag;
 
 export class MeetonePage extends React.Component {
   constructor (props) {
@@ -38,7 +39,9 @@ export class MeetonePage extends React.Component {
       scatterStatus: false,
       GetTransactionButtonScatterState: true,
       columnsData: [],
-      keyAccounts: []
+      keyAccounts: [],
+      checked : false,
+      selectedTags: []
     }
   }
   /**
@@ -130,18 +133,27 @@ export class MeetonePage extends React.Component {
     })
   }
 
-  chioceKeyAccount=(value)=>{
-
-  }
-
   checkAccountName = (rule, value, callback) => {
     value = value.toLowerCase().trim()
     this.props.form.setFieldsValue({AccountName : value})
     callback();
     return
   }
+  handleChange(tag, checked) {
+    const { selectedTags } = this.state;
+    const nextSelectedTags = checked
+      ? [...selectedTags, tag]
+      : selectedTags.filter(t => t !== tag);
+    this.handleGetTransaction(tag)
+    this.setState({ selectedTags: nextSelectedTags });
+  }
+
+
+
 
   render () {
+    const { selectedTags } = this.state;
+
     const { getFieldDecorator } = this.props.form
     const AirGrabAlertMessage = this.state.formatMessage(
       messages.AirGrabAlertMessage,
@@ -183,10 +195,16 @@ export class MeetonePage extends React.Component {
               <div style={{marginBottom: '1rem'}}>
               {this.state.keyAccounts.length>0?(
                <div>
-                  {this.state.keyAccounts.map(item=>(
-                  <span key={item} onClick={v=>this.handleGetTransaction(item)}>
-                    <Tag>{item}</Tag> 
-                  </span>
+                  {this.state.keyAccounts.map(tag=>(
+                   <CheckableTag
+                   style={{border: '1px solid #1890ff'}}
+                   key={tag}
+                   checked={selectedTags.indexOf(tag) > -1}
+                   onChange={checked => this.handleChange(tag, checked)}
+                   onClick={v=>this.handleGetTransaction(tag)}
+                 >
+                   {tag}
+                 </CheckableTag>
                 ))}
                </div>
               ):null}
