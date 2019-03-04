@@ -43,6 +43,7 @@ import ForumVotePage from 'containers/ForumVotePage/Loadable'
 import WorbliPage from 'containers/WorbliPage/Loadable'
 import ScanLoginPage from 'containers/ScanLoginPage/Loadable'
 import ForumDetailPage from 'containers/ForumDetailPage/Loadable'
+import MeetonePage from 'containers/MeetonePage/Loadable'
 
 // import LinkAuthPage from 'containers/LinkAuthPage/Loadable'
 import Header from 'components/Header'
@@ -106,6 +107,8 @@ const render = messages => {
 
               <Route path="/scanLogin" component={ScanLoginPage} />
               <Route path="/iq" component={IQPage} />
+              <Route path="/meetone" component={MeetonePage} />
+
             </Header>
           </Switch>
         </Router>

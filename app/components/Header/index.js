@@ -120,6 +120,9 @@ class HeaderComp extends React.Component {
       case '/scanLogin':
         defaultSelectedKeys = '17'
         break
+      case '/meetone':
+        defaultSelectedKeys = '21'
+        break
       default:
         defaultSelectedKeys = '3'
     }
@@ -436,6 +439,11 @@ class HeaderComp extends React.Component {
               <Menu.Item key="0">
                 <Link to="/sendMessage" href="/sendMessage">
                   {sendMessage}
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="21">
+                <Link to="/meetone" href="/meetone">
+                  Meetone
                 </Link>
               </Menu.Item>
             </SubMenu>
