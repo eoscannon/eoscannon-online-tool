@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { makeSelectNetwork } from '../../containers/LanguageProvider/selectors'
 import styleComps from './styles'
+import axios from 'axios'
 
 // import { push } from 'react-router-redux'
 import { getEos, symbolList, symbolListWorbli } from '../../utils/utils'
@@ -20,6 +21,7 @@ import messages from './messages'
 import config from './../../config'
 import MykeyAccountComp from '../../components/MykeyAccountComp';
 import { storage } from '../../utils/storage';
+import { type } from 'os';
 
 const { Search } = Input
 const { Option } = Select
@@ -61,12 +63,14 @@ export class AccountSearchPage extends React.Component {
       upperBound: '',
       scope: '',
       eos: {},
-      mykeyVisvible: false,
+      mykeyVisvible: false, // MyKey账号数据可见
       tableRows: [],
       AccountNameList : [],
       loading :false,
       mainAccountArr: [], // 公钥关联的主网账号
       bosAccountArr: [],  //  公钥关联的bos网账号
+      telosAccountArr: [],
+      WorbliAccountArr:[],
       pubkeyDataVisvible: false, // 公钥账号数据可见
 
     }
@@ -77,7 +81,8 @@ export class AccountSearchPage extends React.Component {
       this.setState({ account: nextProps.match.params.account })
     }
     let AccountNameList  = storage.getAccountName() || []
-    const eos = getEos(this.props.SelectedNetWork)
+    AccountNameList = this.splitLocalAccount(AccountNameList,nextProps.SelectedNetWork)
+    const eos = getEos(nextProps.SelectedNetWork)
     this.setState({
       eos: eos,
       AccountNameList: AccountNameList
@@ -90,7 +95,7 @@ export class AccountSearchPage extends React.Component {
     if (this.props.match.params.account) {
       this.handleSearch(this.props.match.params.account)
     }
-    if(this.props.SelectedNetWork === 'test') {
+    if(this.props.SelectedNetWork === 'worbli') {
       this.setState({
         symbolNet: 'WBI'
       })
@@ -98,11 +103,26 @@ export class AccountSearchPage extends React.Component {
   
     if(storage.getAccountName()){
         let AccountNameList  = storage.getAccountName() 
+        AccountNameList = this.splitLocalAccount(AccountNameList,this.props.SelectedNetWork)
         this.setState({
           AccountNameList: AccountNameList
         })
       }
     }
+
+  searchBosAccountName = (value)=>{
+    var instance = axios.create({
+      timeout: 1000,
+      headers: {'X-Custom-Header': 'foobar','Access-Control-Allow-Origin': '*'}
+    });
+    instance.get('https://api.boslaoge.me/'+value ,
+      // headers: {'X-Custom-Header': 'foobar'}
+    ).then((data)=>{
+      console.log('data = ',data)
+    }).catch(err=>{
+      console.log('err',err)
+    })
+  }
 
   // 主程搜索数据
   handleSearch = (value,key) => {
@@ -117,26 +137,32 @@ export class AccountSearchPage extends React.Component {
       networkStake: 0,
       loading: true,
       info: ''
-    })
-    if(this.props.SelectedNetWork === 'test') {
-      this.setState({
-        symbolNet: 'WBI'
-      })
-    }else if(this.props.SelectedNetWork === 'telos'){
-      this.setState({
-        symbolNet: 'TLOS'
-      })
-    }else{
+    })   
+    for(let i=0; i< config.netWorkConfig.length; i++){
+      if(this.props.SelectedNetWork === config.netWorkConfig[i].networkName && config.netWorkConfig[i].chainId){
+        this.setState({
+          symbolNet: config.netWorkConfig[i].BaseSymbol
+        })
+      }
+    }
+    let reg = new RegExp('https')
+    if(reg.test(this.props.SelectedNetWork) || type ==='other'){
       this.setState({
         symbolNet: 'EOS'
       })
     }
+
     var netProxy
-    if(key){
+    if(typeof(key) === 'string'){
       netProxy = key
     }else{
       netProxy = this.props.SelectedNetWork
     }
+
+    //if account is in eos main net ,then need search bos account
+    // if(netProxy === 'main'){
+    //   this.searchBosAccountName(value)
+    // }
     const eos = getEos( netProxy )
     let stake = 0
     let cpuBack
@@ -260,7 +286,6 @@ export class AccountSearchPage extends React.Component {
               object.address = info.permissions[i].required_auth.keys[0].key
               this.state.powerAddress.push(object)
             }
-            // console.log('powerAddress===', this.state.powerAddress);
           }
         } catch (err) {
           console.log('err==', err)
@@ -286,10 +311,7 @@ export class AccountSearchPage extends React.Component {
           // 设置mykey data
         this.setState({scope: this.state.account ,loading :false})
         try{
-          let AccountList = storage.getAccountName() || []
-          AccountList.push(this.state.accountSearch.trim())
-          let uniqueList = this.uniqueArr(AccountList)
-          storage.setAccountName(uniqueList)
+          this.storageItemToAccountName()
           this.handleChangeCheck({target: {value: 'keydata'}})
         } catch(err) {
           console.log('Get MYKEY Data failed ')
@@ -304,14 +326,39 @@ export class AccountSearchPage extends React.Component {
         })
       })
   };
+  
+  // new account name storage to local when search success
+  storageItemToAccountName = ()=>{
+    let AccountList = storage.getAccountName() || []
+    AccountList.push(this.props.SelectedNetWork + ':' +this.state.accountSearch.trim())
+    let uniqueList = this.uniqueArr(AccountList)
+    storage.setAccountName(uniqueList)
+  }
   //按照公钥搜索信息
   handlePubKey = (e) =>{
-    let eosMain = getEos( 'main' )
+    let eosMain = getEos( 'eosxmaiApi' )
     eosMain.getKeyAccounts( e).then(res =>{
       this.setState({mainAccountArr : res.account_names, pubkeyDataVisvible: true})
+      this.storageItemToAccountName()
+      
     }).catch(err=>{
       console.log('err = ',err)
     })
+
+    let eosTelos = getEos( 'telos' )
+    eosTelos.getKeyAccounts( e).then(res =>{
+      this.setState({telosAccountArr : res.account_names, pubkeyDataVisvible: true})
+    }).catch(err=>{
+      console.log('err = ',err)
+    })
+
+    let eosWorbli = getEos('worbli')
+    eosWorbli.getKeyAccounts(e).then(res => {
+      this.setState({WorbliAccountArr : res.account_names, pubkeyDataVisvible: true})
+    }).catch(err=>{
+      console.log('err = ',err)
+    })
+
     let eosBos = getEos( 'bos' )
     eosBos.getKeyAccounts(e).then(res =>{
       this.setState({bosAccountArr : res.account_names,  pubkeyDataVisvible: true})
@@ -327,8 +374,21 @@ export class AccountSearchPage extends React.Component {
   handleAccountSearch = ()=>{
 
   }
+  // 根据网络分离本地记录的账号
+  splitLocalAccount = (namelist, network) =>{
+    var listArr = [],
+    reg = new RegExp(network),
+    regTest = new RegExp(':')
 
-    // 简单数组去重
+    namelist.map(item=>{
+      if(regTest.test(item) && reg.test(item.split(':')[0])){
+        listArr.push(item.split(':')[1])
+      }
+    })
+    return listArr
+  }
+
+  // 简单数组去重
   uniqueArr= (array) => {
       // res用来存储结果
       var res = [];
@@ -696,7 +756,12 @@ export class AccountSearchPage extends React.Component {
     const FunctionSearchActionTransfer = this.state.formatMessage(
       messages.FunctionSearchActionTransfer,
     )
-
+    const FunctionSearchBosRelative = this.state.formatMessage(
+      messages.FunctionSearchBosRelative,
+    ) 
+    const FunctionSearchMainRelative = this.state.formatMessage(
+      messages.FunctionSearchMainRelative,
+    )
     const columnsBlance = [
       {
         title: FunctionSearchAccountTableBalance,
@@ -785,7 +850,7 @@ export class AccountSearchPage extends React.Component {
               <div style={{padding: '10px'}}>
                 {this.state.mainAccountArr.length > 0 ? (
                   <div>
-                    <span>主网账户组: </span>
+                    <span>{FunctionSearchMainRelative} </span>
                     {this.state.mainAccountArr.map(item=>(
                       <span key={item} onClick={v=>this.handleChangeAccountName(item,'main')}><Tag>{item}</Tag></span>
                     ))}
@@ -795,9 +860,29 @@ export class AccountSearchPage extends React.Component {
               <div style={{padding: '10px'}}>
                 {this.state.bosAccountArr.length > 0 ? (
                   <div>
-                    <span>BOS账户组: </span>
+                    <span>{FunctionSearchBosRelative} </span>
                     {this.state.bosAccountArr.map(item=>(
                       <span key={item} onClick={v=>this.handleChangeBosAccountName(item)}><Tag>{item}</Tag></span>
+                    ))}
+                  </div>
+                ):null}
+              </div>
+              <div style={{padding: '10px'}}>
+                {this.state.telosAccountArr.length > 0 ? (
+                  <div>
+                    <span>Telos相关账号 </span>
+                    {this.state.telosAccountArr.map(item=>(
+                      <span key={item} onClick={v=>this.handleChangeAccountName(item,'main')}><Tag>{item}</Tag></span>
+                    ))}
+                  </div>
+                ):null}
+              </div>
+              <div style={{padding: '10px'}}>
+                {this.state.WorbliAccountArr.length > 0 ? (
+                  <div>
+                    <span>Worbli相关账号 </span>
+                    {this.state.WorbliAccountArr.map(item=>(
+                      <span key={item} onClick={v=>this.handleChangeAccountName(item,'main')}><Tag>{item}</Tag></span>
                     ))}
                   </div>
                 ):null}
@@ -889,7 +974,7 @@ export class AccountSearchPage extends React.Component {
               <div style={{ padding: '2rem 0' }}>
                 <Tabs defaultActiveKey="1">
                   <TabPane tab={FunctionSearchAccountBalance} key="1">
-                    {this.props.SelectedNetWork === 'test' ? (
+                    {this.props.SelectedNetWork === 'worbli' ? (
                       <div style={{ padding: '1rem 0' }}>
                         <span>{FunctionSearchAccountSyblom}：</span>
                         <AutoComplete
@@ -929,8 +1014,35 @@ export class AccountSearchPage extends React.Component {
                       pagination={false}
                     />
                   </TabPane>
+                  {this.state.mykeyVisvible ? (
+                    <TabPane tab='MYKEY' key="3">
+                      <div>
+                        <MykeyAccountComp
+                          eos={this.state.eos}
+                          form={this.props.form}
+                          scope={this.state.scope}
+                          mykeyVisvible={this.state.mykeyVisvible}
+                          formatMessage={this.state.formatMessage}
+                          SelectedNetWork={this.props.SelectedNetWork}
+                          onSearch = {this.onSearch}
+                          handleChangeCheck={this.handleChangeCheck}
+                          columnsData = {this.state.columnsData}
+                          columnsMykey = {this.state.columnsMykey}
+                          FunctionSearchButton = {FunctionSearchButton}
+                          changeScope ={this.changeScope}
+                          changeLowerBound ={this.changeLowerBound}
+                          changeUpperBound ={this.changeUpperBound}
+                          changeLimit ={this.changeLimit}
+                          limit = {this.state.limit}
+                          lowerBound = {this.state.lowerBound}
+                          upperBound = {this.state.upperBound}
+                          />
+                      </div>
+                     </TabPane>
+                    ) : null}
                 </Tabs>
               </div>
+              
             </div>
           ) : null}
         
@@ -940,28 +1052,7 @@ export class AccountSearchPage extends React.Component {
             </div>
             ): null}
           
-          {this.state.info ? (
-            <MykeyAccountComp
-            eos={this.state.eos}
-            form={this.props.form}
-            scope={this.state.scope}
-            mykeyVisvible={this.state.mykeyVisvible}
-            formatMessage={this.state.formatMessage}
-            SelectedNetWork={this.props.SelectedNetWork}
-            onSearch = {this.onSearch}
-            handleChangeCheck={this.handleChangeCheck}
-            columnsData = {this.state.columnsData}
-            columnsMykey = {this.state.columnsMykey}
-            FunctionSearchButton = {FunctionSearchButton}
-            changeScope ={this.changeScope}
-            changeLowerBound ={this.changeLowerBound}
-            changeUpperBound ={this.changeUpperBound}
-            changeLimit ={this.changeLimit}
-            limit = {this.state.limit}
-            lowerBound = {this.state.lowerBound}
-            upperBound = {this.state.upperBound}
-          />
-          ) : null}
+          
           
         </styleComps.ConBox>
       </LayoutContentBox>

@@ -307,7 +307,7 @@ export class CreateAccountPage extends React.Component {
               </FormItem>
               <FormItem help={BytesHelp} {...formItemLayout}>
                 {getFieldDecorator('Bytes', {
-                  initialValue: 8192,
+                  initialValue: 5120,
                   rules: [
                     {
                       required: true,

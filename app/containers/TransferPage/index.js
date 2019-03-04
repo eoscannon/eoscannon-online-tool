@@ -169,11 +169,7 @@ export class TransferPage extends React.Component {
         !!FromAccountName && !!ToAccountName && !!transferQuantity
     })
     // let oldValue = this.props.form.getFieldsValue()
-    // console.log('transferQuantity =',transferQuantity)
-    // console.log('this.props.form.transferQuantity =',oldValue.transferQuantity )
-
     // if(transferQuantity && oldValue.transferQuantity !== transferQuantity){
-    
     //   let item = transferQuantity.replace(/\,/g, "");
     //   // this.props.form.setFieldsValue({transferQuantity: item})
     // }
@@ -681,7 +677,7 @@ export class TransferPage extends React.Component {
                   />,
                 )}
               </FormItem>
-              {this.props.SelectedNetWork === 'test' ? (
+              {this.props.SelectedNetWork === 'worbli' ? (
                 <FormItem {...formItemLayout} style={{ margin: 0 }}>
                   <div
                     style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}

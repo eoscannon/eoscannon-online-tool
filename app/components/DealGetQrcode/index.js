@@ -108,26 +108,19 @@ export default class DealGetQrcode extends Component {
 
   // 生成报文
   getUnSignedBuffer = () => {
-    const MainChainId = config.mainChainId
-    const TestChainId = config.testChainId
-    const telosChainId = config.testTelosChainId
-    const testKylinChainId  = config.testKylinChainId
-    const testBosChainId  = config.testBosChainId
-
     let chainId
-    if (this.props.SelectedNetWork === 'main') {
-      chainId = MainChainId
-    } else if (this.props.SelectedNetWork === 'test') {
-      chainId = TestChainId
-    }else if(this.props.SelectedNetWork === 'telos'){
-      chainId = telosChainId
-    } else if(this.props.SelectedNetWork === 'kylin'){
-      chainId = testKylinChainId
-    }else if(this.props.SelectedNetWork === 'bos'){
-      chainId = testBosChainId
-    } else if (this.props.SelectedNetWork === 'other') {
+    for(let i=0; i< config.netWorkConfig.length; i++){
+      if(this.props.SelectedNetWork === config.netWorkConfig[i].networkName && config.netWorkConfig[i].chainId){
+        chainId = config.netWorkConfig[i].chainId
+      }
+    }
+    console.log('this.props.SelectedNetWork dealgetqrcode,',this.props.SelectedNetWork )
+    let reg = new RegExp('https')
+    if(reg.test(this.props.SelectedNetWork) || this.props.SelectedNetWork ==='other'){
       chainId = storage.getChainId()
     }
+    
+    console.log('chainId',chainId)
     const buf = Fcbuffer.toBuffer(
       this.state.eos.fc.structs.transaction,
       this.props.transaction.transaction,

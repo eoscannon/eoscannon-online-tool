@@ -152,8 +152,10 @@ export class StakePage extends React.Component {
     }
     const values = this.props.form.getFieldsValue()
     const eos = getEos(this.props.SelectedNetWork)
-    const baseSymbol =storage.getBaseSymbol()
+    var baseSymbol =storage.getBaseSymbol()
+  
     console.log('baseSymbol==',baseSymbol)
+
     const {
       FromAccountName,
       ReceiverAccountName,

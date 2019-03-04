@@ -145,7 +145,7 @@ export default defineMessages({
   },
   FooterCompText: {
     id: 'Public FooterCompText',
-    defaultMessage: 'EOS佳能荣誉出品 ©2018'
+    defaultMessage: 'EOS佳能荣誉出品 ©2018-2019'
   },
 
   HeaderMenuInfoInit: {
