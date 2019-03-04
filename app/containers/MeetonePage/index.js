@@ -56,27 +56,28 @@ export class MeetonePage extends React.Component {
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue()
     const { AccountName } = values
-    this.setState({
-      GetTransactionButtonState:  !!AccountName })
+    // this.setState({
+    //   GetTransactionButtonState:  !!AccountName })
   };
 
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
   handleGetTransaction = record => {
-    if (!this.state.GetTransactionButtonState) {
-      return
-    }
+    // if (!this.state.GetTransactionButtonState) {
+    //   return
+    // }
     const values = this.props.form.getFieldsValue()
-    const eos = getEos(this.props.SelectedNetWork)
-    const { AccountName} = values
-    eos.getAbi('worbliworbli').then(res => {
+    const eos = getEos('meetone')
+    eos.getAbi('airgrab.m').then(res => {
       eos.fc.abiCache.abi(res.account_name, res.abi)
     }).catch(err=>{
       console.log('err', err)
     })
     var data = {
-      owner: AccountName,
+      owner: record,
+      symbol: `4,MEETONE`,
+      ram_payer: record
     }
     console.log('data', data)
     eos
@@ -84,11 +85,11 @@ export class MeetonePage extends React.Component {
         {
           actions: [
             {
-              account: 'worbliworbli',
-              name: 'reg',
+              account: 'airgrab.m',
+              name: 'open',
               authorization: [
                 {
-                  actor: AccountName,
+                  actor: record,
                   permission: 'active'
                 }
               ],
@@ -114,12 +115,9 @@ export class MeetonePage extends React.Component {
   };
 
   onSearch=(value)=> {
-    console.log(`selected ${value}`)
     const eos = getEos('main')
-    eos.getAccount('huangxiaolei').then(data=>{
-      console.log('data ,',data)
-      let pubkey = data.permissions[0].required_auth.keys[0].key
-      console.log('pubkey ,',pubkey)
+    eos.getAccount(value).then(data=>{
+      let pubkey = data.permissions[1].required_auth.keys[0].key
       this.getKeyAccount(pubkey)
     })
   }
@@ -129,11 +127,15 @@ export class MeetonePage extends React.Component {
     eosMeetone.getKeyAccounts( pubkey ).then(res =>{
       console.log('res = ',res)
       this.setState({
-        keyAccounts: res
+        keyAccounts: res.account_names
       })
     }).catch(err=>{
       console.log('err = ',err)
     })
+  }
+
+  chioceKeyAccount=(value)=>{
+
   }
 
   checkAccountName = (rule, value, callback) => {
@@ -161,9 +163,7 @@ export class MeetonePage extends React.Component {
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
-    const keyAccountArr = this.state.keyAccounts.map(item=>(
-      <Tag>{item}</Tag>
-    ))
+    
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -191,7 +191,18 @@ export class MeetonePage extends React.Component {
                 />
                 )}
               </FormItem>
-            <keyAccountArr />
+              <div style={{marginBottom: '1rem'}}>
+              {this.state.keyAccounts.length>0?(
+               <div>
+                  {this.state.keyAccounts.map(item=>(
+                  <span key={item} onClick={v=>this.handleGetTransaction(item)}>
+                    <Tag>{item}</Tag> 
+                  </span>
+                ))}
+               </div>
+              ):null}
+               
+              </div>
               <DealGetQrcode
                 eos={this.state.eos}
                 form={this.props.form}

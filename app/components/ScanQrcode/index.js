@@ -87,6 +87,7 @@ export default class ScanQrcode extends Component {
       signatures: [sig]
     }
     this.state.SendTransaction = output
+
     this.props.form.setFieldsValue({
       SendTransaction: JSON.stringify(this.state.SendTransaction)
     })
@@ -97,8 +98,8 @@ export default class ScanQrcode extends Component {
   };
 
   handleSendSignTransaction = () => {
-    let values
-    this.props.form.validateFields((err, val) => {
+    var values
+    const val = this.props.form.getFieldsValue()
       if (
         val.SendTransaction.indexOf('SIG_') !== -1 &&
         val.SendTransaction.indexOf('{') === -1
@@ -117,7 +118,6 @@ export default class ScanQrcode extends Component {
         })
         values = false
       }
-    })
     if (values === false) {
       return
     }

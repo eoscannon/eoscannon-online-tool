@@ -556,6 +556,7 @@ class HeaderComp extends React.Component {
                   <Option value="telos">TELOS</Option>
                   <Option value="kylin">KYLIN</Option>
                   <Option value="bos">BOS</Option>
+                  <Option value="meetone">MEETONE</Option>
                   <Option value="other">{otherTestNet}</Option>
                 </Select>
               )}
