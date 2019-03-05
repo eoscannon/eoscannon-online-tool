@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { injectIntl } from 'react-intl'
-import { Form, Icon, Input, Card, Col, Row, Modal, Tabs, Select, Table, Alert, Tag } from 'antd'
+import { Form, Icon, Input, Card, Col, Row, Modal, Radio, Select, Table, Alert, Tag } from 'antd'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -25,6 +25,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 const Search = Input.Search;
 const { CheckableTag } = Tag;
+const RadioGroup = Radio.Group;
 
 export class MeetonePage extends React.Component {
   constructor (props) {
@@ -41,7 +42,9 @@ export class MeetonePage extends React.Component {
       columnsData: [],
       keyAccounts: [],
       checked : false,
-      selectedTags: []
+      selectedTags: [],
+      value2: '',
+
     }
   }
   /**
@@ -124,9 +127,15 @@ export class MeetonePage extends React.Component {
   getKeyAccount = (pubkey) => {
     const eosMeetone = getEos('meetone')
     eosMeetone.getKeyAccounts( pubkey ).then(res =>{
-      console.log('res = ',res)
+      var resArr = []
+      for(let i in res.account_names){
+        let newData = { label: '', value: '' }
+        newData.label = res.account_names[i];
+        newData.value = res.account_names[i];
+        resArr.push(newData)
+      }
       this.setState({
-        keyAccounts: res.account_names
+        keyAccounts: resArr
       })
     }).catch(err=>{
       console.log('err = ',err)
@@ -139,16 +148,13 @@ export class MeetonePage extends React.Component {
     callback();
     return
   }
-  handleChange(tag, checked) {
-    const { selectedTags } = this.state;
-    const nextSelectedTags = checked
-      ? [...selectedTags, tag]
-      : selectedTags.filter(t => t !== tag);
-    this.handleGetTransaction(tag)
-    this.setState({ selectedTags: nextSelectedTags });
+
+  handleChange=(e)=> {
+    this.setState({
+      value2: e.target.value
+    });
+    this.handleGetTransaction( e.target.value)
   }
-
-
 
 
   render () {
@@ -195,7 +201,7 @@ export class MeetonePage extends React.Component {
               <div style={{marginBottom: '1rem'}}>
               {this.state.keyAccounts.length>0?(
                <div>
-                  {this.state.keyAccounts.map(tag=>(
+                  {/* {this.state.keyAccounts.map(tag=>(
                    <CheckableTag
                    style={{border: '1px solid #1890ff'}}
                    key={tag}
@@ -205,7 +211,9 @@ export class MeetonePage extends React.Component {
                  >
                    {tag}
                  </CheckableTag>
-                ))}
+                ))} */}
+
+                <RadioGroup options={this.state.keyAccounts} onChange={this.handleChange} value={this.state.value2} />
                </div>
               ):null}
                
