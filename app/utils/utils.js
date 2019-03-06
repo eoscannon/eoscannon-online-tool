@@ -291,6 +291,7 @@ const symbolList = [
   { symbol: 'ARN', contract: 'aeronaerozzz', digit: 4 },
   { symbol: 'ATD', contract: 'eosatidiumio', digit: 4 },
 
+  { symbol: 'BOS', contract: 'eosio.token', digit: 4 },
   { symbol: 'BEAN', contract: 'thebeantoken', digit: 4 },
   { symbol: 'BEST', contract: 'eosgamecoin2', digit: 4 },
   { symbol: 'BETX', contract: 'thebetxtoken', digit: 4 },
@@ -413,6 +414,7 @@ const symbolList = [
   { symbol: 'STAR', contract: 'fastwinitems', digit: 4 },
   { symbol: 'SVN', contract: 'eoseventoken', digit: 4 },
 
+  { symbol: 'TLOS', contract: 'eosio.token', digit: 4 },
   { symbol: 'TASTE', contract: 'taste.x', digit: 4 },
   { symbol: 'TBT', contract: 'trustbetteam', digit: 4 },
   { symbol: 'TEA', contract: 'linzongsheng', digit: 4 },
@@ -433,6 +435,7 @@ const symbolList = [
   { symbol: 'WINS', contract: 'eoswinonewww', digit: 4 },
   { symbol: 'WIZBOX', contract: 'wizboxairdro', digit: 4 },
   { symbol: 'WIZZ', contract: 'wizznetwork1', digit: 4 },
+  { symbol: 'WBI', contract: 'eosio.token', digit: 4 },
 
   { symbol: 'YDAPP', contract: 'dacincubator', digit: 4 },
   { symbol: 'YOU', contract: 'youbaoyoubao', digit: 4 },

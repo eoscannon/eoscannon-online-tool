@@ -36,6 +36,7 @@ import messages from './messages'
 import utilsMsg from '../../utils/messages'
 import { storage } from '../../utils/storage'
 import { makeSelectNetwork } from '../LanguageProvider/selectors'
+import config from './../../config'
 
 const FormItem = Form.Item
 const { Option } = Select
@@ -157,6 +158,18 @@ export class TransferPage extends React.Component {
         selectLanguage: nextProps.SelectLanguage
       })
     }
+    
+    if(nextProps.SelectedNetWork !== this.props.SelectedNetWork) {
+      var nowBaseSymbol = 'EOS'
+      for(let i=0; i< config.netWorkConfig.length; i++){
+        if(nextProps.SelectedNetWork === config.netWorkConfig[i].networkName){
+          nowBaseSymbol = config.netWorkConfig[i].BaseSymbol
+        }
+      }
+      nextProps.form.setFieldsValue({transferSymbol:(nowBaseSymbol+' (eosio.token)')})
+    }
+
+   
   }
   /**
    * 输入框内容变化时，改变按钮状态
@@ -580,7 +593,13 @@ export class TransferPage extends React.Component {
     const AccountFrom = FromAccount.map((data, index) => (
       <Option key={data}>{data}</Option>
     ))
-
+    var baseSymbol
+    for(let i=0; i< config.netWorkConfig.length; i++){
+      if(this.props.SelectedNetWork === config.netWorkConfig[i].networkName){
+        baseSymbol = config.netWorkConfig[i].BaseSymbol
+      }
+    }
+    console.log('baseSymbol ',baseSymbol)
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -683,7 +702,7 @@ export class TransferPage extends React.Component {
                     style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}
                   >
                     {getFieldDecorator('transferSymbol', {
-                      initialValue: 'eos (eosio.token)',
+                      initialValue: baseSymbol+' (eosio.token)',
                       rules: [
                         { required: true, message: TransferSymbolPlaceholder }
                       ]
@@ -715,7 +734,7 @@ export class TransferPage extends React.Component {
                     style={{ visibility: this.state.addSymbol ? 'hidden' : '' }}
                   >
                     {getFieldDecorator('transferSymbol', {
-                      initialValue: 'eos (eosio.token)',
+                      initialValue: baseSymbol+' (eosio.token)',
                       rules: [
                         { required: true, message: TransferSymbolPlaceholder }
                       ]
