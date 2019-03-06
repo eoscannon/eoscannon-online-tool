@@ -121,8 +121,13 @@ export class MeetonePage extends React.Component {
     eos.getAccount(value).then(data=>{
       let pubkey = data.permissions[1].required_auth.keys[0].key
       this.getKeyAccount(pubkey)
+    }).catch(err=>{
+      this.setState({
+        keyAccounts: []
     })
-  }
+    console.log('err = ',err)
+  })
+}
 
   getKeyAccount = (pubkey) => {
     const eosMeetone = getEos('meetone')
@@ -138,6 +143,9 @@ export class MeetonePage extends React.Component {
         keyAccounts: resArr
       })
     }).catch(err=>{
+      this.setState({
+        keyAccounts: []
+      })
       console.log('err = ',err)
     })
   }
@@ -177,7 +185,7 @@ export class MeetonePage extends React.Component {
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
-    
+    console.log('this.state.keyAccounts ',this.state.keyAccounts)
     return (
       <LayoutContent>
         <Row gutter={16}>

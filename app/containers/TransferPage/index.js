@@ -599,7 +599,6 @@ export class TransferPage extends React.Component {
         baseSymbol = config.netWorkConfig[i].BaseSymbol
       }
     }
-    console.log('baseSymbol ',baseSymbol)
     return (
       <LayoutContent>
         <Row gutter={16}>
