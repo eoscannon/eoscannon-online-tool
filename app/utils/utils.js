@@ -6,6 +6,19 @@ import producers from './producers.json'
 import utilsMsg from './messages'
 import { storage } from './storage'
 import config from './../config'
+import { JsonRpc, Api } from 'eosjs2'
+import fetch from 'node-fetch'
+
+let x = null
+
+const GetNewRpc = (http) => new JsonRpc(http , { fetch })
+const getNewApi = (http) => {
+  for(let i=0; i<config.netWorkConfig.length; i++){
+    if(config.netWorkConfig[i].networkName === http){
+      return new Api({ rpc : GetNewRpc(config.netWorkConfig[i].Endpoint) , x, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() })
+    }
+  }
+}
 
 ScatterJS.plugins(new ScatterEOS())
 
@@ -48,7 +61,6 @@ const getEos = type => {
   if(reg.test(type) || type ==='other'){
     return getEosOtherTest()
   }
-
 }
 
 const getEosByScatter = (type, callback) => {
@@ -543,6 +555,7 @@ export {
   openNotification,
   symbolList,
   airgrabList,
-  symbolListWorbli
+  symbolListWorbli,
+  getNewApi
 }
 

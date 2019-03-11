@@ -13,13 +13,13 @@ import { Link } from 'react-router-dom'
 import { makeSelectNetwork } from '../LanguageProvider/selectors'
 import {
   formItemLayout,
-  getEos,
+  getNewApi,
   openTransactionFailNotification
 } from '../../utils/utils'
 import { List } from '../../utils/antdUtils'
 import { LayoutContent } from '../../components/NodeComp'
-import ScanQrcode from '../../components/ScanQrcode'
-import DealGetQrcode from '../../components/DealGetQrcode'
+import NewScanQrcode from '../../components/NewScanQrcode'
+import NewDealGetQrcode from '../../components/NewDealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
 import { now } from 'moment'
@@ -48,7 +48,8 @@ export class ForumVotePage extends React.Component {
       lowerBound: null,
       upperBound: null,
       limit: 100,
-      creatTimeData: []
+      creatTimeData: [],
+      newtransaction:{}
     }
   }
   /**
@@ -89,7 +90,6 @@ export class ForumVotePage extends React.Component {
 
   handleGetTransactionInit = () => {
     this.mounted = true;
-
     fetch('https://s3.amazonaws.com/api.eosvotes.io/eosvotes/tallies/latest.json', {
       method: 'GET'
     }).then((response)=> {
@@ -182,22 +182,21 @@ export class ForumVotePage extends React.Component {
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
   handleGetTransaction = () => {
-    this.setState({ scatterStatus: false })
-    if (!this.state.GetTransactionButtonState) {
-      return
-    }
-    const values = this.props.form.getFieldsValue()
-    const eos = getEos(this.props.SelectedNetWork)
-    const { voter, statusText } = values
-    var data = {
-      voter: voter,
-      proposal_name: statusText,
-      vote: this.state.radio,
-      vote_json: ''
-    }
-    eos
-      .transaction(
-        {
+    (async ()=>{
+      try{
+        this.setState({ scatterStatus: false })
+        if (!this.state.GetTransactionButtonState) {
+          return
+        }
+        const values = this.props.form.getFieldsValue()
+        const { voter, statusText } = values
+        var data = {
+          voter: voter,
+          proposal_name: statusText,
+          vote: this.state.radio,
+          vote_json: ''
+        }
+        let result = await getNewApi(this.props.SelectedNetWork).transact({
           actions: [
             {
               account: 'eosio.forum',
@@ -210,23 +209,30 @@ export class ForumVotePage extends React.Component {
               ],
               data
             }
-          ]
-        },
-        {
+          ],
+        }, {
+          broadcast: false,
           sign: false,
-          broadcast: false
-        },
-      )
-      .then(tr => {
+          blocksBehind: 3,
+          expireSeconds: 1800
+        });
+       
+        var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
+        if(tx)
         this.setState({
-          eos,
-          transaction: tr.transaction
+          transaction: result.serializedTransaction,
+          newtransaction : tx
         })
-      })
-      .catch(err => {
-        console.log('err:', err)
+      }catch(err){
+        console.log('err ',err)
+        this.setState({
+          transaction: '',
+          newtransaction : ''
+        })
         openTransactionFailNotification(this.state.formatMessage, err.name)
-      })
+
+      }
+    })()
   };
 
   onChangeRadio = (e) => {
@@ -398,7 +404,7 @@ export class ForumVotePage extends React.Component {
                 )}
               </FormItem>
 
-              <DealGetQrcode
+              <NewDealGetQrcode
                 eos={this.state.eos}
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}
@@ -409,6 +415,7 @@ export class ForumVotePage extends React.Component {
                 QrCodeValue={this.state.QrCodeValue}
                 SelectedNetWork={this.props.SelectedNetWork}
                 transaction={this.state.transaction}
+                newtransaction={this.state.newtransaction}
                 voteByScatterClick={this.voteByScatter}
                 scatterStatus={this.state.scatterStatus}
                 GetTransactionButtonScatterState={
@@ -419,12 +426,12 @@ export class ForumVotePage extends React.Component {
           </Col>
           <Col span={12}>
             <Card title={ProducersSendTranscation} bordered={false}>
-              <ScanQrcode
+              <NewScanQrcode
                 eos={this.state.eos}
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}
                 SelectedNetWork={this.props.SelectedNetWork}
-                transaction={this.state.transaction}
+                transaction={this.state.newtransaction}
               />
             </Card>
           </Col>

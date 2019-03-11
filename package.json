@@ -161,6 +161,7 @@
     "copy-to-clipboard": "^3.0.8",
     "cross-env": "5.2.0",
     "eosjs": "^16.0.9",
+    "eosjs2": "npm:eosjs@beta3",
     "express": "4.16.3",
     "fontfaceobserver": "2.0.13",
     "history": "4.7.2",

@@ -15,7 +15,10 @@ import {
   voteNodes,
   getEos,
   getEosByScatter,
-  openTransactionFailNotification
+  openTransactionFailNotification,
+  rpc,
+  getNewRpc,
+  getNewApi
 } from '../../utils/utils'
 import { LayoutContent } from '../../components/NodeComp'
 import ScanQrcode from '../../components/ScanQrcode'

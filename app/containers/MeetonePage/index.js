@@ -13,11 +13,12 @@ import { makeSelectNetwork } from '../LanguageProvider/selectors'
 import {
   formItemLayout,
   getEos,
-  openTransactionFailNotification
+  openTransactionFailNotification,
+  getNewApi
 } from '../../utils/utils'
 import { LayoutContent } from '../../components/NodeComp'
-import ScanQrcode from '../../components/ScanQrcode'
-import DealGetQrcode from '../../components/DealGetQrcode'
+import NewScanQrcode from '../../components/NewScanQrcode'
+import NewDealGetQrcode from '../../components/NewDealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
 
@@ -44,19 +45,23 @@ export class MeetonePage extends React.Component {
       checked : false,
       selectedTags: [],
       value2: '',
+      newtransaction:{}
 
     }
   }
   /**
    * 链接scatter
    * */
-  componentDidMount () { }
+  componentDidMount () {  }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps (nextProps) {
     this.onValuesChange(nextProps)
   }
+
+
+  
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -71,53 +76,48 @@ export class MeetonePage extends React.Component {
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
   handleGetTransaction = record => {
-    const eos = getEos('meetone')
-    eos.getAbi('airgrab.m').then(res => {
-      eos.fc.abiCache.abi(res.account_name, res.abi)
-    }).catch(err=>{
-      console.log('err', err)
-    })
-    var data = {
-      owner: record,
-      symbol: `4,MEETONE`,
-      ram_payer: record
-    }
-    eos
-      .transaction(
-        {
-          actions: [
-            {
-              account: 'airgrab.m',
-              name: 'open',
-              authorization: [
-                {
-                  actor: record,
-                  permission: 'active'
-                }
-              ],
-              data
-            }
-          ]
-        },
-        {
+   
+    (async ()=>{
+      try{
+        var data = {
+          owner: record,
+          symbol: `4,MEETONE`,
+          ram_payer: record
+        }
+        let result = await getNewApi(this.props.SelectedNetWork).transact({
+          actions: [{
+            account: 'airgrab.m',
+            name: 'open',
+            authorization: [
+              {
+                actor: record,
+                permission: 'active'
+              }
+            ],
+            data
+          }]
+        }, {
+          broadcast: false,
           sign: false,
-          broadcast: false
-        },
-      )
-      .then(tr => {
+          blocksBehind: 3,
+          expireSeconds: 1800
+        });
+      
+        var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
+        if(tx)
         this.setState({
-          transaction: tr.transaction,
-          eos
+          transaction: result.serializedTransaction,
+          newtransaction : tx
         })
-      })
-      .catch(err => {
-        console.log('catch err', err)
+      }catch(err){
+        console.log('err ',err)
         openTransactionFailNotification(this.state.formatMessage, err.name)
-      })
+      }
+    })()
   };
 
   onSearch=(value)=> {
-    const eos = getEos('main')
+    const eos = getEos('eosxmaiApi')
     eos.getAccount(value).then(data=>{
       let pubkey = data.permissions[1].required_auth.keys[0].key
       this.getKeyAccount(pubkey)
@@ -185,7 +185,7 @@ export class MeetonePage extends React.Component {
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
     )
-    console.log('this.state.keyAccounts ',this.state.keyAccounts)
+    // console.log('this.state.keyAccounts ',this.state.keyAccounts)
     return (
       <LayoutContent>
         <Row gutter={16}>
@@ -226,8 +226,7 @@ export class MeetonePage extends React.Component {
               ):null}
                
               </div>
-              <DealGetQrcode
-                eos={this.state.eos}
+              <NewDealGetQrcode
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}
                 GetTransactionButtonClick={this.handleGetTransaction}
@@ -236,17 +235,18 @@ export class MeetonePage extends React.Component {
                 QrCodeValue={this.state.QrCodeValue}
                 SelectedNetWork={this.props.SelectedNetWork}
                 transaction={this.state.transaction}
+                newtransaction={this.state.newtransaction}
               />
             </Card>
           </Col>
           <Col span={12}>
             <Card title={ProducersSendTranscation} bordered={false}>
-              <ScanQrcode
+              <NewScanQrcode
                 eos={this.state.eos}
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}
                 SelectedNetWork={this.props.SelectedNetWork}
-                transaction={this.state.transaction}
+                transaction={this.state.newtransaction}
               />
             </Card>
           </Col>
