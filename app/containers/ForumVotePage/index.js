@@ -214,7 +214,7 @@ export class ForumVotePage extends React.Component {
           broadcast: false,
           sign: false,
           blocksBehind: 3,
-          expireSeconds: 1800
+          expireSeconds: 3600
         });
        
         var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);

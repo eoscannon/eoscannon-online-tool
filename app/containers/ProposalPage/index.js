@@ -12,12 +12,12 @@ import { connect } from 'react-redux'
 import { makeSelectNetwork } from '../LanguageProvider/selectors'
 import {
   formItemLayout,
-  getEos,
+  getNewApi,
   openTransactionFailNotification
 } from '../../utils/utils'
 import { LayoutContent } from '../../components/NodeComp'
-import ScanQrcode from '../../components/ScanQrcode'
-import DealGetQrcode from '../../components/DealGetQrcode'
+import NewScanQrcode from '../../components/NewScanQrcode'
+import NewDealGetQrcode from '../../components/NewDealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
 
@@ -34,7 +34,8 @@ export class ProposalPage extends React.Component {
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
       scatterStatus: false,
-      GetTransactionButtonScatterState: true
+      GetTransactionButtonScatterState: true,
+      newtransaction:{}
     }
   }
   /**
@@ -68,22 +69,21 @@ export class ProposalPage extends React.Component {
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
   handleGetTransaction = () => {
-    this.setState({ scatterStatus: false })
-    if (!this.state.GetTransactionButtonState) {
-      return
-    }
-    const values = this.props.form.getFieldsValue()
-    const eos = getEos(this.props.SelectedNetWork)
-    const { account, permission, proposer, proposalName} = values
-    var data = {
-      proposer: proposer,
-      proposal_name: proposalName,
-      level: {'actor': account, 'permission': permission}
-    }
-
-    eos
-      .transaction(
-        {
+    (async ()=>{
+      try{
+        this.setState({ scatterStatus: false })
+        if (!this.state.GetTransactionButtonState) {
+          return
+        }
+        const values = this.props.form.getFieldsValue()
+        const { account, permission, proposer, proposalName} = values
+        var data = {
+          proposer: proposer,
+          proposal_name: proposalName,
+          level: {'actor': account, 'permission': permission}
+        }
+    
+        let result = await getNewApi(this.props.SelectedNetWork).transact({
           actions: [
             {
               account: 'eosio.msig',
@@ -97,26 +97,30 @@ export class ProposalPage extends React.Component {
               data
             }
           ]
-        },
-        {
+        }, {
+          broadcast: false,
           sign: false,
-          broadcast: false
-        },
-      )
-      .then(tr => {
+          blocksBehind: 3,
+          expireSeconds: 3600
+        });
+       
+        var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
+        if(tx)
         this.setState({
-          eos,
-          transaction: tr.transaction
+          transaction: result.serializedTransaction,
+          newtransaction : tx
         })
-      })
-      .catch(err => {
-         this.setState({
-           eos:{},
-          transaction: {}
+      }catch(err){
+        console.log('err ',err)
+        this.setState({
+          transaction: '',
+          newtransaction : ''
         })
-        console.log('err = ',err)
         openTransactionFailNotification(this.state.formatMessage, err.name)
-      })
+
+      }
+    })()
+
   };
 
   handleChange=(value)=> {
@@ -254,7 +258,7 @@ export class ProposalPage extends React.Component {
                 />,
               )}
             </FormItem>
-            <DealGetQrcode
+            <NewDealGetQrcode
               eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
@@ -265,6 +269,7 @@ export class ProposalPage extends React.Component {
               QrCodeValue={this.state.QrCodeValue}
               SelectedNetWork={this.props.SelectedNetWork}
               transaction={this.state.transaction}
+              newtransaction={this.state.newtransaction}
               voteByScatterClick={this.voteByScatter}
               scatterStatus={this.state.scatterStatus}
               GetTransactionButtonScatterState={
@@ -275,12 +280,12 @@ export class ProposalPage extends React.Component {
         </Col>
         <Col span={12}>
           <Card title={ProducersSendTranscation} bordered={false}>
-            <ScanQrcode
+            <NewScanQrcode
               eos={this.state.eos}
               form={this.props.form}
               formatMessage={this.state.formatMessage}
               SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
+              transaction={this.state.newtransaction}
             />
           </Card>
         </Col>
