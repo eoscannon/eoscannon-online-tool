@@ -159,6 +159,9 @@ export class ProposalPage extends React.Component {
     const ProposalPermission = this.state.formatMessage(
       messages.ProposalPermission,
     )
+    const ProducersDealTranscation = this.state.formatMessage(
+      utilsMsg.ProducersDealTranscation,
+    )
     // const VoterLabel = this.state.formatMessage(messages.VoterLabel);
     // const ProxyLabel = this.state.formatMessage(messages.ProxyLabel);
     const Proposaler = this.state.formatMessage(
@@ -174,7 +177,7 @@ export class ProposalPage extends React.Component {
     return (
       <LayoutContent>
         <Col span={12}>
-          <Card title={ProposalFirstOne} bordered={false}>
+          <Card title={ProducersDealTranscation} bordered={false}>
             <FormItem {...formItemLayout}>
               {getFieldDecorator('account', {
                 rules: [

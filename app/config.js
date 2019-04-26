@@ -1,6 +1,6 @@
 export default {
   databaseNameArr: ['keydata', 'backupdata', 'subacct', 'subassetsum'],
-  networkCodeArr: ['tuboshuismgr', ''],
+  networkCodeArr: ['tuboshuismgr', 'mykeymanager'],
   // net work config
   netWorkConfig:[{
     networkName:'main',
@@ -39,5 +39,10 @@ export default {
     BaseSymbol: 'MEETONE',
     Endpoint:'https://fullnode.meet.one',
     chainId: 'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422',
+  },{
+    networkName:'Jungle',
+    BaseSymbol: 'EOS',
+    Endpoint:'https://jungle2.cryptolions.io',
+    chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
   }]
 }

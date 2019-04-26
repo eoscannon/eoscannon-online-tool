@@ -121,6 +121,9 @@ class HeaderComp extends React.Component {
       case '/meetone':
         defaultSelectedKeys = '21'
         break
+      case '/rex':
+        defaultSelectedKeys = '22'
+        break
       default:
         defaultSelectedKeys = '3'
     }
@@ -364,6 +367,11 @@ class HeaderComp extends React.Component {
                 </span>
               }
             >
+              <Menu.Item key="22">
+                <Link to="/rex" href="/rex">
+                  Rex
+                </Link>
+              </Menu.Item>
               <Menu.Item key="10">
                 <Link to="/createAccount" href="/createAccount">
                   {createAccount}
@@ -557,6 +565,7 @@ class HeaderComp extends React.Component {
                   <Option value="kylin">KYLIN</Option>
                   <Option value="bos">BOS</Option>
                   <Option value="meetone">MEETONE</Option>
+                  <Option value="Jungle">Jungle</Option>
                   <Option value="other">{otherTestNet}</Option>
                 </Select>
               )}

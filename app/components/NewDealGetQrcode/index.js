@@ -117,12 +117,6 @@ export default class NewDealGetQrcode extends Component {
     if(reg.test(this.props.SelectedNetWork) || this.props.SelectedNetWork ==='other'){
       chainId = storage.getChainId()
     }
-    
-    // console.log('chainId',chainId)
-    // const buf = Fcbuffer.toBuffer(
-    //   this.state.eos.fc.structs.transaction,
-    //   this.props.transaction.transaction,
-    // )
 
     const chainIdBuf = Buffer.from(chainId, 'hex')
 
@@ -191,7 +185,7 @@ export default class NewDealGetQrcode extends Component {
     }
     return (
       <div>
-        {!this.props.isHiddenGetTransactionButton && (
+        {this.props.isHiddenGetTransactionButton ?(
           <FormItem style={{ textAlign: 'center' }}>
             &nbsp;&nbsp;&nbsp;
             {this.props.scatterStatus ? (
@@ -214,10 +208,10 @@ export default class NewDealGetQrcode extends Component {
               </Button>
             )}
           </FormItem>
-        )}
+        ) :null }
         {this.props.scatterStatus ? null : (
           <div>
-            <FormItem >
+            <FormItem>
               {specialStatusCompontent ? (
                 <div style={{border: '1px solid #91d5ff', padding: '10px 15px', backgroundColor: '#e6f7ff', borderRadius: '3px'}}>
                   <div style={{ fontSize: '16px', fontWeight: 'bold'}}>{CopyAlertMessage}</div>
@@ -231,19 +225,19 @@ export default class NewDealGetQrcode extends Component {
                 />
               )}
             </FormItem>
-              <FormItem>
-                {getFieldDecorator('transactionTextArea', {
-                  rules: [
-                    { required: true, message: TransactionTextAreaPlaceholder }
-                  ]
-                })(
-                  <TextArea
-                    disabled
-                    autosize={{ minRows: 4, maxRows: 12 }}
-                    placeholder={TransactionTextAreaPlaceholder}
-                  />,
-                )}
-              </FormItem>
+            <FormItem>
+              {getFieldDecorator('transactionTextArea', {
+                rules: [
+                  { required: true, message: TransactionTextAreaPlaceholder }
+                ]
+              })(
+                <TextArea
+                  disabled
+                  autosize={{ minRows: 4, maxRows: 12 }}
+                  placeholder={TransactionTextAreaPlaceholder}
+                />
+              )}
+            </FormItem>
             {this.state.QrCodeValue  ===  ''  ? null : (
               <div>
                 <FormItem>
