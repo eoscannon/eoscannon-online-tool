@@ -20,6 +20,7 @@ import NewScanQrcode from '../../components/NewScanQrcode'
 import NewDealGetQrcode from '../../components/NewDealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
+import config from './../../config'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -40,18 +41,30 @@ export class RexPage extends React.Component {
       newtransaction:{},
       resourseType:'',
       tabsKey: "1",
-      isHiddenGetTransactionButton: false
+      isHiddenGetTransactionButton: false,
+      nowBaseSymbol:"EOS"
     }
   }
   /**
    * 链接scatter
    * */
-  componentDidMount () {}
+  componentDidMount () {
+    for(let i=0; i< config.netWorkConfig.length; i++){
+      if(this.props.SelectedNetWork === config.netWorkConfig[i].networkName){
+        this.setState({nowBaseSymbol:config.netWorkConfig[i].BaseSymbol})
+      }
+    }
+  }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
   componentWillReceiveProps (nextProps) {
     this.onValuesChange(nextProps)
+    for(let i=0; i< config.netWorkConfig.length; i++){
+      if(nextProps.SelectedNetWork === config.netWorkConfig[i].networkName){
+        this.setState({nowBaseSymbol:config.netWorkConfig[i].BaseSymbol})
+      }
+    }
   }
   /**
    * 输入框内容变化时，改变按钮状态
@@ -162,7 +175,7 @@ export class RexPage extends React.Component {
         const { account, transactionAmount} = values
         var data = {
           owner: account,
-          amount: Number(transactionAmount).toFixed(4)+' EOS',
+          amount: Number(transactionAmount).toFixed(4)+' '+this.state.nowBaseSymbol,
         }
     
         let result = await getNewApi(this.props.SelectedNetWork).transact({
@@ -213,7 +226,7 @@ export class RexPage extends React.Component {
         const { account, transactionAmount} = values
         var data = {
           owner: account,
-          amount: Number(transactionAmount).toFixed(4)+' EOS',
+          amount: Number(transactionAmount).toFixed(4)+' '+this.state.nowBaseSymbol,
         }
     
         let result = await getNewApi(this.props.SelectedNetWork).transact({
@@ -258,14 +271,10 @@ export class RexPage extends React.Component {
   buyrex=()=>{
     (async ()=>{
       try{
-        // this.setState({ scatterStatus: false })
-        // if (!this.state.GetTransactionButtonState) {
-        //   return
-        // }
         const values = this.props.form.getFieldsValue()
         const { accountBuyRex, buyAccount} = values
         var data = {
-          amount: Number(buyAccount).toFixed(4)+" EOS",
+          amount: Number(buyAccount).toFixed(4)+" "+this.state.nowBaseSymbol,
           from: accountBuyRex
         }
     
@@ -362,8 +371,8 @@ export class RexPage extends React.Component {
         var data = {
           from: rentcpuaccount,
           receiver: receivecpuaccount,
-          loan_payment:  Number(paymoneyamount).toFixed(4)+ ' EOS',
-          loan_fund: Number(resoursestoreMoney).toFixed(4)+' EOS',
+          loan_payment:  Number(paymoneyamount).toFixed(4)+ ' '+this.state.nowBaseSymbol,
+          loan_fund: Number(resoursestoreMoney).toFixed(4)+' '+this.state.nowBaseSymbol,
         }
     
         let result = await getNewApi(this.props.SelectedNetWork).transact({
@@ -412,8 +421,8 @@ export class RexPage extends React.Component {
         var data = {
           from: rentcpuaccount,
           receiver: receivecpuaccount,
-          loan_payment:  Number(paymoneyamount).toFixed(4)+ ' EOS',
-          loan_fund: Number(resoursestoreMoney).toFixed(4)+' EOS',
+          loan_payment:  Number(paymoneyamount).toFixed(4)+ ' '+this.state.nowBaseSymbol,
+          loan_fund: Number(resoursestoreMoney).toFixed(4)+' '+this.state.nowBaseSymbol,
         }
     
         let result = await getNewApi(this.props.SelectedNetWork).transact({
@@ -460,7 +469,7 @@ export class RexPage extends React.Component {
         const values = this.props.form.getFieldsValue()
         const { accountBuyRex, buyAccount} = values
         var data = {
-          amount: Number(buyAccount).toFixed(4)+" EOS",
+          amount: Number(buyAccount).toFixed(4)+" "+this.state.nowBaseSymbol,
           from: accountBuyRex
         }
     
