@@ -37,12 +37,18 @@ export class RexPage extends React.Component {
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
       scatterStatus: false,
-      GetTransactionButtonScatterState: true,
+      GetTransactionButtonScatterState: false,
       newtransaction:{},
       resourseType:'',
       tabsKey: "1",
-      isHiddenGetTransactionButton: false,
-      nowBaseSymbol:"EOS"
+      isHiddenGetTransactionButton: true,
+      nowBaseSymbol:"EOS",
+      choiceResourseType:1,
+      buyRexByFundStatus: false,
+      buyRexByCpuStatus: false,
+      buyRexByNetStatus: false,
+      sellRexByFundStatus: false
+
     }
   }
   /**
@@ -71,9 +77,10 @@ export class RexPage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue()
-    const { rentcpuaccount, paymoneyamount,receivecpuaccount ,resoursestoreMoney} = values
+    const { rentcpuaccount, paymoneyamount,receivecpuaccount ,resoursestoreMoney, accountBuyRex,buyAccount,buyCPUAmount,buyNetAmount} = values
     this.setState({
       GetTransactionButtonState: !!rentcpuaccount && !!paymoneyamount && !!receivecpuaccount && !!resoursestoreMoney })
+      // this.setState({buyRexByFundStatus: accountBuyRex && this.state.choiceResourseType===1})
   };
 
   /**
@@ -467,10 +474,22 @@ export class RexPage extends React.Component {
     (async ()=>{
       try{
         const values = this.props.form.getFieldsValue()
-        const { accountBuyRex, buyAccount} = values
-        var data = {
-          amount: Number(buyAccount).toFixed(4)+" "+this.state.nowBaseSymbol,
-          from: accountBuyRex
+        const { accountBuyRex, buyCPUAmount,buyNetAmount} = values
+        //2 is cpu and 3 is net
+        if(this.state.choiceResourseType==2){
+          var data = {
+            owner: accountBuyRex,
+            receiver: accountBuyRex,
+            from_net: '0.0000 '+this.state.nowBaseSymbol,
+            from_cpu: Number(buyCPUAmount).toFixed(4)+ ' '+this.state.nowBaseSymbol,
+          }
+        }else if(this.state.choiceResourseType==3){
+          var data = {
+            owner: accountBuyRex,
+            receiver: accountBuyRex,
+            from_net: Number(buyNetAmount).toFixed(4)+ ' '+this.state.nowBaseSymbol,
+            from_cpu: '0.0000 '+this.state.nowBaseSymbol,
+          }
         }
     
         let result = await getNewApi(this.props.SelectedNetWork).transact({
@@ -517,6 +536,11 @@ export class RexPage extends React.Component {
     });
   }
 
+  onChangeResourseType = (e) => {
+    this.setState({
+      choiceResourseType: e.target.value,
+    });
+  }
   render () {
     const { getFieldDecorator } = this.props.form
     const CreatorAccountNamePlaceholder = this.state.formatMessage(
@@ -559,6 +583,10 @@ export class RexPage extends React.Component {
     const RexPageCancelStake = this.state.formatMessage(
       messages.RexPageCancelStake,
     )
+    // const CreatorAccountNameToRexPlaceholder = this.state.formatMessage(
+    //   messages.CreatorAccountNameToRexPlaceholder,
+    // )
+    
     const RexPageResourseReceive = this.state.formatMessage(
       messages.RexPageResourseReceive,
     )
@@ -645,31 +673,108 @@ export class RexPage extends React.Component {
                   )}
                 </FormItem>
                 <FormItem {...formItemLayout}>
-                  {getFieldDecorator('buyAccount', {
-                    rules: [
-                      {
-                        required: true,
-                        message: {RexPageMoneyAmount},
-                      }
-                    ]
-                  })(
-                    <Input
-                      prefix={
-                        <Icon
-                          type="user"
-                          style={{ color: 'rgba(0,0,0,.25)' }}
-                        />
-                      }
-                      placeholder={RexPageMoneyAmount}
-                    />,
-                  )}
+                  <RadioGroup onChange={this.onChangeResourseType} value={this.state.choiceResourseType}>
+                    <Radio value={1}>Fund</Radio>
+                    <Radio value={2}>CPU</Radio>
+                    <Radio value={3}>NET</Radio>
+                  </RadioGroup>
                 </FormItem>
-              <FormItem>
-                <div style={{display:"flex",justifyContent:"space-around"}}>
-                  <Button type="primary" onClick={this.buyrex}>{RexPageBuyrex}</Button>
-                  <Button type="primary" onClick={this.sellrex}>{RexPageSellrex}</Button>
-                </div>
-              </FormItem>
+                {this.state.choiceResourseType ==1?(
+                  <div>
+                    <FormItem {...formItemLayout}>
+                      {getFieldDecorator('buyAccount', {
+                        rules: [
+                          {
+                            required: true,
+                            message: {RexPageMoneyAmount},
+                          }
+                        ]
+                      })(
+                        <Input
+                          prefix={
+                            <Icon
+                              type="user"
+                              style={{ color: 'rgba(0,0,0,.25)' }}
+                            />
+                          }
+                          placeholder={RexPageMoneyAmount}
+                        />,
+                      )}
+                    </FormItem>
+                    <FormItem>
+                      <div style={{display:"flex",justifyContent:"space-around"}}>
+                        <Button type="primary" onClick={this.buyrex} 
+                        disabled={this.state.buyRexByFundStatus}
+                        >{RexPageBuyrex}</Button>
+                        <Button type="primary" onClick={this.sellrex}>{RexPageSellrex}</Button>
+                      </div>
+                    </FormItem>
+                  </div>
+                ):null}
+
+                {this.state.choiceResourseType == 2 ?(
+                 <div>
+                   
+                    <FormItem {...formItemLayout}>
+                      {getFieldDecorator('buyCPUAmount', {
+                        rules: [
+                          {
+                            required: true,
+                            message: "buyCPUAmount",
+                          }
+                        ]
+                      })(
+                        <Input
+                          prefix={
+                            <Icon
+                              type="user"
+                              style={{ color: 'rgba(0,0,0,.25)' }}
+                            />
+                          }
+                          placeholder="buyCPUAmount"
+                        />,
+                      )}
+                    </FormItem>
+                    <FormItem>
+                      <div style={{display:"flex",justifyContent:"space-around"}}>
+                        <Button type="primary" onClick={this.unstaketorex}  >{RexPageBuyrex}</Button>
+                      </div>
+                    </FormItem>
+                 </div>
+                ):null}
+
+                {this.state.choiceResourseType == 3 ?(
+                  <div>
+                   
+                    <FormItem {...formItemLayout}>
+                      {getFieldDecorator('buyNetAmount', {
+                        rules: [
+                          {
+                            required: true,
+                            message: "buyNetAmount",
+                          }
+                        ]
+                      })(
+                        <Input
+                          prefix={
+                            <Icon
+                              type="user"
+                              style={{ color: 'rgba(0,0,0,.25)' }}
+                            />
+                          }
+                          placeholder="buyNetAmount"
+                        />,
+                      )}
+                    </FormItem>
+                    <FormItem>
+                      <div style={{display:"flex",justifyContent:"space-around"}}>
+                        <Button type="primary" onClick={this.unstaketorex}  >{RexPageBuyrex}</Button>
+                      </div>
+                    </FormItem>
+                  </div>
+                ):null}
+
+              
             </TabPane>
             <TabPane tab={RexPageRent} key="3">
               <FormItem {...formItemLayout}>

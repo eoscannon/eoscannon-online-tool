@@ -66,6 +66,10 @@ export default defineMessages({
     id: 'RexPage ResourseReceive',
     defaultMessage: '资源接收者'
   },
+  CreatorAccountNameToRexPlaceholder:{
+    id: 'RexPage CreatorAccountNameToRexPlaceholder',
+    defaultMessage: ''
+  },
   RexPageHandleTraction:{
     id: 'RexPage HandleTraction',
     defaultMessage: '资源接收者'
