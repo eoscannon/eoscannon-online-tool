@@ -1,3 +1,4 @@
+
 /*
  * DealGetQrcode
  *
@@ -40,7 +41,7 @@ export default class DealGetQrcode extends Component {
       nextProps.transaction !== this.props.transaction &&
       !nextProps.scatterStatus
     ) {
-       JSON.stringify(nextProps.transaction) === '{}' ?  this.setState({QrCodeValue: ''}, this.props.form.setFieldsValue({ transactionTextArea: ''})) : this.setState({ eos: nextProps.eos }, this.getUnSignedBuffer)
+      JSON.stringify(nextProps.transaction) === '{}' ? this.setState({QrCodeValue: ''}, this.props.form.setFieldsValue({ transactionTextArea: ''})) : this.setState({ eos: nextProps.eos }, this.getUnSignedBuffer)
     }
 
     if(nextProps.action === 'transfer') {
@@ -84,23 +85,23 @@ export default class DealGetQrcode extends Component {
   }
  // 简单数组去重
  uniqueArr= (array) => {
-  // res用来存储结果
-  var res = [];
-  for (var i = 0, arrayLen = array.length; i < arrayLen; i++) {
-      for (var j = 0, resLen = res.length; j < resLen; j++ ) {
-          if (array[i] === res[j]) {
-              break;
-          }
-      }
-      // 如果array[i]是唯一的，那么执行完循环，j等于resLen
-      if (j === resLen) {
-          res.push(array[i])
-      }
-  }
-  return res;
-}
+   // res用来存储结果
+   var res = []
+   for (var i = 0, arrayLen = array.length; i < arrayLen; i++) {
+     for (var j = 0, resLen = res.length; j < resLen; j++) {
+       if (array[i] === res[j]) {
+         break
+       }
+     }
+     // 如果array[i]是唯一的，那么执行完循环，j等于resLen
+     if (j === resLen) {
+       res.push(array[i])
+     }
+   }
+   return res
+ }
 
-// 排除空字段
+ // 排除空字段
   testKong = (FromAccountName) =>{
     var reg = /(^\s+)|(\s+$)|\s+/g
     return reg.test(FromAccountName)
@@ -109,17 +110,17 @@ export default class DealGetQrcode extends Component {
   // 生成报文
   getUnSignedBuffer = () => {
     let chainId
-    for(let i=0; i< config.netWorkConfig.length; i++){
-      if(this.props.SelectedNetWork === config.netWorkConfig[i].networkName && config.netWorkConfig[i].chainId){
+    for(let i = 0; i < config.netWorkConfig.length; i++) {
+      if(this.props.SelectedNetWork === config.netWorkConfig[i].networkName && config.netWorkConfig[i].chainId) {
         chainId = config.netWorkConfig[i].chainId
       }
     }
     let reg = new RegExp('https')
-    if(reg.test(this.props.SelectedNetWork) || this.props.SelectedNetWork ==='other'){
+    if(reg.test(this.props.SelectedNetWork) || this.props.SelectedNetWork === 'other') {
       chainId = storage.getChainId()
     }
-    
-    console.log('chainId',chainId)
+
+    console.log('chainId', chainId)
     const buf = Fcbuffer.toBuffer(
       this.state.eos.fc.structs.transaction,
       this.props.transaction.transaction,
@@ -230,28 +231,28 @@ export default class DealGetQrcode extends Component {
                 />
               )}
             </FormItem>
-              <FormItem>
-                {getFieldDecorator('transactionTextArea', {
-                  rules: [
-                    { required: true, message: TransactionTextAreaPlaceholder }
-                  ]
-                })(
-                  <TextArea
-                    disabled
-                    autosize={{ minRows: 4, maxRows: 12 }}
-                    placeholder={TransactionTextAreaPlaceholder}
-                  />,
-                )}
-              </FormItem>
-            {this.state.QrCodeValue  ===  ''  ? null : (
+            <FormItem>
+              {getFieldDecorator('transactionTextArea', {
+                rules: [
+                  { required: true, message: TransactionTextAreaPlaceholder }
+                ]
+              })(
+                <TextArea
+                  disabled
+                  autosize={{ minRows: 4, maxRows: 12 }}
+                  placeholder={TransactionTextAreaPlaceholder}
+                />,
+              )}
+            </FormItem>
+            {this.state.QrCodeValue === '' ? null : (
               <div>
                 <FormItem>
                   <div style={{ textAlign: 'center' }}>
-                      <QRCode
-                        value={this.state.QrCodeValue}
-                        size={256}
-                        style={{ transform: ' rotate(270deg)' }}
-                      />
+                    <QRCode
+                      value={this.state.QrCodeValue}
+                      size={256}
+                      style={{ transform: ' rotate(270deg)' }}
+                    />
                   </div>
                 </FormItem>
                 <FormItem style={{ textAlign: 'center' }}>
@@ -283,5 +284,5 @@ DealGetQrcode.propTypes = {
   QrCodeValue: PropTypes.string,
   SelectedNetWork: PropTypes.string,
   isHiddenGetTransactionButton: PropTypes.bool,
-  GetTransactionButtonScatterState: PropTypes.bool,
+  GetTransactionButtonScatterState: PropTypes.bool
 }
