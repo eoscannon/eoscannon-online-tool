@@ -344,4 +344,17 @@ export default defineMessages({
     id: 'header HelpPage',
     defaultMessage: 'Help'
   },
+  RexPageEOSAmount:{
+    id: 'RexPage EOSAmount',
+    defaultMessage: 'EOS余额'
+  },
+ 
+  RexPageNetAmount:{
+    id: 'RexPage NetAmount',
+    defaultMessage: 'NET余额'
+  },
+  RexPageCPUAmount:{
+    id: 'RexPage CPUAmount',
+    defaultMessage: 'CPU余额'
+  }
 })

@@ -299,5 +299,10 @@
   "RexPage RentResourse": "Resource Type",
   "RexPage CancelStake": "Cancel Staked",
   "RexPage ResourseReceive": "Resource Receiver",
-  "RexPage HandleTraction": "Generate transaction"
+  "RexPage HandleTraction": "Generate transaction",
+  "RexPage NetAmount":"NET Balance",
+  "RexPage EOSAmount":"EOS Balance",
+  "RexPage CPUAmount":"CPU Balance",
+  "RexPage ModalAttention":"Attention",
+  "RexPage ModalContent":"To bug REX, you must vote for at least 21 BPs .Your account has not yet been voted, you can vote for our community proxy CannonProxy1."
 }

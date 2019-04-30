@@ -41,7 +41,20 @@ export class ProxyPage extends React.Component {
   /**
    * 链接scatter
    * */
-  componentDidMount () {}
+  componentDidMount () {
+    if (this.props.location.state) {
+      const accountname = this.props.location.state.accountname
+
+      // 接收到数据后插入表格
+      try{
+        this.props.form.setFieldsValue({
+          voter:accountname
+         })
+      }catch(err){
+        console.log('err === ',err)
+      }
+    }
+  }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -106,6 +119,7 @@ export class ProxyPage extends React.Component {
   voteByScatter = () => {
     getEosByScatter(this.props.SelectedNetWork, this.handleTranscationScatter)
   };
+
   handleTranscationScatter = () => {
     this.setState({ scatterStatus: true })
     const eos = global.EosByScatter

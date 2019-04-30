@@ -299,5 +299,10 @@
   "RexPage RentResourse": "资源类型",
   "RexPage CancelStake": "取消质押",
   "RexPage ResourseReceive": "资源接收者",
-  "RexPage HandleTraction": "生成交易"
+  "RexPage HandleTraction": "生成交易",
+  "RexPage NetAmount":"NET余额",
+  "RexPage EOSAmount":"EOS余额",
+  "RexPage CPUAmount":"CPU余额",
+  "RexPage ModalAttention":"提示",
+  "RexPage ModalContent":"购买REX必须投票给至少21个节点或者投票给代理。您账号还未投票，可以投票给我们的社区代理 CannonProxy1"
 }

@@ -13,6 +13,7 @@ import { makeSelectNetwork } from '../LanguageProvider/selectors'
 import {
   formItemLayout,
   getNewApi,
+  GetNewRpc,
   openTransactionFailNotification
 } from '../../utils/utils'
 import { LayoutContent } from '../../components/NodeComp'
@@ -26,6 +27,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 const TabPane = Tabs.TabPane;
 const RadioGroup = Radio.Group;
+const confirm = Modal.confirm;
 
 export class RexPage extends React.Component {
   constructor (props) {
@@ -47,8 +49,12 @@ export class RexPage extends React.Component {
       buyRexByFundStatus: false,
       buyRexByCpuStatus: false,
       buyRexByNetStatus: false,
-      sellRexByFundStatus: false
-
+      sellRexByFundStatus: false,
+      accountMount:"",
+      accountCpuMount:"",
+      accountNetMount:"",
+      accountData:{},
+      modalVisible:false
     }
   }
   /**
@@ -276,6 +282,9 @@ export class RexPage extends React.Component {
   }
 
   buyrex=()=>{
+    if(!this.checkAccountStatus()){
+      return
+    }
     (async ()=>{
       try{
         const values = this.props.form.getFieldsValue()
@@ -323,6 +332,9 @@ export class RexPage extends React.Component {
     })()
   }
   sellrex=()=>{
+    if(!this.checkAccountStatus()){
+      return
+    }
     (async ()=>{
       try{
         const values = this.props.form.getFieldsValue()
@@ -471,6 +483,9 @@ export class RexPage extends React.Component {
   }
 
   unstaketorex=()=>{
+    if(!this.checkAccountStatus()){
+      return
+    }
     (async ()=>{
       try{
         const values = this.props.form.getFieldsValue()
@@ -530,6 +545,49 @@ export class RexPage extends React.Component {
     })()
   }
 
+  accountBulr=()=>{
+    (async ()=>{
+      this.setState({
+        accountData:"",
+        accountMount: "",
+        accountCpuMount:"",
+        accountNetMount: ""
+      })
+      const values = this.props.form.getFieldsValue()
+      const { accountBuyRex} = values
+      for(let i = 0; i < config.netWorkConfig.length; i++) {
+        if(config.netWorkConfig[i].networkName === this.props.SelectedNetWork) {
+          var accountData = await GetNewRpc(config.netWorkConfig[i].Endpoint).get_account(accountBuyRex)
+        }
+      }
+      this.setState({
+        accountData:accountData,
+        accountMount: accountData.core_liquid_balance,
+        accountCpuMount:accountData.total_resources.cpu_weight,
+        accountNetMount:accountData.total_resources.net_weight
+      })
+    })()
+  }
+
+  checkAccountStatus=()=>{
+    if(this.state.accountData.voter_info.producers.length < 21 && !this.state.accountData.voter_info.proxy){
+      this.setState({modalVisible:true})
+      return false
+    }
+    return true
+  }
+  
+  handleOk=()=>{
+    const values = this.props.form.getFieldsValue()
+    const { accountBuyRex} = values
+    this.props.history.push({
+      pathname: '/proxy',
+      state: {
+        accountname: accountBuyRex
+      }
+    })
+  }
+
   onChangeType = (e) => {
     this.setState({
       resourseType: e.target.value,
@@ -549,6 +607,15 @@ export class RexPage extends React.Component {
     const ProposalFirstOne = this.state.formatMessage(messages.ProposalFirstOne)
     const ProducersSendTranscation = this.state.formatMessage(
       utilsMsg.ProducersSendTranscation,
+    )
+    const RexPageEOSAmount = this.state.formatMessage(
+      utilsMsg.RexPageEOSAmount,
+    )
+    const RexPageCPUAmount = this.state.formatMessage(
+      utilsMsg.RexPageCPUAmount,
+    )
+    const RexPageNetAmount = this.state.formatMessage(
+      utilsMsg.RexPageNetAmount,
     )
     const RexPageAccountManage = this.state.formatMessage(
       messages.RexPageAccountManage,
@@ -583,15 +650,18 @@ export class RexPage extends React.Component {
     const RexPageCancelStake = this.state.formatMessage(
       messages.RexPageCancelStake,
     )
-    // const CreatorAccountNameToRexPlaceholder = this.state.formatMessage(
-    //   messages.CreatorAccountNameToRexPlaceholder,
-    // )
     
     const RexPageResourseReceive = this.state.formatMessage(
       messages.RexPageResourseReceive,
     )
     const RexPageHandleTraction = this.state.formatMessage(
       messages.RexPageHandleTraction,
+    )
+    const RexPageModalAttention = this.state.formatMessage(
+      messages.RexPageModalAttention,
+    )
+    const RexPageModalContent = this.state.formatMessage(
+      messages.RexPageModalContent,
     )
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
@@ -628,7 +698,7 @@ export class RexPage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "",
+                      message: "充值金额",
                     }
                   ]
                 })(
@@ -668,10 +738,18 @@ export class RexPage extends React.Component {
                           style={{ color: 'rgba(0,0,0,.25)' }}
                         />
                       }
+                      onBlur={this.accountBulr}
                       placeholder={CreatorAccountNamePlaceholder}
                     />,
                   )}
                 </FormItem>
+                {!this.state.accountMount && !this.state.accountCpuMount &&!this.state.accountNetMount?null: (
+                  <FormItem {...formItemLayout}>
+                  <div>{RexPageEOSAmount}: <span >{this.state.accountMount}</span></div>
+                  <div>{RexPageCPUAmount}: <span >{this.state.accountCpuMount}</span></div>
+                  <div>{RexPageNetAmount}: <span >{this.state.accountNetMount}</span></div>
+                  </FormItem>
+                )}
                 <FormItem {...formItemLayout}>
                   <RadioGroup onChange={this.onChangeResourseType} value={this.state.choiceResourseType}>
                     <Radio value={1}>Fund</Radio>
@@ -773,8 +851,6 @@ export class RexPage extends React.Component {
                     </FormItem>
                   </div>
                 ):null}
-
-              
             </TabPane>
             <TabPane tab={RexPageRent} key="3">
               <FormItem {...formItemLayout}>
@@ -941,6 +1017,7 @@ export class RexPage extends React.Component {
                 </FormItem>
             </TabPane> */}
           </Tabs>
+        
             <NewDealGetQrcode
               eos={this.state.eos}
               form={this.props.form}
@@ -973,6 +1050,15 @@ export class RexPage extends React.Component {
             />
           </Card>
         </Col>
+        <Modal
+            title={RexPageModalAttention}
+            visible={this.state.modalVisible}
+            onOk={this.handleOk}
+            onCancel={()=>this.setState({modalVisible:false})}
+          >
+          <p>{RexPageModalContent}</p>
+
+          </Modal>
       </LayoutContent>
     )
   }

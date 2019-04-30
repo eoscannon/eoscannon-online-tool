@@ -586,6 +586,7 @@ export {
   symbolList,
   airgrabList,
   symbolListWorbli,
-  getNewApi
+  getNewApi,
+  GetNewRpc
 }
 

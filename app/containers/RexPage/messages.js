@@ -89,5 +89,14 @@ export default defineMessages({
   ProposalName: {
     id: 'ProposalPage ProposalName',
     defaultMessage: '提案名称'
-  }
+  }, 
+  RexPageModalAttention:{
+    id: 'RexPage ModalAttention',
+    defaultMessage: '提示'
+  },
+  RexPageModalContent:{
+    id: 'RexPage ModalContent',
+    defaultMessage: '投票未达到21个节点，前往代理投票'
+  },
+  
 })
