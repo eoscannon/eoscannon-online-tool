@@ -751,10 +751,11 @@ export class RexPage extends React.Component {
                   </FormItem>
                 )}
                 <FormItem {...formItemLayout}>
+                  <span>支付方式：</span>
                   <RadioGroup onChange={this.onChangeResourseType} value={this.state.choiceResourseType}>
-                    <Radio value={1}>Fund</Radio>
-                    <Radio value={2}>CPU</Radio>
-                    <Radio value={3}>NET</Radio>
+                    <Radio value={1}>Rex账户余额</Radio>
+                    <Radio value={2}>抵押的CPU</Radio>
+                    <Radio value={3}>抵押的NET</Radio>
                   </RadioGroup>
                 </FormItem>
                 {this.state.choiceResourseType ==1?(
@@ -775,7 +776,7 @@ export class RexPage extends React.Component {
                               style={{ color: 'rgba(0,0,0,.25)' }}
                             />
                           }
-                          placeholder={RexPageMoneyAmount}
+                          placeholder="购买的EOS / 卖出的REX数量"
                         />,
                       )}
                     </FormItem>
