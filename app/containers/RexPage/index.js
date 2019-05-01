@@ -809,7 +809,7 @@ export class RexPage extends React.Component {
                               style={{ color: 'rgba(0,0,0,.25)' }}
                             />
                           }
-                          placeholder="buyCPUAmount"
+                          placeholder="购买数量(单位:EOS) "
                         />,
                       )}
                     </FormItem>
@@ -840,7 +840,7 @@ export class RexPage extends React.Component {
                               style={{ color: 'rgba(0,0,0,.25)' }}
                             />
                           }
-                          placeholder="buyNetAmount"
+                          placeholder="购买数量(单位:EOS) "
                         />,
                       )}
                     </FormItem>
