@@ -98,5 +98,36 @@ export default defineMessages({
     id: 'RexPage ModalContent',
     defaultMessage: '投票未达到21个节点，前往代理投票'
   },
-  
+  RexPageRexpayment:{
+    id: 'RexPage Rexpayment',
+    defaultMessage: '支付方式'
+  },
+  RexPageRexAccountBalance:{
+    id: 'RexPage RexAccountBalance',
+    defaultMessage: 'REX账户余额'
+  },
+  RexPageDepositBalance:{
+    id: 'RexPage DepositBalance',
+    defaultMessage: '充值金额'
+  },
+  RexPageWithdrawBalance:{
+    id: 'RexPage WithdrawBalance',
+    defaultMessage: '提现金额'
+  },
+  RexPageStakedCpu:{
+    id: 'RexPage StakedCpu',
+    defaultMessage: '质押的CPU'
+  },
+  RexPageStakedNet:{
+    id: 'RexPage StakedNet',
+    defaultMessage: '质押的NET'
+  },
+  RexPageBuyandSold:{
+    id: 'RexPage BuyandSold',
+    defaultMessage: '购买的EOS / 卖出的REX数量'
+  },
+  RexPageQuantity:{
+    id: 'RexPage Quantity',
+    defaultMessage: '购买数量(单位:EOS)'
+  },
 })

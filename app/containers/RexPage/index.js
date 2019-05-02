@@ -663,6 +663,31 @@ export class RexPage extends React.Component {
     const RexPageModalContent = this.state.formatMessage(
       messages.RexPageModalContent,
     )
+    const RexPageDepositBalance = this.state.formatMessage(
+      messages.RexPageDepositBalance,
+    )
+    const RexPageWithdrawBalance = this.state.formatMessage(
+      messages.RexPageWithdrawBalance,
+    )
+    const RexPageRexAccountBalance = this.state.formatMessage(
+      messages.RexPageRexAccountBalance,
+    )
+    const RexPageRexpayment = this.state.formatMessage(
+      messages.RexPageRexpayment,
+    )
+    const RexPageStakedCpu = this.state.formatMessage(
+      messages.RexPageStakedCpu,
+    )
+    const RexPageStakedNet = this.state.formatMessage(
+      messages.RexPageStakedNet,
+    )
+    const RexPageBuyandSold = this.state.formatMessage(
+      messages.RexPageBuyandSold,
+    )
+    const RexPageQuantity = this.state.formatMessage(
+      messages.RexPageQuantity,
+    )
+    
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     )
@@ -698,7 +723,7 @@ export class RexPage extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "充值金额",
+                      message: {RexPageStoreFund},
                     }
                   ]
                 })(
@@ -751,11 +776,11 @@ export class RexPage extends React.Component {
                   </FormItem>
                 )}
                 <FormItem {...formItemLayout}>
-                  <span>支付方式：</span>
+                  <span>{RexPageRexpayment}</span>
                   <RadioGroup onChange={this.onChangeResourseType} value={this.state.choiceResourseType}>
-                    <Radio value={1}>Rex账户余额</Radio>
-                    <Radio value={2}>抵押的CPU</Radio>
-                    <Radio value={3}>抵押的NET</Radio>
+                    <Radio value={1}>{RexPageRexAccountBalance}</Radio>
+                    <Radio value={2}>{RexPageStakedCpu}</Radio>
+                    <Radio value={3}>{RexPageStakedNet}</Radio>
                   </RadioGroup>
                 </FormItem>
                 {this.state.choiceResourseType ==1?(
@@ -776,7 +801,7 @@ export class RexPage extends React.Component {
                               style={{ color: 'rgba(0,0,0,.25)' }}
                             />
                           }
-                          placeholder="购买的EOS / 卖出的REX数量"
+                          placeholder={RexPageBuyandSold}
                         />,
                       )}
                     </FormItem>
@@ -810,7 +835,7 @@ export class RexPage extends React.Component {
                               style={{ color: 'rgba(0,0,0,.25)' }}
                             />
                           }
-                          placeholder="购买数量(单位:EOS) "
+                          placeholder={RexPageQuantity}
                         />,
                       )}
                     </FormItem>
@@ -841,7 +866,7 @@ export class RexPage extends React.Component {
                               style={{ color: 'rgba(0,0,0,.25)' }}
                             />
                           }
-                          placeholder="购买数量(单位:EOS) "
+                          placeholder={RexPageQuantity}
                         />,
                       )}
                     </FormItem>

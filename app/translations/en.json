@@ -288,7 +288,7 @@
   "AccountSearchPage FunctionSearchMainRelative": "Main network related account: ",
   "AccountSearchPage FunctionSearchBosRelative": "BOS related account: ",
   "RexPage AccountManage": "Deposit And Withdraw",
-  "RexPage StoreFund": "Deposit And Withdraw Amount",
+  "RexPage StoreFund": "Deposit And Withdraw Amount(Unit: EOS)",
   "RexPage Deposit": "Deposit",
   "RexPage Withdraw": "Withdraw",
   "RexPage RexManage": "Buy and Sell Rex",
@@ -304,5 +304,13 @@
   "RexPage EOSAmount":"EOS Balance",
   "RexPage CPUAmount":"CPU Balance",
   "RexPage ModalAttention":"Attention",
-  "RexPage ModalContent":"To bug REX, you must vote for at least 21 BPs .Your account has not yet been voted, you can vote for our community proxy CannonProxy1."
+  "RexPage ModalContent":"To bug REX, you must vote for at least 21 BPs .Your account has not yet been voted, you can vote for our community proxy CannonProxy1.",
+  "RexPage Rexpayment":"Payment: ",
+  "RexPage RexAccountBalance":"Rex Account Balance",
+  "RexPage DepositBalance":"Deposit Balance",
+  "RexPage WithdrawBalance":"Withdraw Balance",
+  "RexPage StakedCpu":"Staked Cpu",
+  "RexPage StakedNet":"Staked Net",
+  "RexPage BuyandSold":"EOS purchased / number of REX sold",
+  "RexPage Quantity":"Quantity(Unit: EOS)"
 }
