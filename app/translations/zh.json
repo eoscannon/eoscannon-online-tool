@@ -298,7 +298,7 @@
   "RexPage Rent": "租CPU/NET",
   "RexPage RentResourse": "资源类型",
   "RexPage CancelStake": "取消质押",
-  "RexPage ResourseReceive": "资源接收者",
+  "RexPage ResourseReceive": "资源接收账户",
   "RexPage HandleTraction": "生成交易",
   "RexPage NetAmount":"NET余额",
   "RexPage EOSAmount":"EOS余额",
