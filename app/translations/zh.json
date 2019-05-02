@@ -288,7 +288,7 @@
   "AccountSearchPage FunctionSearchMainRelative": "主网相关账号",
   "AccountSearchPage FunctionSearchBosRelative": "BOS相关账号",
   "RexPage AccountManage": "REX账户充值/提现",
-  "RexPage StoreFund": "充值/提现金额",
+  "RexPage StoreFund": "充值/提现金额(单位:EOS)",
   "RexPage Deposit": "充值",
   "RexPage Withdraw": "提现",
   "RexPage RexManage": "买卖Rex",
@@ -304,5 +304,13 @@
   "RexPage EOSAmount":"EOS余额",
   "RexPage CPUAmount":"CPU余额",
   "RexPage ModalAttention":"提示",
-  "RexPage ModalContent":"购买REX必须投票给至少21个节点或者投票给代理。您账号还未投票，可以投票给我们的社区代理 CannonProxy1"
+  "RexPage ModalContent":"购买REX必须投票给至少21个节点或者投票给代理。您账号还未投票，可以投票给我们的社区代理 CannonProxy1",
+  "RexPage Rexpayment":"支付方式: ",
+  "RexPage RexAccountBalance":"REX账户余额",
+  "RexPage DepositBalance":"充值金额",
+  "RexPage WithdrawBalance":"提现金额",
+  "RexPage StakedCpu":"质押的CPU",
+  "RexPage StakedNet":"质押的NET",
+  "RexPage BuyandSold":"购买的EOS / 卖出的REX数量",
+  "RexPage Quantity":"购买数量(单位:EOS)"
 }
