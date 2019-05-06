@@ -305,7 +305,7 @@
   "RexPage CPUAmount":"CPU Balance",
   "RexPage ModalAttention":"Attention",
   "RexPage ModalContent":"To bug REX, you must vote for at least 21 BPs .Your account has not yet been voted, you can vote for our community proxy CannonProxy1.",
-  "RexPage Rexpayment":"Payment: ",
+  "RexPage Rexpayment":"Payment(Payback): ",
   "RexPage RexAccountBalance":"Rex Account Balance",
   "RexPage DepositBalance":"Deposit Balance",
   "RexPage WithdrawBalance":"Withdraw Balance",
@@ -314,5 +314,6 @@
   "RexPage BuyandSold":"EOS purchased / number of REX sold",
   "RexPage Quantity":"Quantity(Unit: EOS)",
   "RexPage FirstMessage":"Step 1/3: Generate transaction",
-  "RexPage FirstDescription":"xxx"
+  "RexPage AlertDescriptionLast":"Between the EOS account and the REX account, you can deposit or withdraw without delay.",
+  "RexPage FirstDescription":"REX account is similar to EOS's financial account. To purchase REX, you can pay the REX account balance, or staked CPU / NET.  For selling REX, your EOS will be returned to your REX account."
 }

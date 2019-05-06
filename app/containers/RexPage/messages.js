@@ -134,4 +134,8 @@ export default defineMessages({
     id: 'RexPage NetQuantity',
     defaultMessage: '使用NET购买数量(单位:EOS)'
   },
+  CopyAlertFirstDescriptionLast:{
+    id: 'RexPage AlertDescriptionLast',
+    defaultMessage: 'EOS账户和REX账户之间，可以随充随提。'
+  },
 })

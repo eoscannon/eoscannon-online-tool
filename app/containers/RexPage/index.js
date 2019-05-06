@@ -693,15 +693,23 @@ export class RexPage extends React.Component {
     const CopyAlertFirstDescription = this.state.formatMessage(
       utilsMsg.CopyAlertFirstDescription,
     )
+    const CopyAlertFirstDescriptionLast = this.state.formatMessage(
+      messages.CopyAlertFirstDescriptionLast,
+    )
     return (
       <LayoutContent>
         <Col span={12}>
           <Card title={ProducersDealTranscation} bordered={false}>
-          <Alert
-                  message={CopyAlertFirstMessage}
-                  description={CopyAlertFirstDescription}
-                  type="info"
-                />
+          
+          <div style={{border: '1px solid #91d5ff', padding: '10px 15px', backgroundColor: '#e6f7ff', borderRadius: '3px'}}>
+            <div style={{ fontSize: '16px', fontWeight: 'bold'}}>{CopyAlertFirstMessage}</div>
+            <span style={{display: 'block', lineHeight: '22px'}}>
+            {CopyAlertFirstDescription}
+            </span>
+            <span style={{display: 'block', lineHeight: '22px'}}>
+            {CopyAlertFirstDescriptionLast}
+            </span>
+          </div>
           <Tabs defaultActiveKey="1" onChange={this.callback}>
             <TabPane tab={RexPageAccountManage} key="1">
               <FormItem {...formItemLayout}>

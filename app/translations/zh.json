@@ -305,7 +305,7 @@
   "RexPage CPUAmount":"CPU余额",
   "RexPage ModalAttention":"提示",
   "RexPage ModalContent":"购买REX必须投票给至少21个节点或者投票给代理。您账号还未投票，可以投票给我们的社区代理 CannonProxy1",
-  "RexPage Rexpayment":"支付方式: ",
+  "RexPage Rexpayment":"支付方式(回款): ",
   "RexPage RexAccountBalance":"REX账户余额",
   "RexPage DepositBalance":"充值金额",
   "RexPage WithdrawBalance":"提现金额",
@@ -315,5 +315,6 @@
   "RexPage CpuQuantity":"使用CPU购买数量(单位:EOS)",
   "RexPage NetQuantity":"使用NET购买数量(单位:EOS)",
   "RexPage FirstMessage":"步骤 1/3: 生成交易",
-  "RexPage FirstDescription":"EOS体系新增REX账户余额，需从账户余额充值EOS代币到REX账户余额中，再从REX账户余额中扣款购买REX,售卖REX所得EOS代币也将返还至Fund中，REX账户余额可提现至账户中"
+  "RexPage AlertDescriptionLast":"EOS账户和REX账户之间，可以随充随提。",
+  "RexPage FirstDescription":"REX账户，类似于EOS的理财账户。REX的购买，即将EOS代币换成REX代币，既可以使用REX账户余额，又可以使用已抵押的CPU/NET资源。REX的卖出，也就是将REX代币换成EOS代币，EOS代币回到REX账户。" 
 }
