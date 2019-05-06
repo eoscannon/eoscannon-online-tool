@@ -16,11 +16,12 @@ import {
   formItemLayout,
   getEos,
   openTransactionFailNotification,
-  airgrabList
+  airgrabList,
+  getNewApi
 } from '../../utils/utils'
 import { LayoutContent } from '../../components/NodeComp'
-import ScanQrcode from '../../components/ScanQrcode'
-import DealGetQrcode from '../../components/DealGetQrcode'
+import NewScanQrcode from '../../components/NewScanQrcode'
+import NewDealGetQrcode from '../../components/NewDealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
 
@@ -36,7 +37,8 @@ export class AirgrabPage extends React.Component {
       QrCodeValue: this.props.intl.formatMessage(utilsMsg.QrCodeInitValue), // 二维码内容
       transaction: {},
       tableData: [],
-      tableColumns: []
+      tableColumns: [],
+      newtransaction:{}
     }
   }
   /**
@@ -137,40 +139,58 @@ export class AirgrabPage extends React.Component {
         sym: `4,${record.symbol}`
       }
     }
+    if (record.account === 'telosflymoon') {
+      data = {
+        owner: AccountName,
+        sym: `4,${record.symbol}`
+      }
+    }
     //    console.log('data', data)
 
-    eos
-      .transaction(
-        {
+    (async ()=>{
+      try{
+        console.log("data ",data)
+        let result = await getNewApi(this.props.SelectedNetWork).transact({
           actions: [
             {
               account: record.account,
               name: record.method,
               authorization: [
                 {
-                  actor: AccountName,
-                  permission: 'active'
+                  actor:  AccountName,
+                  permission: "active"
                 }
               ],
               data
             }
           ]
-        },
-        {
+        }, {
+          broadcast: false,
           sign: false,
-          broadcast: false
-        },
-      )
-      .then(tr => {
+          blocksBehind: 3,
+          expireSeconds: 3600
+        });
+        console.log("result ",result)
+
+        var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
+        if(tx)
         this.setState({
-          transaction: tr.transaction,
-          eos
+          transaction: result.serializedTransaction,
+          newtransaction : tx
         })
-      })
-      .catch(err => {
-        console.log('catch err', err)
+        console.log("tx ",tx)
+
+      }catch(err){
+        console.log('err ',err)
+        this.setState({
+          transaction: '',
+          newtransaction : ''
+        })
         openTransactionFailNotification(this.state.formatMessage, err.name)
-      })
+
+      }
+    })()
+
   };
 
   checkAccountName = (rule, value, callback) => {
@@ -191,6 +211,7 @@ export class AirgrabPage extends React.Component {
     const OwnerPlaceholder = this.state.formatMessage(
       messages.OwnerPlaceholder,
     )
+  
     // const OwnerLabel = this.state.formatMessage(messages.OwnerLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
@@ -204,6 +225,7 @@ export class AirgrabPage extends React.Component {
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
               <FormItem>
+            
                 <Alert
                   message={AirGrabAlertMessage}
                   description={AirGrabAlertDescription}
@@ -234,27 +256,35 @@ export class AirgrabPage extends React.Component {
                   size="middle"
                 />
               </FormItem>
-              <DealGetQrcode
-                eos={this.state.eos}
-                form={this.props.form}
-                formatMessage={this.state.formatMessage}
-                isHiddenGetTransactionButton
-                GetTransactionButtonClick={this.handleGetTransaction}
-                GetTransactionButtonState={this.state.GetTransactionButtonState}
-                QrCodeValue={this.state.QrCodeValue}
-                SelectedNetWork={this.props.SelectedNetWork}
-                transaction={this.state.transaction}
-              />
+             
+            <NewDealGetQrcode
+              eos={this.state.eos}
+              form={this.props.form}
+              formatMessage={this.state.formatMessage}
+              GetTransactionButtonClick={this.handleGetTransaction}
+              GetTransactionButtonState={
+                this.state.GetTransactionButtonState
+              }
+              QrCodeValue={this.state.QrCodeValue}
+              SelectedNetWork={this.props.SelectedNetWork}
+              transaction={this.state.transaction}
+              newtransaction={this.state.newtransaction}
+              voteByScatterClick={this.voteByScatter}
+              scatterStatus={this.state.scatterStatus}
+              GetTransactionButtonScatterState={
+                this.state.GetTransactionButtonScatterState
+              }
+            />
             </Card>
           </Col>
           <Col span={12}>
             <Card title={ProducersSendTranscation} bordered={false}>
-              <ScanQrcode
+              <NewScanQrcode
                 eos={this.state.eos}
                 form={this.props.form}
                 formatMessage={this.state.formatMessage}
                 SelectedNetWork={this.props.SelectedNetWork}
-                transaction={this.state.transaction}
+                transaction={this.state.newtransaction}
               />
             </Card>
           </Col>
