@@ -126,8 +126,12 @@ export default defineMessages({
     id: 'RexPage BuyandSold',
     defaultMessage: '购买的EOS / 卖出的REX数量'
   },
-  RexPageQuantity:{
-    id: 'RexPage Quantity',
-    defaultMessage: '购买数量(单位:EOS)'
+  RexPageCpuQuantity:{
+    id: 'RexPage CpuQuantity',
+    defaultMessage: '使用CPU购买数量(单位:EOS)'
+  },
+  RexPageNetQuantity:{
+    id: 'RexPage NetQuantity',
+    defaultMessage: '使用NET购买数量(单位:EOS)'
   },
 })

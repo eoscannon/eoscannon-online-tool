@@ -287,7 +287,7 @@
   "header HelpPage": "Help",
   "AccountSearchPage FunctionSearchMainRelative": "Main network related account: ",
   "AccountSearchPage FunctionSearchBosRelative": "BOS related account: ",
-  "RexPage AccountManage": "Deposit And Withdraw",
+  "RexPage AccountManage": "REX Account Deposit And Withdraw",
   "RexPage StoreFund": "Deposit And Withdraw Amount(Unit: EOS)",
   "RexPage Deposit": "Deposit",
   "RexPage Withdraw": "Withdraw",
@@ -312,5 +312,7 @@
   "RexPage StakedCpu":"Staked Cpu",
   "RexPage StakedNet":"Staked Net",
   "RexPage BuyandSold":"EOS purchased / number of REX sold",
-  "RexPage Quantity":"Quantity(Unit: EOS)"
+  "RexPage Quantity":"Quantity(Unit: EOS)",
+  "RexPage FirstMessage":"Step 1/3: Generate transaction",
+  "RexPage FirstDescription":"xxx"
 }

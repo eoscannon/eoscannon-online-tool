@@ -356,5 +356,13 @@ export default defineMessages({
   RexPageCPUAmount:{
     id: 'RexPage CPUAmount',
     defaultMessage: 'CPU余额'
-  }
+  },
+  CopyAlertFirstMessage:{
+    id: 'RexPage FirstMessage',
+    defaultMessage: '步骤 2/3: 签名交易'
+  },
+  CopyAlertFirstDescription:{
+    id: 'RexPage FirstDescription',
+    defaultMessage: '充值fund'
+  },
 })

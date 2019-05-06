@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { injectIntl } from 'react-intl'
-import { Form, Icon, Input, Card, Col, Button, Modal, Tabs, Select ,Radio } from 'antd'
+import { Form, Icon, Input, Card, Col, Button, Modal, Tabs, Select ,Radio ,Alert} from 'antd'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -83,10 +83,10 @@ export class RexPage extends React.Component {
    * */
   onValuesChange = nextProps => {
     const values = nextProps.form.getFieldsValue()
-    const { rentcpuaccount, paymoneyamount,receivecpuaccount ,resoursestoreMoney, accountBuyRex,buyAccount,buyCPUAmount,buyNetAmount} = values
+    const { account, paymoneyamount,receivecpuaccount ,resoursestoreMoney,buyAccount,buyCPUAmount,buyNetAmount} = values
     this.setState({
-      GetTransactionButtonState: !!rentcpuaccount && !!paymoneyamount && !!receivecpuaccount && !!resoursestoreMoney })
-      // this.setState({buyRexByFundStatus: accountBuyRex && this.state.choiceResourseType===1})
+      GetTransactionButtonState: !!account && !!paymoneyamount && !!receivecpuaccount && !!resoursestoreMoney })
+      // this.setState({buyRexByFundStatus:  this.state.choiceResourseType===1})
   };
 
   /**
@@ -288,10 +288,10 @@ export class RexPage extends React.Component {
     (async ()=>{
       try{
         const values = this.props.form.getFieldsValue()
-        const { accountBuyRex, buyAccount} = values
+        const { account, buyAccount} = values
         var data = {
           amount: Number(buyAccount).toFixed(4)+" "+this.state.nowBaseSymbol,
-          from: accountBuyRex
+          from: account
         }
     
         let result = await getNewApi(this.props.SelectedNetWork).transact({
@@ -301,7 +301,7 @@ export class RexPage extends React.Component {
               name: 'buyrex',
               authorization: [
                 {
-                  actor: accountBuyRex,
+                  actor: account,
                   permission: 'active'
                 }
               ],
@@ -338,10 +338,10 @@ export class RexPage extends React.Component {
     (async ()=>{
       try{
         const values = this.props.form.getFieldsValue()
-        const { accountBuyRex, buyAccount} = values
+        const { account, buyAccount} = values
         var data = {
           rex: Number(buyAccount).toFixed(4)+" REX",
-          from: accountBuyRex
+          from: account
         }
     
         let result = await getNewApi(this.props.SelectedNetWork).transact({
@@ -351,7 +351,7 @@ export class RexPage extends React.Component {
               name: 'sellrex',
               authorization: [
                 {
-                  actor: accountBuyRex,
+                  actor: account,
                   permission: 'active'
                 }
               ],
@@ -386,9 +386,9 @@ export class RexPage extends React.Component {
     (async ()=>{
       try{
         const values = this.props.form.getFieldsValue()
-        const { rentcpuaccount, paymoneyamount,receivecpuaccount ,resoursestoreMoney} = values
+        const { account, paymoneyamount,receivecpuaccount ,resoursestoreMoney} = values
         var data = {
-          from: rentcpuaccount,
+          from: account,
           receiver: receivecpuaccount,
           loan_payment:  Number(paymoneyamount).toFixed(4)+ ' '+this.state.nowBaseSymbol,
           loan_fund: Number(resoursestoreMoney).toFixed(4)+' '+this.state.nowBaseSymbol,
@@ -401,7 +401,7 @@ export class RexPage extends React.Component {
               name: 'rentcpu',
               authorization: [
                 {
-                  actor: rentcpuaccount,
+                  actor: account,
                   permission: 'active'
                 }
               ],
@@ -436,9 +436,9 @@ export class RexPage extends React.Component {
     (async ()=>{
       try{
         const values = this.props.form.getFieldsValue()
-        const { rentcpuaccount, paymoneyamount,receivecpuaccount ,resoursestoreMoney} = values
+        const { account, paymoneyamount,receivecpuaccount ,resoursestoreMoney} = values
         var data = {
-          from: rentcpuaccount,
+          from: account,
           receiver: receivecpuaccount,
           loan_payment:  Number(paymoneyamount).toFixed(4)+ ' '+this.state.nowBaseSymbol,
           loan_fund: Number(resoursestoreMoney).toFixed(4)+' '+this.state.nowBaseSymbol,
@@ -451,7 +451,7 @@ export class RexPage extends React.Component {
               name: 'rentnet',
               authorization: [
                 {
-                  actor: rentcpuaccount,
+                  actor: account,
                   permission: 'active'
                 }
               ],
@@ -489,21 +489,14 @@ export class RexPage extends React.Component {
     (async ()=>{
       try{
         const values = this.props.form.getFieldsValue()
-        const { accountBuyRex, buyCPUAmount,buyNetAmount} = values
+        const { account, buyCPUAmount,buyNetAmount} = values
         //2 is cpu and 3 is net
         if(this.state.choiceResourseType==2){
           var data = {
-            owner: accountBuyRex,
-            receiver: accountBuyRex,
-            from_net: '0.0000 '+this.state.nowBaseSymbol,
-            from_cpu: Number(buyCPUAmount).toFixed(4)+ ' '+this.state.nowBaseSymbol,
-          }
-        }else if(this.state.choiceResourseType==3){
-          var data = {
-            owner: accountBuyRex,
-            receiver: accountBuyRex,
-            from_net: Number(buyNetAmount).toFixed(4)+ ' '+this.state.nowBaseSymbol,
-            from_cpu: '0.0000 '+this.state.nowBaseSymbol,
+            owner: account,
+            receiver: account,
+            from_net: Number(buyNetAmount).toFixed(4)+ ' '+this.state.nowBaseSymbol || "0 "+this.state.nowBaseSymbol,
+            from_cpu: Number(buyCPUAmount).toFixed(4)+ ' '+this.state.nowBaseSymbol || "0 "+this.state.nowBaseSymbol,
           }
         }
     
@@ -514,7 +507,7 @@ export class RexPage extends React.Component {
               name: 'unstaketorex',
               authorization: [
                 {
-                  actor: accountBuyRex,
+                  actor: account,
                   permission: 'active'
                 }
               ],
@@ -554,10 +547,10 @@ export class RexPage extends React.Component {
         accountNetMount: ""
       })
       const values = this.props.form.getFieldsValue()
-      const { accountBuyRex} = values
+      const { account} = values
       for(let i = 0; i < config.netWorkConfig.length; i++) {
         if(config.netWorkConfig[i].networkName === this.props.SelectedNetWork) {
-          var accountData = await GetNewRpc(config.netWorkConfig[i].Endpoint).get_account(accountBuyRex)
+          var accountData = await GetNewRpc(config.netWorkConfig[i].Endpoint).get_account(account)
         }
       }
       this.setState({
@@ -570,6 +563,7 @@ export class RexPage extends React.Component {
   }
 
   checkAccountStatus=()=>{
+    console.log("this.state.accountData ",this.state.accountData)
     if(this.state.accountData.voter_info.producers.length < 21 && !this.state.accountData.voter_info.proxy){
       this.setState({modalVisible:true})
       return false
@@ -579,11 +573,11 @@ export class RexPage extends React.Component {
   
   handleOk=()=>{
     const values = this.props.form.getFieldsValue()
-    const { accountBuyRex} = values
+    const { account} = values
     this.props.history.push({
       pathname: '/proxy',
       state: {
-        accountname: accountBuyRex
+        accountname: account
       }
     })
   }
@@ -684,17 +678,30 @@ export class RexPage extends React.Component {
     const RexPageBuyandSold = this.state.formatMessage(
       messages.RexPageBuyandSold,
     )
-    const RexPageQuantity = this.state.formatMessage(
-      messages.RexPageQuantity,
+    const RexPageCpuQuantity = this.state.formatMessage(
+      messages.RexPageCpuQuantity,
     )
-    
+    const RexPageNetQuantity= this.state.formatMessage(
+      messages.RexPageNetQuantity,
+    )
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
+    )
+    const CopyAlertFirstMessage = this.state.formatMessage(
+      utilsMsg.CopyAlertFirstMessage,
+    )
+    const CopyAlertFirstDescription = this.state.formatMessage(
+      utilsMsg.CopyAlertFirstDescription,
     )
     return (
       <LayoutContent>
         <Col span={12}>
           <Card title={ProducersDealTranscation} bordered={false}>
+          <Alert
+                  message={CopyAlertFirstMessage}
+                  description={CopyAlertFirstDescription}
+                  type="info"
+                />
           <Tabs defaultActiveKey="1" onChange={this.callback}>
             <TabPane tab={RexPageAccountManage} key="1">
               <FormItem {...formItemLayout}>
@@ -748,7 +755,7 @@ export class RexPage extends React.Component {
             </TabPane>
             <TabPane tab={RexPageRexManage} key="2">
               <FormItem {...formItemLayout}>
-                  {getFieldDecorator('accountBuyRex', {
+                  {getFieldDecorator('account', {
                     rules: [
                       {
                         required: true,
@@ -780,7 +787,6 @@ export class RexPage extends React.Component {
                   <RadioGroup onChange={this.onChangeResourseType} value={this.state.choiceResourseType}>
                     <Radio value={1}>{RexPageRexAccountBalance}</Radio>
                     <Radio value={2}>{RexPageStakedCpu}</Radio>
-                    <Radio value={3}>{RexPageStakedNet}</Radio>
                   </RadioGroup>
                 </FormItem>
                 {this.state.choiceResourseType ==1?(
@@ -835,21 +841,10 @@ export class RexPage extends React.Component {
                               style={{ color: 'rgba(0,0,0,.25)' }}
                             />
                           }
-                          placeholder={RexPageQuantity}
+                          placeholder={RexPageCpuQuantity}
                         />,
                       )}
                     </FormItem>
-                    <FormItem>
-                      <div style={{display:"flex",justifyContent:"space-around"}}>
-                        <Button type="primary" onClick={this.unstaketorex}  >{RexPageBuyrex}</Button>
-                      </div>
-                    </FormItem>
-                 </div>
-                ):null}
-
-                {this.state.choiceResourseType == 3 ?(
-                  <div>
-                   
                     <FormItem {...formItemLayout}>
                       {getFieldDecorator('buyNetAmount', {
                         rules: [
@@ -866,7 +861,7 @@ export class RexPage extends React.Component {
                               style={{ color: 'rgba(0,0,0,.25)' }}
                             />
                           }
-                          placeholder={RexPageQuantity}
+                          placeholder={RexPageNetQuantity}
                         />,
                       )}
                     </FormItem>
@@ -875,12 +870,12 @@ export class RexPage extends React.Component {
                         <Button type="primary" onClick={this.unstaketorex}  >{RexPageBuyrex}</Button>
                       </div>
                     </FormItem>
-                  </div>
+                 </div>
                 ):null}
             </TabPane>
             <TabPane tab={RexPageRent} key="3">
               <FormItem {...formItemLayout}>
-                  {getFieldDecorator('rentcpuaccount', {
+                  {getFieldDecorator('account', {
                     rules: [
                       {
                         required: true,
@@ -911,7 +906,7 @@ export class RexPage extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: {RexPageResourseReceive},
+                        message: "",
                       }
                     ]
                   })(
