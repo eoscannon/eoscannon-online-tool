@@ -496,18 +496,11 @@ const symbolListWorbli = [
  * */
 const airgrabList = [
   {
-    key: '12',
-    symbol: 'SLAM',
-    account: 'slamdevelops',
-    method: 'signup',
-    url: 'https://slamgames.io'
-  },
-  {
     key: '11',
-    symbol: 'BRM',
-    account: 'openbrmeos11',
-    method: 'open',
-    url: 'https://openbrm.io'
+    symbol: 'MPT',
+    account: 'metpacktoken',
+    method: 'claim',
+    url: ''
   },
   {
     key: '10',
@@ -517,60 +510,11 @@ const airgrabList = [
     url: 'https://nebulaprotocol.com'
   },
   {
-    key: '8',
-    symbol: 'HVT',
-    account: 'hirevibeshvt',
-    method: 'claim',
-    url: 'https://www.hirevibes.io/'
-  },
-  {
     key: '7',
     symbol: 'ZKS',
     account: 'zkstokensr4u',
     method: 'claim',
     url: 'https://zks.one'
-  },
-  {
-    key: '9',
-    symbol: 'INF',
-    account: 'infinicoinio',
-    method: 'open',
-    url: 'https://www.infiniverse.net/'
-  },
-  {
-    key: '6',
-    symbol: 'DEOS',
-    account: 'thedeosgames',
-    method: 'claim',
-    url: 'http://deosgames.com'
-  },
-  {
-    key: '1',
-    symbol: 'ATD',
-    account: 'eosatidiumio',
-    method: 'signup',
-    url: 'https://www.atidium.io'
-  },
-  {
-    key: '2',
-    symbol: 'POOR',
-    account: 'poormantoken',
-    method: 'signup',
-    url: 'https://eostoolkit.io'
-  },
-  {
-    key: '4',
-    symbol: 'TRYBE',
-    account: 'trybenetwork',
-    method: 'claim',
-    url: 'https://trybe.one'
-  },
-  {
-    key: '5',
-    symbol: 'WIZZ',
-    account: 'wizznetwork1',
-    method: 'signup',
-    url: 'https://wizz.network'
   }
 ]
 
