@@ -113,33 +113,9 @@ export class AirgrabPage extends React.Component {
       console.log('err', err)
     })
     var data
-    if (record.method === 'signup' && record.symbol !== 'SEED') {
-      data = {
-        owner: AccountName,
-        quantity: `0.0000 ${record.symbol}`
-      }
-    }
-    if (record.method === 'signup' && record.symbol === 'SEED') {
-      data = {
-        owner: AccountName,
-        sym: `0.0000 ${record.symbol}`
-      }
-    }
-    if (record.account === 'slamdevelops') {
-      data = {
-        owner: AccountName,
-        quantity: `0.00000000 ${record.symbol}`
-      }
-    }
     if (record.method === 'claim') {
       data = {
         claimer: AccountName
-      }
-    }
-    if (record.account === 'thedeosgames') {
-      data = {
-        owner: AccountName,
-        quantity: `0.0000 ${record.symbol}`
       }
     }
     if(record.method === 'open') {
@@ -149,30 +125,16 @@ export class AirgrabPage extends React.Component {
         ram_payer: AccountName
       }
     }
-    if (record.account === 'infinicoinio') {
-      data = {
-        owner: AccountName,
-        symbol: `0.0000 ${record.symbol}`,
-        ram_payer: AccountName
-      }
-    }
-    if (record.account === 'hirevibeshvt') {
-      data = {
-        owner: AccountName,
-        sym: `0.0000 ${record.symbol}`
-      }
-    }
     if (record.account === 'zkstokensr4u') {
       data = {
         owner: AccountName,
         sym: `0,${record.symbol}`
       }
     }
-    if (record.account === 'openbrmeos11') {
+    if (record.account === 'metpacktoken') {
       data = {
         owner: AccountName,
-        symbol: `0.000 ${record.symbol}`,
-        ram_payer: AccountName
+        sym: `4,${record.symbol}`
       }
     }
     //    console.log('data', data)
@@ -250,7 +212,7 @@ export class AirgrabPage extends React.Component {
               </FormItem>
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('AccountName', {
-                  rules: [{ 
+                  rules: [{
                     required: true,
                      message: OwnerPlaceholder ,
                      validator: this.checkAccountName
