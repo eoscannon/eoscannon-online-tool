@@ -496,9 +496,9 @@ const symbolListWorbli = [
  * */
 const airgrabList = [
   {
-    key: '1',
+    key: '11',
     symbol: 'MPT',
-    account: 'telosflymoon',
+    account: 'metpacktoken',
     method: 'claim',
     url: ''
   },
@@ -515,8 +515,7 @@ const airgrabList = [
     account: 'zkstokensr4u',
     method: 'claim',
     url: 'https://zks.one'
-  },
-  
+  }
 ]
 
 export {
