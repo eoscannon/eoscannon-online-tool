@@ -10,6 +10,7 @@ import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { makeSelectNetwork } from '../LanguageProvider/selectors'
+import axios from "axios"
 import {
   formItemLayout,
   getNewApi,
@@ -53,8 +54,11 @@ export class RexPage extends React.Component {
       accountMount:"",
       accountCpuMount:"",
       accountNetMount:"",
-      accountData:{},
-      modalVisible:false
+      accountData:{},   
+      modalVisible:false, // 请前往代理弹框
+      rexPrice:0,   //rex 折算价
+      totalRexNum:0, //rex资金池数量
+      rexAmount:0 ,// rex 余额
     }
   }
   /**
@@ -66,7 +70,23 @@ export class RexPage extends React.Component {
         this.setState({nowBaseSymbol:config.netWorkConfig[i].BaseSymbol})
       }
     }
+    this.getRexPrice()
   }
+
+  getRexPrice=async()=>{
+    this.setState({rexPrice : 0})
+
+    for(let i = 0; i < config.netWorkConfig.length; i++) {
+      if(config.netWorkConfig[i].networkName === this.props.SelectedNetWork) {
+        var result = await GetNewRpc(config.netWorkConfig[i].Endpoint).get_table_rows({json:true, code:"eosio", scope:"eosio", table:'rexpool', limit:10,index_position: 1,key_type: "",show_payer: false})
+      }
+    }
+    let data = result.rows[0]
+    let totalRexNum = Number(data.total_lent.split(" ")[0]) +Number(data.total_unlent.split(" ")[0])
+    let rexprice = (Number(data.total_lent.split(" ")[0]) +Number(data.total_unlent.split(" ")[0]) )/Number(data.total_rex.split(" ")[0])
+    this.setState({rexPrice : rexprice,totalRexNum:totalRexNum})
+  }
+
   /**
    * 输入框内容变化时，改变按钮状态
    * */
@@ -76,6 +96,12 @@ export class RexPage extends React.Component {
       if(nextProps.SelectedNetWork === config.netWorkConfig[i].networkName){
         this.setState({nowBaseSymbol:config.netWorkConfig[i].BaseSymbol})
       }
+    }
+    if(nextProps.SelectedNetWork !== this.props.SelectedNetWork){
+      setTimeout(()=>{
+        this.accountBulr()
+        this.getRexPrice()
+      },500)
     }
   }
   /**
@@ -154,6 +180,17 @@ export class RexPage extends React.Component {
     })()
 
   };
+
+  getRexAmount = async(account)=>{
+    this.setState({rexAmount: 0})
+    for(let i = 0; i < config.netWorkConfig.length; i++) {
+      if(config.netWorkConfig[i].networkName === this.props.SelectedNetWork) {
+        let result = await GetNewRpc(config.netWorkConfig[i].Endpoint).get_table_rows({"json":true,"code":"eosio","scope":"eosio","table":"rexbal","lower_bound":account,"upper_bound":account,"limit":1})
+        let data = result.rows[0]
+        this.setState({rexAmount: data.rex_balance})
+      }
+    }
+  }
 
   checkaccount = (rule, value, callback) => {
     value = value.toLowerCase().trim()
@@ -553,6 +590,7 @@ export class RexPage extends React.Component {
           var accountData = await GetNewRpc(config.netWorkConfig[i].Endpoint).get_account(account)
         }
       }
+      this.getRexAmount(account) //获得eos rex余额
       this.setState({
         accountData:accountData,
         accountMount: accountData.core_liquid_balance,
@@ -684,6 +722,15 @@ export class RexPage extends React.Component {
     const RexPageNetQuantity= this.state.formatMessage(
       messages.RexPageNetQuantity,
     )
+    const RexPageRexPrice= this.state.formatMessage(
+      messages.RexPageRexPrice,
+    )
+    const RexPageRexTotalAmount= this.state.formatMessage(
+      messages.RexPageRexTotalAmount,
+    )
+    const RexPageRexNowAmount= this.state.formatMessage(
+      messages.RexPageRexNowAmount,
+    )
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     )
@@ -710,7 +757,7 @@ export class RexPage extends React.Component {
             {CopyAlertFirstDescriptionLast}
             </span>
           </div>
-          <Tabs defaultActiveKey="1" onChange={this.callback}>
+          <Tabs defaultActiveKey="1" onChange={this.callback}  style={{marginTop:'10px'}}>
             <TabPane tab={RexPageAccountManage} key="1">
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('account', {
@@ -759,7 +806,6 @@ export class RexPage extends React.Component {
                   <Button type="primary" onClick={this.withdraw}>{RexPageWithdraw}</Button>
                 </div>
               </FormItem>
-
             </TabPane>
             <TabPane tab={RexPageRexManage} key="2">
               <FormItem {...formItemLayout}>
@@ -783,19 +829,28 @@ export class RexPage extends React.Component {
                     />,
                   )}
                 </FormItem>
-                {!this.state.accountMount && !this.state.accountCpuMount &&!this.state.accountNetMount?null: (
-                  <FormItem {...formItemLayout}>
-                  <div>{RexPageEOSAmount}: <span >{this.state.accountMount}</span></div>
-                  <div>{RexPageCPUAmount}: <span >{this.state.accountCpuMount}</span></div>
-                  <div>{RexPageNetAmount}: <span >{this.state.accountNetMount}</span></div>
-                  </FormItem>
-                )}
                 <FormItem {...formItemLayout}>
-                  <span>{RexPageRexpayment}</span>
-                  <RadioGroup onChange={this.onChangeResourseType} value={this.state.choiceResourseType}>
-                    <Radio value={1}>{RexPageRexAccountBalance}</Radio>
-                    <Radio value={2}>{RexPageStakedCpu}</Radio>
-                  </RadioGroup>
+                  <div>
+                    <div>{RexPageRexPrice}: {this.state.rexPrice.toFixed(8) || 0} (EOS/REX)</div>
+                    <div>{RexPageRexTotalAmount}: {this.state.totalRexNum || 0} EOS</div>
+                  </div>
+                  {!this.state.accountMount && !this.state.accountCpuMount &&!this.state.accountNetMount?null: (
+                   <div>
+                      <div>{RexPageEOSAmount}: <span >{this.state.accountMount}</span></div>
+                      <div>{RexPageCPUAmount}: <span >{this.state.accountCpuMount}</span></div>
+                      <div>{RexPageNetAmount}: <span >{this.state.accountNetMount}</span></div>
+                      {/* {this.state.rexAmount?( */}
+                        <div>{RexPageRexNowAmount}: <span >{this.state.rexAmount}</span></div>
+                      {/* ):null} */}
+                   </div>
+                  )}
+                  <div>
+                    <span>{RexPageRexpayment}</span>
+                    <RadioGroup onChange={this.onChangeResourseType} value={this.state.choiceResourseType}>
+                      <Radio value={1}>{RexPageRexAccountBalance}</Radio>
+                      <Radio value={2}>{RexPageStakedCpu}</Radio>
+                    </RadioGroup>
+                  </div>
                 </FormItem>
                 {this.state.choiceResourseType ==1?(
                   <div>
@@ -804,7 +859,7 @@ export class RexPage extends React.Component {
                         rules: [
                           {
                             required: true,
-                            message: {RexPageMoneyAmount},
+                            message: "",
                           }
                         ]
                       })(

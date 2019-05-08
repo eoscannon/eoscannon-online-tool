@@ -139,17 +139,9 @@ export class AirgrabPage extends React.Component {
         sym: `4,${record.symbol}`
       }
     }
-    if (record.account === 'telosflymoon') {
-      data = {
-        owner: AccountName,
-        sym: `4,${record.symbol}`
-      }
-    }
-    //    console.log('data', data)
 
     (async ()=>{
       try{
-        console.log("data ",data)
         let result = await getNewApi(this.props.SelectedNetWork).transact({
           actions: [
             {
@@ -170,7 +162,6 @@ export class AirgrabPage extends React.Component {
           blocksBehind: 3,
           expireSeconds: 3600
         });
-        console.log("result ",result)
 
         var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
         if(tx)
@@ -178,8 +169,6 @@ export class AirgrabPage extends React.Component {
           transaction: result.serializedTransaction,
           newtransaction : tx
         })
-        console.log("tx ",tx)
-
       }catch(err){
         console.log('err ',err)
         this.setState({

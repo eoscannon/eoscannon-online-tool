@@ -138,4 +138,17 @@ export default defineMessages({
     id: 'RexPage AlertDescriptionLast',
     defaultMessage: 'EOS账户和REX账户之间，可以随充随提。'
   },
+  RexPageRexPrice:{
+    id: 'RexPage RexPrice',
+    defaultMessage: 'REX价格'
+  },
+  RexPageRexTotalAmount:{
+    id: 'RexPage RexTotalAmount',
+    defaultMessage: '资金池总量'
+  },
+
+  RexPageRexNowAmount:{
+    id: 'RexPage RexNowAmount',
+    defaultMessage: 'REX余额'
+  },
 })
