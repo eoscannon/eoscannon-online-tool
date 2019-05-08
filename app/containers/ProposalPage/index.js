@@ -35,7 +35,8 @@ export class ProposalPage extends React.Component {
       transaction: {},
       scatterStatus: false,
       GetTransactionButtonScatterState: true,
-      newtransaction:{}
+      newtransaction:{},
+      isHiddenGetTransactionButton: true
     }
   }
   /**
@@ -278,6 +279,8 @@ export class ProposalPage extends React.Component {
               GetTransactionButtonScatterState={
                 this.state.GetTransactionButtonScatterState
               }
+              isHiddenGetTransactionButton={this.state.isHiddenGetTransactionButton}
+
             />
           </Card>
         </Col>

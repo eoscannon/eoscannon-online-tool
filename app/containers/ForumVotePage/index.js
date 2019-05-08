@@ -49,7 +49,8 @@ export class ForumVotePage extends React.Component {
       upperBound: null,
       limit: 100,
       creatTimeData: [],
-      newtransaction:{}
+      newtransaction:{},
+      isHiddenGetTransactionButton: true
     }
   }
   /**
@@ -421,6 +422,7 @@ export class ForumVotePage extends React.Component {
                 GetTransactionButtonScatterState={
                   this.state.GetTransactionButtonScatterState
                 }
+                isHiddenGetTransactionButton={this.state.isHiddenGetTransactionButton}
               />
             </Card>
           </Col>
