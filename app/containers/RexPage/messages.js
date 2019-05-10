@@ -124,7 +124,11 @@ export default defineMessages({
   },
   RexPageBuyandSold:{
     id: 'RexPage BuyandSold',
-    defaultMessage: '购买的EOS / 卖出的REX数量'
+    defaultMessage: '购买的EOS的数量'
+  },
+  RexPageSoldAmount:{
+    id: 'RexPage SoldAmount',
+    defaultMessage: '兑换数量(单位:EOS)'
   },
   RexPageCpuQuantity:{
     id: 'RexPage CpuQuantity',
@@ -146,9 +150,12 @@ export default defineMessages({
     id: 'RexPage RexTotalAmount',
     defaultMessage: '资金池总量'
   },
-
   RexPageRexNowAmount:{
     id: 'RexPage RexNowAmount',
     defaultMessage: 'REX余额'
   },
+  RexPageActionMethod:{
+    id: 'RexPage ActionMethod',
+    defaultMessage: '操作方式'
+  }
 })

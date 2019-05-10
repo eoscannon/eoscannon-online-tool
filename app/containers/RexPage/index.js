@@ -42,7 +42,7 @@ export class RexPage extends React.Component {
       scatterStatus: false,
       GetTransactionButtonScatterState: false,
       newtransaction:{},
-      resourseType:'',
+      resourseType:1,
       tabsKey: "1",
       isHiddenGetTransactionButton: true,
       nowBaseSymbol:"EOS",
@@ -59,8 +59,11 @@ export class RexPage extends React.Component {
       rexPrice:0,   //rex 折算价
       totalRexNum:0, //rex资金池数量
       rexAmount:0 ,// rex 余额
+      choiceDepositType:1, // deposit or withdraw
+      choiceBuySellRex:1, // buy or sell rex
     }
   }
+  
   /**
    * 链接scatter
    * */
@@ -218,9 +221,7 @@ export class RexPage extends React.Component {
   deposit = ()=>{
     (async ()=>{
       try{
-        // if (!this.state.GetTransactionButtonState) {
-        //   return
-        // }
+        
         const values = this.props.form.getFieldsValue()
         const { account, transactionAmount} = values
         var data = {
@@ -250,7 +251,7 @@ export class RexPage extends React.Component {
         });
        
         var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
-        console.log('tr ',tx)
+        console.log('tr desposit',tx)
         if(tx)
         this.setState({
           transaction: result.serializedTransaction,
@@ -301,6 +302,8 @@ export class RexPage extends React.Component {
         });
        
         var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
+        console.log('tx withdraw',tx)
+
         if(tx)
         this.setState({
           transaction: result.serializedTransaction,
@@ -353,6 +356,7 @@ export class RexPage extends React.Component {
         });
        
         var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
+        console.log("tx buyrex")
         if(tx)
         this.setState({
           transaction: result.serializedTransaction,
@@ -368,6 +372,7 @@ export class RexPage extends React.Component {
       }
     })()
   }
+
   sellrex=()=>{
     if(!this.checkAccountStatus()){
       return
@@ -403,6 +408,7 @@ export class RexPage extends React.Component {
         });
        
         var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
+        console.log("tx sellrex")
         if(tx)
         this.setState({
           transaction: result.serializedTransaction,
@@ -559,6 +565,7 @@ export class RexPage extends React.Component {
         });
        
         var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
+        console.log("tx unstaketorex")
         if(tx)
         this.setState({
           transaction: result.serializedTransaction,
@@ -601,12 +608,28 @@ export class RexPage extends React.Component {
   }
 
   checkAccountStatus=()=>{
-    console.log("this.state.accountData ",this.state.accountData)
+    console.log("this.state.accountData。voter_info ",this.state.accountData)
     if(this.state.accountData.voter_info.producers.length < 21 && !this.state.accountData.voter_info.proxy){
       this.setState({modalVisible:true})
       return false
     }
     return true
+  }
+
+  onChangeDepositType=(e)=>{
+   this.setState({choiceDepositType:e.target.value})
+  }
+
+  depositHandle=()=>{
+    if(this.state.choiceDepositType===1){
+      this.deposit()
+    }else{
+      this.withdraw()
+    }
+  }
+
+  onChangeBuySellRex=(e)=>{
+    this.setState({choiceBuySellRex :e.target.value})
   }
   
   handleOk=()=>{
@@ -620,6 +643,16 @@ export class RexPage extends React.Component {
     })
   }
 
+  buyAndSellrex=()=>{
+    if(this.state.choiceBuySellRex===1 && this.state.choiceResourseType === 1){
+      this.buyrex()
+    }else if(this.state.choiceBuySellRex===1 && this.state.choiceResourseType === 2){
+      this.unstaketorex()
+    }else if(this.state.choiceBuySellRex===2){
+      this.sellrex()
+    }
+  }
+
   onChangeType = (e) => {
     this.setState({
       resourseType: e.target.value,
@@ -631,6 +664,7 @@ export class RexPage extends React.Component {
       choiceResourseType: e.target.value,
     });
   }
+
   render () {
     const { getFieldDecorator } = this.props.form
     const CreatorAccountNamePlaceholder = this.state.formatMessage(
@@ -716,6 +750,9 @@ export class RexPage extends React.Component {
     const RexPageBuyandSold = this.state.formatMessage(
       messages.RexPageBuyandSold,
     )
+    const RexPageSoldAmount = this.state.formatMessage(
+      messages.RexPageSoldAmount,
+    )
     const RexPageCpuQuantity = this.state.formatMessage(
       messages.RexPageCpuQuantity,
     )
@@ -730,6 +767,9 @@ export class RexPage extends React.Component {
     )
     const RexPageRexNowAmount= this.state.formatMessage(
       messages.RexPageRexNowAmount,
+    )
+    const RexPageActionMethod = this.state.formatMessage(
+      messages.RexPageActionMethod,
     )
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
@@ -749,7 +789,7 @@ export class RexPage extends React.Component {
           <Card title={ProducersDealTranscation} bordered={false}>
           
           <div style={{border: '1px solid #91d5ff', padding: '10px 15px', backgroundColor: '#e6f7ff', borderRadius: '3px'}}>
-            <div style={{ fontSize: '16px', fontWeight: 'bold'}}>{CopyAlertFirstMessage}</div>
+            {/* <div style={{ fontSize: '16px', fontWeight: 'bold'}}>{CopyAlertFirstMessage}</div> */}
             <span style={{display: 'block', lineHeight: '22px'}}>
             {CopyAlertFirstDescription}
             </span>
@@ -759,6 +799,15 @@ export class RexPage extends React.Component {
           </div>
           <Tabs defaultActiveKey="1" onChange={this.callback}  style={{marginTop:'10px'}}>
             <TabPane tab={RexPageAccountManage} key="1">
+              <FormItem {...formItemLayout}>
+                <div style={{textAlign: 'center'}}>
+                  {/* <span>操作方式：</span> */}
+                  <RadioGroup onChange={this.onChangeDepositType} value={this.state.choiceDepositType}>
+                    <Radio value={1}>{RexPageDeposit}</Radio>
+                    <Radio value={2}>{RexPageWithdraw}</Radio>
+                  </RadioGroup>
+                </div>
+              </FormItem>
               <FormItem {...formItemLayout}>
                 {getFieldDecorator('account', {
                   rules: [
@@ -776,16 +825,18 @@ export class RexPage extends React.Component {
                         style={{ color: 'rgba(0,0,0,.25)' }}
                       />
                     }
+                    onBlur={this.accountBulr}
                     placeholder={CreatorAccountNamePlaceholder}
                   />,
                 )}
               </FormItem>
-              <FormItem {...formItemLayout}>
+              {this.state.choiceDepositType === 1? (
+                <FormItem {...formItemLayout}>
                 {getFieldDecorator('transactionAmount', {
                   rules: [
                     {
                       required: true,
-                      message: {RexPageStoreFund},
+                      message: '',
                     }
                   ]
                 })(
@@ -796,63 +847,102 @@ export class RexPage extends React.Component {
                         style={{ color: 'rgba(0,0,0,.25)' }}
                       />
                     }
-                    placeholder={RexPageStoreFund}
+                    placeholder={RexPageDepositBalance}
                   />,
                 )}
               </FormItem>
+              ):(
+                <FormItem {...formItemLayout}>
+                {getFieldDecorator('transactionAmount', {
+                  rules: [
+                    {
+                      required: true,
+                      message: '',
+                    }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon
+                        type="user"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
+                    placeholder={RexPageWithdrawBalance}
+                  />,
+                )}
+              </FormItem>
+              )}
+              
               <FormItem>
                 <div style={{display:"flex",justifyContent:"space-around"}}>
-                  <Button type="primary" onClick={this.deposit}>{RexPageDeposit}</Button>
-                  <Button type="primary" onClick={this.withdraw}>{RexPageWithdraw}</Button>
+                  <Button type="primary" onClick={this.depositHandle}>{RexPageHandleTraction}</Button>
                 </div>
               </FormItem>
             </TabPane>
             <TabPane tab={RexPageRexManage} key="2">
               <FormItem {...formItemLayout}>
-                  {getFieldDecorator('account', {
-                    rules: [
-                      {
-                        required: true,
-                        message: CreatorAccountNamePlaceholder,
-                      }
-                    ]
-                  })(
-                    <Input
-                      prefix={
-                        <Icon
-                          type="user"
-                          style={{ color: 'rgba(0,0,0,.25)' }}
-                        />
-                      }
-                      onBlur={this.accountBulr}
-                      placeholder={CreatorAccountNamePlaceholder}
-                    />,
-                  )}
-                </FormItem>
+                <div style={{textAlign: 'center'}}>
+                  {/* <span>操作方式：</span> */}
+                  <RadioGroup onChange={this.onChangeBuySellRex} value={this.state.choiceBuySellRex}>
+                    <Radio value={1}>{RexPageBuyrex}</Radio>
+                    <Radio value={2}>{RexPageSellrex}</Radio>
+                  </RadioGroup>
+                </div>
+              </FormItem>
+              <FormItem {...formItemLayout}>
+                {getFieldDecorator('account', {
+                  rules: [
+                    {
+                      required: true,
+                      message: CreatorAccountNamePlaceholder,
+                    }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon
+                        type="user"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
+                    onBlur={this.accountBulr}
+                    placeholder={CreatorAccountNamePlaceholder}
+                  />,
+                )}
+              </FormItem>
                 <FormItem {...formItemLayout}>
                   <div>
-                    <div>{RexPageRexPrice}: {this.state.rexPrice.toFixed(8) || 0} (EOS/REX)</div>
-                    <div>{RexPageRexTotalAmount}: {this.state.totalRexNum || 0} EOS</div>
+                    <div>{RexPageRexPrice} : {this.state.rexPrice.toFixed(8) || 0} (EOS/REX)</div>
+                    <div>{RexPageRexTotalAmount} : {this.state.totalRexNum || 0} EOS</div>
                   </div>
                   {!this.state.accountMount && !this.state.accountCpuMount &&!this.state.accountNetMount?null: (
                    <div>
-                      <div>{RexPageEOSAmount}: <span >{this.state.accountMount}</span></div>
-                      <div>{RexPageCPUAmount}: <span >{this.state.accountCpuMount}</span></div>
-                      <div>{RexPageNetAmount}: <span >{this.state.accountNetMount}</span></div>
+                      <div>{RexPageEOSAmount} : <span >{this.state.accountMount}</span></div>
+                      <div>{RexPageCPUAmount} : <span >{this.state.accountCpuMount}</span></div>
+                      <div>{RexPageNetAmount} : <span >{this.state.accountNetMount}</span></div>
                       {/* {this.state.rexAmount?( */}
-                        <div>{RexPageRexNowAmount}: <span >{this.state.rexAmount}</span></div>
+                        <div>{RexPageRexNowAmount} : <span>{this.state.rexAmount}</span></div>
                       {/* ):null} */}
                    </div>
                   )}
-                  <div>
-                    <span>{RexPageRexpayment}</span>
+                  <div style={{marginTop:"13px"}}>
+                    <span>{RexPageRexpayment}</span>&nbsp;
                     <RadioGroup onChange={this.onChangeResourseType} value={this.state.choiceResourseType}>
-                      <Radio value={1}>{RexPageRexAccountBalance}</Radio>
-                      <Radio value={2}>{RexPageStakedCpu}</Radio>
+                      {this.state.choiceBuySellRex ===1 ?(
+                        <div>
+                          <Radio value={1}>{RexPageRexAccountBalance}</Radio>
+                          <Radio value={2}>{RexPageStakedCpu}</Radio>
+                        </div>
+                      ):(
+                        <div>
+                          <Radio value={1}>{RexPageRexNowAmount}</Radio>
+                        </div>
+                      )}
                     </RadioGroup>
                   </div>
                 </FormItem>
-                {this.state.choiceResourseType ==1?(
+                {this.state.choiceResourseType ==1 && this.state.choiceBuySellRex == 1?(
                   <div>
                     <FormItem {...formItemLayout}>
                       {getFieldDecorator('buyAccount', {
@@ -876,24 +966,56 @@ export class RexPage extends React.Component {
                     </FormItem>
                     <FormItem>
                       <div style={{display:"flex",justifyContent:"space-around"}}>
-                        <Button type="primary" onClick={this.buyrex} 
+                        <Button type="primary" onClick={this.buyAndSellrex} 
                         disabled={this.state.buyRexByFundStatus}
-                        >{RexPageBuyrex}</Button>
-                        <Button type="primary" onClick={this.sellrex}>{RexPageSellrex}</Button>
+                        >{RexPageHandleTraction}</Button>
+                        {/* <Button type="primary" onClick={this.sellrex}>{RexPageSellrex}</Button> */}
                       </div>
                     </FormItem>
                   </div>
                 ):null}
 
+                {this.state.choiceResourseType ==1 && this.state.choiceBuySellRex == 2?(
+                    <div>
+                    <FormItem {...formItemLayout}>
+                      {getFieldDecorator('buyAccount', {
+                        rules: [
+                          {
+                            required: true,
+                            message: "",
+                          }
+                        ]
+                      })(
+                        <Input
+                          prefix={
+                            <Icon
+                              type="user"
+                              style={{ color: 'rgba(0,0,0,.25)' }}
+                            />
+                          }
+                          placeholder={RexPageSoldAmount}
+                        />,
+                      )}
+                    </FormItem>
+                    <FormItem>
+                      <div style={{display:"flex",justifyContent:"space-around"}}>
+                        <Button type="primary" onClick={this.buyAndSellrex} 
+                        disabled={this.state.buyRexByFundStatus}
+                        >{RexPageHandleTraction}</Button>
+                        {/* <Button type="primary" onClick={this.sellrex}>{RexPageSellrex}</Button> */}
+                      </div>
+                    </FormItem>
+                    </div>
+                ):null}
+                {/* 资源 */}
                 {this.state.choiceResourseType == 2 ?(
                  <div>
-                   
                     <FormItem {...formItemLayout}>
                       {getFieldDecorator('buyCPUAmount', {
                         rules: [
                           {
                             required: true,
-                            message: "buyCPUAmount",
+                            message: "",
                           }
                         ]
                       })(
@@ -913,7 +1035,7 @@ export class RexPage extends React.Component {
                         rules: [
                           {
                             required: true,
-                            message: "buyNetAmount",
+                            message: "",
                           }
                         ]
                       })(
@@ -930,7 +1052,7 @@ export class RexPage extends React.Component {
                     </FormItem>
                     <FormItem>
                       <div style={{display:"flex",justifyContent:"space-around"}}>
-                        <Button type="primary" onClick={this.unstaketorex}  >{RexPageBuyrex}</Button>
+                        <Button type="primary" onClick={this.unstaketorex}  >{RexPageHandleTraction}</Button>
                       </div>
                     </FormItem>
                  </div>
@@ -942,7 +1064,7 @@ export class RexPage extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: CreatorAccountNamePlaceholder,
+                        message: '',
                       }
                     ]
                   })(
