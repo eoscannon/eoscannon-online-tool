@@ -779,6 +779,9 @@ export class RexPage extends React.Component {
     const RexPageActionMethod = this.state.formatMessage(
       messages.RexPageActionMethod,
     )
+    const RexPageMustRequired = this.state.formatMessage(
+      messages.RexPageMustRequired,
+    )
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
     )
@@ -820,7 +823,7 @@ export class RexPage extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: CreatorAccountNamePlaceholder,
+                        message: RexPageMustRequired,
                         validator: this.checkaccount
                       }
                     ]
@@ -843,7 +846,7 @@ export class RexPage extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: ''
+                          message: RexPageMustRequired
                         }
                       ]
                     })(
@@ -864,7 +867,7 @@ export class RexPage extends React.Component {
                       rules: [
                         {
                           required: true,
-                          message: ''
+                          message: RexPageMustRequired
                         }
                       ]
                     })(
@@ -902,7 +905,7 @@ export class RexPage extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: CreatorAccountNamePlaceholder
+                        message: RexPageMustRequired
                       }
                     ]
                   })(
@@ -956,7 +959,7 @@ export class RexPage extends React.Component {
                         rules: [
                           {
                             required: true,
-                            message: ''
+                            message: RexPageMustRequired
                           }
                         ]
                       })(
@@ -989,7 +992,7 @@ export class RexPage extends React.Component {
                         rules: [
                           {
                             required: true,
-                            message: ''
+                            message: RexPageMustRequired
                           }
                         ]
                       })(
@@ -1022,7 +1025,7 @@ export class RexPage extends React.Component {
                         rules: [
                           {
                             required: true,
-                            message: ''
+                            message: RexPageMustRequired
                           }
                         ]
                       })(
@@ -1042,7 +1045,7 @@ export class RexPage extends React.Component {
                         rules: [
                           {
                             required: true,
-                            message: ''
+                            message: RexPageMustRequired
                           }
                         ]
                       })(
@@ -1071,7 +1074,7 @@ export class RexPage extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: ''
+                        message: RexPageMustRequired
                       }
                     ]
                   })(
@@ -1098,7 +1101,7 @@ export class RexPage extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: ''
+                        message: RexPageMustRequired
                       }
                     ]
                   })(
@@ -1118,7 +1121,7 @@ export class RexPage extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: ''
+                        message: RexPageMustRequired
                       }
                     ]
                   })(
@@ -1138,7 +1141,7 @@ export class RexPage extends React.Component {
                     rules: [
                       {
                         required: true,
-                        message: ''
+                        message: RexPageMustRequired
                       }
                     ]
                   })(

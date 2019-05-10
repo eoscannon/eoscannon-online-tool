@@ -157,5 +157,10 @@ export default defineMessages({
   RexPageActionMethod:{
     id: 'RexPage ActionMethod',
     defaultMessage: '操作方式'
+  },
+  RexPageMustRequired:{
+    id: 'RexPage MustRequired',
+    defaultMessage: '必填'
   }
+
 })
