@@ -42,7 +42,31 @@ export class ProposalPage extends React.Component {
   /**
    * 链接scatter
    * */
-  componentDidMount () {}
+  componentDidMount () {
+    //获取URL 参数
+   if( this.props.location.search ){
+    this.setState({addSymbol : true})
+    const query = this.props.location.search 
+    const arr = query.split('?')[1].split('&') // ['?s=', 'f=7']
+    var newArr = {}
+    for(let i in arr){
+      let data = arr[i].split('=')
+      newArr[data[0]] = data[1]
+    }
+
+    // 接收到数据后插入表格
+    setTimeout(()=>{
+      try{
+        this.props.form.setFieldsValue({
+          proposer: newArr.proposer,
+          proposalName:newArr.proposal
+        })
+        }catch(err){
+          console.log('err == ',err)
+        }
+      },500)
+   }
+  }
   /**
    * 输入框内容变化时，改变按钮状态
    * */
