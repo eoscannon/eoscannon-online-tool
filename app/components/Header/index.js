@@ -432,11 +432,11 @@ class HeaderComp extends React.Component {
                   {StatusText}
                 </Link>
               </Menu.Item>
-              <Menu.Item key="16">
+              {/* <Menu.Item key="16">
                 <Link href="/worbli" to="/worbli">
                  Worbli
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item key="8">
                 <Link to="/infoInit" href="/infoInit">
                   {initInfo}
@@ -447,11 +447,11 @@ class HeaderComp extends React.Component {
                   {sendMessage}
                 </Link>
               </Menu.Item>
-              <Menu.Item key="21">
+              {/* <Menu.Item key="21">
                 <Link to="/meetone" href="/meetone">
                   Meetone
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
             </SubMenu>
             {/* <Menu.SubMenu
               key="2"

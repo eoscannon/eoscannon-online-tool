@@ -13,11 +13,12 @@ import { makeSelectNetwork } from '../LanguageProvider/selectors'
 import {
   formItemLayout,
   getNewApi,
+  getEos,
   openTransactionFailNotification
 } from '../../utils/utils'
 import { LayoutContent } from '../../components/NodeComp'
-import NewScanQrcode from '../../components/NewScanQrcode'
-import NewDealGetQrcode from '../../components/NewDealGetQrcode'
+import ScanQrcode from '../../components/ScanQrcode'
+import DealGetQrcode from '../../components/DealGetQrcode'
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
 
@@ -94,21 +95,23 @@ export class ProposalPage extends React.Component {
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
   handleGetTransaction = () => {
-    (async ()=>{
-      try{
-        this.setState({ scatterStatus: false })
-        if (!this.state.GetTransactionButtonState) {
-          return
-        }
-        const values = this.props.form.getFieldsValue()
-        const { account, permission, proposer, proposalName} = values
-        var data = {
-          proposer: proposer,
-          proposal_name: proposalName,
-          level: {'actor': account, 'permission': permission}
-        }
-    
-        let result = await getNewApi(this.props.SelectedNetWork).transact({
+
+    this.setState({ scatterStatus: false })
+    if (!this.state.GetTransactionButtonState) {
+      return
+    }
+    const values = this.props.form.getFieldsValue()
+    const eos = getEos(this.props.SelectedNetWork)
+    const { account, permission, proposer, proposalName} = values
+    var data = {
+      proposer: proposer,
+      proposal_name: proposalName,
+      level: {'actor': account, 'permission': permission}
+    }
+
+    eos
+      .transaction(
+        {
           actions: [
             {
               account: 'eosio.msig',
@@ -122,29 +125,77 @@ export class ProposalPage extends React.Component {
               data
             }
           ]
-        }, {
+        },
+        {
           broadcast: false,
           sign: false,
-          blocksBehind: 3,
-          expireSeconds: 3600
-        });
+        },
+      )
+      .then(tr => {
+        this.setState({
+          eos,
+          transaction: tr.transaction
+        })
+      })
+      .catch(err => {
+         this.setState({
+           eos:{},
+           transaction: {}
+        })
+        console.log('err = ',err)
+      })
+    
+    // (async ()=>{
+    //   try{
+    //     this.setState({ scatterStatus: false })
+    //     if (!this.state.GetTransactionButtonState) {
+    //       return
+    //     }
+    //     const values = this.props.form.getFieldsValue()
+    //     const { account, permission, proposer, proposalName} = values
+    //     var data = {
+    //       proposer: proposer,
+    //       proposal_name: proposalName,
+    //       level: {'actor': account, 'permission': permission}
+    //     }
+    
+    //     let result = await getNewApi(this.props.SelectedNetWork).transact({
+    //       actions: [
+    //         {
+    //           account: 'eosio.msig',
+    //           name: 'approve',
+    //           authorization: [
+    //             {
+    //               actor: account,
+    //               permission: permission
+    //             }
+    //           ],
+    //           data
+    //         }
+    //       ]
+    //     }, {
+    //       broadcast: false,
+    //       sign: false,
+    //       blocksBehind: 3,
+    //       expireSeconds: 3600
+    //     });
        
-        var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
-        if(tx)
-        this.setState({
-          transaction: result.serializedTransaction,
-          newtransaction : tx
-        })
-      }catch(err){
-        console.log('err ',err)
-        this.setState({
-          transaction: '',
-          newtransaction : ''
-        })
-        openTransactionFailNotification(this.state.formatMessage, err.name)
+    //     var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
+    //     if(tx)
+    //     this.setState({
+    //       transaction: result.serializedTransaction,
+    //       newtransaction : tx
+    //     })
+    //   }catch(err){
+    //     console.log('err ',err)
+    //     this.setState({
+    //       transaction: '',
+    //       newtransaction : ''
+    //     })
+    //     openTransactionFailNotification(this.state.formatMessage, err.name)
 
-      }
-    })()
+    //   }
+    // })()
 
   };
 
@@ -286,37 +337,27 @@ export class ProposalPage extends React.Component {
                 />,
               )}
             </FormItem>
-            <NewDealGetQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonState={
-                this.state.GetTransactionButtonState
-              }
-              QrCodeValue={this.state.QrCodeValue}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-              newtransaction={this.state.newtransaction}
-              voteByScatterClick={this.voteByScatter}
-              scatterStatus={this.state.scatterStatus}
-              GetTransactionButtonScatterState={
-                this.state.GetTransactionButtonScatterState
-              }
-              isHiddenGetTransactionButton={this.state.isHiddenGetTransactionButton}
-
-            />
+            <DealGetQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                GetTransactionButtonClick={this.handleGetTransaction}
+                GetTransactionButtonState={this.state.GetTransactionButtonState}
+                QrCodeValue={this.state.QrCodeValue}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
           </Card>
         </Col>
         <Col span={12}>
           <Card title={ProducersSendTranscation} bordered={false}>
-            <NewScanQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.newtransaction}
-            />
+             <ScanQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+              />
           </Card>
         </Col>
       </LayoutContent>
