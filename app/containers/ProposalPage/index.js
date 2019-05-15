@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { makeSelectNetwork } from '../LanguageProvider/selectors'
 import {
   formItemLayout,
-  getNewApi,
+  // getNewApi,
   getEos,
   openTransactionFailNotification
 } from '../../utils/utils'
@@ -142,6 +142,7 @@ export class ProposalPage extends React.Component {
            eos:{},
            transaction: {}
         })
+        openTransactionFailNotification(this.state.formatMessage, err.name)
         console.log('err = ',err)
       })
     

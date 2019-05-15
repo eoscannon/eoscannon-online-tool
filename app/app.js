@@ -16,6 +16,7 @@ import { Router, Switch, Route } from 'react-router-dom'
 import FontFaceObserver from 'fontfaceobserver'
 import createHashHistory from 'history/createHashHistory'
 import 'sanitize.css/sanitize.css'
+import "./fonts/style.css"
 import LanguageProvider from 'containers/LanguageProvider'
 
 import * as serviceWorker from './serviceWorker';
