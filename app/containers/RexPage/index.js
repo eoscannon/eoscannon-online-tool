@@ -191,7 +191,11 @@ export class RexPage extends React.Component {
       if(config.netWorkConfig[i].networkName === this.props.SelectedNetWork) {
         let result = await GetNewRpc(config.netWorkConfig[i].Endpoint).get_table_rows({'json': true, 'code': 'eosio', 'scope': 'eosio', 'table': 'rexbal', 'lower_bound': account, 'upper_bound': account, 'limit': 1})
         let data = result.rows[0]
-        this.setState({rexAmount: data.rex_balance})
+        try{
+          this.setState({rexAmount: data.rex_balance})
+        }catch(err){
+          console.log('err ',err)
+        }
       }
     }
   }
