@@ -55,6 +55,7 @@ export class RexPage extends React.Component {
       accountCpuMount: '',
       accountNetMount: '',
       accountData: {},
+      rexFund:0, //rex中fund的eos数量
       modalVisible: false, // 请前往代理弹框
       rexPrice: 0, // rex 折算价
       totalRexNum: 0, // rex资金池数量
@@ -190,12 +191,23 @@ export class RexPage extends React.Component {
     for(let i = 0; i < config.netWorkConfig.length; i++) {
       if(config.netWorkConfig[i].networkName === this.props.SelectedNetWork) {
         let result = await GetNewRpc(config.netWorkConfig[i].Endpoint).get_table_rows({'json': true, 'code': 'eosio', 'scope': 'eosio', 'table': 'rexbal', 'lower_bound': account, 'upper_bound': account, 'limit': 1})
+        let resultFund = await GetNewRpc(config.netWorkConfig[i].Endpoint).get_table_rows({'json': true, 'code': 'eosio', 'scope': 'eosio', 'table': 'rexfund', 'lower_bound': account, 'upper_bound': account, 'limit': 1})
         let data = result.rows[0]
         try{
-          this.setState({rexAmount: data.rex_balance})
+          this.setState({
+            rexAmount: data.rex_balance,
+          })
         }catch(err){
-          console.log('err ',err)
+          console.assert('err ',err)
         }
+        try{
+          this.setState({
+            rexFund: resultFund.rows[0].balance,
+          })
+        }catch(err){
+          console.assert('err ',err)
+        }
+
       }
     }
   }
@@ -932,7 +944,7 @@ export class RexPage extends React.Component {
                   </div>
                   {!this.state.accountMount && !this.state.accountCpuMount && !this.state.accountNetMount ? null : (
                     <div>
-                      <div>{RexPageEOSAmount} : <span >{this.state.accountMount}</span></div>
+                      <div>{RexPageEOSAmount} : <span >{this.state.rexFund || 0}</span></div>
                       <div>{RexPageCPUAmount} : <span >{this.state.accountCpuMount}</span></div>
                       <div>{RexPageNetAmount} : <span >{this.state.accountNetMount}</span></div>
                       {/* {this.state.rexAmount?( */}
