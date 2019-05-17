@@ -92,8 +92,6 @@ export class ProposalScatterPage extends React.Component {
       level: {'actor': account.name, 'permission': account.authority}
 
     }
-    let auth = { authorization: [`${account.name}@${account.authority}`] }
-
     eos
       .transaction(
         {
@@ -187,7 +185,7 @@ export class ProposalScatterPage extends React.Component {
       <LayoutContent>
         <Row gutter={16}>
         <Col span={12}>
-          <Card title={ProducersChangeBP} bordered={false}>
+          <Card title='多签提案' bordered={false}>
                 <FormItem {...formItemLayout}>
                   {getFieldDecorator('proposer', {
                     rules: [{
