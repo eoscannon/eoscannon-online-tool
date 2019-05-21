@@ -289,6 +289,7 @@ const openNotification = formatMessage => {
  * */
 const symbolList = [
   { symbol: 'EOS', contract: 'eosio.token', digit: 4 },
+  { symbol: 'KEY', contract: 'mkstaketoken', digit: 4 },
   { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
   { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 4 },
   { symbol: 'WAL', contract: 'whaleextoken', digit: 3 },
