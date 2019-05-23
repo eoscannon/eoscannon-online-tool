@@ -1,6 +1,6 @@
-const json = [
+[
   {
-    "version": "eosio::abi/1.1",
+    "version": "eosio::abi/1.0",
     "structs": [
       {
         "name": "account",
@@ -26,20 +26,6 @@ const json = [
           },
           {
             "name": "sym",
-            "type": "symbol_code"
-          }
-        ]
-      },
-      {
-        "name": "close",
-        "base": "",
-        "fields": [
-          {
-            "name": "owner",
-            "type": "name"
-          },
-          {
-            "name": "symbol",
             "type": "symbol"
           }
         ]
@@ -95,7 +81,7 @@ const json = [
         ]
       },
       {
-        "name": "open",
+        "name": "payram",
         "base": "",
         "fields": [
           {
@@ -103,11 +89,11 @@ const json = [
             "type": "name"
           },
           {
-            "name": "symbol",
+            "name": "sym",
             "type": "symbol"
           },
           {
-            "name": "ram_payer",
+            "name": "payer",
             "type": "name"
           }
         ]
@@ -122,35 +108,7 @@ const json = [
           },
           {
             "name": "sym",
-            "type": "symbol_code"
-          }
-        ]
-      },
-      {
-        "name": "retire",
-        "base": "",
-        "fields": [
-          {
-            "name": "quantity",
-            "type": "asset"
-          },
-          {
-            "name": "memo",
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "name": "team_vesting",
-        "base": "",
-        "fields": [
-          {
-            "name": "account",
-            "type": "name"
-          },
-          {
-            "name": "issued",
-            "type": "asset"
+            "type": "symbol"
           }
         ]
       },
@@ -198,11 +156,6 @@ const json = [
         "ricardian_contract": ""
       },
       {
-        "name": "close",
-        "type": "close",
-        "ricardian_contract": ""
-      },
-      {
         "name": "create",
         "type": "create",
         "ricardian_contract": ""
@@ -213,8 +166,8 @@ const json = [
         "ricardian_contract": ""
       },
       {
-        "name": "open",
-        "type": "open",
+        "name": "payram",
+        "type": "payram",
         "ricardian_contract": ""
       },
       {
@@ -223,14 +176,9 @@ const json = [
         "ricardian_contract": ""
       },
       {
-        "name": "retire",
-        "type": "retire",
-        "ricardian_contract": ""
-      },
-      {
         "name": "transfer",
         "type": "transfer",
-        "ricardian_contract": ""
+        "ricardian_contract": "token-transfer-rc.md"
       },
       {
         "name": "update",
@@ -248,14 +196,7 @@ const json = [
         "name": "stat",
         "index_type": "i64",
         "type": "currency_stats"
-      },
-      {
-        "name": "teamvest",
-        "index_type": "i64",
-        "type": "team_vesting"
       }
     ]
   }
 ]
-
-export default json

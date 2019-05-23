@@ -22,6 +22,11 @@ import {
 import eosioAbi from './abi'
 import eosIqAbi from './iqAbi'
 import adcAbi from './adcAbi'
+import hirevibeshvt from './hirevibeshvt.json';
+import thepeostoken from './adcAbi';
+import eosiomeetone from './meetone.json';
+import ridlridlcoin from './ridlridlcoin.json';
+
 import {
   formItemLayout,
   getEos,
@@ -32,7 +37,6 @@ import {
 import { LayoutContent } from '../../components/NodeComp'
 import ScanQrcode from '../../components/ScanQrcode'
 import DealGetQrcode from '../../components/DealGetQrcode'
-import FormCode from '../../components/FormCode' 
 
 import messages from './messages'
 import utilsMsg from '../../utils/messages'
@@ -229,129 +233,7 @@ export class TransferPage extends React.Component {
         openTransactionFailNotification(this.state.formatMessage, err.name)
       })
   };
-  /**
-   * 使用scatter投票
-   * */
-  voteByScatter = eos => {
-    // const eos = global.EosByScatter;
-    const account = global.AccountByScatter
-    const values = this.props.form.getFieldsValue()
-    const {
-      FromAccountName,
-      ToAccountName,
-      transferQuantity,
-      transferMemo,
-      // transferSymbol,
-      transferSymbolCustom,
-      transferContractCustom,
-      transferDigitCustom
-    } = values
-    // 判断是否为自定义symbol
-    eos
-      .getAbi(transferContractCustom.toLowerCase())
-      .then(res => {
-        eos.fc.abiCache.abi(transferContractCustom, res.abi)
-      })
-      .catch(err => {
-        message.error(`${err}`)
-      })
-    eos
-      .voteproducer({
-        actions: [
-          {
-            account: transferContractCustom,
-            name: 'transfer',
-            authorization: [`${account.name}@${account.authority}`],
-            data: {
-              from: FromAccountName,
-              to: ToAccountName,
-              quantity: `${Number(transferQuantity).toFixed(
-                Number(transferDigitCustom),
-              )} ${transferSymbolCustom.toUpperCase()}`,
-              memo: transferMemo || ''
-            }
-          }
-        ]
-      })
-      .then(tr => {
-        console.log(tr)
-      })
-      .catch(err => {
-        openTransactionFailNotification(this.state.formatMessage, err.name)
-      })
-  };
-
-  /**
-   * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
-   * */
-  handleGetTransactionByScatter = () => {
-    if (!this.state.GetTransactionButtonState) {
-      return
-    }
-    const values = this.props.form.getFieldsValue()
-    const eos = global.EosByScatter
-    const account = global.AccountByScatter
-    const {
-      FromAccountName,
-      ToAccountName,
-      transferQuantity,
-      transferMemo,
-      transferSymbol
-    } = values
-    let transferDigit = 4
-    // let transferContract;
-    if (this.state.addSymbol) {
-      this.voteByScatter(eos)
-      return
-    }
-    const transferContract = this.state.contract
-
-    if (
-      transferContract !== 'eosio' &&
-      transferContract !== 'eosio.token'
-    ) {
-      if (transferContract.toUpperCase() === 'EVERIPEDIAIQ') {
-        transferDigit = 3
-        eos.fc.abiCache.abi(transferContract, eosIqAbi)
-      } else if (transferContract.toUpperCase() === 'CHALLENGEDAC') {
-        eos.fc.abiCache.abi(transferContract, adcAbi)
-      } else {
-        eos.fc.abiCache.abi(transferContract, eosioAbi)
-      }
-    }
-    eos
-      .transaction(
-        {
-          actions: [
-            {
-              account: transferContract,
-              name: 'transfer',
-              authorization: [
-                {
-                  actor: FromAccountName,
-                  permission: 'active'
-                }
-              ],
-              data: {
-                from: FromAccountName,
-                to: ToAccountName,
-                quantity: `${Number(transferQuantity).toFixed(
-                  Number(transferDigit),
-                )} ${transferSymbol.label.toUpperCase()}`,
-                memo: transferMemo || ''
-              }
-            }
-          ]
-        },
-        { authorization: [`${account.name}@${account.authority}`] },
-      )
-      .then(tr => {
-        console.log('tr.transaction==', tr.transaction)
-      })
-      .catch(err => {
-        openTransactionFailNotification(this.state.formatMessage, err.name)
-      })
-  };
+  
   /**
    * 用户点击生成报文，根据用户输入参数，生成签名报文，并将其赋值到文本框和生成对应的二维码
    * */
@@ -402,8 +284,11 @@ export class TransferPage extends React.Component {
         eos.fc.abiCache.abi(transferContract, eosioAbi)
       }
     }
+    eos.fc.abiCache.abi("thepeostoken", thepeostoken[0]);
+    eos.fc.abiCache.abi("hirevibeshvt", hirevibeshvt[0]);
+    eos.fc.abiCache.abi("eosiomeetone", eosiomeetone[0]);
+    eos.fc.abiCache.abi("ridlridlcoin", ridlridlcoin[0]);
 
-    console.log('newFromAccountName===', newFromAccountName)
     eos
       .transaction(
         {
