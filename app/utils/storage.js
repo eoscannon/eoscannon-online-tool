@@ -29,9 +29,11 @@ storage.get = key => {
   }
 }
 storage.setNetwork = name => {
-  storage.set('Network', name)
+  sessionStorage.setItem('Network', name)
 }
-storage.getNetwork = () => storage.get('Network')
+storage.getNetwork = () => {
+  return sessionStorage.getItem('Network')
+}
 storage.setBaseSymbol = symbol => {
   storage.set('BaseSymbol', symbol)
 }

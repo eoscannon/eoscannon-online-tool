@@ -23,7 +23,7 @@ import eosCannonLogo from '../../images/eosLogo.png'
 import eosCannonLogoBig from '../../images/eos_cannon_logo_opacity4.png'
 import downloadAndroid from './1.1.3.png'
 import downloadIos from './ios.png'
-import config from '../../config';
+import config from '../../config'
 import {
   makeSelectLocale,
   makeSelectNetwork
@@ -32,8 +32,8 @@ import {
 // 自定义变量
 const { Header, Sider, Content } = Layout
 const { Option } = Select
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+const SubMenu = Menu.SubMenu
+const MenuItemGroup = Menu.ItemGroup
 const FormItem = Form.Item
 
 class HeaderComp extends React.Component {
@@ -47,16 +47,16 @@ class HeaderComp extends React.Component {
       rootSubmenuKeys: ['1', '2', '3', '4', '5'],
       testNetUrl: '',
       visible: false,
-      mainNetwork:'main',
-      current: 'mail',
+      mainNetwork: 'main',
+      current: 'mail'
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    let value =  this.props.form.getFieldsValue()
+    let value = this.props.form.getFieldsValue()
     const {formItemNetWork} = value
-    if( formItemNetWork !== nextProps.netWork){
-      this.props.form.setFieldsValue({formItemNetWork : nextProps.netWork})
+    if(formItemNetWork !== nextProps.netWork) {
+      this.props.form.setFieldsValue({formItemNetWork: nextProps.netWork})
     }
 
   }
@@ -131,11 +131,13 @@ class HeaderComp extends React.Component {
       defaultSelectedKeys
     })
     storage.setBaseSymbol('EOS')
-    
-    let network = storage.getNetwork() || 'main'
-    this.setState({mainNetwork:network, testNetUrl:network})
-    this.props.onDispatchChangeNetworkReducer(network)
 
+  }
+
+  componentDidMount () {
+    let network = storage.getNetwork() || 'main'
+    this.setState({mainNetwork: network, testNetUrl: network})
+    this.props.onDispatchChangeNetworkReducer(network)
   }
 
   onOpenChange = openKeys => {
@@ -164,8 +166,8 @@ class HeaderComp extends React.Component {
       })
       storage.setBaseSymbol('EOS')
     }else{
-      for(let i=0 ;i<config.netWorkConfig.length;i++){
-        if(value === config.netWorkConfig[i].networkName){
+      for(let i = 0 ;i < config.netWorkConfig.length;i++) {
+        if(value === config.netWorkConfig[i].networkName) {
           storage.setBaseSymbol(config.netWorkConfig[i].BaseSymbol)
         }
       }
@@ -237,13 +239,13 @@ class HeaderComp extends React.Component {
 
   handleClick = (e) => {
     this.setState({
-      current: e.key,
-    });
+      current: e.key
+    })
   }
 
   render () {
     const { getFieldDecorator } = this.props.form
-    
+
     const { formatMessage } = this.props.intl
     const initInfo = formatMessage(utilsMsg.HeaderMenuInfoInit)
     const createAccount = formatMessage(utilsMsg.HeaderMenuCreateAccount)
@@ -274,7 +276,6 @@ class HeaderComp extends React.Component {
     const cancel = formatMessage(utilsMsg.ScanCodeSendCancel)
     const HelpPage = formatMessage(utilsMsg.HelpPage)
 
-    
     const contentAndriod = (
       <div>
         <div>
@@ -341,13 +342,13 @@ class HeaderComp extends React.Component {
                 href="/accountSearch"
                 to="/accountSearch"
                 innerRef={() => {}}
-                style={{ display:'flex',alignItems: 'center'}}
+                style={{ display: 'flex', alignItems: 'center'}}
               >
                 <Icon type="user" />
                 <span>{accountSearch}</span>
               </Link>
             </Menu.Item>
-           
+
             {/* <Menu.Item key="17">
               <Link
                 href="/scanLogin"
@@ -495,7 +496,7 @@ class HeaderComp extends React.Component {
                 href="/dscribe"
                 to="/dscribe"
                 innerRef={() => {}}
-                style={{ display:'flex',alignItems: 'center'}}
+                style={{ display: 'flex', alignItems: 'center'}}
               >
                 <Icon type="notification" />
                 <span>{HelpPage} </span>
@@ -520,12 +521,12 @@ class HeaderComp extends React.Component {
             {/*
              <span>一般操作请使用active key</span>
              */}
-              {/* <Menu
+            {/* <Menu
                 onClick={this.handleClick}
                 selectedKeys={[this.state.current]}
                 mode="horizontal"
               >
-          
+
                 <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />Navigation Three - Submenu</span>}>
                   <MenuItemGroup title="Item 1">
                     <Menu.Item key="setting:1">Option 1</Menu.Item>
@@ -541,37 +542,37 @@ class HeaderComp extends React.Component {
               className="userBox"
               style={{ float: 'right', display: 'flex', alignItems: 'center' }}
             >
-            {/* <Form> */}
+              {/* <Form> */}
               <FormItem
                 {...formItemLayout}
-                style={{marginBottom:0,}}
+                style={{marginBottom: 0}}
               >
-              {getFieldDecorator('formItemNetWork', {
-                initialValue: this.state.mainNetwork,
-                rules: [
-                  {
-                    required: true,
-                  }
-                ]
-              })(
-                <Select
-                  className="netWork"
-                  style={{ width: 110 }}
-                  onChange={this.handleChange}
-                >
-                  <Option value="main">{mainNet}</Option>
-                  <Option value="worbli">{testNet}</Option>
-                  <Option value="telos">TELOS</Option>
-                  <Option value="kylin">KYLIN</Option>
-                  <Option value="bos">BOS</Option>
-                  <Option value="meetone">MEETONE</Option>
-                  <Option value="Jungle">Jungle</Option>
-                  <Option value="other">{otherTestNet}</Option>
-                </Select>
-              )}
+                {getFieldDecorator('formItemNetWork', {
+                  initialValue: this.state.mainNetwork,
+                  rules: [
+                    {
+                      required: true
+                    }
+                  ]
+                })(
+                  <Select
+                    className="netWork"
+                    style={{ width: 110 }}
+                    onChange={this.handleChange}
+                  >
+                    <Option value="main">{mainNet}</Option>
+                    <Option value="worbli">{testNet}</Option>
+                    <Option value="telos">TELOS</Option>
+                    <Option value="kylin">KYLIN</Option>
+                    <Option value="bos">BOS</Option>
+                    <Option value="meetone">MEETONE</Option>
+                    <Option value="Jungle">Jungle</Option>
+                    <Option value="other">{otherTestNet}</Option>
+                  </Select>
+                )}
               </FormItem>
-            {/* </Form> */}
-              
+              {/* </Form> */}
+
               <div
                 className="en"
                 aria-hidden="true"
