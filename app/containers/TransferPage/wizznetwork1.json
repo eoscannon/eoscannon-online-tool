@@ -1,0 +1,303 @@
+[
+  {
+    "version": "eosio::abi/1.1",
+    "structs": [
+      {
+        "name": "account",
+        "base": "",
+        "fields": [
+          {
+            "name": "balance",
+            "type": "asset"
+          }
+        ]
+      },
+      {
+        "name": "adddapp",
+        "base": "",
+        "fields": [
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "displayurl",
+            "type": "string"
+          },
+          {
+            "name": "clickurl",
+            "type": "string"
+          },
+          {
+            "name": "imageurl",
+            "type": "string"
+          },
+          {
+            "name": "blockchain",
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "broadcast",
+        "base": "",
+        "fields": [
+          {
+            "name": "to",
+            "type": "name"
+          },
+          {
+            "name": "message",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "burn",
+        "base": "",
+        "fields": [
+          {
+            "name": "from",
+            "type": "name"
+          },
+          {
+            "name": "quantity",
+            "type": "asset"
+          },
+          {
+            "name": "memo",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "channelchat",
+        "base": "",
+        "fields": [
+          {
+            "name": "from",
+            "type": "name"
+          },
+          {
+            "name": "to",
+            "type": "name"
+          },
+          {
+            "name": "message",
+            "type": "string"
+          },
+          {
+            "name": "channel_id",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "chat",
+        "base": "",
+        "fields": [
+          {
+            "name": "from",
+            "type": "name"
+          },
+          {
+            "name": "to",
+            "type": "name"
+          },
+          {
+            "name": "message",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "create",
+        "base": "",
+        "fields": [
+          {
+            "name": "issuer",
+            "type": "name"
+          },
+          {
+            "name": "maximum_supply",
+            "type": "asset"
+          }
+        ]
+      },
+      {
+        "name": "currency_stats",
+        "base": "",
+        "fields": [
+          {
+            "name": "supply",
+            "type": "asset"
+          },
+          {
+            "name": "max_supply",
+            "type": "asset"
+          },
+          {
+            "name": "issuer",
+            "type": "name"
+          }
+        ]
+      },
+      {
+        "name": "issue",
+        "base": "",
+        "fields": [
+          {
+            "name": "to",
+            "type": "name"
+          },
+          {
+            "name": "quantity",
+            "type": "asset"
+          },
+          {
+            "name": "memo",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "signup",
+        "base": "",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "name"
+          },
+          {
+            "name": "quantity",
+            "type": "asset"
+          }
+        ]
+      },
+      {
+        "name": "transfer",
+        "base": "",
+        "fields": [
+          {
+            "name": "from",
+            "type": "name"
+          },
+          {
+            "name": "to",
+            "type": "name"
+          },
+          {
+            "name": "quantity",
+            "type": "asset"
+          },
+          {
+            "name": "memo",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "wargame",
+        "base": "",
+        "fields": [
+          {
+            "name": "account",
+            "type": "string"
+          },
+          {
+            "name": "dealer",
+            "type": "string"
+          },
+          {
+            "name": "player",
+            "type": "string"
+          },
+          {
+            "name": "bet",
+            "type": "string"
+          },
+          {
+            "name": "tie",
+            "type": "string"
+          },
+          {
+            "name": "payout",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "name": "adddapp",
+        "type": "adddapp",
+        "ricardian_contract": ""
+      },
+      {
+        "name": "broadcast",
+        "type": "broadcast",
+        "ricardian_contract": ""
+      },
+      {
+        "name": "burn",
+        "type": "burn",
+        "ricardian_contract": ""
+      },
+      {
+        "name": "channelchat",
+        "type": "channelchat",
+        "ricardian_contract": ""
+      },
+      {
+        "name": "chat",
+        "type": "chat",
+        "ricardian_contract": ""
+      },
+      {
+        "name": "create",
+        "type": "create",
+        "ricardian_contract": ""
+      },
+      {
+        "name": "issue",
+        "type": "issue",
+        "ricardian_contract": ""
+      },
+      {
+        "name": "signup",
+        "type": "signup",
+        "ricardian_contract": ""
+      },
+      {
+        "name": "transfer",
+        "type": "transfer",
+        "ricardian_contract": ""
+      },
+      {
+        "name": "wargame",
+        "type": "wargame",
+        "ricardian_contract": ""
+      }
+    ],
+    "tables": [
+      {
+        "name": "accounts",
+        "index_type": "i64",
+        "type": "account"
+      },
+      {
+        "name": "stat",
+        "index_type": "i64",
+        "type": "currency_stats"
+      }
+    ]
+  }
+]

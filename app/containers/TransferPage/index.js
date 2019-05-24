@@ -26,6 +26,7 @@ import hirevibeshvt from './hirevibeshvt.json';
 import thepeostoken from './adcAbi';
 import eosiomeetone from './meetone.json';
 import ridlridlcoin from './ridlridlcoin.json';
+import wizznetwork1 from './wizznetwork1.json';
 
 import {
   formItemLayout,
@@ -288,7 +289,8 @@ export class TransferPage extends React.Component {
     eos.fc.abiCache.abi("hirevibeshvt", hirevibeshvt[0]);
     eos.fc.abiCache.abi("eosiomeetone", eosiomeetone[0]);
     eos.fc.abiCache.abi("ridlridlcoin", ridlridlcoin[0]);
-
+    eos.fc.abiCache.abi("wizznetwork1", wizznetwork1[0]);
+    
     eos
       .transaction(
         {
