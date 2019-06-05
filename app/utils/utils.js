@@ -329,6 +329,7 @@ const symbolList = [
   { symbol: 'CUBE', contract: 'eoscubetoken', digit: 4 },
 
   { symbol: 'DAB', contract: 'eoscafekorea', digit: 4 },
+  { symbol: 'DAPPHDL', contract: 'dappairhodl1', digit: 4},
   { symbol: 'DBET', contract: 'dbetminepool', digit: 4 },
   { symbol: 'DEOS', contract: 'thedeosgames', digit: 4 },
   { symbol: 'DET', contract: 'dacincubator', digit: 4 },
@@ -410,6 +411,7 @@ const symbolList = [
   { symbol: 'MGT', contract: 'bitsplatform', digit: 4 },
   { symbol: 'MUGL', contract: 'mugglesspell', digit: 4 },
   { symbol: 'MORE', contract: 'eosiomoreone', digit: 4 },
+  { symbol: 'MPT', contract: 'metpacktoken', digit: 4},
   { symbol: 'MUR', contract: 'murmurtokens', digit: 4 },
 
   { symbol: 'NFT', contract: 'fight22death', digit: 4 },
@@ -496,6 +498,13 @@ const symbolListWorbli = [
  * 空投列表
  * */
 const airgrabList = [
+  {
+    key: '12',
+    symbol: 'DAPPHDL',
+    account: 'dappairhodl1',
+    method: 'grab',
+    url: ''
+  },
   {
     key: '11',
     symbol: 'MPT',

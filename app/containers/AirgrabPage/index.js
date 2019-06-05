@@ -139,6 +139,12 @@ export class AirgrabPage extends React.Component {
         sym: `4,${record.symbol}`
       }
     }
+    if (record.account === 'dappairhodl1') {
+      data = {
+        owner: AccountName,
+        ram_payer: AccountName
+      }
+    }
 
     (async ()=>{
       try{
@@ -200,7 +206,7 @@ export class AirgrabPage extends React.Component {
     const OwnerPlaceholder = this.state.formatMessage(
       messages.OwnerPlaceholder,
     )
-  
+
     // const OwnerLabel = this.state.formatMessage(messages.OwnerLabel);
     const ProducersDealTranscation = this.state.formatMessage(
       utilsMsg.ProducersDealTranscation,
@@ -214,7 +220,7 @@ export class AirgrabPage extends React.Component {
           <Col span={12}>
             <Card title={ProducersDealTranscation} bordered={false}>
               <FormItem>
-            
+
                 <Alert
                   message={AirGrabAlertMessage}
                   description={AirGrabAlertDescription}
@@ -245,7 +251,7 @@ export class AirgrabPage extends React.Component {
                   size="middle"
                 />
               </FormItem>
-             
+
             <NewDealGetQrcode
               eos={this.state.eos}
               form={this.props.form}
