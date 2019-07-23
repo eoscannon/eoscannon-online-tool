@@ -499,6 +499,13 @@ const symbolListWorbli = [
  * */
 const airgrabList = [
   {
+    key: '13',
+    symbol: 'EDNA',
+    account: 'ednazztokens',
+    method: 'claimdrop',
+    url: ''
+  },
+  {
     key: '12',
     symbol: 'DAPPHDL',
     account: 'dappairhodl1',

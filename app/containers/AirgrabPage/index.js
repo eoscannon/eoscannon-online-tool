@@ -145,6 +145,11 @@ export class AirgrabPage extends React.Component {
         ram_payer: AccountName
       }
     }
+    if (record.account === 'ednazztokens') {
+      data = {
+        account: AccountName
+      }
+    }
 
     (async ()=>{
       try{
