@@ -293,6 +293,7 @@ const symbolList = [
   { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
   { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 4 },
   { symbol: 'WAL', contract: 'whaleextoken', digit: 3 },
+  { symbol: 'SOV', contract: 'sovmintofeos', digit: 4 },
 
   { symbol: 'IQ', contract: 'everipediaiq', digit: 3 },
 
@@ -498,6 +499,13 @@ const symbolListWorbli = [
  * 空投列表
  * */
 const airgrabList = [
+  {
+    key: '14',
+    symbol: 'SOV',
+    account: 'sovmintofeos',
+    method: 'airgrab2',
+    url: ''
+  },
   {
     key: '13',
     symbol: 'EDNA',

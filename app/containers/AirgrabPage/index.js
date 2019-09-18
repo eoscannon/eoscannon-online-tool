@@ -38,7 +38,7 @@ export class AirgrabPage extends React.Component {
       transaction: {},
       tableData: [],
       tableColumns: [],
-      newtransaction:{}
+      newtransaction: {}
     }
   }
   /**
@@ -120,6 +120,12 @@ export class AirgrabPage extends React.Component {
         claimer: AccountName
       }
     }
+    if (record.account === 'sovmintofeos') {
+      data = {
+        owner: AccountName,
+        value: '5000.0000 SOV'
+      }
+    }
     if(record.method === 'open') {
       data = {
         owner: AccountName,
@@ -160,8 +166,8 @@ export class AirgrabPage extends React.Component {
               name: record.method,
               authorization: [
                 {
-                  actor:  AccountName,
-                  permission: "active"
+                  actor: AccountName,
+                  permission: 'active'
                 }
               ],
               data
@@ -172,19 +178,20 @@ export class AirgrabPage extends React.Component {
           sign: false,
           blocksBehind: 3,
           expireSeconds: 3600
-        });
-
-        var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction);
-        if(tx)
-        this.setState({
-          transaction: result.serializedTransaction,
-          newtransaction : tx
         })
-      }catch(err){
-        console.log('err ',err)
+
+        var tx = getNewApi(this.props.SelectedNetWork).deserializeTransaction(result.serializedTransaction)
+        if(tx) {
+          this.setState({
+            transaction: result.serializedTransaction,
+            newtransaction: tx
+          })
+        }
+      }catch(err) {
+        console.log('err ', err)
         this.setState({
           transaction: '',
-          newtransaction : ''
+          newtransaction: ''
         })
         openTransactionFailNotification(this.state.formatMessage, err.name)
 
@@ -195,8 +202,8 @@ export class AirgrabPage extends React.Component {
 
   checkAccountName = (rule, value, callback) => {
     value = value.toLowerCase().trim()
-    this.props.form.setFieldsValue({AccountName : value})
-    callback();
+    this.props.form.setFieldsValue({AccountName: value})
+    callback()
     return
   }
 
@@ -236,9 +243,9 @@ export class AirgrabPage extends React.Component {
                 {getFieldDecorator('AccountName', {
                   rules: [{
                     required: true,
-                     message: OwnerPlaceholder ,
-                     validator: this.checkAccountName
-                     }]
+                    message: OwnerPlaceholder,
+                    validator: this.checkAccountName
+                  }]
                 })(
                   <Input
                     prefix={
@@ -257,24 +264,24 @@ export class AirgrabPage extends React.Component {
                 />
               </FormItem>
 
-            <NewDealGetQrcode
-              eos={this.state.eos}
-              form={this.props.form}
-              formatMessage={this.state.formatMessage}
-              GetTransactionButtonClick={this.handleGetTransaction}
-              GetTransactionButtonState={
-                this.state.GetTransactionButtonState
-              }
-              QrCodeValue={this.state.QrCodeValue}
-              SelectedNetWork={this.props.SelectedNetWork}
-              transaction={this.state.transaction}
-              newtransaction={this.state.newtransaction}
-              voteByScatterClick={this.voteByScatter}
-              scatterStatus={this.state.scatterStatus}
-              GetTransactionButtonScatterState={
-                this.state.GetTransactionButtonScatterState
-              }
-            />
+              <NewDealGetQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                GetTransactionButtonClick={this.handleGetTransaction}
+                GetTransactionButtonState={
+                  this.state.GetTransactionButtonState
+                }
+                QrCodeValue={this.state.QrCodeValue}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+                newtransaction={this.state.newtransaction}
+                voteByScatterClick={this.voteByScatter}
+                scatterStatus={this.state.scatterStatus}
+                GetTransactionButtonScatterState={
+                  this.state.GetTransactionButtonScatterState
+                }
+              />
             </Card>
           </Col>
           <Col span={12}>
