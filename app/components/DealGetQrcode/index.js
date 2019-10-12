@@ -28,7 +28,8 @@ export default class DealGetQrcode extends Component {
       eos: null,
       QrCodeValue: '',
       CopyTransactionButtonState: false,
-      oldTransaction: {}
+      oldTransaction: {},
+      version: 1
     }
   }
 
@@ -121,10 +122,15 @@ export default class DealGetQrcode extends Component {
     }
 
     console.log('chainId', chainId)
-    const buf = Fcbuffer.toBuffer(
-      this.state.eos.fc.structs.transaction,
-      this.props.transaction.transaction,
-    )
+    let buf = ''
+    if(this.props.version == 2) {
+      buf = new Buffer(this.props.transaction.serializedTransaction)
+    }else{
+      buf = Fcbuffer.toBuffer(
+        this.state.eos.fc.structs.transaction,
+        this.props.transaction.transaction,
+      )
+    }
     const chainIdBuf = Buffer.from(chainId, 'hex')
     const UnSignedBuffer = Buffer.concat([
       chainIdBuf,
