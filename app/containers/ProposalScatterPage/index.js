@@ -53,29 +53,29 @@ export class ProposalScatterPage extends React.Component {
    * 链接scatter
    * */
   componentDidMount () {
-     //获取URL 参数
-   if( this.props.location.search ){
-    this.setState({addSymbol : true})
-    const query = this.props.location.search 
-    const arr = query.split('?')[1].split('&') // ['?s=', 'f=7']
-    var newArr = {}
-    for(let i in arr){
-      let data = arr[i].split('=')
-      newArr[data[0]] = data[1]
-    }
+    // 获取URL 参数
+    if(this.props.location.search) {
+      this.setState({addSymbol: true})
+      const query = this.props.location.search
+      const arr = query.split('?')[1].split('&') // ['?s=', 'f=7']
+      var newArr = {}
+      for(let i in arr) {
+        let data = arr[i].split('=')
+        newArr[data[0]] = data[1]
+      }
 
-    // 接收到数据后插入表格
-    setTimeout(()=>{
-      try{
-        this.props.form.setFieldsValue({
-          proposer: newArr.proposer,
-          proposalName:newArr.proposal
-        })
-        }catch(err){
-          console.log('err == ',err)
+      // 接收到数据后插入表格
+      setTimeout(()=>{
+        try{
+          this.props.form.setFieldsValue({
+            proposer: newArr.proposer,
+            proposalName: newArr.proposal
+          })
+        }catch(err) {
+          console.log('err == ', err)
         }
-      },500)
-   }
+      }, 500)
+    }
   }
 
   callback = key => {
@@ -95,7 +95,6 @@ export class ProposalScatterPage extends React.Component {
       GetTransactionButtonScatterState: !!proposer && !!proposalName
     })
   };
- 
 
   /**
    * 使用scatter投票
@@ -114,10 +113,9 @@ export class ProposalScatterPage extends React.Component {
       proposer: proposer,
       proposal_name: proposalName,
       level: {'actor': account.name, 'permission': account.authority}
-
     }
     eos
-      .transaction(
+      .transact(
         {
           actions: [
             {
@@ -129,12 +127,16 @@ export class ProposalScatterPage extends React.Component {
                   actor: account.name,
                   permission: account.authority
                 }
-              ],
-            },
-            
-          ],
-        },
-      )
+              ]
+            }
+
+          ]
+        }, {
+          broadcast: true,
+          sign: true,
+          blocksBehind: 3,
+          expireSeconds: 3600
+        })
       .then(tr => {
         console.log(tr)
         Modal.success({
@@ -146,6 +148,7 @@ export class ProposalScatterPage extends React.Component {
         })
       })
       .catch(err => {
+        console.log(err)
         Modal.error({
           title: this.state.formatMessage(utilsMsg.ScanCodeSendFailed),
           content: `${err}`,
@@ -157,16 +160,15 @@ export class ProposalScatterPage extends React.Component {
 
   checkvoter = (rule, value, callback) => {
     value = value.toLowerCase().trim()
-    this.props.form.setFieldsValue({voter : value})
-    callback();
+    this.props.form.setFieldsValue({voter: value})
+    callback()
     return
   }
 
-
   checkproducers = (rule, value, callback) => {
     value = value.toLowerCase().trim()
-    this.props.form.setFieldsValue({producers : value})
-    callback();
+    this.props.form.setFieldsValue({producers: value})
+    callback()
     return
   }
 
@@ -208,66 +210,66 @@ export class ProposalScatterPage extends React.Component {
     return (
       <LayoutContent>
         <Row gutter={16}>
-        <Col span={12}>
-          <Card title='多签提案' bordered={false}>
-                <FormItem {...formItemLayout}>
-                  {getFieldDecorator('proposer', {
-                    rules: [{
-                      required: true,
-                        message: '',
-                        }]
-                  })(
-                    <Input
-                      prefix={
-                        <Icon
-                          type="user"
-                          style={{ color: 'rgba(0,0,0,.25)' }}
-                        />
-                      }
-                      placeholder={Proposaler}
-                    />,
-                  )}
+          <Col span={12}>
+            <Card title='多签提案' bordered={false}>
+              <FormItem {...formItemLayout}>
+                {getFieldDecorator('proposer', {
+                  rules: [{
+                    required: true,
+                    message: ''
+                  }]
+                })(
+                  <Input
+                    prefix={
+                      <Icon
+                        type="user"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
+                    placeholder={Proposaler}
+                  />,
+                )}
 
-                  </FormItem>
-                  <FormItem {...formItemLayout}>
-                    {getFieldDecorator('proposalName', {
-                      rules: [
-                        {
-                          required: true,
-                          message: ''
-                        }
-                      ]
-                    })(
-                      <Input
-                        prefix={
-                          <Icon
-                            type="profile"
-                            style={{ color: 'rgba(0,0,0,.25)' }}
-                          />
-                        }
-                        placeholder={ProposalName}
-                      />,
-                    )}
-                  </FormItem>
-                  <DealGetQrcode
-                    eos={this.state.eos}
-                    form={this.props.form}
-                    formatMessage={this.state.formatMessage}
-                    GetTransactionButtonClick={this.handleGetTransaction}
-                    GetTransactionButtonState={
-                      this.state.GetTransactionButtonState
+              </FormItem>
+              <FormItem {...formItemLayout}>
+                {getFieldDecorator('proposalName', {
+                  rules: [
+                    {
+                      required: true,
+                      message: ''
                     }
-                    QrCodeValue={this.state.QrCodeValue}
-                    SelectedNetWork={this.props.SelectedNetWork}
-                    transaction={this.state.transaction}
-                    voteByScatterClick={this.voteByScatter}
-                    scatterStatus={this.state.scatterStatus}
-                    GetTransactionButtonScatterState={
-                      this.state.GetTransactionButtonScatterState
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon
+                        type="profile"
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
                     }
-                  />
-                </Card>
-              </Col>
+                    placeholder={ProposalName}
+                  />,
+                )}
+              </FormItem>
+              <DealGetQrcode
+                eos={this.state.eos}
+                form={this.props.form}
+                formatMessage={this.state.formatMessage}
+                GetTransactionButtonClick={this.handleGetTransaction}
+                GetTransactionButtonState={
+                  this.state.GetTransactionButtonState
+                }
+                QrCodeValue={this.state.QrCodeValue}
+                SelectedNetWork={this.props.SelectedNetWork}
+                transaction={this.state.transaction}
+                voteByScatterClick={this.voteByScatter}
+                scatterStatus={this.state.scatterStatus}
+                GetTransactionButtonScatterState={
+                  this.state.GetTransactionButtonScatterState
+                }
+              />
+            </Card>
+          </Col>
         </Row>
       </LayoutContent>
     )

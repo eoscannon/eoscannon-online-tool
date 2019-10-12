@@ -1,5 +1,6 @@
-import ScatterJS from 'scatterjs-core'
-import ScatterEOS from 'scatterjs-plugin-eosjs'
+import ScatterJS from '@scatterjs/core'
+import ScatterEOS from '@scatterjs/eosjs2'
+// import ScatterEOS from 'scatterjs-plugin-eosjs'
 import EOS from 'eosjs'
 import { notification } from 'antd'
 import producers from './producers.json'
@@ -78,13 +79,15 @@ const getEosByScatter = (type, callback) => {
 
 // 使用scatter进行签名
 const getEosMainScatter = callback => {
-  const network = {
+  const network = ScatterJS.Network.fromJson({
     blockchain: 'eos',
     protocol: 'https',
     host: 'mainnet.eoscannon.io',
     port: 443,
     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
-  }
+  })
+  const rpc = new JsonRpc(network.fullhost())
+
   ScatterJS.scatter
     .connect('EOSCannonTool')
     .then(connected => {
@@ -101,8 +104,7 @@ const getEosMainScatter = callback => {
               x => x.blockchain === 'eos',
             )
             global.AccountByScatter = account
-            const eosOptions = { expireInSeconds: 60 * 5 }
-            const eos = scatter.eos(network, EOS, eosOptions)
+            const eos = ScatterJS.eos(network, Api, {rpc})
             global.EosByScatter = eos
             callback()
           })
@@ -121,8 +123,7 @@ const getEosMainScatter = callback => {
           x => x.blockchain === 'eos',
         )
         global.AccountByScatter = account
-        const eosOptions = { expireInSeconds: 60 * 5 }
-        const eos = scatter.eos(network, EOS, eosOptions)
+        const eos = ScatterJS.eos(network, Api, {rpc})
         global.EosByScatter = eos
         callback()
       })
@@ -558,4 +559,3 @@ export {
   getNewApi,
   GetNewRpc
 }
-
