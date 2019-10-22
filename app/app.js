@@ -16,10 +16,10 @@ import { Router, Switch, Route } from 'react-router-dom'
 import FontFaceObserver from 'fontfaceobserver'
 import createHashHistory from 'history/createHashHistory'
 import 'sanitize.css/sanitize.css'
-import "./fonts/style.css"
+import './fonts/style.css'
 import LanguageProvider from 'containers/LanguageProvider'
 
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './serviceWorker'
 
 // Load the favicon and the .htaccess file
 import '!file-loader?name=[name].[ext]!./images/favicon.ico'
@@ -40,6 +40,7 @@ import CreateAccountPage from 'containers/CreateAccountPage/Loadable'
 import DescribePage from 'containers/DescribePage/Loadable'
 import IQPage from 'containers/IQPage/Loadable'
 import ProposalPage from 'containers/ProposalPage/Loadable'
+import ProposalExecPage from 'containers/ProposalExecPage/Loadable'
 import ForumVotePage from 'containers/ForumVotePage/Loadable'
 import WorbliPage from 'containers/WorbliPage/Loadable'
 import ScanLoginPage from 'containers/ScanLoginPage/Loadable'
@@ -47,8 +48,6 @@ import ForumDetailPage from 'containers/ForumDetailPage/Loadable'
 import MeetonePage from 'containers/MeetonePage/Loadable'
 import RexPage from 'containers/RexPage/Loadable'
 import ProposalScatterPage from 'containers/ProposalScatterPage/Loadable'
-
-
 
 // import LinkAuthPage from 'containers/LinkAuthPage/Loadable'
 import Header from 'components/Header'
@@ -106,6 +105,7 @@ const render = messages => {
               <Route path="/dscribe" component={DescribePage} />
               <Route path="/airgrab" component={AirgrabPage} />
               <Route path="/proposal" component={ProposalPage} />
+              <Route path="/proposalExec" component={ProposalExecPage} />
               <Route path="/worbli" component={WorbliPage} />
               <Route path="/forumVote" component={ForumVotePage} />
               <Route path="/forumDetail" component={ForumDetailPage} />
@@ -161,4 +161,4 @@ if (!window.Intl) {
 //  require('offline-plugin/runtime').install(); // eslint-disable-line global-require
 // }
 
-serviceWorker.unregister();
+serviceWorker.unregister()

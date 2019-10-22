@@ -10,6 +10,10 @@ export default defineMessages({
     id: 'ProposalPage CreatorAccountNamePlaceholder',
     defaultMessage: '签名账号'
   },
+  ExecuterAccountNamePlaceholder: {
+    id: 'ProposalExecPage ExecuterAccountNamePlaceholder',
+    defaultMessage: '执行账号'
+  },
   ProposalFirstOne: {
     id: 'ProposalPage ProposalFirstOne',
     defaultMessage: '步骤1/3:填写提案表单'
@@ -26,51 +30,51 @@ export default defineMessages({
     id: 'ProposalPage Proposaler',
     defaultMessage: '投票人'
   },
-  RexPageDeposit:{
+  RexPageDeposit: {
     id: 'RexPage Deposit',
     defaultMessage: '充值'
   },
-  RexPageWithdraw:{
+  RexPageWithdraw: {
     id: 'RexPage Withdraw',
     defaultMessage: '提现'
   },
-  RexPageRexManage:{
+  RexPageRexManage: {
     id: 'RexPage RexManage',
     defaultMessage: 'Rex操作'
   },
-  RexPageMoneyAmount:{
+  RexPageMoneyAmount: {
     id: 'RexPage MoneyAmount',
     defaultMessage: '交易金额'
   },
-  RexPageBuyrex:{
+  RexPageBuyrex: {
     id: 'RexPage Buyrex',
     defaultMessage: '买rex'
   },
-  RexPageSellrex:{
+  RexPageSellrex: {
     id: 'RexPage Sellrex',
     defaultMessage: '卖rex'
   },
-  RexPageRent:{
+  RexPageRent: {
     id: 'RexPage Rent',
     defaultMessage: '租赁'
   },
-  RexPageRentResourse:{
+  RexPageRentResourse: {
     id: 'RexPage RentResourse',
     defaultMessage: '资源类型'
   },
-  RexPageCancelStake:{
+  RexPageCancelStake: {
     id: 'RexPage CancelStake',
     defaultMessage: '取消质押'
   },
-  RexPageResourseReceive:{
+  RexPageResourseReceive: {
     id: 'RexPage ResourseReceive',
     defaultMessage: '资源接收者'
   },
-  CreatorAccountNameToRexPlaceholder:{
+  CreatorAccountNameToRexPlaceholder: {
     id: 'RexPage CreatorAccountNameToRexPlaceholder',
     defaultMessage: ''
   },
-  RexPageHandleTraction:{
+  RexPageHandleTraction: {
     id: 'RexPage HandleTraction',
     defaultMessage: '资源接收者'
   },
@@ -89,76 +93,76 @@ export default defineMessages({
   ProposalName: {
     id: 'ProposalPage ProposalName',
     defaultMessage: '提案名称'
-  }, 
-  RexPageModalAttention:{
+  },
+  RexPageModalAttention: {
     id: 'RexPage ModalAttention',
     defaultMessage: '提示'
   },
-  RexPageModalContent:{
+  RexPageModalContent: {
     id: 'RexPage ModalContent',
     defaultMessage: '投票未达到21个节点，前往代理投票'
   },
-  RexPageRexpayment:{
+  RexPageRexpayment: {
     id: 'RexPage Rexpayment',
     defaultMessage: '支付方式'
   },
-  RexPageRexAccountBalance:{
+  RexPageRexAccountBalance: {
     id: 'RexPage RexAccountBalance',
     defaultMessage: 'REX账户余额'
   },
-  RexPageDepositBalance:{
+  RexPageDepositBalance: {
     id: 'RexPage DepositBalance',
     defaultMessage: '充值金额'
   },
-  RexPageWithdrawBalance:{
+  RexPageWithdrawBalance: {
     id: 'RexPage WithdrawBalance',
     defaultMessage: '提现金额'
   },
-  RexPageStakedCpu:{
+  RexPageStakedCpu: {
     id: 'RexPage StakedCpu',
     defaultMessage: '质押的CPU'
   },
-  RexPageStakedNet:{
+  RexPageStakedNet: {
     id: 'RexPage StakedNet',
     defaultMessage: '质押的NET'
   },
-  RexPageBuyandSold:{
+  RexPageBuyandSold: {
     id: 'RexPage BuyandSold',
     defaultMessage: '购买的EOS的数量'
   },
-  RexPageSoldAmount:{
+  RexPageSoldAmount: {
     id: 'RexPage SoldAmount',
     defaultMessage: '兑换数量(单位:EOS)'
   },
-  RexPageCpuQuantity:{
+  RexPageCpuQuantity: {
     id: 'RexPage CpuQuantity',
     defaultMessage: '使用CPU购买数量(单位:EOS)'
   },
-  RexPageNetQuantity:{
+  RexPageNetQuantity: {
     id: 'RexPage NetQuantity',
     defaultMessage: '使用NET购买数量(单位:EOS)'
   },
-  CopyAlertFirstDescriptionLast:{
+  CopyAlertFirstDescriptionLast: {
     id: 'RexPage AlertDescriptionLast',
     defaultMessage: 'EOS账户和REX账户之间，可以随充随提。'
   },
-  RexPageRexPrice:{
+  RexPageRexPrice: {
     id: 'RexPage RexPrice',
     defaultMessage: 'REX价格'
   },
-  RexPageRexTotalAmount:{
+  RexPageRexTotalAmount: {
     id: 'RexPage RexTotalAmount',
     defaultMessage: '资金池总量'
   },
-  RexPageRexNowAmount:{
+  RexPageRexNowAmount: {
     id: 'RexPage RexNowAmount',
     defaultMessage: 'REX余额'
   },
-  RexPageActionMethod:{
+  RexPageActionMethod: {
     id: 'RexPage ActionMethod',
     defaultMessage: '操作方式'
   },
-  RexPageMustRequired:{
+  RexPageMustRequired: {
     id: 'RexPage MustRequired',
     defaultMessage: '必填'
   }

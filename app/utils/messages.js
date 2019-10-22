@@ -50,6 +50,10 @@ export default defineMessages({
     id: 'Public HeaderMenuProposal',
     defaultMessage: '提案'
   },
+  HeaderMenuProposalExec: {
+    id: 'Public HeaderMenuProposalExec',
+    defaultMessage: '提案执行'
+  },
   TransactionSuccessNotificationMsg: {
     id: 'Public TransactionSuccessNotificationMsg',
     defaultMessage: '生成签名报文成功'
@@ -316,53 +320,53 @@ export default defineMessages({
     id: 'Header HeaderMenuStatusText',
     defaultMessage: '论坛投票'
   },
-  CopyOwnerAlertDescriptionFirst:{
+  CopyOwnerAlertDescriptionFirst: {
     id: 'Public CopyOwnerAlertDescriptionFirst',
     defaultMessage: '打开离线工具APP，扫描以下二维码，并用Owner'
   },
-  CopyOwnerAlertDescriptionLast:{
+  CopyOwnerAlertDescriptionLast: {
     id: 'Public CopyOwnerAlertDescriptionLast',
     defaultMessage: '权限的私钥签名'
   },
-  MykeyAccountCompScope:{
+  MykeyAccountCompScope: {
     id: 'MykeyAccountComp MykeyAccountCompScope',
     defaultMessage: '查询范围'
   },
-  MykeyAccountCompLowerBound:{
+  MykeyAccountCompLowerBound: {
     id: 'MykeyAccountComp MykeyAccountCompLowerBound',
     defaultMessage: '下界'
   },
-  MykeyAccountCompUpperBound:{
+  MykeyAccountCompUpperBound: {
     id: 'MykeyAccountComp MykeyAccountCompUpperBound',
     defaultMessage: '上界'
   },
-  MykeyAccountCompLimit:{
+  MykeyAccountCompLimit: {
     id: 'MykeyAccountComp MykeyAccountCompLimit',
     defaultMessage: '查询数量'
   },
-  HelpPage:{
+  HelpPage: {
     id: 'header HelpPage',
     defaultMessage: 'Help'
   },
-  RexPageEOSAmount:{
+  RexPageEOSAmount: {
     id: 'RexPage EOSAmount',
     defaultMessage: 'EOS余额'
   },
- 
-  RexPageNetAmount:{
+
+  RexPageNetAmount: {
     id: 'RexPage NetAmount',
     defaultMessage: 'NET余额'
   },
-  RexPageCPUAmount:{
+  RexPageCPUAmount: {
     id: 'RexPage CPUAmount',
     defaultMessage: 'CPU余额'
   },
-  CopyAlertFirstMessage:{
+  CopyAlertFirstMessage: {
     id: 'RexPage FirstMessage',
     defaultMessage: '步骤 2/3: 签名交易'
   },
-  CopyAlertFirstDescription:{
+  CopyAlertFirstDescription: {
     id: 'RexPage FirstDescription',
     defaultMessage: '充值fund'
-  },
+  }
 })
