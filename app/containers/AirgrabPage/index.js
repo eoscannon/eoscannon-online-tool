@@ -126,6 +126,12 @@ export class AirgrabPage extends React.Component {
         value: '5000.0000 SOV'
       }
     }
+    if (record.account === 'blockbasetkn') {
+      data = {
+        owner: AccountName,
+        quantity: '0.0000 BBT'
+      }
+    }
     if(record.method === 'open') {
       data = {
         owner: AccountName,

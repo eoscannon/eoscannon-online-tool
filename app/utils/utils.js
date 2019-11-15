@@ -294,6 +294,10 @@ const symbolList = [
   { symbol: 'CAN', contract: 'eoscancancan', digit: 4 },
   { symbol: 'MEETONE', contract: 'eosiomeetone', digit: 4 },
   { symbol: 'WAL', contract: 'whaleextoken', digit: 3 },
+
+  { symbol: 'EIDOS', contract: 'eidosonecoin', digit: 4 },
+  { symbol: 'BBT', contract: 'blockbasetkn', digit: 4 },
+
   { symbol: 'SOV', contract: 'sovmintofeos', digit: 4 },
 
   { symbol: 'IQ', contract: 'everipediaiq', digit: 3 },
@@ -500,6 +504,13 @@ const symbolListWorbli = [
  * 空投列表
  * */
 const airgrabList = [
+  {
+    key: '15',
+    symbol: 'BBT',
+    account: 'blockbasetkn',
+    method: 'signup',
+    url: ''
+  },
   {
     key: '14',
     symbol: 'SOV',
