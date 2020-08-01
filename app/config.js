@@ -15,11 +15,18 @@ export default {
     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   },
   {
-    networkName:'worbli',
-    BaseSymbol: 'WBI',
-    Endpoint:'https://worbli.eoscannon.io',
-    chainId: '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
-  },{
+    networkName:'uxnetwork',
+    BaseSymbol: 'EOS',
+    Endpoint:'https://api.uxnetwork.io',
+    chainId: '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02',
+  },
+    {
+      networkName:'worbli',
+      BaseSymbol: 'WBI',
+      Endpoint:'https://worbli.eoscannon.io',
+      chainId: '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
+    }
+  ,{
     networkName:'telos',
     BaseSymbol: 'TLOS',
     Endpoint:'https://telos.caleos.io',

@@ -570,6 +570,7 @@ class HeaderComp extends React.Component {
                     onChange={this.handleChange}
                   >
                     <Option value="main">{mainNet}</Option>
+                    <Option value="uxnetwork">UX Network</Option>
                     <Option value="worbli">{testNet}</Option>
                     <Option value="telos">TELOS</Option>
                     <Option value="kylin">KYLIN</Option>
